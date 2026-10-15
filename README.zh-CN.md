@@ -8,7 +8,7 @@
 
 **先智能选帧，再手动微调；全程本地完成。**
 
-> **最新版：**[v0.2.12 通用 DMG](https://github.com/ixiehao/ShotTessera/releases/tag/v0.2.12) · macOS 13+ · Apple Silicon 与 Intel Mac
+> **最新版：**[v0.2.12 通用 DMG](https://github.com/ixiehao/ShotMap/releases/tag/v0.2.12) · macOS 13+ · Apple Silicon 与 Intel Mac
 
 ## 一张图看懂功能
 
@@ -44,7 +44,7 @@
 brew install --cask ixiehao/tap/shottessera
 ```
 
-也可打开[最新发布页](https://github.com/ixiehao/ShotTessera/releases/latest)，下载适用于 Apple Silicon 或 Intel Mac 的通用 **DMG**。
+也可打开[最新发布页](https://github.com/ixiehao/ShotMap/releases/latest)，下载适用于 Apple Silicon 或 Intel Mac 的通用 **DMG**。
 
 ## 安全安装
 
@@ -63,8 +63,8 @@ brew install --cask ixiehao/tap/shottessera
 ## 项目与反馈
 
 - 开发者：[ixiehao](https://github.com/ixiehao)
-- 源码、下载与版本说明：[github.com/ixiehao/ShotTessera](https://github.com/ixiehao/ShotTessera)
-- 反馈问题或提出建议：[创建 GitHub Issue](https://github.com/ixiehao/ShotTessera/issues/new/choose)
+- 源码、下载与版本说明：[github.com/ixiehao/ShotMap](https://github.com/ixiehao/ShotMap)
+- 反馈问题或提出建议：[创建 GitHub Issue](https://github.com/ixiehao/ShotMap/issues/new/choose)
 - 更新记录：[CHANGELOG.md](CHANGELOG.md) · 隐私承诺：[PRIVACY.md](PRIVACY.md) · 命名规范：[docs/NAMING.md](docs/NAMING.md)
 
 ## 权利与许可

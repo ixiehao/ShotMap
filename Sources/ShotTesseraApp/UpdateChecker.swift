@@ -46,7 +46,7 @@ struct GitHubRelease: Decodable {
         guard !draft, !prerelease,
               let version = ReleaseVersion(tag: tagName), currentVersion < version,
               htmlURL.scheme == "https", htmlURL.host == "github.com",
-              htmlURL.path.hasPrefix("/ixiehao/ShotTessera/releases/") else { return nil }
+              htmlURL.path.hasPrefix("/ixiehao/ShotMap/releases/") else { return nil }
         return AvailableUpdate(version: tagName, downloadURL: htmlURL)
     }
 }
@@ -61,7 +61,7 @@ final class UpdateChecker: ObservableObject {
     private var isChecking = false
     private var lastCheckedAt: Date?
 
-    private static let releaseURL = URL(string: "https://api.github.com/repos/ixiehao/ShotTessera/releases/latest")!
+    private static let releaseURL = URL(string: "https://api.github.com/repos/ixiehao/ShotMap/releases/latest")!
     private static let checkInterval: TimeInterval = 12 * 60 * 60
 
     init(currentVersion: ReleaseVersion? = nil, session: URLSession = .shared) {
@@ -82,7 +82,7 @@ final class UpdateChecker: ObservableObject {
 
         var request = URLRequest(url: Self.releaseURL)
         request.timeoutInterval = 10
-        request.setValue("ShotTessera update checker", forHTTPHeaderField: "User-Agent")
+        request.setValue("ShotMap update checker", forHTTPHeaderField: "User-Agent")
         request.setValue("application/vnd.github+json", forHTTPHeaderField: "Accept")
 
         do {

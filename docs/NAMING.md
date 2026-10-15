@@ -13,14 +13,13 @@ together.
 ## Compatibility identifiers
 
 `ShotTessera` is a legacy technical identifier, not the product name. It is
-intentionally retained during the transition in places where changing it would
-break an existing installation or public link:
+intentionally retained in implementation identifiers where changing it would
+break an existing installation or automation:
 
-- GitHub repository and release URL: `ixiehao/ShotTessera`
 - Bundle identifier: `com.shottessera.videoscreenshotcollage`
-- Swift package, module, executable, update-check endpoint, and Homebrew cask
-  identifier: `shottessera`
+- Swift package, module, executable, and Homebrew cask identifier:
+  `shottessera`
 
-The distributed application is named `ShotMap.app`. A future repository or
-cask move must provide redirects and an explicit migration path before these
-compatibility identifiers are changed.
+The public repository and release URL are now `ixiehao/ShotMap`; the previous
+GitHub URL redirects automatically. The distributed application is named
+`ShotMap.app`.
