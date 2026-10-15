@@ -2,7 +2,7 @@ import AppKit
 import Foundation
 
 /// Renders localized beginner-installation guides around approved, real
-/// ShotTessera installation and launch screenshots.
+/// ShotMap installation and launch screenshots.
 
 private enum Language: String {
     case english = "en"
@@ -23,7 +23,7 @@ private struct Copy {
         switch language {
         case .english:
             return Copy(
-                kicker: "SHOT TESSERA（视频一键截屏拼图） · BEGINNER INSTALL GUIDE",
+                kicker: "SHOTMAP · BEGINNER INSTALL GUIDE",
                 title: "Install safely in three steps",
                 subtitle: "No Terminal. Do not disable macOS security.",
                 steps: [
@@ -37,7 +37,7 @@ private struct Copy {
             )
         case .chinese:
             return Copy(
-                kicker: "视频一键截屏拼图（ShotTessera）· 新手安装指引",
+                kicker: "视频一键拼图（ShotMap）· 新手安装指引",
                 title: "安全安装，只需三步",
                 subtitle: "不需要终端，也不需要关闭 macOS 系统安全设置。",
                 steps: [
@@ -51,7 +51,7 @@ private struct Copy {
             )
         case .japanese:
             return Copy(
-                kicker: "動画ワンクリック・スクリーンショットモンタージュ（ShotTessera）· はじめてのインストール",
+                kicker: "ShotMap · はじめてのインストール",
                 title: "安全なインストールは 3 ステップ",
                 subtitle: "ターミナルも macOS の安全設定変更も不要です。",
                 steps: [

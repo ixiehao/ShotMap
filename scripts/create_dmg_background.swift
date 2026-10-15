@@ -102,13 +102,13 @@ accent.draw(
 )
 
 drawText(
-    "ShotTessera",
+    "ShotMap",
     in: NSRect(x: 100, y: 506, width: 760, height: 42),
     font: .systemFont(ofSize: 30, weight: .semibold),
     color: color(0.10, 0.14, 0.22)
 )
 drawText(
-    "视频一键截屏拼图 · macOS",
+    "视频一键拼图 · macOS",
     in: NSRect(x: 100, y: 474, width: 760, height: 24),
     font: .systemFont(ofSize: 15, weight: .medium),
     color: color(0.31, 0.37, 0.48, 0.82)

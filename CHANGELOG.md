@@ -3,6 +3,29 @@
 All notable user-facing changes are recorded here. Stable releases remain
 available on the [GitHub Releases page](https://github.com/ixiehao/ShotTessera/releases).
 
+## v0.2.12
+
+### English
+
+- ShotTessera is now **ShotMap**: a shorter, easier-to-remember product name. The Chinese product label is now **视频一键拼图**.
+- Updated the app name, About and Help views, DMG installer, README files, website, and public product imagery in English, Chinese, and Japanese. Existing GitHub links and update paths stay the same.
+- Refreshed the existing real product captures with the new name while preserving their original footage and workflows.
+- Batch-complete messages now follow the current app language when you switch languages after a run.
+
+### 中文
+
+- **ShotTessera** 现更名为 **ShotMap**，名称更简洁、更容易记忆；中文产品名调整为 **视频一键拼图**。
+- 已同步更新应用名称、“关于”与帮助界面、DMG 安装器、README、官网及公开产品截图，覆盖英文、中文和日文；原有 GitHub 链接和更新路径保持不变。
+- 在保留原始演示视频内容与操作流程的前提下，更新现有真实产品截图中的品牌文字。
+- 批处理结束后再切换语言，完成提示也会立即显示为当前界面语言。
+
+### 日本語
+
+- **ShotTessera** を、より短く覚えやすい **ShotMap** へ名称変更しました。中国語の製品名も **视频一键拼图** に更新しています。
+- アプリ名、「情報」とヘルプ、DMG インストーラ、README、Web サイト、公開プロダクト画像を英語・中国語・日本語で更新しました。既存の GitHub リンクと更新経路はそのまま利用できます。
+- 元の映像素材と操作フローはそのままに、既存の実機キャプチャ内のブランド表記を更新しました。
+- バッチ処理後に表示言語を切り替えた場合も、完了メッセージが現在の言語にすぐ切り替わります。
+
 ## v0.2.11
 
 ### English

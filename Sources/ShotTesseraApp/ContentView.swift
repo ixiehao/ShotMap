@@ -285,7 +285,7 @@ struct ContentView: View {
             HStack(spacing: 0) {
                 HStack(spacing: 10) {
                     ShotTesseraMark(language: language, size: 26)
-                    Text("ShotTessera")
+                    Text("ShotMap")
                         .font(.system(size: 16, weight: .semibold, design: .rounded))
                 }
                 // The left inset leaves macOS traffic lights unobstructed in the
@@ -1099,6 +1099,8 @@ final class StoryboardViewModel: ObservableObject {
     @Published var showError = false
     @Published var errorMessage = ""
     @Published var outputDescription = ""
+    private var completedBatchDescription: String?
+    private var completedBatchCounts: (completed: Int, failed: Int)?
     @Published var renderedFormat: ExportFormat?
     @Published private(set) var lastSavedURL: URL?
     @Published private(set) var isApplyingFrameAdjustments = false
@@ -1158,6 +1160,11 @@ final class StoryboardViewModel: ObservableObject {
             let name = activeJobName.isEmpty ? t("default.video") : activeJobName
             return t("status.processing", activeJobIndex + 1, max(1, activeJobCount), name, livePreviewFrameCount, totalFrames)
         }
+        if let completedBatchCounts, outputDescription == completedBatchDescription {
+            return completedBatchCounts.failed > 0
+                ? t("status.batchCompletedWithFailures", completedBatchCounts.completed, completedBatchCounts.failed)
+                : t("status.batchCompleted", completedBatchCounts.completed)
+        }
         return previewImage == nil ? t("status.empty") : outputDescription
     }
 
@@ -1203,6 +1210,8 @@ final class StoryboardViewModel: ObservableObject {
         previewImage = nil
         livePreviewSlots.reset(total: 0)
         outputDescription = ""
+        completedBatchDescription = nil
+        completedBatchCounts = nil
         lastSavedURL = nil
         pendingData = nil
         pendingSource = nil
@@ -1263,6 +1272,8 @@ final class StoryboardViewModel: ObservableObject {
         isPauseRequested = false
         isPaused = false
         progress = 0
+        completedBatchDescription = nil
+        completedBatchCounts = nil
         // Present the live grid immediately. This replaces a stale completed
         // image or a blank stage before the first AVFoundation decode returns.
         activeGridSide = gridSide
@@ -1366,6 +1377,8 @@ final class StoryboardViewModel: ObservableObject {
         }
         livePreviewSlots.reset(total: 0)
         outputDescription = t("status.cancelled")
+        completedBatchDescription = nil
+        completedBatchCounts = nil
         Task { await control?.resume() }
     }
 
@@ -1489,9 +1502,12 @@ final class StoryboardViewModel: ObservableObject {
             if case .failed = $0.state { return true }
             return false
         }.count
-        outputDescription = failed > 0
+        let description = failed > 0
             ? t("status.batchCompletedWithFailures", completed, failed)
             : t("status.batchCompleted", completed)
+        completedBatchCounts = (completed, failed)
+        completedBatchDescription = description
+        outputDescription = description
     }
 
     func markCancelled() {

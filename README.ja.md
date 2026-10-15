@@ -1,14 +1,14 @@
-# 動画ワンクリック・スクリーンショットモンタージュ（ShotTessera）
+# ShotMap（動画ワンクリック・モンタージュ）
 
 [English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
 
-![プロジェクト所有者が許可した湖上映像を処理する ShotTessera の日本語ワークスペース](docs/assets/readme-workspace-ja.png)
+![プロジェクト所有者が許可した湖上映像を処理する ShotMap の日本語ワークスペース](docs/assets/readme-workspace-ja.png)
 
-**動画ワンクリック・スクリーンショットモンタージュ（ShotTessera）** は、動画から代表的なフレームを選び、一枚の見やすい絵コンテ画像にまとめるネイティブ macOS アプリです。
+**ShotMap（動画ワンクリック・モンタージュ）** は、動画から代表的なフレームを選び、一枚の見やすい絵コンテ画像にまとめるネイティブ macOS アプリです。
 
 **まずスマート選択、必要なコマだけ手動調整。すべてローカルで完結します。**
 
-> **最新リリース：**[v0.2.11 Universal DMG](https://github.com/ixiehao/ShotTessera/releases/tag/v0.2.11) · macOS 13 以降 · Apple Silicon / Intel Mac
+> **最新リリース：**[v0.2.12 Universal DMG](https://github.com/ixiehao/ShotTessera/releases/tag/v0.2.12) · macOS 13 以降 · Apple Silicon / Intel Mac
 
 ## 一枚で分かる仕組み
 
@@ -20,7 +20,7 @@
 
 実際のアプリで、完成した絵コンテから手動フレーム選択画面を開き、視覚的なタイムラインで場面を探して候補から一コマを選び、保存する流れです。
 
-![ShotTessera のワークスペースから手動フレーム選択画面へ移り、絵コンテ、視覚タイムライン、候補ギャラリーを表示する操作](docs/assets/video-to-storyboard-demo.gif)
+![ShotMap のワークスペースから手動フレーム選択画面へ移り、絵コンテ、視覚タイムライン、候補ギャラリーを表示する操作](docs/assets/video-to-storyboard-demo.gif)
 
 ## 主な機能
 
@@ -50,11 +50,11 @@ brew install --cask ixiehao/tap/shottessera
 
 ![macOS 初心者向けの三段階インストールガイド](docs/assets/install-guide-ja.jpg)
 
-1. ダウンロードした `.dmg` をダブルクリックし、**视频一键截屏拼图.app** を「アプリケーション」へドラッグします。
+1. ダウンロードした `.dmg` をダブルクリックし、**ShotMap.app** を「アプリケーション」へドラッグします。
 2. コピー完了後、DMG は取り出しまたは削除できます。これはインストーラーなので、インストール済みアプリは削除されません。
 3. このアプリはまだ Apple の公証を受けていません。開発元を確認できないと表示された場合は、「アプリケーション」で Control-click し、「開く」を選んで、もう一度「開く」を確認します。macOS 全体の安全設定は変更しないでください。
 
-あとで削除する場合は、アプリを終了してから「アプリケーション」の `视频一键截屏拼图.app` だけをゴミ箱へ移動します。書き出した画像は元動画の横に残ります。
+あとで削除する場合は、アプリを終了してから「アプリケーション」の `ShotMap.app` だけをゴミ箱へ移動します。書き出した画像は元動画の横に残ります。
 
 ## プライバシー優先
 
@@ -69,7 +69,7 @@ brew install --cask ixiehao/tap/shottessera
 
 ## 権利とライセンス
 
-- Swift ソース、文書、Tessera Iris アイコンは本プロジェクトのオリジナルであり、[MIT License](LICENSE) で公開されています。
+- Swift ソース、文書、ShotMap Iris アイコンは本プロジェクトのオリジナルであり、[MIT License](LICENSE) で公開されています。
 - アプリは Apple SDK フレームワークだけを使用し、第三者のアプリケーションコード、パッケージ、分析 SDK、MoviePrint 素材を含みません。
 - 同梱する [Tabler Icons Outline](https://github.com/tabler/tabler-icons) SVG は未改変で、[MIT License](ThirdPartyLicenses/TablerIcons-MIT.txt) に基づいて使用しています。帰属と統合の詳細は [NOTICE.md](NOTICE.md) を参照してください。
 - ファイル名タイトルには同梱の **Noto Sans CJK SC Bold 2.004** を使用します。このフォントは改変せず、[SIL Open Font License 1.1](ThirdPartyLicenses/NotoSansCJK-OFL-1.1.txt) の下で別途ライセンスされています。帰属と検証情報は [NOTICE.md](NOTICE.md) を参照してください。

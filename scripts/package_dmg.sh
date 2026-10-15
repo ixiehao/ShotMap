@@ -2,17 +2,17 @@
 set -euo pipefail
 
 readonly project_dir="$(cd "$(dirname "$0")/.." && pwd)"
-readonly product_name="视频一键截屏拼图"
+readonly product_name="ShotMap"
 readonly executable_name="ShotTessera"
 readonly bundle_name="ShotTessera_ShotTesseraApp.bundle"
 readonly version="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$project_dir/Packaging/Info.plist")"
 # A versioned Finder volume avoids colliding with a user's still-open older
 # installer. Finder resolves a duplicate disk by its internal name, which can
 # otherwise write the layout into the wrong, read-only image.
-readonly volume_name="ShotTessera $version Installer"
+readonly volume_name="ShotMap $version Installer"
 readonly output_dir="$project_dir/dist"
 readonly app_path="$output_dir/$product_name.app"
-readonly dmg_path="$output_dir/ShotTessera-$version.dmg"
+readonly dmg_path="$output_dir/ShotMap-$version.dmg"
 readonly checksum_path="$dmg_path.sha256"
 readonly background_path="$output_dir/.dmg-install-background.png"
 readonly iconset_build_dir="$output_dir/.iconset-build"
@@ -115,7 +115,7 @@ hdiutil verify "$dmg_path"
 
 # A fresh mount path exercises background resolution independently of the
 # build-time /Volumes path. Keep Finder closed until validation is complete.
-validation_mount="$(mktemp -d /tmp/ShotTessera-installer-check.XXXXXX)"
+validation_mount="$(mktemp -d /tmp/ShotMap-installer-check.XXXXXX)"
 validation_output="$(hdiutil attach -readonly -noverify -noautoopen -mountpoint "$validation_mount" "$dmg_path")"
 validation_device="$(printf '%s\n' "$validation_output" | awk '/Apple_HFS/ { print $1; exit }')"
 if [[ -z "$validation_device" || ! -d "$validation_mount" ]]; then

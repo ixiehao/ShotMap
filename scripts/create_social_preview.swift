@@ -107,7 +107,7 @@ private func render(caseStudy: NSImage, compact: Bool) throws -> Data {
 
     fill(NSRect(x: 90, y: 474, width: 82, height: 27), color: color(0.13, 0.48, 0.66), radius: 13.5)
     drawText("macOS", in: NSRect(x: 90, y: 480, width: 82, height: 14), size: 12, weight: .bold, color: .white, alignment: .center)
-    drawText("ShotTessera", in: NSRect(x: 90, y: 410, width: 360, height: 48), size: 42, weight: .bold, color: color(0.93, 0.97, 1))
+    drawText("ShotMap", in: NSRect(x: 90, y: 410, width: 360, height: 48), size: 42, weight: .bold, color: color(0.93, 0.97, 1))
     drawText("Make every video easy to browse", in: NSRect(x: 90, y: 367, width: 390, height: 31), size: 22, weight: .semibold, color: color(0.72, 0.86, 1))
     drawText("Smart selection, precise control, local export.", in: NSRect(x: 90, y: 322, width: 390, height: 22), size: 16, weight: .medium, color: color(0.60, 0.76, 0.93))
     drawText("Native macOS · Your footage stays on your Mac", in: NSRect(x: 90, y: 293, width: 410, height: 18), size: 14, weight: .medium, color: color(0.40, 0.88, 0.91))
@@ -121,7 +121,7 @@ private func render(caseStudy: NSImage, compact: Bool) throws -> Data {
     stroke(caseRect, color: color(0.58, 0.87, 1, 0.35), width: 1.5, radius: 20)
 
     drawText(
-        compact ? "Real workspace · manual control" : "A real ShotTessera workspace",
+        compact ? "Real workspace · manual control" : "A real ShotMap workspace",
         in: NSRect(x: 90, y: 154, width: 360, height: 44),
         size: compact ? 18 : 20,
         weight: .semibold,

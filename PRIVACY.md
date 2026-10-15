@@ -2,7 +2,7 @@
 
 ## English
 
-ShotTessera processes a video entirely on the device that opens it.
+ShotMap processes a video entirely on the device that opens it.
 
 - No user account or analytics SDK is included.
 - No video, frame, path, face-detection result, or generated storyboard is sent over the network.
@@ -14,7 +14,7 @@ If this changes in a future release, the change must be documented here and in t
 
 ## 中文
 
-ShotTessera 会完全在打开视频的设备上处理视频。
+视频一键拼图（ShotMap）会完全在打开视频的设备上处理视频。
 
 - 不包含用户账号或分析 SDK。
 - 不会经由网络发送视频、画面、文件路径、人脸检测结果或生成的分镜图。
@@ -26,7 +26,7 @@ ShotTessera 会完全在打开视频的设备上处理视频。
 
 ## 日本語
 
-ShotTessera は、開いた動画をそのデバイス上で完結して処理します。
+ShotMap は、開いた動画をそのデバイス上で完結して処理します。
 
 - ユーザーアカウントや分析 SDK は含まれません。
 - 動画、フレーム、パス、顔検出結果、生成した絵コンテをネットワークへ送信しません。

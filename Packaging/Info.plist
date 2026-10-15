@@ -5,7 +5,7 @@
     <key>CFBundleDevelopmentRegion</key>
     <string>zh-Hans</string>
     <key>CFBundleDisplayName</key>
-    <string>视频一键截屏拼图</string>
+    <string>ShotMap</string>
     <key>CFBundleExecutable</key>
     <string>ShotTessera</string>
 	<key>CFBundleIconFile</key>
@@ -15,13 +15,13 @@
     <key>CFBundleInfoDictionaryVersion</key>
     <string>6.0</string>
     <key>CFBundleName</key>
-    <string>视频一键截屏拼图</string>
+    <string>ShotMap</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleShortVersionString</key>
-	<string>0.2.11</string>
+    <string>0.2.12</string>
 	<key>CFBundleVersion</key>
-	<string>21</string>
+    <string>22</string>
     <key>LSMinimumSystemVersion</key>
     <string>13.0</string>
     <key>NSHighResolutionCapable</key>

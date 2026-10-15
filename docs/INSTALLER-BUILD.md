@@ -3,7 +3,7 @@
 Run `./scripts/package_dmg.sh` on macOS with Xcode and Python 3.10 or newer.
 The script creates an isolated `.build/dmg-tools` environment and installs the
 versions in `scripts/dmg-requirements.txt`. These Python dependencies are build
-tools only and are never bundled in ShotTessera. Set `PACKAGING_PYTHON` if the
+tools only and are never bundled in ShotMap. Set `PACKAGING_PYTHON` if the
 desired interpreter is not on PATH or in a standard Homebrew location.
 
 Finder saves view settings asynchronously. A successful AppleScript call or a
@@ -21,7 +21,7 @@ dimensions, icon positions, Applications symlink, and background alias volume
 and file identities. Missing metadata fails the build. Application signatures,
 both CPU architectures, and the disk image checksum are also verified.
 
-For visual acceptance, eject previous ShotTessera installer volumes, open the
+For visual acceptance, eject previous ShotMap installer volumes, open the
 new DMG in Finder, and inspect its own installation window. Browsing a volume
 inside an existing Finder tab can inherit that tab's view settings. Reopen the
 DMG after ejecting it to check the saved layout a second time.

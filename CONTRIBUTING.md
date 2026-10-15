@@ -2,7 +2,7 @@
 
 ## English
 
-Thank you for improving ShotTessera.
+Thank you for improving ShotMap.
 
 1. Search existing issues before opening a new one.
 2. Keep a contribution focused: one bug fix, feature, or documentation change per pull request.
@@ -29,7 +29,7 @@ Mac type, container/codec, duration, and the reproduced result.
 
 ## 中文
 
-感谢你改进 ShotTessera。
+感谢你改进视频一键拼图（ShotMap）。
 
 1. 新建 Issue 前，请先搜索现有 Issue。
 2. 每个 Pull Request 请聚焦于一项修复、功能或文档改动。
@@ -52,7 +52,7 @@ swift build -c release --arch arm64 --arch x86_64
 
 ## 日本語
 
-ShotTessera の改善にご協力いただき、ありがとうございます。
+ShotMap の改善にご協力いただき、ありがとうございます。
 
 1. 新しい Issue を作成する前に、既存の Issue を検索してください。
 2. 1 つの Pull Request では、1 件のバグ修正、機能、またはドキュメント変更に集中してください。

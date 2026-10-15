@@ -1,14 +1,14 @@
-# 视频一键截屏拼图（ShotTessera）
+# 视频一键拼图（ShotMap）
 
 [English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
 
-![ShotTessera 中文工作区正在处理项目作者授权的船行湖面示例视频](docs/assets/readme-workspace-zh.png)
+![ShotMap 中文工作区正在处理项目作者授权的船行湖面示例视频](docs/assets/readme-workspace-zh.png)
 
-**视频一键截屏拼图（ShotTessera）** 是一款原生 macOS 应用：从视频中挑选有代表性的画面，拼成一张干净的分镜图。
+**视频一键拼图（ShotMap）** 是一款原生 macOS 应用：从视频中挑选有代表性的画面，拼成一张干净的分镜图。
 
 **先智能选帧，再手动微调；全程本地完成。**
 
-> **最新版：**[v0.2.11 通用 DMG](https://github.com/ixiehao/ShotTessera/releases/tag/v0.2.11) · macOS 13+ · Apple Silicon 与 Intel Mac
+> **最新版：**[v0.2.12 通用 DMG](https://github.com/ixiehao/ShotTessera/releases/tag/v0.2.12) · macOS 13+ · Apple Silicon 与 Intel Mac
 
 ## 一张图看懂功能
 
@@ -20,7 +20,7 @@
 
 下方是真实软件操作：从已完成的分镜图进入手动选帧窗口，在可视化时间轴上定位画面，再从候选区选择更合适的一帧后保存。
 
-![ShotTessera 从工作区进入手动选帧窗口，展示分镜图、可视化时间轴与候选画廊](docs/assets/video-to-storyboard-demo.gif)
+![ShotMap 从工作区进入手动选帧窗口，展示分镜图、可视化时间轴与候选画廊](docs/assets/video-to-storyboard-demo.gif)
 
 ## 功能
 
@@ -50,11 +50,11 @@ brew install --cask ixiehao/tap/shottessera
 
 ![适合新手的 macOS 三步安装图文说明](docs/assets/install-guide-zh.jpg)
 
-1. 双击下载的 `.dmg`，将 **视频一键截屏拼图.app** 拖进“应用程序”。
+1. 双击下载的 `.dmg`，将 **ShotMap.app** 拖进“应用程序”。
 2. 复制完成后可推出或删除 DMG；它只是安装包，不会删除已经安装的应用。
 3. 应用尚未经过 Apple 公证。若系统提示无法验证开发者，请在“应用程序”中按住 Control 点按应用，选择“打开”，再确认一次“打开”。无需关闭 macOS 的系统级安全设置。
 
-之后如需卸载，先退出应用，再将“应用程序”中的 `视频一键截屏拼图.app` 移入废纸篓（回收站）。已经导出的图片仍在原视频文件夹中。
+之后如需卸载，先退出应用，再将“应用程序”中的 `ShotMap.app` 移入废纸篓（回收站）。已经导出的图片仍在原视频文件夹中。
 
 ## 隐私优先
 
@@ -69,7 +69,7 @@ brew install --cask ixiehao/tap/shottessera
 
 ## 权利与许可
 
-- Swift 源码、文档和 Tessera Iris 图标均为本项目原创内容，按 [MIT License](LICENSE) 发布。
+- Swift 源码、文档和 ShotMap Iris 图标均为本项目原创内容，按 [MIT License](LICENSE) 发布。
 - 应用只使用 Apple SDK 框架；未包含第三方应用代码、依赖包、分析 SDK 或 MoviePrint 素材。
 - 内置的 [Tabler Icons Outline](https://github.com/tabler/tabler-icons) SVG 保持原样，按 [MIT License](ThirdPartyLicenses/TablerIcons-MIT.txt) 使用；归属与集成说明见 [NOTICE.md](NOTICE.md)。
 - 文件名标题使用随应用打包的 **Noto Sans CJK SC Bold 2.004**。该字体保持原样，采用 [SIL Open Font License 1.1](ThirdPartyLicenses/NotoSansCJK-OFL-1.1.txt) 单独授权；归属与校验信息见 [NOTICE.md](NOTICE.md)。

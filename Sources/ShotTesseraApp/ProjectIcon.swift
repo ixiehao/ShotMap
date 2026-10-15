@@ -4,7 +4,7 @@ import SwiftUI
 /// Tabler Icons Outline, v3.49.0, rendered from the original bundled SVGs.
 ///
 /// The Tabler project designs each icon on a 24-point grid with a 2 pt outline.
-/// Keeping its source SVGs in the app bundle gives ShotTessera a consistent,
+/// Keeping its source SVGs in the app bundle gives ShotMap a consistent,
 /// recognisable visual language without adding a network dependency or an icon
 /// font. The originals and their MIT licence are documented in `NOTICE.md`.
 @MainActor

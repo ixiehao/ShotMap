@@ -131,6 +131,20 @@ final class FrameSelectionTests: XCTestCase {
         }
     }
 
+    @MainActor
+    func testCompletedBatchStatusUpdatesWhenLanguageChanges() {
+        let model = StoryboardViewModel()
+        model.language = .chinese
+        model.finishBatch()
+        XCTAssertEqual(model.previewStatus, "批量处理完成：已保存 0 部。")
+
+        model.language = .english
+        XCTAssertEqual(model.previewStatus, "Batch complete: 0 saved.")
+
+        model.language = .japanese
+        XCTAssertEqual(model.previewStatus, "バッチ処理完了：0 本を保存しました。")
+    }
+
     func testReleaseVersionComparesNumericTagsAndRejectsInvalidTags() {
         XCTAssertLessThan(tryVersion("v0.2.4"), tryVersion("v0.2.10"))
         XCTAssertLessThan(tryVersion("1.0.0"), tryVersion("v1.0.1"))

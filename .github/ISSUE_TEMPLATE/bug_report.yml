@@ -1,5 +1,5 @@
 name: Bug report
-description: Report a reproducible problem in ShotTessera.
+description: Report a reproducible problem in ShotMap.
 title: "[Bug]: "
 labels: [bug]
 body:

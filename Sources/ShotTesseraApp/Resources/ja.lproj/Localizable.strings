@@ -1,10 +1,10 @@
 "alert.generation.title" = "絵コンテを作成できません";
 "button.ok" = "OK";
 "app.tagline" = "動画を一枚の絵コンテに";
-"app.productName" = "视频一键截屏拼图";
+"app.productName" = "ShotMap";
 "studio.title" = "バッチスタジオ";
 "app.language" = "言語";
-"app.icon.accessibility" = "ShotTessera のアイコン";
+"app.icon.accessibility" = "ShotMap のアイコン";
 "section.grid" = "絵コンテのグリッド";
 "section.frame" = "画面";
 "section.aspect" = "比率";
@@ -106,13 +106,13 @@
 "error.previewStorage" = "空き容量不足、または保存できないため、残りの処理を停止しました。先に現在の結果を別名で保存してください。";
 "error.noUsableFrames" = "十分に鮮明で明るいフレームが見つかりませんでした。";
 "error.noExportData" = "書き出し画像を作成できません。";
-"about.menu" = "ShotTessera について";
+"about.menu" = "ShotMap について";
 "about.developer" = "開発者";
 "about.feedback" = "GitHub で問題を報告";
 "about.privacy" = "ローカル処理 · アカウント・追跡なし";
 "about.license" = "MIT ライセンス";
 "help.menu" = "使い方";
-"help.title" = "ShotTessera の使い方";
+"help.title" = "ShotMap の使い方";
 "help.intro" = "3 ステップで絵コンテを作成できます。";
 "help.step.add.title" = "動画を追加";
 "help.step.add.detail" = "クリックまたはドラッグ＆ドロップで動画を一つ以上追加します。";
@@ -170,5 +170,5 @@
 "transcoding.intro" = "この macOS ではこれらの動画を復号できません。変換後の新しいファイルをキューに追加してください。";
 "transcoding.step.one" = "Finder で元ファイルを表示し、信頼できる動画変換ツールで開きます。";
 "transcoding.step.two" = "H.264 または H.265 の MP4 / MOV として書き出します。";
-"transcoding.step.three" = "変換後のファイルを ShotTessera にドロップして、もう一度作成します。";
+"transcoding.step.three" = "変換後のファイルを ShotMap にドロップして、もう一度作成します。";
 "transcoding.tip" = "システムプレーヤーで元動画を再生できない場合、再試行だけでは解決しません。元動画と完成済みの絵コンテは変更されません。";

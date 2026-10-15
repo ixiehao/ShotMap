@@ -960,7 +960,7 @@ enum ManualFrameExtractor {
 
 /// Pure in-memory decoder-budget accounting. This exists so performance
 /// regressions can be caught in XCTest without collecting user activity or
-/// introducing telemetry into ShotTessera's local-first processing model.
+/// introducing telemetry into ShotMap's local-first processing model.
 struct FrameDecodeDiagnostics: Equatable, Sendable {
     let itemCount: Int
     let primaryRequests: Int

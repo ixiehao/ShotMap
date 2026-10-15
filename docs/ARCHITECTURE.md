@@ -1,6 +1,6 @@
 # Architecture
 
-ShotTessera is a native macOS storyboard generator. Its deliberately small
+ShotMap is a native macOS storyboard generator. Its deliberately small
 architecture uses only Apple system frameworks: SwiftUI, AVFoundation, Vision,
 CoreGraphics, ImageIO, and AppKit. There are no package dependencies,
 media sidecars, bundled ML models, web services, analytics SDKs, or runtime
@@ -10,7 +10,7 @@ downloads.
 
 The selected video stays on the Mac. AVFoundation decodes it locally and Vision
 runs its face and human-rectangle requests on-device. The only persistent output
-is the PNG or JPEG the user chooses to save. ShotTessera has no account, network
+is the PNG or JPEG the user chooses to save. ShotMap has no account, network
 client, upload path, or internal media library. See [PRIVACY.md](../PRIVACY.md)
 for the user-facing promise.
 

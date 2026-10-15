@@ -1,14 +1,14 @@
-# ShotTessera（视频一键截屏拼图）
+# ShotMap
 
 [English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
 
-![ShotTessera's real English workspace processing project-owner footage](docs/assets/readme-workspace-en.png)
+![ShotMap's real English workspace processing project-owner footage](docs/assets/readme-workspace-en.png)
 
-**ShotTessera（视频一键截屏拼图）** is a native macOS app that selects representative video frames and turns them into one clean storyboard image.
+**ShotMap** is a native macOS app that selects representative video frames and turns them into one clean storyboard image.
 
 **Smart selection first. Fine-tune any frame. Export entirely locally.**
 
-> **Latest release:** [v0.2.11 universal DMG](https://github.com/ixiehao/ShotTessera/releases/tag/v0.2.11) · macOS 13+ · Apple Silicon and Intel
+> **Latest release:** [v0.2.12 universal DMG](https://github.com/ixiehao/ShotTessera/releases/tag/v0.2.12) · macOS 13+ · Apple Silicon and Intel
 
 ## At a glance
 
@@ -20,7 +20,7 @@
 
 The real app moves from a finished storyboard to the manual frame editor, where you can locate a moment on the visual timeline and choose a better candidate before saving.
 
-![ShotTessera moves from its workspace to the manual frame editor, showing the storyboard, visual timeline, and candidate gallery](docs/assets/video-to-storyboard-demo.gif)
+![ShotMap moves from its workspace to the manual frame editor, showing the storyboard, visual timeline, and candidate gallery](docs/assets/video-to-storyboard-demo.gif)
 
 ## Features
 
@@ -50,15 +50,15 @@ Or open [the latest release](https://github.com/ixiehao/ShotTessera/releases/lat
 
 ![Three beginner-friendly installation steps for macOS](docs/assets/install-guide-en.jpg)
 
-1. Double-click the downloaded `.dmg`, then drag **视频一键截屏拼图.app** to **Applications**.
+1. Double-click the downloaded `.dmg`, then drag **ShotMap.app** to **Applications**.
 2. After the copy finishes, eject or delete the DMG. It is only the installer and does not remove the installed app.
 3. The app is not Apple-notarized yet. If macOS cannot verify the developer, open **Applications**, Control-click the app, choose **Open**, then choose **Open** once more. Do not disable macOS system-wide security.
 
-To remove it later, quit the app and move only `视频一键截屏拼图.app` from Applications to Trash. Exported images remain beside their source videos.
+To remove it later, quit the app and move only `ShotMap.app` from Applications to Trash. Exported images remain beside their source videos.
 
 ## Private by design
 
-All frame analysis and export happen on your Mac. ShotTessera has no account, telemetry, cloud upload, Electron, FFmpeg, or Python runtime. Its optional update check reads only public GitHub release metadata; it never sends video or usage data.
+All frame analysis and export happen on your Mac. ShotMap has no account, telemetry, cloud upload, Electron, FFmpeg, or Python runtime. Its optional update check reads only public GitHub release metadata; it never sends video or usage data.
 
 ## Project and feedback
 
@@ -69,7 +69,7 @@ All frame analysis and export happen on your Mac. ShotTessera has no account, te
 
 ## Rights and license
 
-- Swift source, documentation, and the Tessera Iris icon are original project work released under the [MIT License](LICENSE).
+- Swift source, documentation, and the ShotMap Iris icon are original project work released under the [MIT License](LICENSE).
 - The app uses Apple SDK frameworks only; it bundles no third-party application code, packages, analytics SDKs, or MoviePrint assets.
 - The bundled [Tabler Icons Outline](https://github.com/tabler/tabler-icons) SVGs are used unmodified under the [MIT License](ThirdPartyLicenses/TablerIcons-MIT.txt). Their attribution and integration details are in [NOTICE.md](NOTICE.md).
 - The filename title uses the bundled **Noto Sans CJK SC Bold 2.004** font, unmodified and separately licensed under the [SIL Open Font License 1.1](ThirdPartyLicenses/NotoSansCJK-OFL-1.1.txt). See [NOTICE.md](NOTICE.md) for attribution and verification details.

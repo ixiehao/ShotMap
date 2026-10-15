@@ -313,7 +313,7 @@ struct ShotTesseraApp: App {
     }
 
     var body: some Scene {
-        Window("ShotTessera", id: "main") {
+        Window("ShotMap", id: "main") {
             ContentView(model: storyboardModel)
                 .environmentObject(updateChecker)
                 .frame(minWidth: 940, minHeight: 640)

@@ -1,10 +1,10 @@
 "alert.generation.title" = "Unable to Create Storyboard";
 "button.ok" = "OK";
 "app.tagline" = "Turn video into one storyboard";
-"app.productName" = "视频一键截屏拼图";
+"app.productName" = "ShotMap";
 "studio.title" = "Batch Studio";
 "app.language" = "Language";
-"app.icon.accessibility" = "ShotTessera Tessera Iris icon";
+"app.icon.accessibility" = "ShotMap icon";
 "section.grid" = "Storyboard Grid";
 "section.frame" = "Frame";
 "section.aspect" = "Aspect";
@@ -106,13 +106,13 @@
 "error.previewStorage" = "Storage is full or unavailable. Remaining tasks have stopped. Save the current result before continuing.";
 "error.noUsableFrames" = "No sufficiently clear and bright frames were found.";
 "error.noExportData" = "Unable to create the exported image.";
-"about.menu" = "About ShotTessera";
+"about.menu" = "About ShotMap";
 "about.developer" = "Developer";
 "about.feedback" = "Report an issue on GitHub";
 "about.privacy" = "Local processing · No account or tracking";
 "about.license" = "MIT License";
 "help.menu" = "Help";
-"help.title" = "ShotTessera Help";
+"help.title" = "ShotMap Help";
 "help.intro" = "Create a storyboard in three steps.";
 "help.step.add.title" = "Add videos";
 "help.step.add.detail" = "Click or drop in one or more videos.";
@@ -170,5 +170,5 @@
 "transcoding.intro" = "This macOS installation cannot decode these videos. Convert them, then add the new files to the queue.";
 "transcoding.step.one" = "Show the original files in Finder and open them with a video converter you trust.";
 "transcoding.step.two" = "Export as MP4 or MOV with H.264 or H.265 video.";
-"transcoding.step.three" = "Drop the converted files into ShotTessera and create the storyboard again.";
+"transcoding.step.three" = "Drop the converted files into ShotMap and create the storyboard again.";
 "transcoding.tip" = "If the original cannot play in a system media player, retrying alone cannot fix it. Original videos and completed storyboards are never modified.";

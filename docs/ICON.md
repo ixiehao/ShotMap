@@ -1,6 +1,6 @@
-# Tessera Iris icon
+# ShotMap Iris icon
 
-`Tessera Iris` is the original visual identity for ShotTessera. It combines an
+`ShotMap Iris` is the original visual identity for ShotMap. It combines an
 abstract eye-shaped viewfinder with a 3 x 3 field of rounded storyboard tiles.
 The dark central pupil means visual selection; its small gold highlight means
 the chosen representative frame. It intentionally avoids play buttons, camera
@@ -33,15 +33,10 @@ distributed with the repository under its MIT license.
 
 ## Interface pictograms
 
-Every interface pictogram is original geometry implemented in
-`Sources/ShotTesseraApp/ProjectIcon.swift`. The project does not bundle an
-icon font, an icon library, or SF Symbols. These source-drawn pictograms are
-part of the project and are available under the repository's MIT License,
-including commercial use, modification, and redistribution.
-
-This includes the create button's wand: it is a simple original line drawing,
-not a third-party asset or a copied trademarked symbol. It also includes the
-appearance control's sun and dark-mode crescent moon.
+The interface uses bundled [Tabler Icons Outline](https://github.com/tabler/tabler-icons)
+SVGs as native template images. Their strokes adapt to the current light or
+dark appearance. The unmodified third-party assets and their MIT attribution
+are documented in [NOTICE.md](../NOTICE.md).
 
 The only non-project symbols visible during installation are macOS-owned
 system UI: Finder renders the Applications-folder alias and the Dock itself.

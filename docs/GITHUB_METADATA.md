@@ -1,11 +1,11 @@
-# GitHub metadata for 视频一键截屏拼图
+# GitHub metadata for ShotMap（视频一键拼图）
 
 GitHub indexes the repository title, description, topics, README heading, and
 social preview. Keep the public metadata below aligned with the stable release.
 
 ## Repository description
 
-`视频一键截屏拼图 (ShotTessera) — Native macOS video screenshot collage, contact sheet, and storyboard generator. Local, fast, private, and open source.`
+`ShotMap（视频一键拼图）— Native macOS video screenshot collage, contact sheet, and storyboard generator. Local, fast, private, and open source.`
 
 ## Suggested topics
 
@@ -16,7 +16,7 @@ social preview. Keep the public metadata below aligned with the stable release.
 
 ## Social-preview copy
 
-**ShotTessera · Turn video into storyboards on macOS**
+**ShotMap · Turn video into storyboards on macOS**
 
 Smart frame selection, optional manual fine-tuning, and fully local export.
 

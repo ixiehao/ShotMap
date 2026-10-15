@@ -1,6 +1,6 @@
 # Public visual assets
 
-ShotTessera’s public visuals now use real, current application captures—not
+ShotMap’s public visuals now use real, current application captures—not
 drawn or generated imitations of the product interface. They share one visual
 system across the README files, the project website, release previews, and
 installation guides.
@@ -24,12 +24,12 @@ supplied by the project owner.
   `readme-workspace-ja.png` are the screenshots used at the top of the three
   README files. Each shows the real Batch Studio in its matching interface
   language.
-- `website/assets/workspace-en.png`, `workspace-zh.png`, and
+- `website/assets/workspace-en.webp`, `workspace-zh.webp`, and
   `workspace-ja.png` are the corresponding website hero captures.
-- `website/assets/manual-en.png` and `manual-zh.png` are real manual-frame
+- `website/assets/manual-en.webp` and `manual-zh.webp` are real manual-frame
   selection windows: player, visual timeline, frame stepping controls, and
   candidate gallery are all live product UI.
-- `website/assets/workflow-ja.png` is a Japanese workspace crop used so the
+- `website/assets/workflow-ja.webp` is a Japanese workspace crop used so the
   Japanese website stays readable in Japanese as well.
 
 `video-to-storyboard-demo.gif` and its PNG fallback are rebuilt from actual
@@ -37,7 +37,7 @@ workspace states. `video-to-storyboard-overview.png` is a real manual-frame
 selection capture, not an illustrated stand-in. The GIF is kept at 960 × 540
 for fast README loading.
 
-The original Tessera Iris icon is intentionally retained as the stable product
+The original ShotMap Iris icon is intentionally retained as the stable product
 identity. Its canonical source is `Assets/AppIcon-1024-source.png`; the
 in-app and website copies are derived from the shipped application icon.
 
@@ -52,7 +52,7 @@ Regenerate the cards on macOS with:
 
 ```sh
 swift scripts/create_social_preview.swift \
-  website/assets/manual-en.png \
+  website/assets/manual-en.webp \
   docs/assets/social-preview.jpg \
   docs/assets/social-preview-v2.jpg
 ```
@@ -69,9 +69,8 @@ for the guide renderer. It is deliberately separate from the DMG window
 background, which has its own installation arrow and title.
 
 ```sh
-swift scripts/create_install_guide_background.swift docs/assets/install-guide-background.png
 swift scripts/create_install_guide.swift docs/assets/install-guide-background.png en \
-  docs/assets/install-screen-dmg.png website/assets/workspace-en.png \
+  docs/assets/install-screen-dmg.png docs/assets/install-screen-launch.png \
   docs/assets/install-guide-en.jpg
 ```
 

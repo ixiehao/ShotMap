@@ -1,7 +1,7 @@
 import Foundation
 
 /// An in-app language choice. Keeping the selected language separate from the
-/// macOS system language lets people use ShotTessera in their preferred language
+/// macOS system language lets people use ShotMap in their preferred language
 /// without restarting the application.
 enum AppLanguage: String, CaseIterable, Identifiable, Sendable {
     case chinese = "zh-Hans"

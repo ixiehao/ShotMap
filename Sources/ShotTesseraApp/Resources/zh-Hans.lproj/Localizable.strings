@@ -1,10 +1,10 @@
 "alert.generation.title" = "无法生成分镜图";
 "button.ok" = "好";
 "app.tagline" = "把影片织成一张分镜图";
-"app.productName" = "视频一键截屏拼图";
+"app.productName" = "视频一键拼图";
 "studio.title" = "批处理工作台";
 "app.language" = "语言";
-"app.icon.accessibility" = "ShotTessera 拼片之眼图标";
+"app.icon.accessibility" = "ShotMap 图标";
 "section.grid" = "分镜网格";
 "section.frame" = "画面";
 "section.aspect" = "比例";
@@ -106,13 +106,13 @@
 "error.previewStorage" = "存储空间不足或无法写入，已停止后续任务。请先将当前结果另存为图片。";
 "error.noUsableFrames" = "没有找到足够清晰、明亮的画面。";
 "error.noExportData" = "无法生成导出图片。";
-"about.menu" = "关于视频一键截屏拼图";
+"about.menu" = "关于视频一键拼图";
 "about.developer" = "开发者";
 "about.feedback" = "在 GitHub 反馈问题";
 "about.privacy" = "本机处理 · 无账号、无跟踪";
 "about.license" = "MIT 开源许可";
 "help.menu" = "使用帮助";
-"help.title" = "视频一键截屏拼图 · 使用帮助";
+"help.title" = "视频一键拼图 · 使用帮助";
 "help.intro" = "三步生成一张分镜图。";
 "help.step.add.title" = "添加视频";
 "help.step.add.detail" = "点击或拖入一个或多个视频。";
@@ -170,5 +170,5 @@
 "transcoding.intro" = "当前 macOS 无法解码这些影片的编码；转码后即可重新加入队列。";
 "transcoding.step.one" = "在 Finder 中显示原文件，并用你信任的视频转换工具打开。";
 "transcoding.step.two" = "导出为 MP4 或 MOV，视频编码选择 H.264 或 H.265。";
-"transcoding.step.three" = "将转码后的新文件拖入 ShotTessera，再开始生成。";
+"transcoding.step.three" = "将转码后的新文件拖入 ShotMap，再开始生成。";
 "transcoding.tip" = "如果系统播放器也无法播放原文件，单纯“重试”不会解决问题；原始文件和已完成的分镜图都不会被修改。";
