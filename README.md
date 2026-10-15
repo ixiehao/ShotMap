@@ -71,6 +71,7 @@ All frame analysis and export happen on your Mac. ShotTessera has no account, te
 
 - Swift source, documentation, and the Tessera Iris icon are original project work released under the [MIT License](LICENSE).
 - The app uses Apple SDK frameworks only; it bundles no third-party application code, packages, analytics SDKs, or MoviePrint assets.
+- The bundled [Tabler Icons Outline](https://github.com/tabler/tabler-icons) SVGs are used unmodified under the [MIT License](ThirdPartyLicenses/TablerIcons-MIT.txt). Their attribution and integration details are in [NOTICE.md](NOTICE.md).
 - The filename title uses the bundled **Noto Sans CJK SC Bold 2.004** font, unmodified and separately licensed under the [SIL Open Font License 1.1](ThirdPartyLicenses/NotoSansCJK-OFL-1.1.txt). See [NOTICE.md](NOTICE.md) for attribution and verification details.
 - Rights to source videos, subtitles, marks, watermarks, and music remain with their respective owners. Generating a storyboard does not grant publication or redistribution rights.
 - Follow applicable local law and process only videos you own or are authorised to analyse. This repository audit is technical information, not legal advice.

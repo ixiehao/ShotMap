@@ -71,6 +71,7 @@ brew install --cask ixiehao/tap/shottessera
 
 - Swift 源码、文档和 Tessera Iris 图标均为本项目原创内容，按 [MIT License](LICENSE) 发布。
 - 应用只使用 Apple SDK 框架；未包含第三方应用代码、依赖包、分析 SDK 或 MoviePrint 素材。
+- 内置的 [Tabler Icons Outline](https://github.com/tabler/tabler-icons) SVG 保持原样，按 [MIT License](ThirdPartyLicenses/TablerIcons-MIT.txt) 使用；归属与集成说明见 [NOTICE.md](NOTICE.md)。
 - 文件名标题使用随应用打包的 **Noto Sans CJK SC Bold 2.004**。该字体保持原样，采用 [SIL Open Font License 1.1](ThirdPartyLicenses/NotoSansCJK-OFL-1.1.txt) 单独授权；归属与校验信息见 [NOTICE.md](NOTICE.md)。
 - 视频本身及其中已有的字幕、商标、水印和音乐等权利仍归相关权利人所有。生成分镜图并不授予发布或再分发权限。
 - 请遵守适用的当地法律，并仅处理你拥有或获授权处理的视频。本仓库审计仅提供技术信息，不构成法律意见。
