@@ -8,7 +8,7 @@
 
 **Smart selection first. Fine-tune any frame. Export entirely locally.**
 
-> **Latest release:** [v0.2.10 universal DMG](https://github.com/ixiehao/ShotTessera/releases/tag/v0.2.10) · macOS 13+ · Apple Silicon and Intel
+> **Latest release:** [v0.2.11 universal DMG](https://github.com/ixiehao/ShotTessera/releases/tag/v0.2.11) · macOS 13+ · Apple Silicon and Intel
 
 ## At a glance
 
@@ -34,6 +34,7 @@ The real app moves from a finished storyboard to the manual frame editor, where 
 - Supports MP4, MOV, MPEG, and other formats supported by macOS; optional timecodes and filename titles are available.
 - Exports PNG or JPG at 1920 px or wider as `video-name-shot-001.ext`, incrementing safely when needed.
 - Remembers your English, 中文, or 日本語 interface choice and supports light, dark, or system appearance.
+- Uses a consistent Tabler Icons Outline interface, designed to keep video, frame, and export controls easy to scan.
 
 ## Download
 

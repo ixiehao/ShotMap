@@ -8,7 +8,7 @@
 
 **先智能选帧，再手动微调；全程本地完成。**
 
-> **最新版：**[v0.2.10 通用 DMG](https://github.com/ixiehao/ShotTessera/releases/tag/v0.2.10) · macOS 13+ · Apple Silicon 与 Intel Mac
+> **最新版：**[v0.2.11 通用 DMG](https://github.com/ixiehao/ShotTessera/releases/tag/v0.2.11) · macOS 13+ · Apple Silicon 与 Intel Mac
 
 ## 一张图看懂功能
 
@@ -34,6 +34,7 @@
 - 支持 MP4、MOV、MPEG 等当前 macOS 支持的格式；可选显示时间码和视频文件名标题。
 - 支持 PNG、JPG 和最低 1920 px 宽度导出，命名为 `视频名-shot-001.ext`，序号会安全递增。
 - 可记住 English、中文、日本語界面选择，并支持浅色、深色或跟随设备显示模式。
+- 采用统一的 Tabler Icons Outline 图标界面，让视频、选帧和导出等常用操作更易识别。
 
 ## 下载
 

@@ -3,6 +3,26 @@
 All notable user-facing changes are recorded here. Stable releases remain
 available on the [GitHub Releases page](https://github.com/ixiehao/ShotTessera/releases).
 
+## v0.2.11
+
+### English
+
+- Refreshed the whole workspace with a consistent Tabler Icons Outline system, including the queue, preview, settings, batch controls, and Manual Frame Editor.
+- Improved the visual hierarchy of icon labels, section badges, and action controls in both Light and Dark appearance modes, so common tasks are easier to find at a glance.
+- Bundled the local icon assets and added their MIT attribution to the app's notices.
+
+### 中文
+
+- 全面采用统一的 Tabler Icons Outline 图标系统，覆盖视频队列、预览、设置、批处理控制和手动选帧窗口。
+- 优化浅色与深色模式下的图标标签、分区标识和操作控件层级，让常用功能更易识别。
+- 内置本地图标资源，并在项目声明中补充相应的 MIT 致谢。
+
+### 日本語
+
+- キュー、プレビュー、設定、バッチ操作、手動フレーム選択を含むワークスペース全体を、統一した Tabler Icons Outline のアイコン体系へ刷新しました。
+- ライト／ダーク表示の両方で、アイコン付きラベル、セクションバッジ、操作コントロールの情報階層を改善し、よく使う機能を見つけやすくしました。
+- ローカルのアイコン素材を同梱し、プロジェクトの表記に MIT ライセンスの帰属情報を追加しました。
+
 ## v0.2.10
 
 ### English

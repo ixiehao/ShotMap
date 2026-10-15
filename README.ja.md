@@ -8,7 +8,7 @@
 
 **まずスマート選択、必要なコマだけ手動調整。すべてローカルで完結します。**
 
-> **最新リリース：**[v0.2.10 Universal DMG](https://github.com/ixiehao/ShotTessera/releases/tag/v0.2.10) · macOS 13 以降 · Apple Silicon / Intel Mac
+> **最新リリース：**[v0.2.11 Universal DMG](https://github.com/ixiehao/ShotTessera/releases/tag/v0.2.11) · macOS 13 以降 · Apple Silicon / Intel Mac
 
 ## 一枚で分かる仕組み
 
@@ -34,6 +34,7 @@
 - MP4、MOV、MPEG など、現在の macOS が対応する形式を扱えます。タイムコードと動画ファイル名タイトルは任意で表示できます。
 - PNG/JPG、幅 1920 px 以上の書き出しに対応し、`動画名-shot-001.ext` の形式で安全に連番を付けます。
 - English、中文、日本語の表示選択を記憶し、ライト、ダーク、またはシステムの外観に対応します。
+- 統一された Tabler Icons Outline の画面により、動画、フレーム選択、書き出しの操作を見つけやすくしています。
 
 ## ダウンロード
 
