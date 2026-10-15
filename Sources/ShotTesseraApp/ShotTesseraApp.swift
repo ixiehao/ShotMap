@@ -2,8 +2,8 @@ import AppKit
 import SwiftUI
 
 private enum ProjectLinks {
-    static let repository = URL(string: "https://github.com/ixiehao/ShotTessera")!
-    static let issues = URL(string: "https://github.com/ixiehao/ShotTessera/issues/new/choose")!
+    static let repository = URL(string: "https://github.com/ixiehao/ShotMap")!
+    static let issues = URL(string: "https://github.com/ixiehao/ShotMap/issues/new/choose")!
 }
 
 private enum AboutCredits {
@@ -36,7 +36,7 @@ private enum AboutCredits {
         }
 
         appendBody("\(language.text("about.developer")) · ixiehao\n")
-        appendLink("github.com/ixiehao/ShotTessera\n", destination: ProjectLinks.repository)
+        appendLink("github.com/ixiehao/ShotMap\n", destination: ProjectLinks.repository)
         appendLink(language.text("about.feedback"), destination: ProjectLinks.issues)
         if let availableUpdate {
             appendBody("\n\n\(language.text("update.about.available", availableUpdate.version))\n")

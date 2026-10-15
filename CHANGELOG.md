@@ -1,28 +1,28 @@
 # Changelog
 
 All notable user-facing changes are recorded here. Stable releases remain
-available on the [GitHub Releases page](https://github.com/ixiehao/ShotTessera/releases).
+available on the [GitHub Releases page](https://github.com/ixiehao/ShotMap/releases).
 
 ## v0.2.12
 
 ### English
 
 - ShotTessera is now **ShotMap**: a shorter, easier-to-remember product name. The Chinese product label is now **视频一键拼图**.
-- Updated the app name, About and Help views, DMG installer, README files, website, and public product imagery in English, Chinese, and Japanese. The public product name is ShotMap; GitHub links, update checks, and the official Pages address use the official ShotTessera project URLs.
+- Updated the app name, About and Help views, DMG installer, README files, website, and public product imagery in English, Chinese, and Japanese. GitHub links, update checks, and the official Pages address now use the new ShotMap URLs; the former GitHub repository address continues to redirect.
 - Refreshed the existing real product captures with the new name while preserving their original footage and workflows.
 - Batch-complete messages now follow the current app language when you switch languages after a run.
 
 ### 中文
 
 - **ShotTessera** 现更名为 **ShotMap**，名称更简洁、更容易记忆；中文产品名调整为 **视频一键拼图**。
-- 已同步更新应用名称、“关于”与帮助界面、DMG 安装器、README、官网及公开产品截图，覆盖英文、中文和日文；产品显示名为 ShotMap，GitHub 链接、应用内更新检查和官网地址均使用官方 ShotTessera 项目 URL。
+- 已同步更新应用名称、“关于”与帮助界面、DMG 安装器、README、官网及公开产品截图，覆盖英文、中文和日文；GitHub 链接、应用内更新检查和官网地址均已切换至新的 ShotMap URL，旧 GitHub 仓库地址仍会自动跳转。
 - 在保留原始演示视频内容与操作流程的前提下，更新现有真实产品截图中的品牌文字。
 - 批处理结束后再切换语言，完成提示也会立即显示为当前界面语言。
 
 ### 日本語
 
 - **ShotTessera** を、より短く覚えやすい **ShotMap** へ名称変更しました。中国語の製品名も **视频一键拼图** に更新しています。
-- アプリ名、「情報」とヘルプ、DMG インストーラ、README、Web サイト、公開プロダクト画像を英語・中国語・日本語で更新しました。製品表示名は ShotMap のまま、GitHub リンク、アプリ内の更新確認、公式 Pages の URL には公式 ShotTessera プロジェクト URL を使用します。
+- アプリ名、「情報」とヘルプ、DMG インストーラ、README、Web サイト、公開プロダクト画像を英語・中国語・日本語で更新しました。GitHub リンク、アプリ内の更新確認、公式 Pages の URL は新しい ShotMap の URL へ切り替え、以前の GitHub リポジトリ URL は自動的に転送されます。
 - 元の映像素材と操作フローはそのままに、既存の実機キャプチャ内のブランド表記を更新しました。
 - バッチ処理後に表示言語を切り替えた場合も、完了メッセージが現在の言語にすぐ切り替わります。
 

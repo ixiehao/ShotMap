@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://ixiehao.github.io/ShotTessera/sitemap.xml
+Sitemap: https://ixiehao.github.io/ShotMap/sitemap.xml
