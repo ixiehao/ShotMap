@@ -129,6 +129,11 @@ final class FrameSelectionTests: XCTestCase {
             XCTAssertFalse(language.text("button.generate.batch", 2).contains("%"))
             XCTAssertFalse(language.text("button.saveas", "PNG").contains("%"))
         }
+
+        // A fallback to Bundle.module could look like a valid translation on
+        // an English CI host. Assert distinctive localized text explicitly.
+        XCTAssertEqual(AppLanguage.chinese.text("status.batchCompleted", 2), "批量处理完成：已保存 2 部。")
+        XCTAssertEqual(AppLanguage.japanese.text("status.batchCompleted", 2), "バッチ処理完了：2 本を保存しました。")
     }
 
     @MainActor

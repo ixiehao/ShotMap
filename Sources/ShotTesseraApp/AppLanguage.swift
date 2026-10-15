@@ -56,12 +56,14 @@ enum AppLanguage: String, CaseIterable, Identifiable, Sendable {
     ]
 
     /// Resource-bundle lookup is immutable for the lifetime of the process.
-    /// Cache it once per language instead of rebuilding a Bundle for every
-    /// localized label during each SwiftUI body update.
+    /// Resolve each `.lproj` directory from the resource root explicitly:
+    /// `path(forResource:ofType:)` may fall back to the host language in an
+    /// XCTest bundle, which would silently show English for another selection.
+    /// Cache the exact bundles for SwiftUI's frequent label updates.
     private static let localizationBundles: [AppLanguage: Bundle] = Dictionary(
         uniqueKeysWithValues: allCases.compactMap { language in
-            guard let path = Bundle.module.path(forResource: language.rawValue, ofType: "lproj"),
-                  let bundle = Bundle(path: path) else { return nil }
+            guard let resources = Bundle.module.resourceURL,
+                  let bundle = Bundle(url: resources.appendingPathComponent("\(language.rawValue).lproj", isDirectory: true)) else { return nil }
             return (language, bundle)
         }
     )
