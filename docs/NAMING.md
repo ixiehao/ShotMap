@@ -20,6 +20,5 @@ break an existing installation or automation:
 - Swift package, module, executable, and Homebrew cask identifier:
   `shottessera`
 
-The public repository and release URL are now `ixiehao/ShotMap`; the previous
-GitHub URL redirects automatically. The distributed application is named
-`ShotMap.app`.
+The public repository and release URL remain `ixiehao/ShotTessera`; the product
+name and distributed application are `ShotMap` and `ShotMap.app`.

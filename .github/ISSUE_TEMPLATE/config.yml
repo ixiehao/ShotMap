@@ -1,8 +1,8 @@
 blank_issues_enabled: false
 contact_links:
   - name: Download the stable release
-    url: https://github.com/ixiehao/ShotMap/releases/latest
+    url: https://github.com/ixiehao/ShotTessera/releases/latest
     about: Download the latest DMG for Apple Silicon and Intel Macs.
   - name: Security vulnerability
-    url: https://github.com/ixiehao/ShotMap/security/advisories/new
+    url: https://github.com/ixiehao/ShotTessera/security/advisories/new
     about: Use GitHub's private vulnerability reporting flow; do not post sensitive details publicly.

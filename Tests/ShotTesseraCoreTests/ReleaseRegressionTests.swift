@@ -15,7 +15,7 @@ final class ReleaseRegressionTests: XCTestCase {
 
     func testOnlyNewStableReleasesFromTheProjectProduceAnUpdate() throws {
         let installed = try XCTUnwrap(ReleaseVersion(tag: "0.2.5"))
-        func release(draft: Bool = false, prerelease: Bool = false, tag: String = "v0.2.6", url: String = "https://github.com/ixiehao/ShotMap/releases/tag/v0.2.6") -> GitHubRelease {
+        func release(draft: Bool = false, prerelease: Bool = false, tag: String = "v0.2.6", url: String = "https://github.com/ixiehao/ShotTessera/releases/tag/v0.2.6") -> GitHubRelease {
             GitHubRelease(tagName: tag, htmlURL: URL(string: url)!, draft: draft, prerelease: prerelease)
         }
         XCTAssertNotNil(release().update(newerThan: installed))

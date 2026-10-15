@@ -8,7 +8,7 @@
 
 **まずスマート選択、必要なコマだけ手動調整。すべてローカルで完結します。**
 
-> **最新リリース：**[v0.2.12 Universal DMG](https://github.com/ixiehao/ShotMap/releases/tag/v0.2.12) · macOS 13 以降 · Apple Silicon / Intel Mac
+> **最新リリース：**[v0.2.12 Universal DMG](https://github.com/ixiehao/ShotTessera/releases/tag/v0.2.12) · macOS 13 以降 · Apple Silicon / Intel Mac
 
 ## 一枚で分かる仕組み
 
@@ -44,7 +44,7 @@
 brew install --cask ixiehao/tap/shottessera
 ```
 
-または [最新リリース](https://github.com/ixiehao/ShotMap/releases/latest)を開き、Apple Silicon / Intel Mac 対応のユニバーサル **DMG** をダウンロードします。
+または [最新リリース](https://github.com/ixiehao/ShotTessera/releases/latest)を開き、Apple Silicon / Intel Mac 対応のユニバーサル **DMG** をダウンロードします。
 
 ## 安全にインストールする
 
@@ -63,8 +63,8 @@ brew install --cask ixiehao/tap/shottessera
 ## プロジェクトとフィードバック
 
 - 開発者：[ixiehao](https://github.com/ixiehao)
-- ソース、ダウンロード、リリースノート：[github.com/ixiehao/ShotMap](https://github.com/ixiehao/ShotMap)
-- 不具合報告・提案：[GitHub Issue を作成](https://github.com/ixiehao/ShotMap/issues/new/choose)
+- ソース、ダウンロード、リリースノート：[github.com/ixiehao/ShotTessera](https://github.com/ixiehao/ShotTessera)
+- 不具合報告・提案：[GitHub Issue を作成](https://github.com/ixiehao/ShotTessera/issues/new/choose)
 - 更新履歴：[CHANGELOG.md](CHANGELOG.md) · プライバシー：[PRIVACY.md](PRIVACY.md) · 命名規約：[docs/NAMING.md](docs/NAMING.md)
 
 ## 権利とライセンス

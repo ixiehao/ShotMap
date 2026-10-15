@@ -8,7 +8,7 @@
 
 **Smart selection first. Fine-tune any frame. Export entirely locally.**
 
-> **Latest release:** [v0.2.12 universal DMG](https://github.com/ixiehao/ShotMap/releases/tag/v0.2.12) · macOS 13+ · Apple Silicon and Intel
+> **Latest release:** [v0.2.12 universal DMG](https://github.com/ixiehao/ShotTessera/releases/tag/v0.2.12) · macOS 13+ · Apple Silicon and Intel
 
 ## At a glance
 
@@ -44,7 +44,7 @@ With [Homebrew](https://brew.sh/):
 brew install --cask ixiehao/tap/shottessera
 ```
 
-Or open [the latest release](https://github.com/ixiehao/ShotMap/releases/latest) and download the universal **DMG**.
+Or open [the latest release](https://github.com/ixiehao/ShotTessera/releases/latest) and download the universal **DMG**.
 
 ## Install safely
 
@@ -63,8 +63,8 @@ All frame analysis and export happen on your Mac. ShotMap has no account, teleme
 ## Project and feedback
 
 - Developer: [ixiehao](https://github.com/ixiehao)
-- Source, downloads, and release notes: [github.com/ixiehao/ShotMap](https://github.com/ixiehao/ShotMap)
-- Feedback and feature ideas: [open a GitHub issue](https://github.com/ixiehao/ShotMap/issues/new/choose)
+- Source, downloads, and release notes: [github.com/ixiehao/ShotTessera](https://github.com/ixiehao/ShotTessera)
+- Feedback and feature ideas: [open a GitHub issue](https://github.com/ixiehao/ShotTessera/issues/new/choose)
 - What changed: [CHANGELOG.md](CHANGELOG.md) · Privacy promise: [PRIVACY.md](PRIVACY.md) · Product naming: [docs/NAMING.md](docs/NAMING.md)
 
 ## Rights and license
