@@ -626,12 +626,18 @@ struct ContentView: View {
     private func queuePanel(compact: Bool, isNarrow: Bool) -> some View {
         VStack(alignment: .leading, spacing: compact ? 10 : 12) {
             HStack(alignment: .center, spacing: 10) {
-                VStack(alignment: .leading, spacing: StudioLayout.titleSubtitleGap) {
-                    Text(t("queue.title"))
-                        .font(.system(size: 16, weight: .semibold, design: .rounded))
-                    Text(t("queue.count", model.videoJobs.count))
-                        .font(.system(size: 11, weight: .medium, design: .monospaced))
-                        .foregroundStyle(.secondary)
+                HStack(spacing: 9) {
+                    ProjectIcon(symbol: .filmStack, size: 16)
+                        .foregroundStyle(studioAccent)
+                        .frame(width: 30, height: 30)
+                        .background(studioAccent.opacity(isLightAppearance ? 0.12 : 0.18), in: RoundedRectangle(cornerRadius: 9, style: .continuous))
+                    VStack(alignment: .leading, spacing: StudioLayout.titleSubtitleGap) {
+                        Text(t("queue.title"))
+                            .font(.system(size: 16, weight: .semibold, design: .rounded))
+                        Text(t("queue.count", model.videoJobs.count))
+                            .font(.system(size: 11, weight: .medium, design: .monospaced))
+                            .foregroundStyle(.secondary)
+                    }
                 }
                 Spacer(minLength: 4)
                 Button(action: model.chooseVideo) {
@@ -675,8 +681,14 @@ struct ContentView: View {
 
     private func controlPanel(compact: Bool, isNarrow _: Bool) -> some View {
         return VStack(alignment: .leading, spacing: 0) {
-            Text(t("inspector.title"))
-                .font(.system(size: 16, weight: .semibold, design: .rounded))
+            HStack(spacing: 9) {
+                ProjectIcon(symbol: .sliders, size: 16)
+                    .foregroundStyle(studioAccent)
+                    .frame(width: 30, height: 30)
+                    .background(studioAccent.opacity(isLightAppearance ? 0.12 : 0.18), in: RoundedRectangle(cornerRadius: 9, style: .continuous))
+                Text(t("inspector.title"))
+                    .font(.system(size: 16, weight: .semibold, design: .rounded))
+            }
                 .padding(.horizontal, StudioLayout.panelInset)
                 .padding(.top, compact ? 12 : StudioLayout.panelTitleTop)
                 .padding(.bottom, compact ? 8 : 12)
@@ -747,15 +759,15 @@ struct ContentView: View {
             VStack(spacing: 8) {
                 if !model.isProcessing {
                     Button(action: model.generate) {
-                        Text(model.primaryButtonTitle)
-                    .font(.system(size: 15, weight: .bold))
-                    .frame(maxWidth: .infinity, minHeight: 44)
+                        GlyphLabel(title: model.primaryButtonTitle, glyph: .filmStack, glyphSize: 18)
+                            .font(.system(size: 15, weight: .bold))
+                            .frame(maxWidth: .infinity, minHeight: 44)
                     }
                     .buttonStyle(PrimaryButtonStyle())
                     .disabled(!model.hasVideos || model.isBusy)
                     .accessibilityLabel(t("accessibility.generate"))
                 } else {
-                    Label(model.processingLabel, systemImage: "circle.dotted")
+                    GlyphLabel(title: model.processingLabel, glyph: .refreshCandidates, glyphSize: 15)
                         .font(.system(size: 12, weight: .semibold))
                         .foregroundStyle(.secondary)
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -799,9 +811,15 @@ struct ContentView: View {
         @ViewBuilder content: () -> SectionContent
     ) -> some View {
         VStack(alignment: .leading, spacing: 8) {
-            GlyphLabel(title: title, glyph: glyph, glyphSize: 15)
-                .font(.system(size: 12, weight: .semibold))
-                .foregroundStyle(.primary)
+            HStack(spacing: 7) {
+                ProjectIcon(symbol: glyph, size: 14)
+                    .foregroundStyle(studioAccent)
+                    .frame(width: 24, height: 24)
+                    .background(studioAccent.opacity(isLightAppearance ? 0.11 : 0.17), in: RoundedRectangle(cornerRadius: 7, style: .continuous))
+                Text(title)
+                    .font(.system(size: 12, weight: .semibold))
+                    .foregroundStyle(.primary)
+            }
             content()
         }
         .padding(.vertical, 12)
@@ -934,16 +952,22 @@ struct ContentView: View {
     private var previewPanel: some View {
         VStack(spacing: 0) {
             HStack(alignment: .top, spacing: 16) {
-                VStack(alignment: .leading, spacing: StudioLayout.titleSubtitleGap) {
-                    Text(t("preview.title"))
-                        .font(.system(size: 16, weight: .semibold, design: .rounded))
-                        .foregroundStyle(PreviewText.primary)
-                    Text(model.previewStatus)
-                        .font(.system(size: 11, weight: .medium))
-                        .foregroundStyle(PreviewText.secondary)
-                        .lineLimit(2)
-                        .truncationMode(.tail)
-                        .help(model.previewStatus)
+                HStack(alignment: .top, spacing: 9) {
+                    ProjectIcon(symbol: .filmStack, size: 16)
+                        .foregroundStyle(studioAccent)
+                        .frame(width: 30, height: 30)
+                        .background(studioAccent.opacity(isLightAppearance ? 0.12 : 0.18), in: RoundedRectangle(cornerRadius: 9, style: .continuous))
+                    VStack(alignment: .leading, spacing: StudioLayout.titleSubtitleGap) {
+                        Text(t("preview.title"))
+                            .font(.system(size: 16, weight: .semibold, design: .rounded))
+                            .foregroundStyle(PreviewText.primary)
+                        Text(model.previewStatus)
+                            .font(.system(size: 11, weight: .medium))
+                            .foregroundStyle(PreviewText.secondary)
+                            .lineLimit(2)
+                            .truncationMode(.tail)
+                            .help(model.previewStatus)
+                    }
                 }
                 Spacer()
             }

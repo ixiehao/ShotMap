@@ -13,6 +13,16 @@
 
 The font file is an unmodified upstream copy. It is bundled only so exported title watermarks render consistently; it is registered for the app process and is not installed into the user's system font library. The complete license text is provided in [ThirdPartyLicenses/NotoSansCJK-OFL-1.1.txt](ThirdPartyLicenses/NotoSansCJK-OFL-1.1.txt).
 
+### Tabler Icons Outline
+
+- Files: `Sources/ShotTesseraApp/Resources/tabler-*.svg`
+- Version: 3.49.0
+- Upstream release: <https://github.com/tabler/tabler-icons/tree/v3.49.0>
+- Copyright: © 2020–2026 Paweł Kuna
+- License: MIT License
+
+ShotTessera bundles unmodified Tabler Icons Outline SVGs and renders them as native template images, so their strokes adopt the active light or dark appearance. The complete license text is provided in [ThirdPartyLicenses/TablerIcons-MIT.txt](ThirdPartyLicenses/TablerIcons-MIT.txt).
+
 ### Build-only packaging tools
 
 - `dmgbuild` 1.6.7 — MIT License
@@ -34,6 +44,16 @@ These tools generate and verify the DMG during a local release build only. They 
 
 该字体文件为未经修改的上游副本，仅用于使导出的标题水印保持一致。它只为应用进程注册，不会安装到用户的系统字体库。完整许可证原文见 [ThirdPartyLicenses/NotoSansCJK-OFL-1.1.txt](ThirdPartyLicenses/NotoSansCJK-OFL-1.1.txt)。
 
+### Tabler Icons Outline
+
+- 文件：`Sources/ShotTesseraApp/Resources/tabler-*.svg`
+- 版本：3.49.0
+- 上游发布：<https://github.com/tabler/tabler-icons/tree/v3.49.0>
+- 版权所有：© 2020–2026 Paweł Kuna
+- 许可证：MIT License
+
+ShotTessera 原样内置 Tabler Icons Outline SVG，并以原生模板图像进行渲染，使描边能随浅色或深色外观自动适配。完整许可证原文见 [ThirdPartyLicenses/TablerIcons-MIT.txt](ThirdPartyLicenses/TablerIcons-MIT.txt)。
+
 ### 仅构建时使用的打包工具
 
 - `dmgbuild` 1.6.7 — MIT License
@@ -54,6 +74,16 @@ These tools generate and verify the DMG during a local release build only. They 
 - ライセンス：SIL Open Font License, Version 1.1
 
 このフォントファイルは改変していないアップストリームのコピーです。書き出したタイトルウォーターマークを一貫して描画するためだけに同梱しています。アプリケーションプロセスにのみ登録され、ユーザーのシステムフォントライブラリにはインストールされません。完全なライセンス原文は [ThirdPartyLicenses/NotoSansCJK-OFL-1.1.txt](ThirdPartyLicenses/NotoSansCJK-OFL-1.1.txt) にあります。
+
+### Tabler Icons Outline
+
+- ファイル：`Sources/ShotTesseraApp/Resources/tabler-*.svg`
+- バージョン：3.49.0
+- アップストリームリリース：<https://github.com/tabler/tabler-icons/tree/v3.49.0>
+- 著作権：© 2020–2026 Paweł Kuna
+- ライセンス：MIT License
+
+ShotTessera には未改変の Tabler Icons Outline SVG が同梱されており、ネイティブのテンプレート画像として描画されます。これにより、アウトラインはライト／ダーク外観に自動的に適応します。完全なライセンス原文は [ThirdPartyLicenses/TablerIcons-MIT.txt](ThirdPartyLicenses/TablerIcons-MIT.txt) にあります。
 
 ### ビルド時のみ使用するパッケージングツール
 
