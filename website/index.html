@@ -6,24 +6,32 @@
     <meta name="description" content="Turn any video into a clear storyboard before you open it. ShotMap is a free, private macOS app for smart frame selection and local PNG or JPG export." />
     <meta name="keywords" content="video storyboard mac, macOS video storyboard app, video contact sheet mac, video frame picker, frame extraction macOS, video thumbnail sheet, 视频分镜图, 视频一键拼图, 動画 絵コンテ" />
     <meta name="author" content="ixiehao" />
-    <meta name="robots" content="index,follow" />
+    <meta name="robots" content="index,follow,max-image-preview:large" />
     <meta name="theme-color" content="#f8fafc" />
-    <link rel="canonical" href="https://ixiehao.github.io/ShotMap/" />
+    <link id="canonical-url" rel="canonical" href="https://ixiehao.github.io/ShotMap/" />
     <link rel="alternate" hreflang="en" href="https://ixiehao.github.io/ShotMap/" />
-    <link rel="alternate" hreflang="zh-CN" href="https://ixiehao.github.io/ShotMap/" />
-    <link rel="alternate" hreflang="ja" href="https://ixiehao.github.io/ShotMap/" />
+    <link rel="alternate" hreflang="zh-CN" href="https://ixiehao.github.io/ShotMap/?lang=zh" />
+    <link rel="alternate" hreflang="ja" href="https://ixiehao.github.io/ShotMap/?lang=ja" />
+    <link rel="alternate" hreflang="x-default" href="https://ixiehao.github.io/ShotMap/" />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://ixiehao.github.io/ShotMap/" />
+    <meta id="og-url" property="og:url" content="https://ixiehao.github.io/ShotMap/" />
     <meta property="og:site_name" content="ShotMap" />
     <meta property="og:locale" content="en_US" />
+    <meta property="og:locale:alternate" content="zh_CN" />
+    <meta property="og:locale:alternate" content="ja_JP" />
     <meta property="og:title" content="ShotMap — Turn video into a clear storyboard on your Mac" />
     <meta property="og:description" content="Browse a video’s key moments before opening it. Smart selection, manual control, and private local export for macOS." />
     <meta property="og:image" content="https://ixiehao.github.io/ShotMap/assets/social-preview.jpg?v=0.2.13.2" />
-    <meta property="og:image:alt" content="ShotMap’s real macOS workspace and manual frame editor" />
+    <meta property="og:image:secure_url" content="https://ixiehao.github.io/ShotMap/assets/social-preview.jpg?v=0.2.13.2" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1280" />
+    <meta property="og:image:height" content="640" />
+    <meta id="og-image-alt" property="og:image:alt" content="ShotMap’s real macOS workspace and manual frame editor" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="ShotMap — Turn video into a clear storyboard on your Mac" />
     <meta name="twitter:description" content="Browse a video’s key moments before opening it. Smart selection, manual control, and private local export for macOS." />
     <meta name="twitter:image" content="https://ixiehao.github.io/ShotMap/assets/social-preview.jpg?v=0.2.13.2" />
+    <meta id="twitter-image-alt" name="twitter:image:alt" content="ShotMap’s real macOS workspace and manual frame editor" />
     <link rel="icon" type="image/svg+xml" href="favicon.svg?v=0.2.13.1" />
     <link rel="icon" type="image/png" sizes="256x256" href="assets/app-icon.png?v=0.2.13.1" />
     <link rel="apple-touch-icon" href="assets/app-icon.png?v=0.2.13.1" />
@@ -32,12 +40,15 @@
       {
         "@context": "https://schema.org",
         "@type": "SoftwareApplication",
+        "@id": "https://ixiehao.github.io/ShotMap/#software",
         "name": "ShotMap",
         "applicationCategory": "MultimediaApplication",
         "operatingSystem": "macOS 13 or later",
         "softwareVersion": "0.2.13",
         "description": "A native macOS app that turns videos into clear storyboards with smart frame selection, manual control, and private local PNG or JPG export.",
         "downloadUrl": "https://github.com/ixiehao/ShotMap/releases/latest",
+        "url": "https://ixiehao.github.io/ShotMap/",
+        "codeRepository": "https://github.com/ixiehao/ShotMap",
         "screenshot": "https://ixiehao.github.io/ShotMap/assets/workspace-en.webp",
         "featureList": "Smart frame selection; manual frame editor; batch processing; PNG and JPG export; local-only processing",
         "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
