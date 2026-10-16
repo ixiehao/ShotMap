@@ -103,11 +103,22 @@ const localizedVisualAssets = {
 };
 
 const languageStorageKey = "shotmap-language";
+const siteURL = "https://ixiehao.github.io/ShotMap/";
+const localeURLs = {
+  en: siteURL,
+  zh: `${siteURL}?lang=zh`,
+  ja: `${siteURL}?lang=ja`
+};
 const releaseURL = "https://github.com/ixiehao/ShotMap/releases/latest";
 
 function setContent(selector, value) {
   const node = document.querySelector(selector);
   if (node) node.setAttribute("content", value);
+}
+
+function setLink(selector, value) {
+  const node = document.querySelector(selector);
+  if (node) node.setAttribute("href", value);
 }
 
 function updateVisual(selector, visual) {
@@ -120,16 +131,18 @@ function updateVisual(selector, visual) {
   image.height = height;
 }
 
-function updateSchemas(copy) {
+function updateSchemas(copy, selectedLanguage) {
+  const productVisual = localizedVisualAssets[selectedLanguage].product;
   const softwareSchema = {
     "@context": "https://schema.org", "@type": "SoftwareApplication", name: "ShotMap",
-    applicationCategory: "MultimediaApplication", operatingSystem: "macOS 13 or later", softwareVersion: "0.2.13",
-    description: copy.pageDescription, downloadUrl: releaseURL,
-    screenshot: "https://ixiehao.github.io/ShotMap/assets/workspace-en.webp",
+    "@id": `${siteURL}#software`, applicationCategory: "MultimediaApplication", operatingSystem: "macOS 13 or later", softwareVersion: "0.2.13",
+    url: localeURLs[selectedLanguage], description: copy.pageDescription, downloadUrl: releaseURL,
+    screenshot: new URL(productVisual[0], siteURL).href,
     featureList: "Smart frame selection; manual frame editor; batch processing; PNG and JPG export; local-only processing",
     offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
     author: { "@type": "Person", name: "ixiehao", url: "https://github.com/ixiehao" },
-    license: "https://opensource.org/license/mit"
+    codeRepository: "https://github.com/ixiehao/ShotMap", license: "https://opensource.org/license/mit",
+    inLanguage: selectedLanguage === "zh" ? "zh-CN" : selectedLanguage
   };
   const faqSchema = {
     "@context": "https://schema.org", "@type": "FAQPage", mainEntity: [
@@ -142,7 +155,7 @@ function updateSchemas(copy) {
   document.querySelector("#faq-schema").textContent = JSON.stringify(faqSchema);
 }
 
-function activateLanguage(language) {
+function activateLanguage(language, updateURL = false) {
   const selectedLanguage = translations[language] ? language : "en";
   const copy = translations[selectedLanguage];
   document.documentElement.lang = selectedLanguage === "zh" ? "zh-CN" : selectedLanguage;
@@ -164,10 +177,14 @@ function activateLanguage(language) {
   setContent('meta[name="description"]', copy.pageDescription);
   setContent('meta[property="og:title"]', copy.ogTitle);
   setContent('meta[property="og:description"]', copy.ogDescription);
+  setContent('meta[property="og:url"]', localeURLs[selectedLanguage]);
   setContent('meta[property="og:locale"]', copy.locale);
   setContent('meta[name="twitter:title"]', copy.ogTitle);
   setContent('meta[name="twitter:description"]', copy.ogDescription);
-  updateSchemas(copy);
+  setContent('#og-image-alt', localizedVisualAssets[selectedLanguage].product[1]);
+  setContent('#twitter-image-alt', localizedVisualAssets[selectedLanguage].product[1]);
+  setLink('link[rel="canonical"]', localeURLs[selectedLanguage]);
+  updateSchemas(copy, selectedLanguage);
 
   const visuals = localizedVisualAssets[selectedLanguage];
   updateVisual(".localized-product", visuals.product);
@@ -177,9 +194,17 @@ function activateLanguage(language) {
     button.setAttribute("aria-pressed", String(button.dataset.lang === selectedLanguage));
   });
   localStorage.setItem(languageStorageKey, selectedLanguage);
+  if (updateURL) {
+    const url = new URL(window.location.href);
+    if (selectedLanguage === "en") url.searchParams.delete("lang");
+    else url.searchParams.set("lang", selectedLanguage);
+    window.history.replaceState(null, "", `${url.pathname}${url.search}${url.hash}`);
+  }
 }
 
 function preferredLanguage() {
+  const requested = new URLSearchParams(window.location.search).get("lang");
+  if (translations[requested]) return requested;
   const stored = localStorage.getItem(languageStorageKey);
   if (translations[stored]) return stored;
   const browserLanguage = navigator.language.toLowerCase();
@@ -189,7 +214,7 @@ function preferredLanguage() {
 }
 
 document.querySelectorAll("[data-lang]").forEach((button) => {
-  button.addEventListener("click", () => activateLanguage(button.dataset.lang));
+  button.addEventListener("click", () => activateLanguage(button.dataset.lang, true));
 });
 
 activateLanguage(preferredLanguage());
