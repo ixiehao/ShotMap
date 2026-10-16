@@ -3,51 +3,70 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="ShotMap makes a visual map for every video on your Mac, so family memories, trips, and old footage are easy to browse and find again." />
-    <meta name="keywords" content="video storyboard mac, video contact sheet mac, video screenshot collage, frame extraction macOS, local video frame picker, mac 视频截图拼图, 视频分镜图, 動画 コンタクトシート" />
+    <meta name="description" content="See what is in a video before you open it. ShotMap creates private video contact sheets on your Mac." />
+    <meta name="keywords" content="video contact sheet mac, video storyboard mac, video screenshot collage, frame extraction macOS, local video frame picker, mac 视频截图拼图, 视频分镜图, 動画 コンタクトシート" />
     <meta name="author" content="ixiehao" />
     <meta name="robots" content="index,follow" />
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="ShotMap — Video contact sheets for Mac" />
-    <meta property="og:description" content="Give every video a visual map. Browse its key moments at a glance, then find the memory you want." />
-    <meta property="og:image" content="https://ixiehao.github.io/ShotMap/assets/social-preview.jpg" />
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="ShotMap — Video contact sheets for Mac" />
-    <meta name="twitter:description" content="A private macOS app that turns every video into an easy-to-browse visual map." />
-    <meta name="theme-color" content="#0d1d35" />
+    <meta name="theme-color" content="#f8fafc" />
     <link rel="canonical" href="https://ixiehao.github.io/ShotMap/" />
+    <link rel="alternate" hreflang="en" href="https://ixiehao.github.io/ShotMap/" />
+    <link rel="alternate" hreflang="zh-CN" href="https://ixiehao.github.io/ShotMap/" />
+    <link rel="alternate" hreflang="ja" href="https://ixiehao.github.io/ShotMap/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://ixiehao.github.io/ShotMap/" />
+    <meta property="og:site_name" content="ShotMap" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content="ShotMap — See what is in a video before you open it" />
+    <meta property="og:description" content="A private macOS app that turns videos into clear, easy-to-browse contact sheets." />
+    <meta property="og:image" content="https://ixiehao.github.io/ShotMap/assets/social-preview.jpg" />
+    <meta property="og:image:alt" content="ShotMap video contact-sheet workspace" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="ShotMap — See what is in a video before you open it" />
+    <meta name="twitter:description" content="A private macOS app that turns videos into clear, easy-to-browse contact sheets." />
+    <meta name="twitter:image" content="https://ixiehao.github.io/ShotMap/assets/social-preview.jpg" />
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <link rel="stylesheet" href="styles.css" />
-    <script type="application/ld+json">
+    <script id="software-schema" type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "SoftwareApplication",
         "name": "ShotMap",
         "applicationCategory": "MultimediaApplication",
         "operatingSystem": "macOS 13 or later",
-        "softwareVersion": "0.2.12",
-        "description": "A native macOS app that turns videos into easy-to-browse visual maps locally.",
+        "softwareVersion": "0.2.13",
+        "description": "A native macOS app that creates easy-to-browse video contact sheets locally.",
         "downloadUrl": "https://github.com/ixiehao/ShotMap/releases/latest",
         "author": { "@type": "Person", "name": "ixiehao", "url": "https://github.com/ixiehao" },
         "license": "https://opensource.org/license/mit"
       }
     </script>
-    <title>ShotMap — Video Storyboard & Contact Sheet for macOS</title>
+    <script id="faq-schema" type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "Does ShotMap upload my videos?", "acceptedAnswer": { "@type": "Answer", "text": "No. Frame analysis and export happen locally on your Mac." } },
+          { "@type": "Question", "name": "Which Macs are supported?", "acceptedAnswer": { "@type": "Answer", "text": "ShotMap supports macOS 13 or later on Apple Silicon and Intel Macs." } }
+        ]
+      }
+    </script>
+    <title>ShotMap — Video Contact Sheets for macOS</title>
   </head>
   <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <header class="site-header">
+    <a class="skip-link" href="#main" data-i18n="skipLink">Skip to content</a>
+
+    <header class="site-header" id="top">
       <a class="brand" href="#top" aria-label="ShotMap home">
-        <img class="brand-mark" src="assets/app-icon.png" width="58" height="58" alt="" />
+        <img class="brand-mark" src="assets/app-icon.png" width="36" height="36" alt="" />
         <span>ShotMap</span>
       </a>
       <nav aria-label="Primary navigation">
-        <a href="#workflow" data-i18n="navWorkflow">Workflow</a>
+        <a href="#how-it-works" data-i18n="navWorkflow">How it works</a>
         <a href="#features" data-i18n="navFeatures">Features</a>
         <a href="#privacy" data-i18n="navPrivacy">Privacy</a>
       </nav>
       <div class="header-actions">
-        <div class="language-picker" aria-label="Choose language">
+        <div class="language-picker" role="group" aria-label="Choose language" data-i18n-aria="languageLabel">
           <button type="button" data-lang="en" aria-pressed="true">EN</button>
           <button type="button" data-lang="zh" aria-pressed="false">中文</button>
           <button type="button" data-lang="ja" aria-pressed="false">日本語</button>
@@ -57,57 +76,133 @@
     </header>
 
     <main id="main">
-      <section id="top" class="hero section-shell">
+      <section class="hero shell" aria-labelledby="hero-title">
         <div class="hero-copy">
-          <p class="eyebrow" data-i18n="eyebrow">Native macOS · Private by default</p>
-          <h1 data-i18n="heroTitle">Turn video into a<br />clean storyboard.</h1>
-          <p class="hero-summary" data-i18n="heroSummary">Pick representative frames, make precise adjustments, and export a polished contact sheet—entirely on your Mac.</p>
+          <p class="eyebrow" data-i18n="heroEyebrow">VIDEO CONTACT SHEETS FOR MAC</p>
+          <h1 id="hero-title" data-i18n-html="heroTitle">See what’s in a video<br />before you open it.</h1>
+          <p class="hero-summary" data-i18n="heroSummary">ShotMap turns a video into one clear storyboard, so you can browse its important moments at a glance.</p>
           <div class="hero-actions">
             <a class="button" href="https://github.com/ixiehao/ShotMap/releases/latest" data-i18n="heroDownload">Download for macOS</a>
-            <a class="text-link" href="https://github.com/ixiehao/ShotMap" data-i18n="viewSource">View source <span aria-hidden="true">↗</span></a>
+            <a class="text-link" href="https://github.com/ixiehao/ShotMap" data-i18n-html="viewSource">View on GitHub <span aria-hidden="true">↗</span></a>
           </div>
           <p class="compatibility" data-i18n="compatibility">macOS 13+ · Apple Silicon & Intel · Free and open source</p>
+          <p class="demo-credit" data-i18n-html="demoCredit">Demo screenshots use <a href="https://mango.blender.org/" rel="noreferrer">Tears of Steel</a> (2012) © Blender Foundation / Blender Institute, licensed under <a href="https://creativecommons.org/licenses/by/3.0/" rel="license noreferrer">CC BY 3.0</a>.</p>
         </div>
-        <figure class="hero-product">
-          <img class="localized-product" src="assets/workspace-en.webp" width="1920" height="1080" alt="ShotMap workspace in English" />
+        <figure class="product-shot hero-shot">
+          <img class="localized-product" src="assets/workspace-en.webp?v=tears-20261016" width="1400" height="995" fetchpriority="high" decoding="async" alt="ShotMap workspace in English" />
           <figcaption data-i18n="productCaption">ShotMap workspace</figcaption>
         </figure>
       </section>
 
-      <section id="workflow" class="section-shell workflow-section">
-        <div class="section-intro"><p class="eyebrow" data-i18n="workflowEyebrow">A focused workflow</p><h2 data-i18n="workflowTitle">From video to contact sheet in three steps.</h2></div>
-        <ol class="steps">
-          <li><span>01</span><h3 data-i18n="stepOneTitle">Drop in your videos</h3><p data-i18n="stepOneText">Add one clip or a batch. The queue stays simple and visible.</p></li>
-          <li><span>02</span><h3 data-i18n="stepTwoTitle">Choose the moments</h3><p data-i18n="stepTwoText">Use intelligent selection, then fine-tune with a real player timeline when you need control.</p></li>
-          <li><span>03</span><h3 data-i18n="stepThreeTitle">Export the story</h3><p data-i18n="stepThreeText">Set grid, dimensions, background, labels, and PNG or JPG—then save beside your video.</p></li>
-        </ol>
-        <figure class="workflow-visual"><img class="localized-workflow" src="assets/manual-en.webp" width="1920" height="1080" alt="ShotMap manual frame selection in English" /></figure>
+      <section class="facts shell" aria-label="ShotMap facts">
+        <div><strong data-i18n="factOneTitle">Private by default</strong><span data-i18n="factOneText">Your videos stay on your Mac</span></div>
+        <div><strong data-i18n="factTwoTitle">Batch ready</strong><span data-i18n="factTwoText">Review one video or an entire folder</span></div>
+        <div><strong data-i18n="factThreeTitle">Made for macOS</strong><span data-i18n="factThreeText">Apple Silicon and Intel supported</span></div>
       </section>
 
-      <section id="features" class="feature-section">
-        <div class="section-shell feature-layout">
-          <div class="feature-copy"><p class="eyebrow light" data-i18n="featuresEyebrow">Designed for the edit, not the setup</p><h2 data-i18n="featuresTitle">The useful frame, without the noise.</h2><p data-i18n="featuresSummary">Every part of ShotMap is tuned for the moment you need to review a film, share a scene, or find a shot again.</p></div>
-          <div class="feature-list">
-            <article><span class="feature-icon">✦</span><div><h3 data-i18n="featureOneTitle">Smarter frame selection</h3><p data-i18n="featureOneText">Balances sharpness, scene variety, faces, action, and text-heavy screens for more useful results.</p></div></article>
-            <article><span class="feature-icon">⌘</span><div><h3 data-i18n="featureTwoTitle">Manual precision</h3><p data-i18n="featureTwoText">Scrub a visual timeline, step by frames, type a timecode, and number your selected sequence.</p></div></article>
-            <article><span class="feature-icon">◌</span><div><h3 data-i18n="featureThreeTitle">Made for your format</h3><p data-i18n="featureThreeText">From 3 × 3 to 8 × 8, landscape to vertical, with backgrounds that match the material.</p></div></article>
-          </div>
+      <section id="how-it-works" class="section shell workflow" aria-labelledby="workflow-title">
+        <div class="section-heading">
+          <p class="eyebrow" data-i18n="workflowEyebrow">A CLEARER WAY TO BROWSE</p>
+          <h2 id="workflow-title" data-i18n="workflowTitle">Three steps from video to visual overview.</h2>
+        </div>
+        <div class="workflow-layout">
+          <ol class="steps">
+            <li><span>01</span><div><h3 data-i18n="stepOneTitle">Add your videos</h3><p data-i18n="stepOneText">Drop in one clip, a few family videos, or a whole folder of footage.</p></div></li>
+            <li><span>02</span><div><h3 data-i18n="stepTwoTitle">Choose the moments</h3><p data-i18n="stepTwoText">Start with Smart Select, then adjust the exact frames when you want more control.</p></div></li>
+            <li><span>03</span><div><h3 data-i18n="stepThreeTitle">Save the storyboard</h3><p data-i18n="stepThreeText">Choose the grid and export a clean PNG or JPG beside the original video.</p></div></li>
+          </ol>
+          <figure class="product-shot overview-shot">
+            <img src="assets/video-to-storyboard-overview.webp?v=tears-20261016" width="1280" height="910" loading="lazy" decoding="async" alt="A video represented by a contact sheet in ShotMap" data-i18n-alt="overviewAlt" />
+          </figure>
         </div>
       </section>
 
-      <section id="privacy" class="section-shell privacy-section">
-        <div class="privacy-card"><div><p class="eyebrow" data-i18n="privacyEyebrow">Your footage stays yours</p><h2 data-i18n="privacyTitle">No account. No upload. No cloud queue.</h2></div><p data-i18n="privacyText">Frame analysis and export happen on your Mac. ShotMap has no telemetry, cloud processing, Electron, FFmpeg, or Python runtime.</p></div>
+      <section id="features" class="section shell precision" aria-labelledby="precision-title">
+        <div class="precision-copy">
+          <p class="eyebrow" data-i18n="precisionEyebrow">SMART FIRST, PRECISE WHEN NEEDED</p>
+          <h2 id="precision-title" data-i18n="precisionTitle">Let the app find a starting point. Keep the final say.</h2>
+          <p data-i18n="precisionText">Smart Select gives you representative frames. The visual timeline, frame steps, and timecode field make a quick replacement feel natural.</p>
+          <ul class="check-list">
+            <li data-i18n="precisionPointOne">Review frames in a real video timeline</li>
+            <li data-i18n="precisionPointTwo">Step backward or forward by individual frames</li>
+            <li data-i18n="precisionPointThree">Keep selected frames in a clear sequence</li>
+          </ul>
+        </div>
+        <figure class="product-shot manual-shot">
+          <img class="localized-manual" src="assets/manual-en.webp?v=tears-20261016" width="1280" height="828" loading="lazy" decoding="async" alt="ShotMap manual frame selection in English" />
+          <figcaption data-i18n="manualCaption">Manual frame selection</figcaption>
+        </figure>
       </section>
 
-      <section class="section-shell guide-section">
-        <div class="section-intro"><p class="eyebrow" data-i18n="guideEyebrow">Getting started</p><h2 data-i18n="guideTitle">Install it in three simple steps.</h2></div>
-        <figure class="guide-visual"><img class="localized-guide" src="assets/install-guide-en.jpg" width="1600" height="1000" alt="ShotMap English installation guide" /></figure>
+      <section class="section shell capabilities" aria-labelledby="capabilities-title">
+        <div class="section-heading compact-heading">
+          <p class="eyebrow" data-i18n="capabilitiesEyebrow">BUILT FOR USEFUL RESULTS</p>
+          <h2 id="capabilities-title" data-i18n="capabilitiesTitle">Simple controls. Flexible output.</h2>
+        </div>
+        <div class="capability-grid">
+          <article>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h6v6h-6zM14 4h6v6h-6zM4 14h6v6h-6zM14 14h6v6h-6z" /></svg>
+            <h3 data-i18n="featureOneTitle">Choose the right grid</h3><p data-i18n="featureOneText">From 3 × 3 to 8 × 8, choose the amount of detail your video needs.</p>
+          </article>
+          <article>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19l5 -5 3 3 5 -6 3 3M4 5h16M4 5v14M20 5v14" /></svg>
+            <h3 data-i18n="featureTwoTitle">Keep useful context</h3><p data-i18n="featureTwoText">Show timecodes and file names when they help you find a scene again.</p>
+          </article>
+          <article>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" /><path d="M7 4v16M17 4v16" /></svg>
+            <h3 data-i18n="featureThreeTitle">Match the material</h3><p data-i18n="featureThreeText">Use the video’s aspect ratio, choose a background, and export PNG or JPG.</p>
+          </article>
+          <article>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 8v-3h10v3M5 10h14v9h-14zM9 14h6" /></svg>
+            <h3 data-i18n="featureFourTitle">Process more at once</h3><p data-i18n="featureFourText">Keep a visible queue and create storyboards for multiple videos in one pass.</p>
+          </article>
+        </div>
       </section>
 
-      <section class="section-shell final-cta"><p class="eyebrow" data-i18n="ctaEyebrow">Ready when you are</p><h2 data-i18n="ctaTitle">Make your next review easier.</h2><div class="cta-actions"><a class="button" href="https://github.com/ixiehao/ShotMap/releases/latest" data-i18n="ctaDownload">Get the latest version</a><a class="button button-secondary" href="https://github.com/ixiehao/ShotMap" data-i18n="ctaGithub">Follow on GitHub ↗</a></div></section>
+      <section id="privacy" class="section privacy-section" aria-labelledby="privacy-title">
+        <div class="shell privacy-card">
+          <div>
+            <p class="eyebrow inverse" data-i18n="privacyEyebrow">PRIVATE BY DESIGN</p>
+            <h2 id="privacy-title" data-i18n="privacyTitle">Your footage stays on your Mac.</h2>
+          </div>
+          <p data-i18n="privacyText">Frame analysis and export happen locally. There is no account, upload, cloud queue, or telemetry to set up.</p>
+        </div>
+      </section>
+
+      <section class="section shell install-section" aria-labelledby="install-title">
+        <div class="install-copy">
+          <p class="eyebrow" data-i18n="installEyebrow">INSTALL AND START</p>
+          <h2 id="install-title" data-i18n="installTitle">Ready in a few simple steps.</h2>
+          <p data-i18n="installText">Download the latest release, move ShotMap to Applications, and open it. No account or command line is required.</p>
+          <p class="compatibility" data-i18n="installCompatibility">Requires macOS 13 or later · Apple Silicon and Intel</p>
+        </div>
+      </section>
+
+      <section class="section shell faq-section" aria-labelledby="faq-title">
+        <div class="section-heading compact-heading"><p class="eyebrow" data-i18n="faqEyebrow">GOOD TO KNOW</p><h2 id="faq-title" data-i18n="faqTitle">A few quick answers.</h2></div>
+        <div class="faq-grid">
+          <details open><summary data-i18n="faqOneQuestion">Does ShotMap upload my videos?</summary><p data-i18n="faqOneAnswer">No. Reading frames and creating the final image happen entirely on your Mac.</p></details>
+          <details><summary data-i18n="faqTwoQuestion">Which Macs are supported?</summary><p data-i18n="faqTwoAnswer">ShotMap supports macOS 13 or later on Apple Silicon and Intel Macs.</p></details>
+          <details><summary data-i18n="faqThreeQuestion">Can I replace a frame myself?</summary><p data-i18n="faqThreeAnswer">Yes. Smart Select is a starting point; the manual frame picker lets you choose the moments yourself.</p></details>
+        </div>
+      </section>
+
+      <section class="final-cta shell" aria-labelledby="cta-title">
+        <p class="eyebrow" data-i18n="ctaEyebrow">READY WHEN YOU ARE</p>
+        <h2 id="cta-title" data-i18n="ctaTitle">Make every video easier to browse.</h2>
+        <div class="cta-actions">
+          <a class="button" href="https://github.com/ixiehao/ShotMap/releases/latest" data-i18n="ctaDownload">Get the latest version</a>
+          <a class="button button-secondary" href="https://github.com/ixiehao/ShotMap" data-i18n-html="ctaGithub">View the project on GitHub <span aria-hidden="true">↗</span></a>
+        </div>
+      </section>
     </main>
 
-    <footer><span>© 2026 ixiehao</span><span>ShotMap</span><a href="https://github.com/ixiehao/ShotMap" data-i18n="github">GitHub</a><a href="https://github.com/ixiehao/ShotMap/issues/new/choose" data-i18n="feedback">Feedback</a></footer>
+    <footer class="shell">
+      <span>© 2026 ixiehao</span><span>ShotMap · MIT</span>
+      <a href="https://github.com/ixiehao/ShotMap" data-i18n="github">GitHub</a>
+      <a href="https://github.com/ixiehao/ShotMap/releases/latest" data-i18n="releases">Releases</a>
+      <a href="https://github.com/ixiehao/ShotMap/issues/new/choose" data-i18n="feedback">Feedback</a>
+    </footer>
     <script src="script.js"></script>
   </body>
 </html>

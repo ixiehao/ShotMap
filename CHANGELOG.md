@@ -3,6 +3,32 @@
 All notable user-facing changes are recorded here. Stable releases remain
 available on the [GitHub Releases page](https://github.com/ixiehao/ShotMap/releases).
 
+## v0.2.13
+
+### English
+
+- Rebuilt the Batch Studio workspace with a calmer three-pane layout, a sharper visual hierarchy, compact header controls, and consistent light and dark palettes.
+- Redesigned Manual Frame Editor as a focused editing desk: player, visual timeline, frame-step controls, selectable candidates, and selection order all remain visible together.
+- Replaced the generic grid controls with clear visual grid choices, refined the queue action, and refreshed the ShotMap icon across the app and public surfaces.
+- Updated the official website and three README files with real *Tears of Steel* product captures in English, Chinese, and Japanese. Demo footage is credited to Blender Foundation / Blender Institute under CC BY 3.0.
+- Simplified the documentation by removing the image-heavy installation guide while retaining concise, safe installation steps.
+
+### 中文
+
+- 重构 Batch Studio 主工作区：采用更安静清晰的三栏布局、紧凑的顶部控件，并统一优化浅色和深色配色。
+- 重新设计手动选帧窗口：播放器、可视化时间轴、逐帧调整、候选画面和选中顺序可同时查看与操作。
+- 将普通网格按钮替换为更直观的可视化网格选择器，优化视频队列添加操作，并同步更新 ShotMap 图标及公开素材。
+- 官网与三语 README 已改用真实运行的《Tears of Steel》软件截图；英文、中文、日文均提供对应界面，且明确署名 Blender Foundation / Blender Institute 的 CC BY 3.0 演示视频授权。
+- 移除偏重图片的安装指南，文档保留更简洁、安全的文字安装步骤。
+
+### 日本語
+
+- Batch Studio のメイン画面を再構築し、落ち着いた 3 ペイン構成、明確な情報階層、コンパクトなヘッダー操作、統一したライト／ダーク配色へ刷新しました。
+- 手動フレーム選択画面を、プレーヤー、視覚的タイムライン、コマ送り、候補、選択順を同時に確認できる編集画面として再設計しました。
+- 通常のグリッドボタンを視覚的にわかりやすいグリッド選択へ置き換え、キュー追加操作と ShotMap アイコン、公開素材を改善しました。
+- 公式サイトと 3 言語の README を、実際に動作する *Tears of Steel* のキャプチャへ更新しました。英語・中国語・日本語で対応する UI を表示し、Blender Foundation / Blender Institute による CC BY 3.0 の映像を明記しています。
+- 画像中心のインストールガイドを削除し、簡潔で安全なテキスト手順を残しました。
+
 ## v0.2.12
 
 ### English

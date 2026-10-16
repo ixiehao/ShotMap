@@ -2,21 +2,18 @@
 
 ShotMap’s public visuals now use real, current application captures—not
 drawn or generated imitations of the product interface. They share one visual
-system across the README files, the project website, release previews, and
-installation guides.
+system across the README files, the project website, and release previews.
 
 ## Approved demonstration footage
 
-The screenshots show a silent, reduced derivative of footage recorded and
-supplied by the project owner.
+The screenshots show reduced derivatives of the following openly licensed
+film. The original video and its audio are not committed; only screenshots,
+storyboards, and a short documentation GIF are published.
 
-- Original filename: `船外机.mp4`
-- Source dimensions and duration: 1920 × 1080, 129.033 seconds
-- Source SHA-256:
-  `beaddf7057f9c0f8c0f7f271373e4fdad17f1276a976f03dff098a36966f838c`
-- Permission: the project owner authorised documentation use on 2026-09-17.
-- Distribution: the original video and its audio are not committed. Only
-  reduced screenshots and storyboard output are published.
+- Title: *Tears of Steel* (2012)
+- Attribution: © Blender Foundation / Blender Institute
+- Licence: [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/)
+- Project: [Tears of Steel — Blender Studio](https://mango.blender.org/)
 
 ## Product screenshots
 
@@ -25,17 +22,16 @@ supplied by the project owner.
   README files. Each shows the real Batch Studio in its matching interface
   language.
 - `website/assets/workspace-en.webp`, `workspace-zh.webp`, and
-  `workspace-ja.png` are the corresponding website hero captures.
-- `website/assets/manual-en.webp` and `manual-zh.webp` are real manual-frame
-  selection windows: player, visual timeline, frame stepping controls, and
-  candidate gallery are all live product UI.
-- `website/assets/workflow-ja.webp` is a Japanese workspace crop used so the
-  Japanese website stays readable in Japanese as well.
+  `workspace-ja.webp` are the corresponding website hero captures.
+- `website/assets/manual-en.webp`, `manual-zh.webp`, and `manual-ja.webp`
+  are real manual-frame selection windows: player, visual timeline, frame
+  stepping controls, and candidate gallery are all live product UI.
 
 `video-to-storyboard-demo.gif` and its PNG fallback are rebuilt from actual
-workspace states. `video-to-storyboard-overview.png` is a real manual-frame
-selection capture, not an illustrated stand-in. The GIF is kept at 960 × 540
-for fast README loading.
+*Tears of Steel* workspace and manual-selection states.
+`video-to-storyboard-overview.png` is a real manual-frame selection capture,
+not an illustrated stand-in. The GIF is kept at 960 × 620 for fast README
+loading.
 
 The original ShotMap Iris icon is intentionally retained as the stable product
 identity. Its canonical source is `Assets/AppIcon-1024-source.png`; the
@@ -57,23 +53,6 @@ swift scripts/create_social_preview.swift \
   docs/assets/social-preview-v2.jpg
 ```
 
-## Localised installation guides
-
-`install-guide-en.jpg`, `install-guide-zh.jpg`, and `install-guide-ja.jpg`
-use localised copy and their matching real workspace capture for the first
-launch card. The DMG card uses the real mounted installer image in
-`install-screen-dmg.png`.
-
-`install-guide-background.png` is a text-free original background reserved
-for the guide renderer. It is deliberately separate from the DMG window
-background, which has its own installation arrow and title.
-
-```sh
-swift scripts/create_install_guide.swift docs/assets/install-guide-background.png en \
-  docs/assets/install-screen-dmg.png docs/assets/install-screen-launch.png \
-  docs/assets/install-guide-en.jpg
-```
-
-Replace `en` and the locale-specific input/output assets with `zh` or `ja` to
-refresh the other guides. All original project visual artwork is released
-under the [MIT License](../../LICENSE); footage rights remain with its owner.
+All original project visual artwork is released under the [MIT License](../../LICENSE). The *Tears of Steel* derivatives are
+published with the attribution and CC BY 3.0 licence notice above; the film
+itself remains available from Blender Studio.

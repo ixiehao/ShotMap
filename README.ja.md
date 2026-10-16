@@ -2,13 +2,15 @@
 
 [English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
 
-![プロジェクト所有者が許可した湖上映像を処理する ShotMap の日本語ワークスペース](docs/assets/readme-workspace-ja.png)
+![Tears of Steel を処理して絵コンテを作成する ShotMap の日本語ワークスペース](docs/assets/readme-workspace-ja.png?v=tears-20261016)
 
 **ShotMap（動画ワンクリック・モンタージュ）** は、動画から代表的なフレームを選び、一枚の見やすい絵コンテ画像にまとめるネイティブ macOS アプリです。
 
 **まずスマート選択、必要なコマだけ手動調整。すべてローカルで完結します。**
 
-> **最新リリース：**[v0.2.12 Universal DMG](https://github.com/ixiehao/ShotMap/releases/tag/v0.2.12) · macOS 13 以降 · Apple Silicon / Intel Mac
+> **デモ映像のクレジット：** *Tears of Steel*（2012）© Blender Foundation / Blender Institute、[CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) ライセンス。以下の製品スクリーンショットとアニメーションにはこの映像を使用しています。
+
+> **最新リリース：**[v0.2.13 Universal DMG](https://github.com/ixiehao/ShotMap/releases/tag/v0.2.13) · macOS 13 以降 · Apple Silicon / Intel Mac
 
 ## 一枚で分かる仕組み
 
@@ -20,7 +22,7 @@
 
 実際のアプリで、完成した絵コンテから手動フレーム選択画面を開き、視覚的なタイムラインで場面を探して候補から一コマを選び、保存する流れです。
 
-![ShotMap のワークスペースから手動フレーム選択画面へ移り、絵コンテ、視覚タイムライン、候補ギャラリーを表示する操作](docs/assets/video-to-storyboard-demo.gif)
+![Tears of Steel の絵コンテを表示する ShotMap ワークスペースから手動フレーム選択画面へ移り、視覚タイムラインと候補ギャラリーを表示する操作](docs/assets/video-to-storyboard-demo.gif?v=tears-20261016)
 
 ## 主な機能
 
@@ -48,8 +50,6 @@ brew install --cask ixiehao/tap/shottessera
 
 ## 安全にインストールする
 
-![macOS 初心者向けの三段階インストールガイド](docs/assets/install-guide-ja.jpg)
-
 1. ダウンロードした `.dmg` をダブルクリックし、**ShotMap.app** を「アプリケーション」へドラッグします。
 2. コピー完了後、DMG は取り出しまたは削除できます。これはインストーラーなので、インストール済みアプリは削除されません。
 3. このアプリはまだ Apple の公証を受けていません。開発元を確認できないと表示された場合は、「アプリケーション」で Control-click し、「開く」を選んで、もう一度「開く」を確認します。macOS 全体の安全設定は変更しないでください。
@@ -73,5 +73,6 @@ brew install --cask ixiehao/tap/shottessera
 - アプリは Apple SDK フレームワークだけを使用し、第三者のアプリケーションコード、パッケージ、分析 SDK、MoviePrint 素材を含みません。
 - 同梱する [Tabler Icons Outline](https://github.com/tabler/tabler-icons) SVG は未改変で、[MIT License](ThirdPartyLicenses/TablerIcons-MIT.txt) に基づいて使用しています。帰属と統合の詳細は [NOTICE.md](NOTICE.md) を参照してください。
 - ファイル名タイトルには同梱の **Noto Sans CJK SC Bold 2.004** を使用します。このフォントは改変せず、[SIL Open Font License 1.1](ThirdPartyLicenses/NotoSansCJK-OFL-1.1.txt) の下で別途ライセンスされています。帰属と検証情報は [NOTICE.md](NOTICE.md) を参照してください。
+- 文書内のデモ映像：*Tears of Steel*（2012）© Blender Foundation / Blender Institute、[CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) ライセンス。
 - 動画そのもの、動画内の字幕、商標、透かし、音楽などの権利は各権利者に帰属します。絵コンテの生成は公開または再配布の権利を付与しません。
 - 適用される現地の法令を守り、あなたが所有する、または処理する権限のある動画だけを扱ってください。このリポジトリ監査は技術情報であり、法的助言ではありません。

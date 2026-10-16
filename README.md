@@ -2,13 +2,15 @@
 
 [English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
 
-![ShotMap's real English workspace processing project-owner footage](docs/assets/readme-workspace-en.png)
+![ShotMap's real English workspace creating a storyboard from Tears of Steel](docs/assets/readme-workspace-en.png?v=tears-20261016)
 
 **ShotMap** is a native macOS app that selects representative video frames and turns them into one clean storyboard image.
 
 **Smart selection first. Fine-tune any frame. Export entirely locally.**
 
-> **Latest release:** [v0.2.12 universal DMG](https://github.com/ixiehao/ShotMap/releases/tag/v0.2.12) · macOS 13+ · Apple Silicon and Intel
+> **Demo footage credit:** *Tears of Steel* (2012) © Blender Foundation / Blender Institute, licensed under [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/). The product screenshots and animation below use this footage.
+
+> **Latest release:** [v0.2.13 universal DMG](https://github.com/ixiehao/ShotMap/releases/tag/v0.2.13) · macOS 13+ · Apple Silicon and Intel
 
 ## At a glance
 
@@ -20,7 +22,7 @@
 
 The real app moves from a finished storyboard to the manual frame editor, where you can locate a moment on the visual timeline and choose a better candidate before saving.
 
-![ShotMap moves from its workspace to the manual frame editor, showing the storyboard, visual timeline, and candidate gallery](docs/assets/video-to-storyboard-demo.gif)
+![ShotMap moves from its Tears of Steel storyboard workspace to the manual frame editor, showing the visual timeline and candidate gallery](docs/assets/video-to-storyboard-demo.gif?v=tears-20261016)
 
 ## Features
 
@@ -48,8 +50,6 @@ Or open [the latest release](https://github.com/ixiehao/ShotMap/releases/latest)
 
 ## Install safely
 
-![Three beginner-friendly installation steps for macOS](docs/assets/install-guide-en.jpg)
-
 1. Double-click the downloaded `.dmg`, then drag **ShotMap.app** to **Applications**.
 2. After the copy finishes, eject or delete the DMG. It is only the installer and does not remove the installed app.
 3. The app is not Apple-notarized yet. If macOS cannot verify the developer, open **Applications**, Control-click the app, choose **Open**, then choose **Open** once more. Do not disable macOS system-wide security.
@@ -73,5 +73,6 @@ All frame analysis and export happen on your Mac. ShotMap has no account, teleme
 - The app uses Apple SDK frameworks only; it bundles no third-party application code, packages, analytics SDKs, or MoviePrint assets.
 - The bundled [Tabler Icons Outline](https://github.com/tabler/tabler-icons) SVGs are used unmodified under the [MIT License](ThirdPartyLicenses/TablerIcons-MIT.txt). Their attribution and integration details are in [NOTICE.md](NOTICE.md).
 - The filename title uses the bundled **Noto Sans CJK SC Bold 2.004** font, unmodified and separately licensed under the [SIL Open Font License 1.1](ThirdPartyLicenses/NotoSansCJK-OFL-1.1.txt). See [NOTICE.md](NOTICE.md) for attribution and verification details.
+- Documentation demo footage: *Tears of Steel* (2012) © Blender Foundation / Blender Institute, used under [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/).
 - Rights to source videos, subtitles, marks, watermarks, and music remain with their respective owners. Generating a storyboard does not grant publication or redistribution rights.
 - Follow applicable local law and process only videos you own or are authorised to analyse. This repository audit is technical information, not legal advice.

@@ -12,6 +12,30 @@ private enum StudioLayout {
     static let titleSubtitleGap: CGFloat = 4
     static let panelHeaderHeight: CGFloat = 76
     static let toolbarHorizontalInset: CGFloat = 20
+    static let controlHeight: CGFloat = 32
+    static let toolbarControlHeight: CGFloat = 28
+    static let primaryControlHeight: CGFloat = 36
+    static let controlCornerRadius: CGFloat = 8
+    static let panelCornerRadius: CGFloat = 12
+}
+
+/// Measurements for the dedicated manual editor.  Keep this separate from
+/// Batch Studio: it is a dense editing desk with a fixed visual rhythm, not a
+/// three-panel form.  Values are whole points so separators and baselines land
+/// on physical pixels at the standard macOS scale.
+private enum ManualEditorLayout {
+    static let toolbarHeight: CGFloat = 54
+    static let horizontalInset: CGFloat = 24
+    static let workspaceVerticalInset: CGFloat = 12
+    static let workspaceGap: CGFloat = 28
+    static let mediaHeight: CGFloat = 238
+    static let candidateGap: CGFloat = 12
+    static let candidateHeaderTop: CGFloat = 15
+    static let candidateHeaderBottom: CGFloat = 10
+    static let candidateGridBottom: CGFloat = 16
+    static let footerHeight: CGFloat = 62
+    static let compactControlHeight: CGFloat = 34
+    static let toolbarControlHeight: CGFloat = 32
 }
 
 private struct ManualFrameEditorRequest: Identifiable {
@@ -90,43 +114,44 @@ struct ContentView: View {
 
     private var isLightAppearance: Bool { resolvedAppearance == .light }
 
-    // Batch Studio uses surfaces and spacing rather than nested glass cards.
-    // This keeps a 940 pt window readable while giving the storyboard itself
-    // the strongest visual weight.
+    // Frame Desk is intentionally quiet: neutral surfaces make video frames,
+    // selection state, and one primary action easier to scan at a glance.
+    // Values are paired for light and dark appearances instead of relying on
+    // the system control palette, which also keeps the three panes cohesive.
     private var appBackground: Color {
         isLightAppearance
-            ? Color(red: 0.925, green: 0.961, blue: 0.976)
-            : Color(red: 0.035, green: 0.061, blue: 0.102)
+            ? Color(red: 0.969, green: 0.973, blue: 0.980) // #F7F8FA
+            : Color(red: 0.063, green: 0.075, blue: 0.090) // #101317
     }
 
     private var sidebarFill: Color {
         isLightAppearance
-            ? Color(red: 0.930, green: 0.965, blue: 0.976)
-            : Color(red: 0.055, green: 0.098, blue: 0.145)
+            ? Color(red: 0.945, green: 0.961, blue: 0.976) // #F1F5F9
+            : Color(red: 0.082, green: 0.102, blue: 0.129) // #151A21
     }
 
     private var stageFill: Color {
         isLightAppearance
-            ? Color(red: 0.990, green: 0.996, blue: 0.998)
-            : Color(red: 0.025, green: 0.043, blue: 0.070)
+            ? Color.white
+            : Color(red: 0.090, green: 0.106, blue: 0.133) // #171B22
     }
 
     private var workspaceDivider: Color {
         isLightAppearance
-            ? Color(red: 0.80, green: 0.875, blue: 0.905)
-            : Color(red: 0.16, green: 0.24, blue: 0.33)
+            ? Color(red: 0.843, green: 0.871, blue: 0.910) // #D7DEE8
+            : Color(red: 0.224, green: 0.271, blue: 0.329) // #394554
     }
 
     private var studioAccent: Color {
         isLightAppearance
-            ? Color(red: 0.04, green: 0.53, blue: 0.62)
-            : Color(red: 0.38, green: 0.85, blue: 0.89)
+            ? Color(red: 0.039, green: 0.400, blue: 0.851) // #0A66D9
+            : Color(red: 0.353, green: 0.655, blue: 1.0) // #5AA7FF
     }
 
     private var inlineControlFill: Color {
         isLightAppearance
-            ? Color.white.opacity(0.82)
-            : Color(red: 0.10, green: 0.15, blue: 0.21)
+            ? Color.white
+            : Color(red: 0.114, green: 0.137, blue: 0.173) // #1D232C
     }
 
     private func t(_ key: String, _ arguments: CVarArg...) -> String {
@@ -284,9 +309,9 @@ struct ContentView: View {
         return ZStack(alignment: .leading) {
             HStack(spacing: 0) {
                 HStack(spacing: 10) {
-                    ShotTesseraMark(language: language, size: 26)
+                    ShotMapMark(language: language, size: 28)
                     Text("ShotMap")
-                        .font(.system(size: 16, weight: .semibold, design: .rounded))
+                        .font(.system(size: 18, weight: .semibold))
                 }
                 // The left inset leaves macOS traffic lights unobstructed in the
                 // hidden-title-bar window. The frame ends at the column boundary.
@@ -295,10 +320,10 @@ struct ContentView: View {
 
                 VStack(alignment: .leading, spacing: 1) {
                     Text(t("app.productName"))
-                        .font(.system(size: 11, weight: .semibold))
+                        .font(.system(size: 13, weight: .semibold))
                         .foregroundStyle(.primary)
                     Text(t("app.tagline"))
-                        .font(.system(size: 10, weight: .medium))
+                        .font(.system(size: 11, weight: .regular))
                         .foregroundStyle(.secondary)
                 }
                 .lineLimit(1)
@@ -319,20 +344,21 @@ struct ContentView: View {
     }
 
     private func headerControlLabel(symbol: ProjectIcon.Symbol, title: String) -> some View {
-        HStack(spacing: 8) {
-            ProjectIcon(symbol: symbol, size: 18)
+        HStack(spacing: 6) {
+            ProjectIcon(symbol: symbol, size: 15)
                 .foregroundStyle(studioAccent)
             Text(title)
                 .foregroundStyle(.primary)
                 .lineLimit(1)
-            ProjectIcon(symbol: .disclosure, size: 10)
+                .minimumScaleFactor(0.78)
+            ProjectIcon(symbol: .disclosure, size: 8)
                 .foregroundStyle(.secondary)
         }
-        .font(.system(size: 12, weight: .semibold))
-        .frame(width: 108, height: 28)
-        .contentShape(Capsule())
-        .background(sidebarFill, in: Capsule())
-        .overlay { Capsule().strokeBorder(workspaceDivider) }
+        .font(.system(size: 12, weight: .medium))
+        .frame(width: 98, height: StudioLayout.toolbarControlHeight)
+        .contentShape(RoundedRectangle(cornerRadius: StudioLayout.controlCornerRadius, style: .continuous))
+        .background(inlineControlFill.opacity(isLightAppearance ? 0.68 : 0.84), in: RoundedRectangle(cornerRadius: StudioLayout.controlCornerRadius, style: .continuous))
+        .overlay { RoundedRectangle(cornerRadius: StudioLayout.controlCornerRadius, style: .continuous).strokeBorder(workspaceDivider.opacity(0.82)) }
     }
 
     private var appearanceMenu: some View {
@@ -342,7 +368,7 @@ struct ContentView: View {
             headerControlLabel(symbol: appearanceSymbol, title: appearance.displayName(in: language))
         }
         .buttonStyle(.plain)
-        .frame(width: 108, height: 28)
+        .frame(width: 98, height: StudioLayout.toolbarControlHeight)
         .accessibilityLabel(t("app.appearance"))
         // Open beneath the top toolbar. An upward popover is clipped whenever
         // the window sits against the top edge of the display.
@@ -394,7 +420,7 @@ struct ContentView: View {
             headerControlLabel(symbol: .language, title: language.displayName)
         }
         .buttonStyle(.plain)
-        .frame(width: 108, height: 28)
+        .frame(width: 98, height: StudioLayout.toolbarControlHeight)
         .accessibilityLabel(t("app.language"))
         .popover(isPresented: $isLanguagePickerPresented, arrowEdge: .bottom) {
             VStack(alignment: .leading, spacing: 4) {
@@ -452,9 +478,9 @@ struct ContentView: View {
                         .foregroundStyle(.secondary)
                 }
                 .padding(.horizontal, 9)
-                .frame(width: 154, height: 30)
-                .background(inlineControlFill, in: RoundedRectangle(cornerRadius: 7, style: .continuous))
-                .overlay { RoundedRectangle(cornerRadius: 7, style: .continuous).strokeBorder(workspaceDivider.opacity(0.7)) }
+                .frame(width: 154, height: StudioLayout.controlHeight)
+                .background(inlineControlFill, in: RoundedRectangle(cornerRadius: StudioLayout.controlCornerRadius, style: .continuous))
+                .overlay { RoundedRectangle(cornerRadius: StudioLayout.controlCornerRadius, style: .continuous).strokeBorder(workspaceDivider) }
             }
             .foregroundStyle(.primary)
             .frame(maxWidth: .infinity)
@@ -523,9 +549,9 @@ struct ContentView: View {
                         .foregroundStyle(.secondary)
                 }
                 .padding(.horizontal, 9)
-                .frame(width: 154, height: 30)
-                .background(inlineControlFill, in: RoundedRectangle(cornerRadius: 7, style: .continuous))
-                .overlay { RoundedRectangle(cornerRadius: 7, style: .continuous).strokeBorder(workspaceDivider.opacity(0.7)) }
+                .frame(width: 154, height: StudioLayout.controlHeight)
+                .background(inlineControlFill, in: RoundedRectangle(cornerRadius: StudioLayout.controlCornerRadius, style: .continuous))
+                .overlay { RoundedRectangle(cornerRadius: StudioLayout.controlCornerRadius, style: .continuous).strokeBorder(workspaceDivider) }
             }
             .foregroundStyle(.primary)
             .frame(maxWidth: .infinity)
@@ -591,10 +617,10 @@ struct ContentView: View {
                     } label: {
                         Circle()
                             .fill(storyboardBackgroundColor(background))
-                            .frame(width: 18, height: 18)
+                            .frame(width: 20, height: 20)
                             .overlay {
                                 Circle().strokeBorder(
-                                    isSelected ? Color.accentColor : Color.primary.opacity(0.22),
+                                    isSelected ? studioAccent : Color.primary.opacity(0.22),
                                     lineWidth: isSelected ? 3 : 1
                                 )
                             }
@@ -627,13 +653,13 @@ struct ContentView: View {
         VStack(alignment: .leading, spacing: compact ? 10 : 12) {
             HStack(alignment: .center, spacing: 10) {
                 HStack(spacing: 9) {
-                    ProjectIcon(symbol: .filmStack, size: 16)
+                    ProjectIcon(symbol: .videoImport, size: 16)
                         .foregroundStyle(studioAccent)
                         .frame(width: 30, height: 30)
                         .background(studioAccent.opacity(isLightAppearance ? 0.12 : 0.18), in: RoundedRectangle(cornerRadius: 9, style: .continuous))
                     VStack(alignment: .leading, spacing: StudioLayout.titleSubtitleGap) {
                         Text(t("queue.title"))
-                            .font(.system(size: 16, weight: .semibold, design: .rounded))
+                            .font(.system(size: 17, weight: .semibold))
                         Text(t("queue.count", model.videoJobs.count))
                             .font(.system(size: 11, weight: .medium, design: .monospaced))
                             .foregroundStyle(.secondary)
@@ -641,18 +667,15 @@ struct ContentView: View {
                 }
                 Spacer(minLength: 4)
                 Button(action: model.chooseVideo) {
-                    HStack(spacing: 6) {
-                        ProjectIcon(symbol: .plus, size: 14)
-                        Text(t("queue.addAction"))
-                    }
-                    .font(.system(size: 11, weight: .bold))
-                    .foregroundStyle(isLightAppearance ? Color.white : Color(red: 0.02, green: 0.06, blue: 0.08))
-                    .padding(.horizontal, 11)
-                    .frame(height: 32)
-                    .background(studioAccent, in: RoundedRectangle(cornerRadius: 9, style: .continuous))
+                    ProjectIcon(symbol: .plus, size: 15)
+                        .foregroundStyle(.white)
+                        .frame(width: StudioLayout.primaryControlHeight, height: StudioLayout.primaryControlHeight)
+                        .background(studioAccent, in: RoundedRectangle(cornerRadius: StudioLayout.controlCornerRadius, style: .continuous))
                 }
                 .buttonStyle(.plain)
                 .disabled(model.isQueueLocked)
+                .accessibilityLabel(t("queue.addAction"))
+                .help(t("queue.addAction"))
             }
 
             VideoBatchCard(
@@ -685,9 +708,9 @@ struct ContentView: View {
                 ProjectIcon(symbol: .sliders, size: 16)
                     .foregroundStyle(studioAccent)
                     .frame(width: 30, height: 30)
-                    .background(studioAccent.opacity(isLightAppearance ? 0.12 : 0.18), in: RoundedRectangle(cornerRadius: 9, style: .continuous))
+                .background(studioAccent.opacity(isLightAppearance ? 0.12 : 0.18), in: RoundedRectangle(cornerRadius: StudioLayout.controlCornerRadius, style: .continuous))
                 Text(t("inspector.title"))
-                    .font(.system(size: 16, weight: .semibold, design: .rounded))
+                    .font(.system(size: 17, weight: .semibold))
             }
                 .padding(.horizontal, StudioLayout.panelInset)
                 .padding(.top, compact ? 12 : StudioLayout.panelTitleTop)
@@ -695,25 +718,7 @@ struct ContentView: View {
 
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 0) {
-                    inspectorSection(title: t("section.grid"), glyph: .grid, compact: compact) {
-                        LazyVGrid(
-                            columns: Array(repeating: GridItem(.flexible(), spacing: 8), count: 3),
-                            spacing: 8
-                        ) {
-                            ForEach(StoryboardGrid.availableSides, id: \.self) { side in
-                                Button {
-                                    model.gridSide = side
-                                } label: {
-                                    Text("\(side) × \(side)")
-                                        .font(.system(size: 11, weight: .semibold, design: .rounded))
-                                        .frame(maxWidth: .infinity)
-                                        .padding(.vertical, 7)
-                                }
-                                .buttonStyle(GridChoiceStyle(isSelected: model.gridSide == side))
-                                .disabled(model.isSettingsLocked)
-                            }
-                        }
-                    }
+                    storyboardGridPicker(compact: compact)
 
                     inspectorSection(title: t("section.frame"), glyph: .frame, compact: compact) {
                         VStack(spacing: 8) {
@@ -803,6 +808,37 @@ struct ContentView: View {
         .background(sidebarFill)
     }
 
+    /// The panel heading already establishes this as storyboard settings, so a
+    /// second "Storyboard grid" heading adds visual noise.  The picker itself
+    /// communicates the setting through a compact visual preview instead.
+    private func storyboardGridPicker(compact: Bool) -> some View {
+        LazyVGrid(
+            columns: Array(repeating: GridItem(.flexible(), spacing: 8), count: 3),
+            spacing: 8
+        ) {
+            ForEach(StoryboardGrid.availableSides, id: \.self) { side in
+                Button {
+                    model.gridSide = side
+                } label: {
+                    StoryboardGridChoiceLabel(
+                        side: side,
+                        isSelected: model.gridSide == side
+                    )
+                }
+                .buttonStyle(StoryboardGridChoiceStyle(isSelected: model.gridSide == side))
+                .disabled(model.isSettingsLocked)
+                .accessibilityLabel("\(side) × \(side)")
+            }
+        }
+        .padding(.top, compact ? 8 : 10)
+        .padding(.bottom, 12)
+        .overlay(alignment: .bottom) {
+            Rectangle()
+                .fill(workspaceDivider.opacity(0.72))
+                .frame(height: 1)
+        }
+    }
+
     private func inspectorSection<SectionContent: View>(
         title: String,
         glyph: ProjectIcon.Symbol,
@@ -817,7 +853,7 @@ struct ContentView: View {
                     .frame(width: 24, height: 24)
                     .background(studioAccent.opacity(isLightAppearance ? 0.11 : 0.17), in: RoundedRectangle(cornerRadius: 7, style: .continuous))
                 Text(title)
-                    .font(.system(size: 12, weight: .semibold))
+                    .font(.system(size: 13, weight: .semibold))
                     .foregroundStyle(.primary)
             }
             content()
@@ -959,7 +995,7 @@ struct ContentView: View {
                         .background(studioAccent.opacity(isLightAppearance ? 0.12 : 0.18), in: RoundedRectangle(cornerRadius: 9, style: .continuous))
                     VStack(alignment: .leading, spacing: StudioLayout.titleSubtitleGap) {
                         Text(t("preview.title"))
-                            .font(.system(size: 16, weight: .semibold, design: .rounded))
+                            .font(.system(size: 17, weight: .semibold))
                             .foregroundStyle(PreviewText.primary)
                         Text(model.previewStatus)
                             .font(.system(size: 11, weight: .medium))
@@ -2049,27 +2085,59 @@ private struct ManualFrameEditor: View {
     }
 
     private var safeDuration: Double { max(0.01, duration) }
-    private let manualPreviewHeight: CGFloat = 208
+    private let manualPreviewHeight = ManualEditorLayout.mediaHeight
 
-    private var controlBorder: Color {
-        colorScheme == .dark ? .white.opacity(0.24) : .black.opacity(0.14)
+    // The editor has its own deliberately quiet, contact-sheet-like palette.
+    // This makes the source media, selection order and current playhead the
+    // visual anchors instead of surrounding every control with a card.
+    private var editorCanvas: Color {
+        colorScheme == .dark
+            ? Color(red: 0.067, green: 0.078, blue: 0.094) // #111419
+            : Color(red: 0.961, green: 0.959, blue: 0.945) // warm #F5F5F1
     }
 
+    private var editorControlSurface: Color {
+        colorScheme == .dark
+            ? Color(red: 0.114, green: 0.133, blue: 0.157)
+            : Color.white.opacity(0.84)
+    }
+
+    private var editorDivider: Color {
+        colorScheme == .dark
+            ? Color.white.opacity(0.13)
+            : Color(red: 0.805, green: 0.816, blue: 0.824)
+    }
+
+    private var mediaWell: Color {
+        colorScheme == .dark
+            ? Color(red: 0.012, green: 0.016, blue: 0.024)
+            : Color(red: 0.067, green: 0.078, blue: 0.090)
+    }
+
+    private var currentFrameAccent: Color {
+        colorScheme == .dark
+            ? Color(red: 1.0, green: 0.68, blue: 0.20)
+            : Color(red: 0.88, green: 0.52, blue: 0.035)
+    }
+
+    private var controlBorder: Color { editorDivider }
+
     private var controlText: Color {
-        colorScheme == .dark ? .white.opacity(0.88) : Color(red: 0.10, green: 0.19, blue: 0.32)
+        colorScheme == .dark
+            ? Color(red: 0.949, green: 0.965, blue: 0.988)
+            : Color(red: 0.071, green: 0.125, blue: 0.200)
     }
 
     var body: some View {
         VStack(spacing: 0) {
             editorToolbar
-            Divider()
+            Rectangle().fill(editorDivider).frame(height: 1)
             manualVideoPreview
-            Divider()
             candidateBrowser
-            Divider()
+            Rectangle().fill(editorDivider).frame(height: 1)
             editorFooter
         }
-        .background(Color(nsColor: .windowBackgroundColor))
+        .background(editorCanvas)
         .frame(
             minWidth: 1_000,
             idealWidth: 1_280,
@@ -2100,9 +2168,9 @@ private struct ManualFrameEditor: View {
     }
 
     private var editorToolbar: some View {
-        HStack(spacing: 8) {
+        HStack(spacing: 10) {
             GlyphLabel(title: t("editor.selectionCount", selectedIDs.count, selectionLimit), glyph: .layers, glyphSize: 18)
-                .font(.system(size: 15, weight: .semibold))
+                .font(.system(size: 14, weight: .semibold))
                 .foregroundStyle(selectedIDs.count == selectionLimit ? Color.green : controlText)
 
             Spacer(minLength: 16)
@@ -2113,53 +2181,75 @@ private struct ManualFrameEditor: View {
                         ProgressView().controlSize(.small)
                     } else {
                         GlyphLabel(title: t("editor.smartSelect"), glyph: .smartSelect, glyphSize: 16)
-                            .font(.system(size: 14, weight: .semibold))
+                            .font(.system(size: 13, weight: .semibold))
                     }
                 }
-                .frame(width: 136, height: 36)
+                .frame(height: ManualEditorLayout.toolbarControlHeight)
+                .padding(.horizontal, 9)
             }
-            .buttonStyle(ManualFrameEditorActionButtonStyle(role: .smartSelect))
+            .buttonStyle(ManualFrameEditorActionButtonStyle(role: .toolbarPrimary))
             .disabled(isLoadingCandidates || candidates.isEmpty || isSmartSelecting)
             .accessibilityIdentifier("manual-frame-smart-select")
 
             Button(action: regenerateCandidates) {
                 GlyphLabel(title: t("editor.regenerate"), glyph: .refreshCandidates, glyphSize: 16)
-                    .font(.system(size: 14, weight: .semibold))
-                    .frame(width: 148, height: 36)
+                    .font(.system(size: 13, weight: .medium))
+                    .frame(height: ManualEditorLayout.toolbarControlHeight)
+                    .padding(.horizontal, 9)
             }
-            .buttonStyle(ManualFrameEditorActionButtonStyle(role: .regenerate))
+            .buttonStyle(ManualFrameEditorActionButtonStyle(role: .toolbarSecondary))
             .disabled(isLoadingCandidates || isSmartSelecting)
             .accessibilityIdentifier("manual-frame-regenerate")
         }
-        .padding(.horizontal, 20)
-        .frame(height: 60)
+        .padding(.horizontal, ManualEditorLayout.horizontalInset)
+        .frame(height: ManualEditorLayout.toolbarHeight)
     }
 
     private var candidateBrowser: some View {
-        ScrollView {
-            if isLoadingCandidates {
-                ProgressView(t("editor.loading"))
-                    .frame(maxWidth: .infinity, minHeight: 260)
-            } else if candidates.isEmpty {
-                VStack(spacing: 8) {
-                    ProjectIcon(symbol: .film, size: 28)
-                        .foregroundStyle(.secondary)
-                    Text(captureError.isEmpty ? t("editor.noPreview") : captureError)
-                        .font(.system(size: 12))
-                        .foregroundStyle(captureError.isEmpty ? Color.secondary : Color.red)
-                }
-                .frame(maxWidth: .infinity, minHeight: 260)
-            } else {
-                LazyVGrid(
-                    columns: [GridItem(.adaptive(minimum: 250, maximum: 320), spacing: 12)],
-                    spacing: 12
-                ) {
-                    ForEach(candidates) { candidate in
-                        candidateTile(candidate)
+        VStack(spacing: 0) {
+            HStack(spacing: 8) {
+                Text(t("editor.candidates"))
+                    .font(.system(size: 16, weight: .semibold))
+                    .foregroundStyle(controlText)
+                Text("·")
+                    .foregroundStyle(.secondary)
+                Text("\(selectedIDs.count) / \(selectionLimit)")
+                    .font(.system(size: 13, weight: .semibold, design: .monospaced))
+                    .foregroundStyle(.secondary)
+                Spacer()
+                ProjectIcon(symbol: .grid, size: 17)
+                    .foregroundStyle(SelectionPalette.active)
+                    .accessibilityHidden(true)
+            }
+            .padding(.horizontal, ManualEditorLayout.horizontalInset)
+            .padding(.top, ManualEditorLayout.candidateHeaderTop)
+            .padding(.bottom, ManualEditorLayout.candidateHeaderBottom)
+
+            ScrollView {
+                if isLoadingCandidates {
+                    ProgressView(t("editor.loading"))
+                        .frame(maxWidth: .infinity, minHeight: 260)
+                } else if candidates.isEmpty {
+                    VStack(spacing: 8) {
+                        ProjectIcon(symbol: .film, size: 28)
+                            .foregroundStyle(.secondary)
+                        Text(captureError.isEmpty ? t("editor.noPreview") : captureError)
+                            .font(.system(size: 12))
+                            .foregroundStyle(captureError.isEmpty ? Color.secondary : Color.red)
                     }
+                    .frame(maxWidth: .infinity, minHeight: 260)
+                } else {
+                    LazyVGrid(
+                        columns: [GridItem(.adaptive(minimum: 238, maximum: 340), spacing: ManualEditorLayout.candidateGap)],
+                        spacing: ManualEditorLayout.candidateGap
+                    ) {
+                        ForEach(candidates) { candidate in
+                            candidateTile(candidate)
+                        }
+                    }
+                    .padding(.horizontal, ManualEditorLayout.horizontalInset)
+                    .padding(.bottom, ManualEditorLayout.candidateGridBottom)
                 }
-                .padding(.horizontal, 20)
-                .padding(.vertical, 12)
             }
         }
         .frame(minHeight: 220, maxHeight: .infinity)
@@ -2180,33 +2270,32 @@ private struct ManualFrameEditor: View {
                 .frame(maxWidth: .infinity)
                 .overlay(alignment: .bottomLeading) {
                     Text(TimestampFormatter.string(for: candidate.time))
-                        .font(.system(size: 10, weight: .bold, design: .monospaced))
-                        .padding(.horizontal, 6)
+                        .font(.system(size: 10, weight: .semibold, design: .monospaced))
+                        .padding(.horizontal, 7)
                         .padding(.vertical, 4)
                         .foregroundStyle(.white)
-                        .background(.black.opacity(0.72), in: Capsule())
-                        .padding(7)
+                        .background(.black.opacity(0.72), in: RoundedRectangle(cornerRadius: 4, style: .continuous))
+                        .padding(6)
                 }
                 .overlay(alignment: .topLeading) {
                     ZStack {
-                        Circle()
-                            .fill(isSelected ? Color(red: 0.04, green: 0.48, blue: 1.00) : .black.opacity(0.28))
-                        Circle().strokeBorder(.white.opacity(0.90), lineWidth: 1.5)
+                        Circle().fill(isSelected ? SelectionPalette.active : .black.opacity(0.16))
+                        Circle().strokeBorder(.white.opacity(0.92), lineWidth: 1.5)
                         if let selectionNumber {
                             Text("\(selectionNumber)")
-                                .font(.system(size: selectionNumber >= 10 ? 10 : 12, weight: .bold, design: .rounded))
+                                .font(.system(size: selectionNumber >= 10 ? 9 : 11, weight: .bold))
                                 .monospacedDigit()
                                 .foregroundStyle(.white)
                         }
                     }
-                    .frame(width: 23, height: 23)
-                    .padding(8)
+                    .frame(width: 24, height: 24)
+                    .padding(7)
                 }
                 .overlay {
-                    RoundedRectangle(cornerRadius: 7, style: .continuous)
+                    RoundedRectangle(cornerRadius: 5, style: .continuous)
                         .strokeBorder(
-                            isSelected ? Color(red: 0.04, green: 0.48, blue: 1.00) : controlBorder,
-                            lineWidth: isSelected ? 3 : 1
+                            isSelected ? SelectionPalette.active : controlBorder,
+                            lineWidth: isSelected ? 2 : 1
                         )
                 }
         }
@@ -2225,10 +2314,10 @@ private struct ManualFrameEditor: View {
         HStack {
             Button(role: .cancel, action: onClose) {
                 Text(t("editor.cancel"))
-                    .font(.system(size: 14, weight: .semibold))
-                    .frame(width: 132, height: 36)
+                    .font(.system(size: 13, weight: .medium))
+                    .frame(width: 128, height: ManualEditorLayout.compactControlHeight)
             }
-            .buttonStyle(ManualFrameEditorActionButtonStyle(role: .regenerate))
+            .buttonStyle(ManualFrameEditorActionButtonStyle(role: .secondary))
             .keyboardShortcut(.escape, modifiers: [])
 
             Spacer()
@@ -2239,19 +2328,19 @@ private struct ManualFrameEditor: View {
                         ProgressView().controlSize(.small)
                     } else {
                         GlyphLabel(title: t("editor.apply"), glyph: .check)
-                            .font(.system(size: 14, weight: .semibold))
+                            .font(.system(size: 13, weight: .semibold))
                     }
                 }
-                .frame(width: 164, height: 36)
+                .frame(width: 156, height: ManualEditorLayout.compactControlHeight)
             }
-            .buttonStyle(ManualFrameEditorActionButtonStyle(role: .smartSelect))
+            .buttonStyle(ManualFrameEditorActionButtonStyle(role: .primary))
             .disabled(selectedIDs.count != selectionLimit || model.isApplyingFrameAdjustments || isRefiningSelectedFrames)
             .keyboardShortcut(.return, modifiers: [.command])
             .accessibilityIdentifier("manual-frame-apply")
         }
-        .padding(.horizontal, 20)
-        .frame(height: 56)
-        .background(Color(nsColor: .windowBackgroundColor).opacity(0.96))
+        .padding(.horizontal, ManualEditorLayout.horizontalInset)
+        .frame(height: ManualEditorLayout.footerHeight)
+        .background(editorCanvas)
     }
 
     @ViewBuilder
@@ -2260,11 +2349,10 @@ private struct ManualFrameEditor: View {
             Image(nsImage: image)
                 .resizable()
                 .scaledToFit()
-                .padding(2)
-                .background(.black.opacity(0.08), in: RoundedRectangle(cornerRadius: 8, style: .continuous))
-                .clipShape(RoundedRectangle(cornerRadius: 6, style: .continuous))
+                .background(.black.opacity(0.08))
+                .clipShape(RoundedRectangle(cornerRadius: 5, style: .continuous))
         } else {
-            RoundedRectangle(cornerRadius: 6, style: .continuous)
+            RoundedRectangle(cornerRadius: 5, style: .continuous)
                 .fill(.quaternary)
                 .aspectRatio(frame.aspectRatio, contentMode: .fit)
         }
@@ -2272,17 +2360,17 @@ private struct ManualFrameEditor: View {
 
     private var manualVideoPreview: some View {
         GeometryReader { proxy in
-            let monitorWidth = min(max(proxy.size.width * 0.38, 320), 500)
-            HStack(alignment: .top, spacing: 16) {
+            let monitorWidth = min(max(proxy.size.width * 0.42, 360), 548)
+            HStack(alignment: .top, spacing: ManualEditorLayout.workspaceGap) {
                 previewMonitor
                     .frame(width: monitorWidth, height: manualPreviewHeight)
                 timelineControlDeck
                     .frame(maxWidth: .infinity, minHeight: manualPreviewHeight, maxHeight: manualPreviewHeight)
             }
         }
-        .padding(.horizontal, 20)
-        .padding(.vertical, 12)
-        .frame(height: manualPreviewHeight + 24)
+        .padding(.horizontal, ManualEditorLayout.horizontalInset)
+        .padding(.vertical, ManualEditorLayout.workspaceVerticalInset)
+        .frame(height: manualPreviewHeight + ManualEditorLayout.workspaceVerticalInset * 2)
     }
 
     private var previewMonitor: some View {
@@ -2313,11 +2401,11 @@ private struct ManualFrameEditor: View {
             .frame(height: 42)
             .background(.black.opacity(0.54))
         }
-        .background(Color(red: 0.06, green: 0.07, blue: 0.09))
-        .clipShape(RoundedRectangle(cornerRadius: 7, style: .continuous))
+        .background(mediaWell)
+        .clipShape(RoundedRectangle(cornerRadius: 6, style: .continuous))
         .overlay {
-            RoundedRectangle(cornerRadius: 7, style: .continuous)
-                .strokeBorder(Color.white.opacity(0.22), lineWidth: 1)
+            RoundedRectangle(cornerRadius: 6, style: .continuous)
+                .strokeBorder(colorScheme == .dark ? .white.opacity(0.16) : .black.opacity(0.22), lineWidth: 1)
         }
     }
 
@@ -2333,47 +2421,36 @@ private struct ManualFrameEditor: View {
     }
 
     private var timelineControlDeck: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            // This is intentionally its own card. It follows the reference
-            // player layout: a compact timeline above one aligned control row.
-            VStack(alignment: .leading, spacing: 0) {
+        VStack(alignment: .leading, spacing: 0) {
+            HStack(alignment: .firstTextBaseline, spacing: 10) {
                 Text(t("editor.timelineHint"))
-                    .font(.system(size: 13, weight: .medium))
+                    .font(.system(size: 13, weight: .semibold))
                     .foregroundStyle(controlText)
                     .lineLimit(1)
-
-                timelineFilmstrip
-                    .padding(.top, 10)
-
-                Slider(value: $previewTime, in: 0...safeDuration, onEditingChanged: finishPreviewScrub)
-                    .tint(Color(red: 0.04, green: 0.48, blue: 1.00))
-                    .padding(.top, 7)
-                    .onChange(of: previewTime) { time in
-                        if isScrubbingPreview {
-                            scrubVideoPreview(to: time)
-                        } else {
-                            seekVideoPreview(to: time)
-                        }
-                    }
-                    .accessibilityIdentifier("manual-frame-timeline")
-                    .accessibilityLabel(t("editor.timelineHint"))
-                    .accessibilityValue(previewTimeText)
-
-                HStack {
-                    Text(TimestampFormatter.string(for: 0))
-                    Spacer()
-                    Text(TimestampFormatter.string(for: safeDuration))
-                }
-                .font(.system(size: 10, weight: .medium, design: .monospaced))
-                .foregroundStyle(.secondary)
-                .padding(.top, 2)
+                Spacer(minLength: 12)
+                Text("\(TimestampFormatter.string(for: previewTime))  /  \(TimestampFormatter.string(for: safeDuration))")
+                    .font(.system(size: 11, weight: .medium, design: .monospaced))
+                    .foregroundStyle(.secondary)
+                    .lineLimit(1)
             }
-            .padding(12)
-            .background(Color(nsColor: .controlBackgroundColor), in: RoundedRectangle(cornerRadius: 7, style: .continuous))
-            .overlay {
-                RoundedRectangle(cornerRadius: 7, style: .continuous)
-                    .strokeBorder(controlBorder, lineWidth: 1)
+
+            timelineFilmstrip
+                .padding(.top, 13)
+
+            timelineScrubber
+                .padding(.top, 8)
+
+            timelineRuler
+                .padding(.top, 1)
+
+            HStack {
+                Text(TimestampFormatter.string(for: 0))
+                Spacer()
+                Text(TimestampFormatter.string(for: safeDuration))
             }
+            .font(.system(size: 10, weight: .medium, design: .monospaced))
+            .foregroundStyle(.secondary)
+            .padding(.top, 1)
 
             HStack(spacing: 8) {
                 frameNudgeButton(
@@ -2404,15 +2481,16 @@ private struct ManualFrameEditor: View {
 
                 Button(action: addCurrentFrame) {
                     GlyphLabel(title: t("editor.addCurrentFrame"), glyph: .plus, glyphSize: 16)
-                        .font(.system(size: 14, weight: .semibold))
+                        .font(.system(size: 13, weight: .semibold))
                         .lineLimit(1)
-                        .frame(width: 230, height: 36)
+                        .frame(width: 188, height: ManualEditorLayout.compactControlHeight)
                 }
-                .buttonStyle(ManualFrameEditorActionButtonStyle(role: .smartSelect))
+                .buttonStyle(ManualFrameEditorActionButtonStyle(role: .primary))
                 .disabled(previewFrame == nil || isLoadingPreviewFrame || isRefiningCurrentFrame)
                 .accessibilityIdentifier("manual-frame-add-current")
             }
-            .frame(height: 36)
+            .padding(.top, 14)
+            .frame(height: 48)
         }
     }
 
@@ -2420,34 +2498,106 @@ private struct ManualFrameEditor: View {
         let frames = timelineFrames
         return GeometryReader { proxy in
             if frames.isEmpty {
-                RoundedRectangle(cornerRadius: 4, style: .continuous)
-                    .fill(Color.black.opacity(0.06))
+                Rectangle().fill(mediaWell.opacity(0.12))
             } else {
                 let frameWidth = max(1, (proxy.size.width - CGFloat(max(0, frames.count - 1))) / CGFloat(frames.count))
                 ZStack(alignment: .leading) {
                     HStack(spacing: 1) {
                         ForEach(frames) { frame in
                             filmstripImage(frame)
-                                .frame(width: frameWidth, height: 52)
+                                .frame(width: frameWidth, height: 62)
                                 .clipped()
                         }
                     }
 
                     Rectangle()
-                        .fill(Color.accentColor.opacity(0.92))
-                        .frame(width: 2, height: 52)
-                        .shadow(color: .white.opacity(0.70), radius: 1)
+                        .fill(currentFrameAccent)
+                        .frame(width: 2, height: 62)
+                        .shadow(color: currentFrameAccent.opacity(0.32), radius: 2)
                         .offset(x: timelinePlayheadOffset(in: proxy.size.width))
                         .allowsHitTesting(false)
                 }
             }
         }
-        .frame(height: 52)
+        .frame(height: 62)
         .clipShape(RoundedRectangle(cornerRadius: 4, style: .continuous))
-        .overlay {
-            RoundedRectangle(cornerRadius: 4, style: .continuous)
-                .strokeBorder(controlBorder, lineWidth: 1)
+    }
+
+    /// A custom scrubber shares its exact coordinate system with the amber
+    /// filmstrip marker above it.  Native `Slider` internally reserves thumb
+    /// insets, which is what made the former blue line drift at either end.
+    private var timelineScrubber: some View {
+        GeometryReader { proxy in
+            let thumbDiameter: CGFloat = 12
+            let markerWidth: CGFloat = 2
+            let markerX = timelinePlayheadOffset(in: proxy.size.width)
+            let thumbX = max(0, min(proxy.size.width - thumbDiameter, markerX + markerWidth / 2 - thumbDiameter / 2))
+
+            ZStack(alignment: .leading) {
+                Capsule()
+                    .fill(editorDivider.opacity(0.88))
+                    .frame(height: 2)
+                Capsule()
+                    .fill(SelectionPalette.active)
+                    .frame(width: max(0, markerX + markerWidth / 2), height: 2)
+                Circle()
+                    .fill(editorControlSurface)
+                    .overlay { Circle().strokeBorder(currentFrameAccent, lineWidth: 2) }
+                    .frame(width: thumbDiameter, height: thumbDiameter)
+                    .offset(x: thumbX)
+                    .shadow(color: .black.opacity(0.14), radius: 1, y: 1)
+            }
+            .frame(maxHeight: .infinity)
+            .contentShape(Rectangle())
+            .gesture(
+                DragGesture(minimumDistance: 0)
+                    .onChanged { value in
+                        updateTimelineScrub(location: value.location.x, width: proxy.size.width)
+                    }
+                    .onEnded { _ in
+                        finishTimelineScrub()
+                    }
+            )
         }
+        .frame(height: 18)
+        .accessibilityIdentifier("manual-frame-timeline")
+        .accessibilityLabel(t("editor.timelineHint"))
+        .accessibilityValue(previewTimeText)
+        .accessibilityAdjustableAction { direction in
+            nudgePreview(by: direction == .increment ? previewFrameStep : -previewFrameStep)
+        }
+    }
+
+    private var timelineRuler: some View {
+        HStack(spacing: 0) {
+            ForEach(0..<9, id: \.self) { tick in
+                Rectangle()
+                    .fill(editorDivider)
+                    .frame(width: 1, height: tick.isMultiple(of: 2) ? 6 : 4)
+                    .frame(maxWidth: .infinity, alignment: tick == 0 ? .leading : .center)
+            }
+        }
+        .frame(height: 6)
+    }
+
+    private func updateTimelineScrub(location: CGFloat, width: CGFloat) {
+        guard width > 0 else { return }
+        let thumbRadius: CGFloat = 6
+        let usableWidth = max(1, width - thumbRadius * 2)
+        let progress = max(0, min(1, (location - thumbRadius) / usableWidth))
+        let target = safeDuration * progress
+        if !isScrubbingPreview {
+            isScrubbingPreview = true
+            previewCaptureTask?.cancel()
+        }
+        previewTime = target
+        scrubVideoPreview(to: target)
+    }
+
+    private func finishTimelineScrub() {
+        guard isScrubbingPreview else { return }
+        isScrubbingPreview = false
+        seekVideoPreview(to: previewTime)
     }
 
     /// Candidate ordering can change when a user manually adds a frame. The
@@ -2470,16 +2620,17 @@ private struct ManualFrameEditor: View {
         return evenlyDistributedFrames
     }
 
-    /// SwiftUI's macOS slider reserves a thumb-radius at both ends of its
-    /// drawing track. Use the same effective range for the filmstrip marker;
-    /// otherwise the marker drifts to the right of the slider thumb near the
-    /// end of a video.
+    /// The custom scrubber and the filmstrip marker intentionally use the
+    /// same 0...width coordinate space, so the playhead remains aligned at
+    /// every timestamp—including both ends of the video.
     private func timelinePlayheadOffset(in width: CGFloat) -> CGFloat {
         let markerWidth: CGFloat = 2
-        let thumbInset: CGFloat = 14
+        let thumbRadius: CGFloat = 6
         let progress = max(0, min(1, previewTime / safeDuration))
-        let usableWidth = max(0, width - markerWidth - thumbInset * 2)
-        return thumbInset + usableWidth * progress
+        let firstCenter = min(thumbRadius, max(0, width / 2))
+        let lastCenter = max(firstCenter, width - thumbRadius)
+        let center = firstCenter + (lastCenter - firstCenter) * progress
+        return max(0, min(width - markerWidth, center - markerWidth / 2))
     }
 
     @ViewBuilder
@@ -2501,15 +2652,15 @@ private struct ManualFrameEditor: View {
             nudgePreview(by: offset)
         } label: {
             Text(label)
-                .font(.system(size: 12, weight: .semibold, design: .rounded))
-                .frame(width: 52, height: 36)
-                .contentShape(RoundedRectangle(cornerRadius: 6, style: .continuous))
+                .font(.system(size: 12, weight: .semibold))
+                .frame(width: 52, height: ManualEditorLayout.compactControlHeight)
+                .contentShape(RoundedRectangle(cornerRadius: StudioLayout.controlCornerRadius, style: .continuous))
         }
         .buttonStyle(.plain)
         .foregroundStyle(controlText)
-        .background(Color(nsColor: .controlBackgroundColor), in: RoundedRectangle(cornerRadius: 7, style: .continuous))
+        .background(editorControlSurface, in: RoundedRectangle(cornerRadius: StudioLayout.controlCornerRadius, style: .continuous))
         .overlay {
-            RoundedRectangle(cornerRadius: 7, style: .continuous)
+            RoundedRectangle(cornerRadius: StudioLayout.controlCornerRadius, style: .continuous)
                 .strokeBorder(controlBorder, lineWidth: 1)
         }
         .disabled((offset < 0 && previewTime <= 0.000_01) || (offset > 0 && previewTime >= safeDuration - 0.000_01))
@@ -2540,7 +2691,7 @@ private struct ManualFrameEditor: View {
     private func nudgePreview(by offset: Double) {
         let target = min(max(0, previewTime + offset), safeDuration)
         if abs(target - previewTime) < 0.000_01 { return }
-        previewTime = target
+        seekVideoPreview(to: target)
     }
 
     private func seekVideoPreview(to time: Double) {
@@ -2586,13 +2737,7 @@ private struct ManualFrameEditor: View {
             return
         }
         let clampedTime = min(max(0, requestedTime), safeDuration)
-        if abs(previewTime - clampedTime) < 0.000_5 {
-            seekVideoPreview(to: clampedTime)
-        } else {
-            // The slider's onChange then seeks the player and refreshes the
-            // canonical text value, keeping both controls in lockstep.
-            previewTime = clampedTime
-        }
+        seekVideoPreview(to: clampedTime)
     }
 
     private func updateTimelineFromCompleteTimeText(_ text: String) {
@@ -2601,7 +2746,7 @@ private struct ManualFrameEditor: View {
         guard text != TimestampFormatter.editableString(for: previewTime),
               let requestedTime = TimestampFormatter.editableSeconds(from: text),
               isCompleteTimestamp(text) else { return }
-        previewTime = min(max(0, requestedTime), safeDuration)
+        seekVideoPreview(to: min(max(0, requestedTime), safeDuration))
     }
 
     private func isCompleteTimestamp(_ text: String) -> Bool {
@@ -2830,13 +2975,13 @@ private struct ManualVideoPlayerView: NSViewRepresentable {
     }
 }
 
-private struct ShotTesseraMark: View {
+private struct ShotMapMark: View {
     let language: AppLanguage
     var size: CGFloat = 44
 
     var body: some View {
         Group {
-            if let image = ShotTesseraIconAsset.image {
+            if let image = ShotMapIconAsset.image {
                 Image(nsImage: image)
                     .resizable()
                     .interpolation(.high)
@@ -2853,7 +2998,7 @@ private struct ShotTesseraMark: View {
     }
 }
 
-private enum ShotTesseraIconAsset {
+private enum ShotMapIconAsset {
     static let image: NSImage? = {
         guard let url = Bundle.module.url(forResource: "AppIcon", withExtension: "png") else { return nil }
         return NSImage(contentsOf: url)
@@ -2872,21 +3017,21 @@ private struct ProcessingControlButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         let colors: (fill: Color, stroke: Color, text: Color) = switch tone {
         case .primary:
-            (Color(red: 0.12, green: 0.38, blue: 0.54).opacity(0.80), Color(red: 0.36, green: 0.82, blue: 0.92).opacity(0.72), .white)
+            (SelectionPalette.active, .white.opacity(0.18), .white)
         case .secondary:
-            (Color.white.opacity(0.075), Color.white.opacity(0.16), PreviewText.primary)
+            (Color(nsColor: .controlBackgroundColor), Color.primary.opacity(0.14), PreviewText.primary)
         case .destructive:
-            (Color(red: 0.48, green: 0.10, blue: 0.16).opacity(0.82), Color(red: 1.0, green: 0.42, blue: 0.46).opacity(0.75), .white)
+            (Color(red: 0.788, green: 0.208, blue: 0.310), .white.opacity(0.22), .white)
         }
         return configuration.label
             .font(.system(size: 11, weight: .semibold))
             .foregroundStyle(colors.text)
-            .background(colors.fill.opacity(configuration.isPressed ? 0.68 : 1), in: RoundedRectangle(cornerRadius: 10, style: .continuous))
+            .background(colors.fill.opacity(configuration.isPressed ? 0.78 : 1), in: RoundedRectangle(cornerRadius: StudioLayout.controlCornerRadius, style: .continuous))
             .overlay {
-                RoundedRectangle(cornerRadius: 10, style: .continuous)
+                RoundedRectangle(cornerRadius: StudioLayout.controlCornerRadius, style: .continuous)
                     .strokeBorder(colors.stroke)
             }
-            .contentShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+            .contentShape(RoundedRectangle(cornerRadius: StudioLayout.controlCornerRadius, style: .continuous))
     }
 }
 
@@ -3053,21 +3198,18 @@ private struct VideoBatchCard: View {
 
     private var emptyQueueTarget: some View {
         Button(action: choose) {
-            HStack(spacing: 12) {
-                ProjectIcon(symbol: .videoImport, size: 21)
-                    .foregroundStyle(Color(red: 0.42, green: 0.85, blue: 0.91))
-                VStack(alignment: .leading, spacing: 3) {
-                    Text(title)
-                        .font(.system(size: 13, weight: .semibold))
-                    Text(subtitle)
-                        .font(.system(size: 11))
-                        .foregroundStyle(.secondary)
-                        .lineLimit(1)
-                }
-                Spacer(minLength: 0)
-                ProjectIcon(symbol: .plus, size: 15)
+            // The queue heading already identifies this as video import.  A
+            // text-only empty state keeps the drop zone calm and gives the
+            // filename support text more room in narrow windows.
+            VStack(alignment: .leading, spacing: 3) {
+                Text(title)
+                    .font(.system(size: 13, weight: .semibold))
+                Text(subtitle)
+                    .font(.system(size: 11))
                     .foregroundStyle(.secondary)
+                    .lineLimit(1)
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
             .padding(isCompact ? 12 : 15)
             .background(
                 isLightAppearance
@@ -3214,8 +3356,8 @@ private struct QueueScrollIndicator: View {
             Capsule()
                 .fill(
                     isLightAppearance
-                        ? Color(red: 0.20, green: 0.57, blue: 0.64).opacity(0.56)
-                        : Color(red: 0.38, green: 0.85, blue: 0.89).opacity(0.62)
+                        ? SelectionPalette.active.opacity(0.56)
+                        : Color(red: 0.353, green: 0.655, blue: 1.0).opacity(0.62)
                 )
                 .frame(width: 4, height: thumbHeight)
                 .shadow(color: isLightAppearance ? Color.black.opacity(0.08) : Color.black.opacity(0.18), radius: 1, y: 1)
@@ -3351,9 +3493,9 @@ private struct EmptyPreview: View {
 
     var body: some View {
         VStack(spacing: 18) {
-            ShotTesseraMark(language: language, size: 72)
+            ShotMapMark(language: language, size: 72)
             Text(language.text("preview.empty.title"))
-                .font(.system(size: 22, weight: .semibold, design: .rounded))
+                .font(.system(size: 22, weight: .semibold))
                 .foregroundStyle(PreviewText.primary)
             Text(language.text("preview.empty.description"))
                 .font(.system(size: 13))
@@ -3379,7 +3521,104 @@ private enum PreviewText {
 
 private enum SelectionPalette {
     /// The single active-state color used by grid, format, and switch controls.
-    static let active = Color(red: 0.46, green: 0.87, blue: 0.88)
+    static let active = Color(red: 0.039, green: 0.400, blue: 0.851) // #0A66D9
+}
+
+/// A compact visual preview makes the effect of each grid choice clear before
+/// export. The real size remains in the label; very dense choices are capped
+/// visually so their tiny cells stay legible in the narrow inspector.
+private struct StoryboardGridChoiceLabel: View {
+    let side: Int
+    let isSelected: Bool
+
+    private var visualSide: Int { min(5, max(2, side)) }
+
+    var body: some View {
+        VStack(spacing: 4) {
+            VStack(spacing: 2.5) {
+                ForEach(0..<visualSide, id: \.self) { _ in
+                    HStack(spacing: 2.5) {
+                        ForEach(0..<visualSide, id: \.self) { _ in
+                            RoundedRectangle(cornerRadius: 1.2, style: .continuous)
+                                .fill(isSelected ? SelectionPalette.active : Color.secondary.opacity(0.72))
+                                .frame(width: 4.5, height: 4.5)
+                        }
+                    }
+                }
+            }
+            // Do not constrain this to a synthetic, one-size-fits-all height:
+            // a 5 × 5 pictogram is taller than a 4 × 4 one.  Giving the
+            // pictogram its real height lets the surrounding stack centre the
+            // icon-and-label pair as one unit inside each option.
+
+            Text("\(side) × \(side)")
+                .font(.system(size: 11, weight: .semibold))
+                .monospacedDigit()
+        }
+        // Keep the icon/label pair centred within every tap target.  This is
+        // particularly noticeable for the active tile, whose outline makes
+        // even a one-pixel vertical drift look unintentional.
+        .frame(maxWidth: .infinity, minHeight: 58, alignment: .center)
+        .contentShape(Rectangle())
+    }
+}
+
+/// A grid selector should read as a set of pictograms first, then as a value.
+/// It intentionally differs from generic segmented controls used for formats.
+private struct StoryboardGridChoiceStyle: ButtonStyle {
+    let isSelected: Bool
+    @Environment(\.colorScheme) private var colorScheme
+
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .foregroundStyle(labelColor)
+            .background {
+                // Inactive choices deliberately have no card chrome.  The
+                // controls read as a quiet set of options until a choice is
+                // made; only the active value earns a surface and outline.
+                if isSelected || configuration.isPressed {
+                    RoundedRectangle(cornerRadius: 9, style: .continuous)
+                        .fill(fillColor(isPressed: configuration.isPressed))
+                }
+            }
+            .overlay {
+                if isSelected {
+                    RoundedRectangle(cornerRadius: 9, style: .continuous)
+                        .strokeBorder(borderColor, lineWidth: 1.5)
+                }
+            }
+            .opacity(configuration.isPressed ? 0.82 : 1)
+    }
+
+    private var labelColor: Color {
+        guard isSelected else { return .primary }
+        return SelectionPalette.active
+    }
+
+    private var borderColor: Color {
+        if isSelected {
+            return colorScheme == .light
+                ? Color(red: 0.30, green: 0.56, blue: 1.0)
+                : Color(red: 0.36, green: 0.65, blue: 1.0)
+        }
+        return colorScheme == .light
+            ? Color.black.opacity(0.045)
+            : Color.white.opacity(0.08)
+    }
+
+    private func fillColor(isPressed: Bool) -> Color {
+        let base: Color
+        if isSelected {
+            base = colorScheme == .light
+                ? Color(red: 0.91, green: 0.95, blue: 1.0)
+                : Color(red: 0.09, green: 0.20, blue: 0.36)
+        } else {
+            base = colorScheme == .light
+                ? Color.black.opacity(0.055)
+                : Color.white.opacity(0.10)
+        }
+        return base.opacity(isPressed ? 0.78 : 1)
+    }
 }
 
 private struct GridChoiceStyle: ButtonStyle {
@@ -3388,29 +3627,33 @@ private struct GridChoiceStyle: ButtonStyle {
 
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .foregroundStyle(isSelected ? Color(red: 0.06, green: 0.08, blue: 0.11) : .primary)
+            .foregroundStyle(isSelected ? .white : .primary)
             .background(
                 isSelected ? SelectionPalette.active : idleFill(isPressed: configuration.isPressed),
-                in: RoundedRectangle(cornerRadius: 10, style: .continuous)
+                in: RoundedRectangle(cornerRadius: StudioLayout.controlCornerRadius, style: .continuous)
             )
+            .overlay {
+                RoundedRectangle(cornerRadius: StudioLayout.controlCornerRadius, style: .continuous)
+                    .strokeBorder(isSelected ? Color.white.opacity(0.18) : Color.primary.opacity(0.08))
+            }
     }
 
     private func idleFill(isPressed: Bool) -> Color {
         guard colorScheme == .light else {
-            return Color(red: 0.10, green: 0.15, blue: 0.21).opacity(isPressed ? 0.84 : 1)
+            return Color(red: 0.114, green: 0.137, blue: 0.173).opacity(isPressed ? 0.84 : 1)
         }
         return isPressed
-            ? Color(red: 0.86, green: 0.93, blue: 0.95)
-            : Color(red: 0.93, green: 0.97, blue: 0.98)
+            ? Color(red: 0.910, green: 0.945, blue: 0.992)
+            : Color.white
     }
 }
 
 private struct PrimaryButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .foregroundStyle(Color(red: 0.04, green: 0.06, blue: 0.08))
-            .background(SelectionPalette.active, in: RoundedRectangle(cornerRadius: 9, style: .continuous))
-            .overlay { RoundedRectangle(cornerRadius: 9, style: .continuous).strokeBorder(.white.opacity(0.18)) }
+            .foregroundStyle(.white)
+            .background(SelectionPalette.active, in: RoundedRectangle(cornerRadius: StudioLayout.controlCornerRadius, style: .continuous))
+            .overlay { RoundedRectangle(cornerRadius: StudioLayout.controlCornerRadius, style: .continuous).strokeBorder(.white.opacity(0.18)) }
             .opacity(configuration.isPressed ? 0.78 : 1)
     }
 }
@@ -3419,15 +3662,15 @@ private struct ExportButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .foregroundStyle(.primary)
-            .background(Color.white.opacity(configuration.isPressed ? 0.16 : 0.09), in: Capsule())
-            .overlay { Capsule().strokeBorder(.white.opacity(0.15)) }
+            .background(Color(nsColor: .controlBackgroundColor), in: RoundedRectangle(cornerRadius: StudioLayout.controlCornerRadius, style: .continuous))
+            .overlay { RoundedRectangle(cornerRadius: StudioLayout.controlCornerRadius, style: .continuous).strokeBorder(Color.primary.opacity(0.14)) }
     }
 }
 
 private struct SavedResultButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .foregroundStyle(Color(red: 0.04, green: 0.11, blue: 0.16))
+            .foregroundStyle(.white)
             .background(SelectionPalette.active, in: Capsule())
             .overlay { Capsule().strokeBorder(.white.opacity(0.28)) }
             .shadow(color: Color(red: 0.30, green: 0.75, blue: 0.94).opacity(0.24), radius: 10, y: 4)
@@ -3438,10 +3681,10 @@ private struct SavedResultButtonStyle: ButtonStyle {
 private struct ManualAdjustmentButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .foregroundStyle(Color(red: 0.88, green: 0.96, blue: 1.00))
-            .background(Color(red: 0.07, green: 0.22, blue: 0.31), in: Capsule())
-            .overlay { Capsule().strokeBorder(Color(red: 0.42, green: 0.84, blue: 0.96).opacity(0.72)) }
-            .shadow(color: Color(red: 0.25, green: 0.68, blue: 0.91).opacity(configuration.isPressed ? 0.08 : 0.18), radius: 8, y: 3)
+            .foregroundStyle(.white)
+            .background(Color(red: 0.071, green: 0.125, blue: 0.200), in: Capsule())
+            .overlay { Capsule().strokeBorder(Color(red: 0.290, green: 0.510, blue: 0.820).opacity(0.72)) }
+            .shadow(color: Color.black.opacity(configuration.isPressed ? 0.08 : 0.18), radius: 8, y: 3)
             .opacity(configuration.isPressed ? 0.80 : 1)
     }
 }
@@ -3459,15 +3702,17 @@ private struct ManualFrameEditorTextFieldStyle: TextFieldStyle {
             .foregroundStyle(.primary)
             .multilineTextAlignment(.center)
             .padding(.horizontal, 10)
-            .frame(height: 36)
+            .frame(height: ManualEditorLayout.compactControlHeight)
             .background(
-                Color(nsColor: .controlBackgroundColor),
-                in: RoundedRectangle(cornerRadius: 7, style: .continuous)
+                colorScheme == .dark
+                    ? Color(red: 0.114, green: 0.133, blue: 0.157)
+                    : Color.white.opacity(0.84),
+                in: RoundedRectangle(cornerRadius: StudioLayout.controlCornerRadius, style: .continuous)
             )
             .overlay {
-                RoundedRectangle(cornerRadius: 7, style: .continuous)
+                RoundedRectangle(cornerRadius: StudioLayout.controlCornerRadius, style: .continuous)
                     .strokeBorder(
-                        colorScheme == .dark ? .white.opacity(0.24) : .black.opacity(0.14),
+                        colorScheme == .dark ? .white.opacity(0.18) : Color(red: 0.805, green: 0.816, blue: 0.824),
                         lineWidth: 1
                     )
             }
@@ -3477,21 +3722,23 @@ private struct ManualFrameEditorTextFieldStyle: TextFieldStyle {
 private struct ManualFrameEditorActionButtonStyle: ButtonStyle {
     @Environment(\.colorScheme) private var colorScheme
     enum Role {
-        case smartSelect
-        case regenerate
+        case primary
+        case secondary
+        case toolbarPrimary
+        case toolbarSecondary
     }
 
     let role: Role
     func makeBody(configuration: Configuration) -> some View {
-        let shape = RoundedRectangle(cornerRadius: 7, style: .continuous)
+        let shape = RoundedRectangle(cornerRadius: StudioLayout.controlCornerRadius, style: .continuous)
         let pressedOpacity = configuration.isPressed ? 0.80 : 1.0
 
         switch role {
-        case .smartSelect:
+        case .primary:
             configuration.label
                 .foregroundStyle(Color.white)
                 .background(
-                    Color(red: 0.04, green: 0.48, blue: 1.00),
+                    SelectionPalette.active,
                     in: shape
                 )
                 .overlay {
@@ -3499,19 +3746,35 @@ private struct ManualFrameEditorActionButtonStyle: ButtonStyle {
                 }
                 .opacity(pressedOpacity)
 
-        case .regenerate:
+        case .secondary:
             configuration.label
                 .foregroundStyle(.primary)
                 .background(
-                    Color(nsColor: .controlBackgroundColor),
+                    colorScheme == .dark
+                        ? Color(red: 0.114, green: 0.133, blue: 0.157)
+                        : Color.white.opacity(0.84),
                     in: shape
                 )
                 .overlay {
                     shape.strokeBorder(
-                        colorScheme == .dark ? .white.opacity(0.24) : .black.opacity(0.14),
+                        colorScheme == .dark ? .white.opacity(0.18) : Color(red: 0.805, green: 0.816, blue: 0.824),
                         lineWidth: 1
                     )
                 }
+                .opacity(pressedOpacity)
+
+        case .toolbarPrimary:
+            configuration.label
+                .foregroundStyle(SelectionPalette.active)
+                .background(Color.clear, in: shape)
+                .overlay { shape.strokeBorder(Color.clear, lineWidth: 1) }
+                .opacity(pressedOpacity)
+
+        case .toolbarSecondary:
+            configuration.label
+                .foregroundStyle(.primary)
+                .background(Color.clear, in: shape)
+                .overlay { shape.strokeBorder(Color.clear, lineWidth: 1) }
                 .opacity(pressedOpacity)
         }
     }

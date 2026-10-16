@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-labelledby="title">
+  <title>ShotMap Atlas Aperture</title>
+  <rect x="44" y="44" width="936" height="936" rx="206" fill="#11233D"/>
+  <rect x="45" y="45" width="934" height="934" rx="205" fill="none" stroke="#35587F" stroke-width="2"/>
+  <!-- Four directional panels form a compact map around a central aperture. -->
+  <path d="M202 188h232c30 0 54 24 54 54v222H266c-43 0-78-35-78-78V242c0-30 24-54 54-54Z" fill="#F7F8FA"/>
+  <path d="M590 188h232c30 0 54 24 54 54v144c0 43-35 78-78 78H576V242c0-30 24-54 54-54Z" fill="#0A66D9"/>
+  <path d="M188 590c0-30 24-54 54-54h222v222c0 43-35 78-78 78H242c-30 0-54-24-54-54V590Z" fill="#0A66D9"/>
+  <path d="M536 536h222c43 0 78 35 78 78v144c0 30-24 54-54 54H590c-30 0-54-24-54-54V536Z" fill="#F7F8FA"/>
+  <rect x="464" y="464" width="96" height="96" rx="24" fill="#11233D"/>
+  <rect x="485" y="485" width="54" height="54" rx="14" fill="#D9E9FF"/>
+</svg>

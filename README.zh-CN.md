@@ -2,13 +2,15 @@
 
 [English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
 
-![ShotMap 中文工作区正在处理项目作者授权的船行湖面示例视频](docs/assets/readme-workspace-zh.png)
+![ShotMap 中文工作区正在处理《Tears of Steel》并生成分镜图](docs/assets/readme-workspace-zh.png?v=tears-20261016)
 
 **视频一键拼图（ShotMap）** 是一款原生 macOS 应用：从视频中挑选有代表性的画面，拼成一张干净的分镜图。
 
 **先智能选帧，再手动微调；全程本地完成。**
 
-> **最新版：**[v0.2.12 通用 DMG](https://github.com/ixiehao/ShotMap/releases/tag/v0.2.12) · macOS 13+ · Apple Silicon 与 Intel Mac
+> **演示视频署名：**《Tears of Steel》（2012）© Blender Foundation / Blender Institute，采用 [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) 许可。下方的软件截图和动图均使用该视频制作。
+
+> **最新版：**[v0.2.13 通用 DMG](https://github.com/ixiehao/ShotMap/releases/tag/v0.2.13) · macOS 13+ · Apple Silicon 与 Intel Mac
 
 ## 一张图看懂功能
 
@@ -20,7 +22,7 @@
 
 下方是真实软件操作：从已完成的分镜图进入手动选帧窗口，在可视化时间轴上定位画面，再从候选区选择更合适的一帧后保存。
 
-![ShotMap 从工作区进入手动选帧窗口，展示分镜图、可视化时间轴与候选画廊](docs/assets/video-to-storyboard-demo.gif)
+![ShotMap 从 Tears of Steel 分镜工作区进入手动选帧窗口，展示可视化时间轴与候选画廊](docs/assets/video-to-storyboard-demo.gif?v=tears-20261016)
 
 ## 功能
 
@@ -48,8 +50,6 @@ brew install --cask ixiehao/tap/shottessera
 
 ## 安全安装
 
-![适合新手的 macOS 三步安装图文说明](docs/assets/install-guide-zh.jpg)
-
 1. 双击下载的 `.dmg`，将 **ShotMap.app** 拖进“应用程序”。
 2. 复制完成后可推出或删除 DMG；它只是安装包，不会删除已经安装的应用。
 3. 应用尚未经过 Apple 公证。若系统提示无法验证开发者，请在“应用程序”中按住 Control 点按应用，选择“打开”，再确认一次“打开”。无需关闭 macOS 的系统级安全设置。
@@ -73,5 +73,6 @@ brew install --cask ixiehao/tap/shottessera
 - 应用只使用 Apple SDK 框架；未包含第三方应用代码、依赖包、分析 SDK 或 MoviePrint 素材。
 - 内置的 [Tabler Icons Outline](https://github.com/tabler/tabler-icons) SVG 保持原样，按 [MIT License](ThirdPartyLicenses/TablerIcons-MIT.txt) 使用；归属与集成说明见 [NOTICE.md](NOTICE.md)。
 - 文件名标题使用随应用打包的 **Noto Sans CJK SC Bold 2.004**。该字体保持原样，采用 [SIL Open Font License 1.1](ThirdPartyLicenses/NotoSansCJK-OFL-1.1.txt) 单独授权；归属与校验信息见 [NOTICE.md](NOTICE.md)。
+- 文档演示视频：《Tears of Steel》（2012）© Blender Foundation / Blender Institute，采用 [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) 许可。
 - 视频本身及其中已有的字幕、商标、水印和音乐等权利仍归相关权利人所有。生成分镜图并不授予发布或再分发权限。
 - 请遵守适用的当地法律，并仅处理你拥有或获授权处理的视频。本仓库审计仅提供技术信息，不构成法律意见。
