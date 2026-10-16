@@ -1,18 +1,29 @@
 # ShotMap
 
+[![Latest release](https://img.shields.io/github/v/release/ixiehao/ShotMap?display_name=tag&label=release&color=2563eb)](https://github.com/ixiehao/ShotMap/releases/latest)
+[![Verify](https://img.shields.io/github/actions/workflow/status/ixiehao/ShotMap/ci.yml?branch=main&label=verify)](https://github.com/ixiehao/ShotMap/actions/workflows/ci.yml)
+[![macOS 13+](https://img.shields.io/badge/macOS-13%2B-111827?logo=apple)](https://github.com/ixiehao/ShotMap/releases/latest)
+[![License: MIT](https://img.shields.io/badge/license-MIT-059669)](LICENSE)
+
 [English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
 
 ![ShotMap's real English workspace creating a storyboard from Tears of Steel](docs/assets/readme-workspace-en.png?v=tears-20261016)
 
-## See what is in a video—at a glance
+## See what is in a video—before you open it
 
-**ShotMap** turns the representative moments in a video into one clear storyboard image. Browse the story before opening the file, then return to the original video only when you need it.
+**ShotMap** turns the representative moments in a video into one clear storyboard image. Browse the story first, then open the original only when it is the one you need. It is a native, open-source macOS app: no account, upload, or cloud queue.
 
-Smart Select gives you a useful starting point. If one moment is not right, the manual picker lets you replace it with the frame you want. Everything happens on your Mac.
+Smart Select gives you a useful starting point. If one moment is not right, the Manual Frame Editor lets you replace it with the exact frame you want. Everything happens on your Mac.
 
-> **Get ShotMap:** [latest universal DMG](https://github.com/ixiehao/ShotMap/releases/latest) · macOS 13 or later · Apple Silicon and Intel
+> **Start here:** [Download the latest universal DMG](https://github.com/ixiehao/ShotMap/releases/latest) · macOS 13 or later · Apple Silicon and Intel
 
 > **Demo footage:** *Tears of Steel* (2012) © Blender Foundation / Blender Institute, licensed under [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/). The screenshots and animation below use this footage.
+
+## Made for videos you want to find again
+
+- **Family and personal archives:** locate a birthday, trip, sunset, or first step without opening every file.
+- **Creators and editors:** scan a batch of clips before bringing the right material into an editing timeline.
+- **Organising a video folder:** save a compact visual index beside each original video, with optional timecodes and filenames.
 
 ## From video to storyboard in three steps
 
@@ -37,27 +48,21 @@ This recording shows the real app moving from a completed storyboard to the Manu
 
 ## Download and install
 
-With [Homebrew](https://brew.sh/):
+**Most people:** open the [latest release](https://github.com/ixiehao/ShotMap/releases/latest), download the universal `.dmg`, then drag **ShotMap.app** to **Applications**.
 
-```sh
-brew install --cask ixiehao/tap/shottessera
-```
-
-Or download the [latest universal DMG](https://github.com/ixiehao/ShotMap/releases/latest), open it, and drag **ShotMap.app** to **Applications**.
-
-ShotMap is not Apple-notarized yet. If macOS asks you to confirm the developer, Control-click the app in Applications, choose **Open**, then choose **Open** again. You do not need to lower system-wide security settings.
+The release page includes a SHA-256 checksum for people who want to verify their download. ShotMap is not Apple-notarized yet. If macOS asks you to confirm the developer, Control-click the app in Applications, choose **Open**, then choose **Open** again. You do not need to lower system-wide security settings.
 
 ## Private by design
 
 Your videos stay on your Mac. ShotMap has no account, tracking, cloud upload, Electron, FFmpeg, or Python runtime. Its optional update check reads public GitHub release metadata only; it never sends video or usage data.
 
-## Project and feedback
+## Help, feedback, and community
 
-- Website: [ixiehao.github.io/ShotMap](https://ixiehao.github.io/ShotMap/)
-- Source, downloads, and release notes: [github.com/ixiehao/ShotMap](https://github.com/ixiehao/ShotMap)
-- Feedback and feature ideas: [open a GitHub issue](https://github.com/ixiehao/ShotMap/issues/new/choose)
-- Developer: [ixiehao](https://github.com/ixiehao)
-- What changed: [CHANGELOG.md](CHANGELOG.md) · Privacy promise: [PRIVACY.md](PRIVACY.md)
+- **New to ShotMap?** Visit the [website](https://ixiehao.github.io/ShotMap/) for a concise product tour and real screenshots.
+- **Need help, found a bug, or have an idea?** Start with [Support](SUPPORT.md), then use an [issue form](https://github.com/ixiehao/ShotMap/issues/new/choose) for reproducible problems and focused feature requests.
+- **Want to ask or share?** Join [GitHub Discussions](https://github.com/ixiehao/ShotMap/discussions) for questions and workflow ideas.
+- **Want to contribute?** Read [CONTRIBUTING.md](CONTRIBUTING.md). Security concerns belong in the private [security reporting flow](https://github.com/ixiehao/ShotMap/security/advisories/new).
+- **Project details:** [CHANGELOG.md](CHANGELOG.md) · [PRIVACY.md](PRIVACY.md) · [Developer: ixiehao](https://github.com/ixiehao)
 
 ## Rights and license
 

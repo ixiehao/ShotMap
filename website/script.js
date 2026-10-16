@@ -1,12 +1,12 @@
 const translations = {
   en: {
-    pageTitle: "ShotMap — Video Contact Sheets for macOS",
-    pageDescription: "See what is in a video before you open it. ShotMap creates private video contact sheets on your Mac.",
-    ogTitle: "ShotMap — See what is in a video before you open it",
-    ogDescription: "A private macOS app that turns videos into clear, easy-to-browse contact sheets.",
+    pageTitle: "ShotMap — Video Storyboards for macOS",
+    pageDescription: "Turn any video into a clear storyboard before you open it. ShotMap is a free, private macOS app for smart frame selection and local PNG or JPG export.",
+    ogTitle: "ShotMap — Turn video into a clear storyboard on your Mac",
+    ogDescription: "Browse a video’s key moments before opening it. Smart selection, manual control, and private local export for macOS.",
     locale: "en_US", languageLabel: "Choose language", skipLink: "Skip to content",
     navWorkflow: "How it works", navFeatures: "Features", navPrivacy: "Privacy", download: "Download",
-    heroEyebrow: "VIDEO CONTACT SHEETS FOR MAC", heroTitle: "See what’s in a video<br />before you open it.",
+    heroEyebrow: "VIDEO STORYBOARDS FOR MAC", heroTitle: "See what’s in a video<br />before you open it.",
     heroSummary: "ShotMap turns a video into one clear storyboard, so you can browse its important moments at a glance.",
     heroDownload: "Download for macOS", viewSource: "View on GitHub <span aria-hidden=\"true\">↗</span>",
     compatibility: "macOS 13+ · Apple Silicon & Intel · Free and open source", productCaption: "ShotMap workspace",
@@ -30,8 +30,8 @@ const translations = {
     ctaEyebrow: "READY WHEN YOU ARE", ctaTitle: "Make every video easier to browse.", ctaDownload: "Get the latest version", ctaGithub: "View the project on GitHub <span aria-hidden=\"true\">↗</span>", github: "GitHub", releases: "Releases", feedback: "Feedback"
   },
   zh: {
-    pageTitle: "ShotMap — macOS 视频一键拼图", pageDescription: "打开视频前，先看懂里面有什么。ShotMap 在 Mac 本机生成清晰易读的视频分镜图。",
-    ogTitle: "ShotMap — 打开视频前，先看懂里面有什么", ogDescription: "一款在 Mac 本机生成清晰视频分镜图的隐私优先工具。",
+    pageTitle: "ShotMap — macOS 视频分镜图工具", pageDescription: "打开视频前，先看懂里面有什么。ShotMap 在 Mac 本机生成清晰易读的视频分镜图，支持智能选帧、手动调整和 PNG 或 JPG 导出。",
+    ogTitle: "ShotMap — 打开视频前，先看懂里面有什么", ogDescription: "在 Mac 本机生成清晰视频分镜图：智能选帧、手动调整、私密导出。",
     locale: "zh_CN", languageLabel: "选择语言", skipLink: "跳到正文",
     navWorkflow: "使用方法", navFeatures: "功能", navPrivacy: "隐私", download: "下载",
     heroEyebrow: "MAC 视频一键拼图", heroTitle: "打开视频前，<br />内容一眼看懂。",
@@ -58,8 +58,8 @@ const translations = {
     ctaEyebrow: "随时准备开始", ctaTitle: "让每段视频都更容易浏览。", ctaDownload: "获取最新版本", ctaGithub: "在 GitHub 查看项目 <span aria-hidden=\"true\">↗</span>", github: "GitHub", releases: "发布版本", feedback: "反馈"
   },
   ja: {
-    pageTitle: "ShotMap — macOS 向け動画コンタクトシート", pageDescription: "動画を開く前に、内容がひと目でわかる。ShotMap は Mac 上で見やすい動画コンタクトシートを作成します。",
-    ogTitle: "ShotMap — 動画を開く前に、内容がひと目でわかる", ogDescription: "Mac 上だけで見やすい動画コンタクトシートを作成する、プライバシー重視のアプリです。",
+    pageTitle: "ShotMap — macOS 向け動画ストーリーボード", pageDescription: "動画を開く前に、内容がひと目でわかる。ShotMap は Mac 上で見やすい動画の絵コンテを作成し、スマート選択、手動調整、PNG または JPG 出力に対応します。",
+    ogTitle: "ShotMap — 動画を開く前に、内容がひと目でわかる", ogDescription: "Mac 上だけで動画を見やすい絵コンテに。スマート選択、手動調整、プライベートな書き出し。",
     locale: "ja_JP", languageLabel: "言語を選択", skipLink: "本文へ移動",
     navWorkflow: "使い方", navFeatures: "できること", navPrivacy: "プライバシー", download: "ダウンロード",
     heroEyebrow: "MAC 向け動画コンタクトシート", heroTitle: "開く前に、<br />動画の内容がわかる。",
@@ -125,6 +125,9 @@ function updateSchemas(copy) {
     "@context": "https://schema.org", "@type": "SoftwareApplication", name: "ShotMap",
     applicationCategory: "MultimediaApplication", operatingSystem: "macOS 13 or later", softwareVersion: "0.2.13",
     description: copy.pageDescription, downloadUrl: releaseURL,
+    screenshot: "https://ixiehao.github.io/ShotMap/assets/workspace-en.webp",
+    featureList: "Smart frame selection; manual frame editor; batch processing; PNG and JPG export; local-only processing",
+    offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
     author: { "@type": "Person", name: "ixiehao", url: "https://github.com/ixiehao" },
     license: "https://opensource.org/license/mit"
   };

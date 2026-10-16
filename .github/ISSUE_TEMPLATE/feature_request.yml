@@ -1,28 +1,30 @@
-name: Feature request
-description: Suggest a focused improvement for ShotMap.
-title: "[Feature]: "
+name: Feature request / 功能建议 / 機能リクエスト
+description: Suggest a focused improvement for ShotMap. / 提出明确的改进建议。 / 具体的な改善案を提案します。
+title: "[Feature] "
 labels: [enhancement]
 body:
   - type: markdown
     attributes:
       value: |
         Thanks for the idea. Please describe the problem before proposing a solution.
+        感谢建议。请先说明你遇到的问题，再提出解决方案。
+        アイデアをありがとうございます。解決策の前に、困っていることを説明してください。
   - type: textarea
     id: problem
     attributes:
-      label: What problem would this solve?
+      label: What problem would this solve? / 想解决什么问题？ / どんな問題を解決しますか？
     validations:
       required: true
   - type: textarea
     id: proposal
     attributes:
-      label: Proposed experience
-      description: Describe the smallest useful workflow.
+      label: Proposed experience / 期望的使用体验 / 提案する使い方
+      description: Describe the smallest useful workflow. / 请描述最小可用流程。 / 最小限で役立つワークフローを説明してください。
     validations:
       required: true
   - type: textarea
     id: alternatives
     attributes:
-      label: Alternatives considered
+      label: Alternatives considered / 考虑过的替代方案 / 検討した代替案
     validations:
       required: false

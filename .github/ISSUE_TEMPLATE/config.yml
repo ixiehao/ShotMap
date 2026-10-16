@@ -3,6 +3,12 @@ contact_links:
   - name: Download the stable release
     url: https://github.com/ixiehao/ShotMap/releases/latest
     about: Download the latest DMG for Apple Silicon and Intel Macs.
+  - name: Help and common questions / 帮助与常见问题 / ヘルプとよくある質問
+    url: https://ixiehao.github.io/ShotMap/
+    about: Read the product overview, installation steps, and compatibility notes.
+  - name: Ask a question or share a workflow / 提问或分享使用经验 / 質問・使い方の共有
+    url: https://github.com/ixiehao/ShotMap/discussions
+    about: Use Discussions for general questions, workflow ideas, and conversation.
   - name: Security vulnerability
     url: https://github.com/ixiehao/ShotMap/security/advisories/new
     about: Use GitHub's private vulnerability reporting flow; do not post sensitive details publicly.

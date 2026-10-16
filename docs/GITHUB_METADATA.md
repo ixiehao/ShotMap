@@ -5,7 +5,7 @@ social preview. Keep the public metadata below aligned with the stable release.
 
 ## Repository description
 
-`ShotMap — macOS video storyboard and contact sheet app. Smart frame selection, manual refinement, and private local export.`
+`ShotMap makes local video storyboards on macOS — smart frame selection, manual control, and private PNG/JPG export.`
 
 ## Suggested topics
 
@@ -15,9 +15,9 @@ social preview. Keep the public metadata below aligned with the stable release.
 
 ## Social-preview copy
 
-**ShotMap · See what is in a video at a glance**
+**ShotMap · Turn video into a clear storyboard on your Mac**
 
-Smart frame selection, manual refinement, and private local export on macOS.
+Browse a video’s key moments before opening it. Smart selection, manual control, and private local export for macOS.
 
 Use [`docs/assets/social-preview-v2.jpg`](assets/social-preview-v2.jpg) for the
 repository social preview. It is a 1280 × 640 px JPEG and remains below

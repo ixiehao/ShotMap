@@ -1,18 +1,29 @@
 # ShotMap
 
+[![最新リリース](https://img.shields.io/github/v/release/ixiehao/ShotMap?display_name=tag&label=release&color=2563eb)](https://github.com/ixiehao/ShotMap/releases/latest)
+[![検証](https://img.shields.io/github/actions/workflow/status/ixiehao/ShotMap/ci.yml?branch=main&label=verify)](https://github.com/ixiehao/ShotMap/actions/workflows/ci.yml)
+[![macOS 13+](https://img.shields.io/badge/macOS-13%2B-111827?logo=apple)](https://github.com/ixiehao/ShotMap/releases/latest)
+[![License: MIT](https://img.shields.io/badge/license-MIT-059669)](LICENSE)
+
 [English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
 
 ![Tears of Steel を処理して絵コンテを作成する ShotMap の日本語ワークスペース](docs/assets/readme-workspace-ja.png?v=tears-20261016)
 
 ## 動画を開く前に、中身をひと目で
 
-**ShotMap** は、動画の代表的な場面を一枚の見やすい絵コンテにまとめるネイティブ macOS アプリです。まず絵コンテを見れば、動画の内容や流れをおおまかに把握できます。必要なときだけ元の動画を開けます。
+**ShotMap** は、動画の代表的な場面を一枚の見やすい絵コンテにまとめるネイティブ macOS アプリです。まず絵コンテを見れば、動画の内容や流れをおおまかに把握できます。必要なときだけ元の動画を開けます。オープンソースで、アカウント、アップロード、クラウドキューは不要です。
 
-スマート選択で最初の候補を作り、気になるコマだけ手動で置き換えられます。すべての処理は Mac 上で完結します。
+スマート選択で最初の候補を作り、気になるコマだけ手動フレーム選択で正確な場面に置き換えられます。すべての処理は Mac 上で完結します。
 
-> **ShotMap を入手：**[最新 Universal DMG](https://github.com/ixiehao/ShotMap/releases/latest) · macOS 13 以降 · Apple Silicon / Intel Mac 対応
+> **ここから始める：**[最新 Universal DMG をダウンロード](https://github.com/ixiehao/ShotMap/releases/latest) · macOS 13 以降 · Apple Silicon / Intel Mac 対応
 
 > **デモ映像のクレジット：** *Tears of Steel*（2012）© Blender Foundation / Blender Institute、[CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) ライセンス。以下の製品スクリーンショットとアニメーションにはこの映像を使用しています。
+
+## また見つけたい動画のために
+
+- **家族や個人のアーカイブ：**一つずつ開かなくても、誕生日、旅行、夕日、子どもの成長の場面を探せます。
+- **クリエイターと編集者：**編集ソフトに読み込む前に、まとめて素材を確認し、本当に必要なショットを見つけられます。
+- **動画フォルダの整理：**各動画の横にコンパクトな視覚インデックスを保存。必要ならタイムコードとファイル名も表示できます。
 
 ## 3 ステップで絵コンテを作成
 
@@ -37,27 +48,21 @@
 
 ## ダウンロードとインストール
 
-[Homebrew](https://brew.sh/) を使用している場合：
+**ほとんどの方へ：**[最新リリース](https://github.com/ixiehao/ShotMap/releases/latest)を開き、Universal `.dmg` をダウンロードして **ShotMap.app** を「アプリケーション」へドラッグしてください。
 
-```sh
-brew install --cask ixiehao/tap/shottessera
-```
-
-または[最新 Universal DMG](https://github.com/ixiehao/ShotMap/releases/latest)をダウンロードし、開いて **ShotMap.app** を「アプリケーション」へドラッグします。
-
-ShotMap はまだ Apple の公証を受けていません。macOS に開発元の確認を求められた場合は、「アプリケーション」で Control-click して「開く」を選び、もう一度「開く」を確認してください。macOS 全体のセキュリティ設定を下げる必要はありません。
+リリースページには、ダウンロードを確認したい方のために SHA-256 チェックサムも用意されています。ShotMap はまだ Apple の公証を受けていません。macOS に開発元の確認を求められた場合は、「アプリケーション」で Control-click して「開く」を選び、もう一度「開く」を確認してください。macOS 全体のセキュリティ設定を下げる必要はありません。
 
 ## プライバシー優先
 
 動画は Mac から外へ出ません。ShotMap はアカウント、追跡、クラウドアップロードを使わず、Electron、FFmpeg、Python ランタイムも含みません。任意の更新確認は GitHub の公開リリース情報だけを読み取り、動画や利用データを送信しません。
 
-## プロジェクトとフィードバック
+## ヘルプ、フィードバック、コミュニティ
 
-- Web サイト：[ixiehao.github.io/ShotMap](https://ixiehao.github.io/ShotMap/)
-- ソース、ダウンロード、リリースノート：[github.com/ixiehao/ShotMap](https://github.com/ixiehao/ShotMap)
-- 不具合報告・提案：[GitHub Issue を作成](https://github.com/ixiehao/ShotMap/issues/new/choose)
-- 開発者：[ixiehao](https://github.com/ixiehao)
-- 更新履歴：[CHANGELOG.md](CHANGELOG.md) · プライバシー：[PRIVACY.md](PRIVACY.md)
+- **初めての方へ：**[公式サイト](https://ixiehao.github.io/ShotMap/)で、短い製品紹介と実際のスクリーンショットを確認できます。
+- **ヘルプ、不具合、機能の提案：**まず[サポート](SUPPORT.md)を確認してください。再現できる不具合と具体的な提案は [Issue フォーム](https://github.com/ixiehao/ShotMap/issues/new/choose)から送れます。
+- **質問や使い方の共有：**[GitHub Discussions](https://github.com/ixiehao/ShotMap/discussions)へどうぞ。
+- **開発に参加する：**[CONTRIBUTING.md](CONTRIBUTING.md)をお読みください。セキュリティ上の問題は、非公開の[脆弱性報告フロー](https://github.com/ixiehao/ShotMap/security/advisories/new)を利用してください。
+- **プロジェクト情報：**[CHANGELOG.md](CHANGELOG.md) · [PRIVACY.md](PRIVACY.md) · [開発者：ixiehao](https://github.com/ixiehao)
 
 ## 権利とライセンス
 
