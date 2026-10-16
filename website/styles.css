@@ -123,8 +123,8 @@ h1 { max-width: 550px; margin-bottom: 23px; font-size: clamp(45px, 5vw, 64px); l
 
 .faq-section { border-top: 1px solid var(--line); }
 .faq-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 46px; }
-.faq-grid details { min-height: 154px; padding: 20px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
-.faq-grid summary { cursor: pointer; font-size: 15px; font-weight: 680; letter-spacing: -.015em; }
+.faq-grid article { min-height: 154px; padding: 20px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+.faq-grid h3 { margin: 0; font-size: 15px; font-weight: 680; letter-spacing: -.015em; }
 .faq-grid p { margin: 12px 0 0; color: var(--muted); font-size: 14px; line-height: 1.55; }
 
 .final-cta { padding-block: 100px 112px; text-align: center; }
@@ -166,7 +166,7 @@ footer span:nth-child(2) { margin-right: auto; color: var(--muted); font-weight:
   .capability-grid, .faq-grid { grid-template-columns: 1fr; gap: 14px; }
   .capability-grid { margin-top: 36px; }
   .faq-grid { margin-top: 32px; }
-  .faq-grid details { min-height: auto; }
+  .faq-grid article { min-height: auto; }
   .privacy-section { padding-block: 72px; }
   .final-cta { padding-block: 72px 80px; }
   .cta-actions { align-items: stretch; flex-direction: column; gap: 12px; }

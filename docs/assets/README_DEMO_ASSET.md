@@ -26,6 +26,10 @@ storyboards, and a short documentation GIF are published.
 - `website/assets/manual-en.webp`, `manual-zh.webp`, and `manual-ja.webp`
   are real manual-frame selection windows: player, visual timeline, frame
   stepping controls, and candidate gallery are all live product UI.
+- `website/assets/tears-of-steel-storyboard.webp` is a direct ShotMap export
+  from the approved footage. It is kept separate from the surrounding
+  application-window captures so the website shows each step without
+  repeating the same image.
 
 `video-to-storyboard-demo.gif` and its PNG fallback are rebuilt from actual
 *Tears of Steel* workspace and manual-selection states.
