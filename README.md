@@ -4,41 +4,38 @@
 
 ![ShotMap's real English workspace creating a storyboard from Tears of Steel](docs/assets/readme-workspace-en.png?v=tears-20261016)
 
-**ShotMap** is a native macOS app that selects representative video frames and turns them into one clean storyboard image.
+## See what is in a video—at a glance
 
-**Smart selection first. Fine-tune any frame. Export entirely locally.**
+**ShotMap** turns the representative moments in a video into one clear storyboard image. Browse the story before opening the file, then return to the original video only when you need it.
 
-> **Demo footage credit:** *Tears of Steel* (2012) © Blender Foundation / Blender Institute, licensed under [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/). The product screenshots and animation below use this footage.
+Smart Select gives you a useful starting point. If one moment is not right, the manual picker lets you replace it with the frame you want. Everything happens on your Mac.
 
-> **Latest release:** [v0.2.13 universal DMG](https://github.com/ixiehao/ShotMap/releases/tag/v0.2.13) · macOS 13+ · Apple Silicon and Intel
+> **Get ShotMap:** [latest universal DMG](https://github.com/ixiehao/ShotMap/releases/latest) · macOS 13 or later · Apple Silicon and Intel
 
-## At a glance
+> **Demo footage:** *Tears of Steel* (2012) © Blender Foundation / Blender Institute, licensed under [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/). The screenshots and animation below use this footage.
 
-| 1. Add videos | 2. Smart-select, then fine-tune | 3. Build the storyboard | 4. Export locally |
-| --- | --- | --- | --- |
-| Add one video or queue several. | Detect cuts and avoid black, blurry, and duplicate frames; inspect alternatives when needed. | Preview 3×3 to 8×8 grids while each storyboard is built. | Save a PNG or JPG beside the source video. |
+## From video to storyboard in three steps
 
-### See the workflow
+| 1. Add videos | 2. Choose the moments | 3. Save the storyboard |
+| --- | --- | --- |
+| Drop in one video or queue several. | Start with Smart Select, then adjust any frame yourself. | Export a PNG or JPG beside the original video. |
 
-The real app moves from a finished storyboard to the manual frame editor, where you can locate a moment on the visual timeline and choose a better candidate before saving.
+## Made for finding moments quickly
+
+- Starts with clear, representative frames and avoids black, blurry, and near-duplicate shots.
+- Lets you refine a result in the Manual Frame Editor: player, visual timeline, frame steps, and candidate gallery are all in one place.
+- Processes a visible queue and fills the storyboard preview as each result is ready.
+- Offers 3 × 3 through 8 × 8 grids, aspect ratio, background colour, image width, optional timecodes, and file titles.
+- Supports MP4, MOV, MPEG, and other formats supported by macOS.
+- Works in English, 简体中文, and 日本語, with Light, Dark, or System appearance.
+
+### See the real workflow
+
+This recording shows the real app moving from a completed storyboard to the Manual Frame Editor, where you can find a moment on the visual timeline and choose a better candidate before saving.
 
 ![ShotMap moves from its Tears of Steel storyboard workspace to the manual frame editor, showing the visual timeline and candidate gallery](docs/assets/video-to-storyboard-demo.gif?v=tears-20261016)
 
-## Features
-
-- Detects meaningful scene changes and prioritises usable frames containing faces or people.
-- Skips black, low-sharpness, and near-duplicate frames.
-- Keeps the source composition by default; choose 16:9, 4:3, 1:1, 3:4, 9:16, or 21:9 before creating a 3×3 to 8×8 grid.
-- Queues multiple videos and processes them in order, with live preview for each result.
-- Lets you browse another candidate set, use Smart Select, and fine-tune frames before saving again with the original output settings.
-- Redesigned the manual frame editor as a player, timeline, and candidate gallery.
-- Choose a storyboard background colour in Frame settings.
-- Supports MP4, MOV, MPEG, and other formats supported by macOS; optional timecodes and filename titles are available.
-- Exports PNG or JPG at 1920 px or wider as `video-name-shot-001.ext`, incrementing safely when needed.
-- Remembers your English, 中文, or 日本語 interface choice and supports light, dark, or system appearance.
-- Uses a consistent Tabler Icons Outline interface, designed to keep video, frame, and export controls easy to scan.
-
-## Download
+## Download and install
 
 With [Homebrew](https://brew.sh/):
 
@@ -46,33 +43,26 @@ With [Homebrew](https://brew.sh/):
 brew install --cask ixiehao/tap/shottessera
 ```
 
-Or open [the latest release](https://github.com/ixiehao/ShotMap/releases/latest) and download the universal **DMG**.
+Or download the [latest universal DMG](https://github.com/ixiehao/ShotMap/releases/latest), open it, and drag **ShotMap.app** to **Applications**.
 
-## Install safely
-
-1. Double-click the downloaded `.dmg`, then drag **ShotMap.app** to **Applications**.
-2. After the copy finishes, eject or delete the DMG. It is only the installer and does not remove the installed app.
-3. The app is not Apple-notarized yet. If macOS cannot verify the developer, open **Applications**, Control-click the app, choose **Open**, then choose **Open** once more. Do not disable macOS system-wide security.
-
-To remove it later, quit the app and move only `ShotMap.app` from Applications to Trash. Exported images remain beside their source videos.
+ShotMap is not Apple-notarized yet. If macOS asks you to confirm the developer, Control-click the app in Applications, choose **Open**, then choose **Open** again. You do not need to lower system-wide security settings.
 
 ## Private by design
 
-All frame analysis and export happen on your Mac. ShotMap has no account, telemetry, cloud upload, Electron, FFmpeg, or Python runtime. Its optional update check reads only public GitHub release metadata; it never sends video or usage data.
+Your videos stay on your Mac. ShotMap has no account, tracking, cloud upload, Electron, FFmpeg, or Python runtime. Its optional update check reads public GitHub release metadata only; it never sends video or usage data.
 
 ## Project and feedback
 
-- Developer: [ixiehao](https://github.com/ixiehao)
+- Website: [ixiehao.github.io/ShotMap](https://ixiehao.github.io/ShotMap/)
 - Source, downloads, and release notes: [github.com/ixiehao/ShotMap](https://github.com/ixiehao/ShotMap)
 - Feedback and feature ideas: [open a GitHub issue](https://github.com/ixiehao/ShotMap/issues/new/choose)
-- What changed: [CHANGELOG.md](CHANGELOG.md) · Privacy promise: [PRIVACY.md](PRIVACY.md) · Product naming: [docs/NAMING.md](docs/NAMING.md)
+- Developer: [ixiehao](https://github.com/ixiehao)
+- What changed: [CHANGELOG.md](CHANGELOG.md) · Privacy promise: [PRIVACY.md](PRIVACY.md)
 
 ## Rights and license
 
-- Swift source, documentation, and the ShotMap Iris icon are original project work released under the [MIT License](LICENSE).
-- The app uses Apple SDK frameworks only; it bundles no third-party application code, packages, analytics SDKs, or MoviePrint assets.
-- The bundled [Tabler Icons Outline](https://github.com/tabler/tabler-icons) SVGs are used unmodified under the [MIT License](ThirdPartyLicenses/TablerIcons-MIT.txt). Their attribution and integration details are in [NOTICE.md](NOTICE.md).
-- The filename title uses the bundled **Noto Sans CJK SC Bold 2.004** font, unmodified and separately licensed under the [SIL Open Font License 1.1](ThirdPartyLicenses/NotoSansCJK-OFL-1.1.txt). See [NOTICE.md](NOTICE.md) for attribution and verification details.
-- Documentation demo footage: *Tears of Steel* (2012) © Blender Foundation / Blender Institute, used under [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/).
-- Rights to source videos, subtitles, marks, watermarks, and music remain with their respective owners. Generating a storyboard does not grant publication or redistribution rights.
-- Follow applicable local law and process only videos you own or are authorised to analyse. This repository audit is technical information, not legal advice.
+- ShotMap’s Swift source, documentation, and Iris icon are original project work released under the [MIT License](LICENSE).
+- The app uses Apple SDK frameworks only. It bundles no third-party application code, packages, analytics SDKs, or MoviePrint assets.
+- The bundled [Tabler Icons Outline](https://github.com/tabler/tabler-icons) SVGs are used unmodified under the [MIT License](ThirdPartyLicenses/TablerIcons-MIT.txt). The bundled Noto Sans CJK font is licensed under the [SIL Open Font License 1.1](ThirdPartyLicenses/NotoSansCJK-OFL-1.1.txt). See [NOTICE.md](NOTICE.md) for details.
+- Documentation demo footage is *Tears of Steel* (2012) © Blender Foundation / Blender Institute, used under [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/).
+- Process only videos you own or are authorised to analyse. Creating a storyboard does not grant rights to publish or redistribute the source video.

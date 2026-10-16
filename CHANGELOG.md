@@ -7,27 +7,21 @@ available on the [GitHub Releases page](https://github.com/ixiehao/ShotMap/relea
 
 ### English
 
-- Rebuilt the Batch Studio workspace with a calmer three-pane layout, a sharper visual hierarchy, compact header controls, and consistent light and dark palettes.
-- Redesigned Manual Frame Editor as a focused editing desk: player, visual timeline, frame-step controls, selectable candidates, and selection order all remain visible together.
-- Replaced the generic grid controls with clear visual grid choices, refined the queue action, and refreshed the ShotMap icon across the app and public surfaces.
-- Updated the official website and three README files with real *Tears of Steel* product captures in English, Chinese, and Japanese. Demo footage is credited to Blender Foundation / Blender Institute under CC BY 3.0.
-- Simplified the documentation by removing the image-heavy installation guide while retaining concise, safe installation steps.
+- Refreshed the workspace and Manual Frame Editor for a clearer, more focused workflow in Light and Dark mode.
+- Made grid choices, queue controls, and the ShotMap icon easier to recognise at a glance.
+- Updated the website and three README files with real *Tears of Steel* captures and shorter installation guidance. Demo footage is credited under CC BY 3.0.
 
 ### 中文
 
-- 重构 Batch Studio 主工作区：采用更安静清晰的三栏布局、紧凑的顶部控件，并统一优化浅色和深色配色。
-- 重新设计手动选帧窗口：播放器、可视化时间轴、逐帧调整、候选画面和选中顺序可同时查看与操作。
-- 将普通网格按钮替换为更直观的可视化网格选择器，优化视频队列添加操作，并同步更新 ShotMap 图标及公开素材。
-- 官网与三语 README 已改用真实运行的《Tears of Steel》软件截图；英文、中文、日文均提供对应界面，且明确署名 Blender Foundation / Blender Institute 的 CC BY 3.0 演示视频授权。
-- 移除偏重图片的安装指南，文档保留更简洁、安全的文字安装步骤。
+- 优化主工作区与手动选帧窗口，浅色、深色模式下的操作层级更清晰、更专注。
+- 网格选择、队列操作和 ShotMap 图标更容易一眼识别。
+- 官网与三语 README 更新为真实的《Tears of Steel》运行截图，并保留更简洁的安装说明；演示视频采用 CC BY 3.0 许可。
 
 ### 日本語
 
-- Batch Studio のメイン画面を再構築し、落ち着いた 3 ペイン構成、明確な情報階層、コンパクトなヘッダー操作、統一したライト／ダーク配色へ刷新しました。
-- 手動フレーム選択画面を、プレーヤー、視覚的タイムライン、コマ送り、候補、選択順を同時に確認できる編集画面として再設計しました。
-- 通常のグリッドボタンを視覚的にわかりやすいグリッド選択へ置き換え、キュー追加操作と ShotMap アイコン、公開素材を改善しました。
-- 公式サイトと 3 言語の README を、実際に動作する *Tears of Steel* のキャプチャへ更新しました。英語・中国語・日本語で対応する UI を表示し、Blender Foundation / Blender Institute による CC BY 3.0 の映像を明記しています。
-- 画像中心のインストールガイドを削除し、簡潔で安全なテキスト手順を残しました。
+- ワークスペースと手動フレーム選択を改善し、ライト／ダークの両方で、より見やすく集中できる操作画面にしました。
+- グリッド選択、キュー操作、ShotMap アイコンをひと目で認識しやすくしました。
+- 公式サイトと 3 言語の README を実際の *Tears of Steel* キャプチャへ更新し、インストール案内を簡潔にしました。デモ映像は CC BY 3.0 です。
 
 ## v0.2.12
 

@@ -5,20 +5,19 @@ social preview. Keep the public metadata below aligned with the stable release.
 
 ## Repository description
 
-`ShotMap（视频一键拼图）— Native macOS video screenshot collage, contact sheet, and storyboard generator. Local, fast, private, and open source.`
+`ShotMap — macOS video storyboard and contact sheet app. Smart frame selection, manual refinement, and private local export.`
 
 ## Suggested topics
 
-`macos`, `macos-app`, `swift`, `swiftui`, `video-screenshot`,
-`screenshot-collage`, `video-collage`, `contact-sheet`, `storyboard`,
-`video-storyboard`, `frame-extraction`, `video-tools`, `open-source`,
-`privacy`, `offline`, `chinese`, `japanese`.
+`macos`, `macos-app`, `swift`, `swiftui`, `avfoundation`,
+`video-storyboard`, `contact-sheet`, `video-thumbnail`, `video-screenshot`,
+`frame-extraction`, `video-tools`, `local-first`, `privacy`, `open-source`.
 
 ## Social-preview copy
 
-**ShotMap · Turn video into storyboards on macOS**
+**ShotMap · See what is in a video at a glance**
 
-Smart frame selection, optional manual fine-tuning, and fully local export.
+Smart frame selection, manual refinement, and private local export on macOS.
 
 Use [`docs/assets/social-preview-v2.jpg`](assets/social-preview-v2.jpg) for the
 repository social preview. It is a 1280 × 640 px JPEG and remains below
