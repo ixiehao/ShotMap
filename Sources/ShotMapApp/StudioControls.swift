@@ -6,29 +6,56 @@ struct ShotMapMark: View {
     var size: CGFloat = 44
 
     var body: some View {
-        Group {
-            if let image = ShotMapIconAsset.image {
-                Image(nsImage: image)
-                    .resizable()
-                    .interpolation(.high)
-                    .scaledToFit()
-                    .accessibilityLabel(language.text("app.icon.accessibility"))
-            } else {
-                ProjectIcon(symbol: .eye, size: 22)
-                    .foregroundStyle(.white)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .background(Color.indigo, in: RoundedRectangle(cornerRadius: 12, style: .continuous))
-            }
-        }
+        // The application bundle keeps the full-resolution PNG / ICNS for the
+        // Dock and Finder. In workspace chrome native shapes retain softer,
+        // cleaner corners than a very small raster rendition.
+        ShotMapMarkGlyph(size: size)
+            .accessibilityLabel(language.text("app.icon.accessibility"))
         .frame(width: size, height: size)
     }
 }
 
-private enum ShotMapIconAsset {
-    static let image: NSImage? = {
-        guard let url = Bundle.module.url(forResource: "AppIcon", withExtension: "png") else { return nil }
-        return NSImage(contentsOf: url)
-    }()
+/// Compact vector form of the ShotMap mark used inside the app chrome. Whole
+/// point measurements keep the tile edges clean at standard and Retina scales.
+private struct ShotMapMarkGlyph: View {
+    let size: CGFloat
+    @Environment(\.colorScheme) private var colorScheme
+
+    private var outerCornerRadius: CGFloat { max(7, size * 0.27) }
+    private var tileCornerRadius: CGFloat { max(2, size * 0.105) }
+    private var tileInset: CGFloat { size * 0.19 }
+    private var tileGap: CGFloat { size * 0.075 }
+
+    var body: some View {
+        let tileSize = (size - tileInset * 2 - tileGap) / 2
+        let outer = RoundedRectangle(cornerRadius: outerCornerRadius, style: .continuous)
+        let tile = RoundedRectangle(cornerRadius: tileCornerRadius, style: .continuous)
+
+        ZStack {
+            outer.fill(Color(red: 0.067, green: 0.137, blue: 0.239))
+            outer.strokeBorder(
+                colorScheme == .light ? Color.white.opacity(0.38) : Color.white.opacity(0.16),
+                lineWidth: 1
+            )
+            VStack(spacing: tileGap) {
+                HStack(spacing: tileGap) {
+                    tile.fill(Color(red: 0.965, green: 0.970, blue: 0.978))
+                    tile.fill(SelectionPalette.active)
+                }
+                HStack(spacing: tileGap) {
+                    tile.fill(SelectionPalette.active)
+                    tile.fill(Color(red: 0.965, green: 0.970, blue: 0.978))
+                }
+            }
+            .frame(width: tileSize * 2 + tileGap, height: tileSize * 2 + tileGap)
+        }
+        .compositingGroup()
+        .shadow(
+            color: Color.black.opacity(colorScheme == .light ? 0.12 : 0.30),
+            radius: size > 40 ? 5 : 2,
+            y: size > 40 ? 3 : 1
+        )
+    }
 }
 
 struct ProcessingControlButtonStyle: ButtonStyle {
@@ -80,33 +107,32 @@ struct StoryboardGridChoiceLabel: View {
     let isSelected: Bool
 
     private var visualSide: Int { min(5, max(2, side)) }
+    private var dotSize: CGFloat { visualSide >= 5 ? 4 : 5 }
+    private var dotSpacing: CGFloat { visualSide >= 5 ? 2 : 3 }
 
     var body: some View {
-        VStack(spacing: 4) {
-            VStack(spacing: 2.5) {
+        VStack(spacing: 3) {
+            VStack(spacing: dotSpacing) {
                 ForEach(0..<visualSide, id: \.self) { _ in
-                    HStack(spacing: 2.5) {
+                    HStack(spacing: dotSpacing) {
                         ForEach(0..<visualSide, id: \.self) { _ in
-                            RoundedRectangle(cornerRadius: 1.2, style: .continuous)
+                            RoundedRectangle(cornerRadius: 1, style: .continuous)
                                 .fill(isSelected ? SelectionPalette.active : Color.secondary.opacity(0.72))
-                                .frame(width: 4.5, height: 4.5)
+                                .frame(width: dotSize, height: dotSize)
                         }
                     }
                 }
             }
-            // Do not constrain this to a synthetic, one-size-fits-all height:
-            // a 5 × 5 pictogram is taller than a 4 × 4 one.  Giving the
-            // pictogram its real height lets the surrounding stack centre the
-            // icon-and-label pair as one unit inside each option.
+            .frame(height: 29, alignment: .center)
 
             Text("\(side) × \(side)")
                 .font(.system(size: 11, weight: .semibold))
                 .monospacedDigit()
+                .frame(height: 14)
         }
-        // Keep the icon/label pair centred within every tap target.  This is
-        // particularly noticeable for the active tile, whose outline makes
-        // even a one-pixel vertical drift look unintentional.
-        .frame(maxWidth: .infinity, minHeight: 58, alignment: .center)
+        // Every option uses the same icon and label lanes. This prevents the
+        // 5 × 5 glyph from shifting its label by a visible pixel.
+        .frame(maxWidth: .infinity, minHeight: 60, alignment: .center)
         .contentShape(Rectangle())
     }
 }
@@ -118,6 +144,7 @@ struct StoryboardGridChoiceStyle: ButtonStyle {
     @Environment(\.colorScheme) private var colorScheme
 
     func makeBody(configuration: Configuration) -> some View {
+        let shape = RoundedRectangle(cornerRadius: 10, style: .continuous)
         configuration.label
             .foregroundStyle(labelColor)
             .background {
@@ -125,16 +152,19 @@ struct StoryboardGridChoiceStyle: ButtonStyle {
                 // controls read as a quiet set of options until a choice is
                 // made; only the active value earns a surface and outline.
                 if isSelected || configuration.isPressed {
-                    RoundedRectangle(cornerRadius: 9, style: .continuous)
+                    shape
                         .fill(fillColor(isPressed: configuration.isPressed))
                 }
             }
             .overlay {
                 if isSelected {
-                    RoundedRectangle(cornerRadius: 9, style: .continuous)
-                        .strokeBorder(borderColor, lineWidth: 1.5)
+                    shape.strokeBorder(borderColor, lineWidth: 1)
+                    shape
+                        .inset(by: 1)
+                        .strokeBorder(Color.white.opacity(colorScheme == .light ? 0.72 : 0.16), lineWidth: 0.5)
                 }
             }
+            .shadow(color: isSelected ? borderColor.opacity(0.14) : .clear, radius: 3, y: 1)
             .opacity(configuration.isPressed ? 0.82 : 1)
     }
 
@@ -158,8 +188,8 @@ struct StoryboardGridChoiceStyle: ButtonStyle {
         let base: Color
         if isSelected {
             base = colorScheme == .light
-                ? Color(red: 0.91, green: 0.95, blue: 1.0)
-                : Color(red: 0.09, green: 0.20, blue: 0.36)
+                ? Color(red: 0.935, green: 0.962, blue: 1.0)
+                : Color(red: 0.075, green: 0.172, blue: 0.310)
         } else {
             base = colorScheme == .light
                 ? Color.black.opacity(0.055)

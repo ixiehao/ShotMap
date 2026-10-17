@@ -539,21 +539,11 @@ struct ContentView: View {
                     Button {
                         model.background = background
                     } label: {
-                        Circle()
-                            .fill(storyboardBackgroundColor(background))
-                            .frame(width: 20, height: 20)
-                            .overlay {
-                                Circle().strokeBorder(
-                                    isSelected ? studioAccent : Color.primary.opacity(0.22),
-                                    lineWidth: isSelected ? 3 : 1
-                                )
-                            }
-                            .shadow(
-                                color: .black.opacity(0.20),
-                                radius: isSelected ? 3 : 1,
-                                y: 1
-                            )
-                            .contentShape(Circle())
+                        StoryboardBackgroundSwatch(
+                            color: storyboardBackgroundColor(background),
+                            isSelected: isSelected,
+                            accent: studioAccent
+                        )
                     }
                     .buttonStyle(.plain)
                     .disabled(model.isSettingsLocked)
@@ -571,6 +561,38 @@ struct ContentView: View {
     private func storyboardBackgroundColor(_ background: StoryboardBackground) -> Color {
         let rgb = background.rgb
         return Color(red: rgb.red, green: rgb.green, blue: rgb.blue)
+    }
+
+    /// Keep the visible colour chip separate from its selected ring. The old
+    /// heavy outline sat on top of the chip, which made compact palette edges
+    /// look uneven. This gives the ring a small, intentional breathing space.
+    private struct StoryboardBackgroundSwatch: View {
+        let color: Color
+        let isSelected: Bool
+        let accent: Color
+
+        var body: some View {
+            ZStack {
+                if isSelected {
+                    Circle()
+                        .fill(accent.opacity(0.10))
+                        .frame(width: 26, height: 26)
+                    Circle()
+                        .strokeBorder(accent, lineWidth: 1.5)
+                        .frame(width: 26, height: 26)
+                }
+
+                Circle()
+                    .fill(color)
+                    .frame(width: 18, height: 18)
+                    .overlay {
+                        Circle().strokeBorder(Color.primary.opacity(0.18), lineWidth: 0.75)
+                    }
+            }
+            .frame(width: 28, height: 28)
+            .contentShape(Circle())
+            .shadow(color: .black.opacity(isSelected ? 0.15 : 0.10), radius: isSelected ? 2 : 1, y: 1)
+        }
     }
 
     private func queuePanel(compact: Bool, isNarrow: Bool) -> some View {

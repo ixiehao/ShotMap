@@ -10,18 +10,21 @@ available on the [GitHub Releases page](https://github.com/ixiehao/ShotMap/relea
 - Reduced repeated frame decoding and selection calculations while preserving existing selection rules.
 - Improved image memory management, task cancellation, and saving reliability.
 - Fixed repeated frame stepping, manual editor window lifecycle, and status messages after language changes.
+- Refined the in-app ShotMap mark, grid-choice outline, and background-colour selection ring for cleaner small-control edges.
 
 ### 中文
 
 - 减少重复取帧与筛选计算，保留现有选帧规则。
 - 优化图片内存管理、任务取消与保存可靠性。
 - 修复连续逐帧定位、手动窗口生命周期及语言切换后的状态提示。
+- 细化应用内 ShotMap 标识、分镜网格选中边框与底色选择环的小尺寸边缘表现。
 
 ### 日本語
 
 - 既存の選択ルールを維持しながら、重複するフレーム取得と選択処理を削減しました。
 - 画像のメモリ管理、タスクのキャンセル、保存処理の信頼性を改善しました。
 - 連続したコマ送り、手動選択ウインドウの開閉、言語切り替え後のステータス表示を修正しました。
+- アプリ内の ShotMap マーク、グリッド選択の枠線、背景色選択リングを、小さな操作部でも滑らかに見えるよう整えました。
 
 ## v0.2.13
 
