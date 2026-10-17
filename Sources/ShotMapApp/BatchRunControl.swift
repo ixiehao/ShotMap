@@ -5,7 +5,9 @@ import Foundation
 /// so a partially rendered storyboard is never left behind.
 actor BatchRunControl {
     private var pauseRequested = false
-    private var resumeWaiters: [CheckedContinuation<Void, Never>] = []
+    private var resumeWaiters: [UUID: CheckedContinuation<Void, Never>] = [:]
+
+    var waitingWorkerCount: Int { resumeWaiters.count }
 
     func requestPause() {
         pauseRequested = true
@@ -17,6 +19,7 @@ actor BatchRunControl {
 
     func waitUntilResumed() async {
         guard pauseRequested else { return }
+        let waiterID = UUID()
         await withTaskCancellationHandler {
             guard !Task.isCancelled else { return }
             await withCheckedContinuation { continuation in
@@ -24,18 +27,24 @@ actor BatchRunControl {
                     continuation.resume()
                     return
                 }
-                resumeWaiters.append(continuation)
+                resumeWaiters[waiterID] = continuation
             }
         } onCancel: {
             // Cancellation must release a paused worker even if the view/model
             // has already gone away and cannot send an explicit resume call.
-            Task { await self.resume() }
+            Task { await self.cancelWaiter(waiterID) }
         }
+    }
+
+    private func cancelWaiter(_ id: UUID) {
+        // Cancelling one worker must not resume a different worker or clear a
+        // pause that was requested while the cancellation handler was queued.
+        resumeWaiters.removeValue(forKey: id)?.resume()
     }
 
     func resume() {
         pauseRequested = false
-        let waiters = resumeWaiters
+        let waiters = resumeWaiters.values
         resumeWaiters.removeAll()
         waiters.forEach { $0.resume() }
     }

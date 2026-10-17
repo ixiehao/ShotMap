@@ -92,7 +92,8 @@ enum FrameSelection {
     }
 
     static func evenlySpaced(_ frames: [FrameDescriptor], count: Int) -> [FrameDescriptor] {
-        guard count > 0, frames.count > count else { return frames }
+        guard count > 0 else { return [] }
+        guard frames.count > count else { return frames }
         if count == 1 {
             return [frames[frames.count / 2]]
         }
@@ -200,45 +201,54 @@ enum FrameSelection {
         return output
     }
 
-    private static func selectStoryDiverse(
+    static func selectStoryDiverse(
         from candidates: [FrameDescriptor],
         sceneIndexByID: [Int: Int],
         count: Int
     ) -> [FrameDescriptor] {
         guard count > 0 else { return [] }
         let maxQuality = max(0.001, candidates.map(\.qualityScore).max() ?? 0.001)
-        var remaining = candidates
+        var remaining = candidates.map { DiversityCandidate(frame: $0, quality: $0.qualityScore / maxQuality) }
         var selected: [FrameDescriptor] = []
         var sceneUseCount: [Int: Int] = [:]
 
         while selected.count < count, !remaining.isEmpty {
+            // Novelty is the minimum distance to the selected set. Updating
+            // that minimum once per winner avoids re-measuring every previous
+            // winner inside every comparator, without changing the score.
             let winner = remaining.max { lhs, rhs in
-                selectionUtility(lhs, selected: selected, sceneIndexByID: sceneIndexByID, sceneUseCount: sceneUseCount, maxQuality: maxQuality)
-                    < selectionUtility(rhs, selected: selected, sceneIndexByID: sceneIndexByID, sceneUseCount: sceneUseCount, maxQuality: maxQuality)
-            }!
+                selectionUtility(lhs, hasSelection: !selected.isEmpty, sceneIndexByID: sceneIndexByID, sceneUseCount: sceneUseCount)
+                    < selectionUtility(rhs, hasSelection: !selected.isEmpty, sceneIndexByID: sceneIndexByID, sceneUseCount: sceneUseCount)
+            }!.frame
             selected.append(winner)
             if let scene = sceneIndexByID[winner.id] { sceneUseCount[scene, default: 0] += 1 }
-            remaining.removeAll { $0.id == winner.id || isVisualDuplicate($0, winner, strict: true) }
+            remaining.removeAll { $0.frame.id == winner.id || isVisualDuplicate($0.frame, winner, strict: true) }
+            guard selected.count < count else { break }
+            for index in remaining.indices {
+                let frame = remaining[index].frame
+                let histogram = histogramDistance(frame.histogram, winner.histogram)
+                let hash = Float(hammingDistance(frame.fingerprint, winner.fingerprint)) / 64
+                remaining[index].novelty = min(remaining[index].novelty, min(1, histogram * 1.8 + hash * 0.45))
+            }
         }
         return selected
     }
 
+    private struct DiversityCandidate {
+        let frame: FrameDescriptor
+        let quality: Float
+        var novelty: Float = 1
+    }
+
     private static func selectionUtility(
-        _ candidate: FrameDescriptor,
-        selected: [FrameDescriptor],
+        _ candidate: DiversityCandidate,
+        hasSelection: Bool,
         sceneIndexByID: [Int: Int],
-        sceneUseCount: [Int: Int],
-        maxQuality: Float
+        sceneUseCount: [Int: Int]
     ) -> Float {
-        let quality = candidate.qualityScore / maxQuality
-        guard !selected.isEmpty else { return quality }
-        let novelty = selected.map { existing -> Float in
-            let histogram = histogramDistance(candidate.histogram, existing.histogram)
-            let hash = Float(hammingDistance(candidate.fingerprint, existing.fingerprint)) / 64
-            return min(1, histogram * 1.8 + hash * 0.45)
-        }.min() ?? 1
+        guard hasSelection else { return candidate.quality }
         let sameScenePenalty: Float
-        if let scene = sceneIndexByID[candidate.id] {
+        if let scene = sceneIndexByID[candidate.frame.id] {
             switch sceneUseCount[scene, default: 0] {
             case 0: sameScenePenalty = 0
             case 1: sameScenePenalty = 0.10
@@ -247,7 +257,7 @@ enum FrameSelection {
         } else {
             sameScenePenalty = 0
         }
-        return quality * 0.72 + novelty * 0.48 - sameScenePenalty
+        return candidate.quality * 0.72 + candidate.novelty * 0.48 - sameScenePenalty
     }
 
     private static func relaxedBucketFill(

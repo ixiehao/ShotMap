@@ -36,6 +36,7 @@ enum ManualFrameExtractor {
         maximumEdge: CGFloat,
         compressionQuality: CGFloat
     ) async throws -> CapturedFrame {
+        try Task.checkCancellation()
         let boundedDuration = max(0, duration - 0.001)
         let centre = min(max(0, requestedTime), boundedDuration)
         let frameRate = await nominalFrameRate(for: asset)
@@ -135,6 +136,7 @@ enum ManualFrameExtractor {
         maximumEdge: CGFloat,
         compressionQuality: CGFloat
     ) async throws -> [CapturedFrame] {
+        try Task.checkCancellation()
         guard !frames.isEmpty else { return [] }
         let batchInterval = sharpnessBatchSignposter.value.beginInterval("selectedFrameRefinement")
         defer {
@@ -234,7 +236,8 @@ enum ManualFrameExtractor {
                 using: finalGenerator,
                 requestBatch: finalRequests,
                 planCount: plans.count,
-                frameRate: frameRate
+                frameRate: frameRate,
+                compressionQuality: compressionQuality
             )
         }
 
@@ -254,14 +257,16 @@ enum ManualFrameExtractor {
             try Task.checkCancellation()
             guard let best = bestByPlan[index] else { continue }
             let final = finalImages[index]
-            let image = final?.image ?? best.image
-            guard let jpegData = ImageCodec.jpegData(from: image, compressionQuality: compressionQuality) else {
+            guard let jpegData = final?.jpegData ?? ImageCodec.jpegData(
+                from: best.image,
+                compressionQuality: compressionQuality
+            ) else {
                 continue
             }
             let capturedTime = final?.time ?? best.time
-            let aspectRatio = image.height > 0
-                ? Double(image.width) / Double(image.height)
-                : 16.0 / 9.0
+            let aspectRatio = final?.aspectRatio ?? (best.image.height > 0
+                ? Double(best.image.width) / Double(best.image.height)
+                : 16.0 / 9.0)
             output.append(CapturedFrame(
                 id: plan.identifier,
                 time: capturedTime,
@@ -293,8 +298,9 @@ enum ManualFrameExtractor {
     }
 
     private struct FinalSharpnessImage {
-        let image: CGImage
+        let jpegData: Data
         let time: Double
+        let aspectRatio: Double
     }
 
     private static func sharpnessRequestBatch(
@@ -367,7 +373,8 @@ enum ManualFrameExtractor {
         using generator: AVAssetImageGenerator,
         requestBatch: SharpnessRequestBatch,
         planCount: Int,
-        frameRate: Double
+        frameRate: Double,
+        compressionQuality: CGFloat
     ) async throws -> [FinalSharpnessImage?] {
         var results = Array<FinalSharpnessImage?>(repeating: nil, count: planCount)
         guard !requestBatch.requestedTimes.isEmpty else { return results }
@@ -380,8 +387,19 @@ enum ManualFrameExtractor {
             let resolvedTime = actualTime.isValid && actualTime.seconds.isFinite
                 ? actualTime.seconds
                 : requestedTime.seconds
+            // Keep compressed results, not every export-sized bitmap. At 64
+            // cards, retaining 1280px RGBA images can cost hundreds of MB. Each
+            // shared request is encoded once and its Data reused by all plans.
+            guard let jpegData = autoreleasepool(invoking: {
+                ImageCodec.jpegData(from: image, compressionQuality: compressionQuality)
+            }) else { continue }
+            let captured = FinalSharpnessImage(
+                jpegData: jpegData,
+                time: resolvedTime,
+                aspectRatio: image.height > 0 ? Double(image.width) / Double(image.height) : 16.0 / 9.0
+            )
             for index in planIndices {
-                results[index] = FinalSharpnessImage(image: image, time: resolvedTime)
+                results[index] = captured
             }
         }
         return results
@@ -450,6 +468,7 @@ enum ManualFrameExtractor {
         identifier: Int,
         maximumEdge: CGFloat = 1_600
     ) async throws -> CapturedFrame {
+        try Task.checkCancellation()
         let asset = AVURLAsset(url: videoURL)
         guard try await asset.load(.isPlayable) else { throw StoryboardError.unsupportedCodec }
         let duration = try await asset.load(.duration).seconds
@@ -465,23 +484,28 @@ enum ManualFrameExtractor {
         generator.requestedTimeToleranceBefore = tolerance
         generator.requestedTimeToleranceAfter = tolerance
 
-        var actualTime = CMTime.zero
-        guard let image = try? generator.copyCGImage(
-            at: CMTime(seconds: time, preferredTimescale: 600),
-            actualTime: &actualTime
-        ), let jpegData = ImageCodec.jpegData(from: image, compressionQuality: 0.92) else {
-            throw StoryboardError.noUsableFrames
+        defer { generator.cancelAllCGImageGeneration() }
+        try Task.checkCancellation()
+        // Scrubbing frequently supersedes the previous request. Suspend while
+        // AVFoundation decodes instead of occupying a cooperative Swift worker
+        // with a synchronous seek, and never publish an obsolete result.
+        for await result in generator.images(for: [CMTime(seconds: time, preferredTimescale: 600)]) {
+            try Task.checkCancellation()
+            guard case let .success(_, image, actualTime) = result,
+                  let jpegData = ImageCodec.jpegData(from: image, compressionQuality: 0.92) else { continue }
+            try Task.checkCancellation()
+            let actualSeconds = actualTime.seconds
+            let capturedTime = actualTime.isValid && actualSeconds.isFinite ? actualSeconds : time
+            let aspectRatio = image.height > 0 ? Double(image.width) / Double(image.height) : 16.0 / 9.0
+            return CapturedFrame(
+                id: identifier,
+                time: capturedTime,
+                jpegData: jpegData,
+                aspectRatio: aspectRatio
+            )
         }
-
-        let actualSeconds = actualTime.seconds
-        let capturedTime = actualTime.isValid && actualSeconds.isFinite ? actualSeconds : time
-        let aspectRatio = image.height > 0 ? Double(image.width) / Double(image.height) : 16.0 / 9.0
-        return CapturedFrame(
-            id: identifier,
-            time: capturedTime,
-            jpegData: jpegData,
-            aspectRatio: aspectRatio
-        )
+        try Task.checkCancellation()
+        throw StoryboardError.noUsableFrames
     }
 
     /// Re-decodes only the final automatic tiles at presentation size after a
@@ -494,6 +518,7 @@ enum ManualFrameExtractor {
         maximumEdge: CGFloat,
         compressionQuality: CGFloat
     ) async throws -> [CapturedFrame] {
+        try Task.checkCancellation()
         guard !frames.isEmpty else { return [] }
         let interval = sharpnessBatchSignposter.value.beginInterval("presentationFrameDecode")
         defer {
@@ -540,6 +565,7 @@ enum ManualFrameExtractor {
                 )
             }
         }
+        try Task.checkCancellation()
         return frames.compactMap { capturedByID[$0.id] }
     }
 
@@ -550,6 +576,7 @@ enum ManualFrameExtractor {
         count: Int,
         batch: Int
     ) async throws -> [CapturedFrame] {
+        try Task.checkCancellation()
         let wholeBatch = candidateBatchSignposter.value.beginInterval("manualCandidateBatch")
         defer {
             candidateBatchSignposter.value.endInterval("manualCandidateBatch", wholeBatch)

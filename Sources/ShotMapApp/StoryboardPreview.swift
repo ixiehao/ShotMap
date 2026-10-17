@@ -1,5 +1,4 @@
 import AppKit
-import ImageIO
 
 /// Batch history stores paths and the settings used for each result. Keeping
 /// every decoded image, encoded export and source frame in memory is unbounded
@@ -18,6 +17,14 @@ struct RenderedStoryboardPreview: Identifiable, Sendable {
 
     var format: ExportFormat { settings.format }
 
+    func saved(at destination: URL) -> RenderedStoryboardPreview {
+        RenderedStoryboardPreview(
+            id: id, sourceURL: sourceURL, duration: duration, frameCount: frameCount,
+            settings: settings, savedURL: destination, storageURL: destination,
+            fallbackData: nil, jobIndex: jobIndex, jobCount: jobCount
+        )
+    }
+
     func loadData() throws -> Data {
         if let fallbackData { return fallbackData }
         guard let storageURL else { throw StoryboardError.noExportData }
@@ -25,18 +32,23 @@ struct RenderedStoryboardPreview: Identifiable, Sendable {
     }
 
     func thumbnail(from data: Data) -> CGImage? {
-        guard let source = CGImageSourceCreateWithData(data as CFData, nil),
-              let image = CGImageSourceCreateThumbnailAtIndex(source, 0, [
-                kCGImageSourceCreateThumbnailFromImageAlways: true,
-                kCGImageSourceThumbnailMaxPixelSize: 1_280,
-                kCGImageSourceCreateThumbnailWithTransform: true
-              ] as CFDictionary) else { return nil }
-        return image
+        ImageCodec.thumbnail(from: data)
     }
 
     func loadPresentation() throws -> PreparedPreviewPresentation {
+        try Task.checkCancellation()
+        if savedURL != nil, fallbackData == nil, let storageURL {
+            // Saved results need only a display-sized bitmap. Let ImageIO read
+            // the file directly instead of mapping the full export into Data.
+            guard let image = ImageCodec.thumbnail(at: storageURL) else {
+                throw StoryboardError.noExportData
+            }
+            try Task.checkCancellation()
+            return PreparedPreviewPresentation(image: image, pendingData: nil)
+        }
         let data = try loadData()
         guard let image = thumbnail(from: data) else { throw StoryboardError.noExportData }
+        try Task.checkCancellation()
         return PreparedPreviewPresentation(image: image, pendingData: savedURL == nil ? data : nil)
     }
 }
@@ -71,12 +83,18 @@ actor StoryboardOutputWriter {
         previewStore: PreviewImageStore
     ) throws -> PreparedStoryboardOutput {
         try Task.checkCancellation()
+        // Validate before allocating a filename or writing a file: a failed
+        // decode must not leave an unreadable export beside the source video.
+        guard let image = ImageCodec.thumbnail(from: data) else { throw StoryboardError.noExportData }
+        try Task.checkCancellation()
         var savedURL: URL?
         var saveFailure: String?
         do {
             let destination = destinations.nextURL(for: result.sourceURL, format: settings.format)
             try writeFile(data, destination)
             savedURL = destination
+        } catch let error as CancellationError {
+            throw error
         } catch {
             saveFailure = error.localizedDescription
         }
@@ -87,7 +105,6 @@ actor StoryboardOutputWriter {
             storageURL: storageURL, fallbackData: storageURL == nil ? data : nil,
             jobIndex: jobIndex, jobCount: jobCount
         )
-        guard let image = preview.thumbnail(from: data) else { throw StoryboardError.noExportData }
         return PreparedStoryboardOutput(
             preview: preview,
             presentation: PreparedPreviewPresentation(image: image, pendingData: savedURL == nil ? data : nil),
@@ -96,6 +113,7 @@ actor StoryboardOutputWriter {
     }
 
     func save(_ data: Data, to destination: URL) throws {
+        try Task.checkCancellation()
         try writeFile(data, destination)
     }
 }

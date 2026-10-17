@@ -36,4 +36,23 @@ enum ImageCodec {
         guard let source = CGImageSourceCreateWithData(data as CFData, nil) else { return nil }
         return CGImageSourceCreateImageAtIndex(source, 0, nil)
     }
+
+    static func thumbnail(from data: Data, maximumPixelSize: Int = 1_280) -> CGImage? {
+        guard let source = CGImageSourceCreateWithData(data as CFData, nil) else { return nil }
+        return thumbnail(from: source, maximumPixelSize: maximumPixelSize)
+    }
+
+    static func thumbnail(at url: URL, maximumPixelSize: Int = 1_280) -> CGImage? {
+        guard let source = CGImageSourceCreateWithURL(url as CFURL, nil) else { return nil }
+        return thumbnail(from: source, maximumPixelSize: maximumPixelSize)
+    }
+
+    private static func thumbnail(from source: CGImageSource, maximumPixelSize: Int) -> CGImage? {
+        CGImageSourceCreateThumbnailAtIndex(source, 0, [
+            kCGImageSourceCreateThumbnailFromImageAlways: true,
+            kCGImageSourceThumbnailMaxPixelSize: max(1, maximumPixelSize),
+            kCGImageSourceCreateThumbnailWithTransform: true,
+            kCGImageSourceShouldCacheImmediately: true
+        ] as CFDictionary)
+    }
 }

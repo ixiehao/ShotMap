@@ -127,23 +127,31 @@ struct ExportSettings: Sendable {
 enum TimestampFormatter {
     static func string(for seconds: Double) -> String {
         guard seconds.isFinite else { return "00:00:00" }
-        let totalSeconds = max(0, Int(seconds.rounded(.down)))
+        let totalSeconds = boundedInteger(seconds.rounded(.down))
         let hours = totalSeconds / 3_600
         let minutes = (totalSeconds % 3_600) / 60
         let remainder = totalSeconds % 60
-        return String(format: "%02d:%02d:%02d", hours, minutes, remainder)
+        return String(format: "%02lld:%02d:%02d", hours, minutes, remainder)
     }
 
     /// A stable, editable representation for manual timeline positioning.
     /// Keep this separate from the short timestamp burned into thumbnails.
     static func editableString(for seconds: Double) -> String {
         guard seconds.isFinite else { return "00:00:00.000" }
-        let milliseconds = max(0, Int((seconds * 1_000).rounded()))
+        let milliseconds = boundedInteger((seconds * 1_000).rounded())
         let hours = milliseconds / 3_600_000
         let minutes = (milliseconds % 3_600_000) / 60_000
         let remainderSeconds = (milliseconds % 60_000) / 1_000
         let remainderMilliseconds = milliseconds % 1_000
-        return String(format: "%02d:%02d:%02d.%03d", hours, minutes, remainderSeconds, remainderMilliseconds)
+        return String(format: "%02lld:%02d:%02d.%03d", hours, minutes, remainderSeconds, remainderMilliseconds)
+    }
+
+    private static func boundedInteger(_ value: Double) -> Int {
+        // Finite media metadata or a pasted time can still exceed Int's range;
+        // multiplying a finite number by 1,000 can also produce infinity.
+        if value >= Double(Int.max) { return Int.max }
+        if value <= 0 { return 0 }
+        return Int(value)
     }
 
     /// Accepts `SS.mmm`, `MM:SS.mmm`, or `HH:MM:SS.mmm` so people can enter a

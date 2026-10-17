@@ -3,18 +3,41 @@
 ShotMap is a native macOS storyboard generator. Its deliberately small
 architecture uses only Apple system frameworks: SwiftUI, AVFoundation, Vision,
 CoreGraphics, ImageIO, and AppKit. There are no package dependencies,
-media sidecars, bundled ML models, web services, analytics SDKs, or runtime
-downloads.
+media sidecars, bundled ML models, analytics SDKs, or runtime asset downloads.
 
 ## Privacy boundary
 
 The selected video stays on the Mac. AVFoundation decodes it locally and Vision
-runs its face and human-rectangle requests on-device. The only persistent output
-is the PNG or JPEG the user chooses to save. ShotMap has no account, network
-client, upload path, or internal media library. See [PRIVACY.md](../PRIVACY.md)
-for the user-facing promise.
+runs its face and human-rectangle requests on-device. Generated images are saved
+beside the source video or through Save As. Failed exports use temporary local
+preview storage so users can retry without retaining full batches in memory.
+ShotMap has no account, media upload path, or internal media library. The update
+checker requests only public GitHub release metadata. See [PRIVACY.md](../PRIVACY.md).
 
 ## Processing pipeline
+
+The UI and processing code have separate ownership:
+
+| File | Responsibility |
+| --- | --- |
+| `ContentView.swift` | Main workspace layout and user commands |
+| `StoryboardViewModel.swift` | Batch state, result navigation, and run-checked UI updates |
+| `ManualFrameEditor.swift` | Manual selection, player controls, and editor task lifetime |
+| `ManualEditorTimeline.swift` | Bounded timeline positioning and frame stepping |
+| `ManualFrameEditorWindow.swift` | AppKit window ownership and SwiftUI presentation |
+| `ManualFrameEditorRequest.swift` | Stable identity and settings for an editing session |
+| `VideoQueueViews.swift`, `StoryboardPreviewViews.swift` | Queue and preview presentation |
+| `StudioControls.swift`, `ManualEditorControls.swift`, `StudioLayout.swift` | Shared controls and fixed layout measurements |
+| `BatchSupportViews.swift` | Failure reports and conversion guidance |
+| `VideoStoryboardAnalyzer.swift`, `ManualFrameExtractor.swift` | Automatic analysis and exact manual capture |
+| `FrameSelection.swift` | Deterministic scene, quality, and diversity selection |
+| `StoryboardComposer.swift`, `ImageCodec.swift` | Bitmap layout, encoding, and display thumbnails |
+| `StoryboardPreview.swift`, `BatchRunControl.swift` | Serialized output, temporary previews, pause and cancellation |
+
+Views keep the existing layout constants and appearance choices. Processing
+workers do not own windows; editor tasks and their detached workers are cancelled
+together when superseded or closed. Timeline actions update the same position
+used by the next action, so repeated frame stepping accumulates correctly.
 
 ```text
 video URL
@@ -26,8 +49,9 @@ video URL
      from each range, supplements short-cut videos by time bucket, and removes
      near duplicates
   -> Vision scores only promising JPEG candidates for faces and full-body people
-  -> selected JPEGs stream to the live grid, then StoryboardComposer lays them out
-     as rounded 16:9 cards
+  -> selected JPEGs stream to stable live-grid slots; low-detail selections are
+     refined and remaining small-grid selections receive a presentation-size decode
+  -> StoryboardComposer lays out rounded cards using the chosen aspect ratio
   -> the shared ImageCodec uses ImageIO for background decode/encode and writes
      the requested PNG or JPEG
 ```
@@ -43,6 +67,13 @@ All text rendered into exported images uses the bundled, unmodified Noto Sans
 CJK SC Bold 2.004 font. The font is registered only for the app process; its
 SIL Open Font License 1.1, source release, and checksum are retained in
 [NOTICE.md](../NOTICE.md).
+
+Selections returned by refinement are excluded from the presentation-upgrade
+pass, preserving the existing priority of refinement results (including their
+fallbacks) over presentation upgrades. Manual refinement encodes final images as they arrive,
+retaining compressed JPEGs rather than an entire gallery of final-size bitmaps.
+The diversity scorer keeps each candidate's minimum distance to the selected set
+and updates it once per new selection, preserving its scoring and tie order.
 
 ## Selection behavior
 
@@ -70,8 +101,11 @@ is compiled in complete checking mode during release verification.
 
 The package deployment target is macOS 13. Release builds contain both `arm64`
 and `x86_64` slices and use only APIs available at that target. The automated
-suite includes a synthetic H.264 end-to-end test covering decode, selection,
-composition, JPEG export, manual candidate sampling, and smart selection.
+suite includes generated H.264, HEVC, and variable-frame-rate portrait fixtures
+covering decode, selection, composition, JPEG export, and manual refinement.
+Codec fixtures check that returned timestamps identify real source frames.
+Storage tests cover cancelled writes, invalid image data, temporary previews,
+large histories, and cancellation of one paused worker without resuming others.
 
 ## Known limits
 
@@ -90,7 +124,7 @@ composition, JPEG export, manual candidate sampling, and smart selection.
 
 ## Contributor notes
 
-- Preserve the no-dependency, no-network design. Discuss any new entitlement,
+- Preserve the no-dependency, local-media design. Discuss any new entitlement,
   package, model, telemetry, or remote request before adding it.
 - Keep video access scoped to a user-selected URL and keep derived media
   ephemeral unless the user explicitly exports it.

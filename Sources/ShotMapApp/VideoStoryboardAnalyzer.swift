@@ -41,6 +41,7 @@ struct VideoStoryboardAnalyzer: Sendable {
         progress: @escaping @Sendable (Double) -> Void,
         onPreviewFrame: @escaping @Sendable (CapturedFrame, Int, Int) async -> Void
     ) async throws -> StoryboardResult {
+        try Task.checkCancellation()
         let wholePipeline = Self.pipelineSignposter.value.beginInterval("storyboardPipeline")
         defer {
             Self.pipelineSignposter.value.endInterval("storyboardPipeline", wholePipeline)
@@ -116,6 +117,7 @@ struct VideoStoryboardAnalyzer: Sendable {
             }
         }
 
+        try Task.checkCancellation()
         guard !descriptors.isEmpty else { throw StoryboardError.unreadableVideo }
         descriptors.sort { $0.time < $1.time }
         descriptors = addingTemporalSignals(to: descriptors)
@@ -148,6 +150,7 @@ struct VideoStoryboardAnalyzer: Sendable {
             // the same image work for each Vision request type.
             var visionPreviewsByID: [Int: CGImage] = [:]
             for candidate in personCandidates + textCandidates where visionPreviewsByID[candidate.id] == nil {
+                try Task.checkCancellation()
                 let preview: CGImage? = autoreleasepool {
                     guard let data = candidate.previewData,
                           let image = ImageCodec.cgImage(from: data) else {
@@ -233,24 +236,6 @@ struct VideoStoryboardAnalyzer: Sendable {
                 guard requiresExactRefinement(descriptor) else { return nil }
                 return fallbackByID[descriptor.id]
             }
-            let presentationByID: [Int: CapturedFrame]
-            if needsPresentationUpgrade(gridSide: gridSide, outputWidth: outputWidth) {
-                do {
-                    let presentationFrames = try await ManualFrameExtractor.capturePresentationFrames(
-                        from: asset,
-                        frames: selected.compactMap { fallbackByID[$0.id] },
-                        maximumEdge: finalFrameEdge,
-                        compressionQuality: 0.92
-                    )
-                    presentationByID = Dictionary(uniqueKeysWithValues: presentationFrames.map { ($0.id, $0) })
-                } catch is CancellationError {
-                    throw CancellationError()
-                } catch {
-                    presentationByID = [:]
-                }
-            } else {
-                presentationByID = [:]
-            }
             let refinedByID: [Int: CapturedFrame]
             if refinementInputs.isEmpty {
                 refinedByID = [:]
@@ -272,6 +257,33 @@ struct VideoStoryboardAnalyzer: Sendable {
                     // scan image when the optional batch refinement fails.
                     refinedByID = [:]
                 }
+            }
+
+            // Refinement already attempts an export-sized decode and its result
+            // takes precedence (including the analysis fallback for a damaged
+            // final seek). Upgrade only cards without a refinement result;
+            // this preserves the previous fallback order without decoding
+            // presentation images that would immediately be discarded.
+            let presentationByID: [Int: CapturedFrame]
+            if needsPresentationUpgrade(gridSide: gridSide, outputWidth: outputWidth) {
+                do {
+                    let presentationFrames = try await ManualFrameExtractor.capturePresentationFrames(
+                        from: asset,
+                        frames: Self.presentationUpgradeInputs(
+                            selected.compactMap { fallbackByID[$0.id] },
+                            refinedIDs: Set(refinedByID.keys)
+                        ),
+                        maximumEdge: finalFrameEdge,
+                        compressionQuality: 0.92
+                    )
+                    presentationByID = Dictionary(uniqueKeysWithValues: presentationFrames.map { ($0.id, $0) })
+                } catch is CancellationError {
+                    throw CancellationError()
+                } catch {
+                    presentationByID = [:]
+                }
+            } else {
+                presentationByID = [:]
             }
 
             for (offset, descriptor) in selected.enumerated() {
@@ -309,6 +321,13 @@ struct VideoStoryboardAnalyzer: Sendable {
         }
         progress(1)
         return StoryboardResult(frames: captured, sourceURL: videoURL, duration: duration)
+    }
+
+    static func presentationUpgradeInputs(
+        _ frames: [CapturedFrame],
+        refinedIDs: Set<Int>
+    ) -> [CapturedFrame] {
+        frames.filter { !refinedIDs.contains($0.id) }
     }
 
     private func imageGenerator(asset: AVAsset, maximumEdge: CGFloat) -> AVAssetImageGenerator {
