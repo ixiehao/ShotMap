@@ -3,7 +3,7 @@ import AVFoundation
 import CoreText
 import CoreVideo
 import XCTest
-@testable import ShotTesseraApp
+@testable import ShotMapApp
 
 final class FrameSelectionTests: XCTestCase {
     func testProgressivePreviewSlotsKeepGridOrderWhenFramesAreReplaced() {
@@ -258,7 +258,7 @@ final class FrameSelectionTests: XCTestCase {
 
     func testSyntheticH264VideoCompletesTheFullStoryboardPipeline() async throws {
         let temporaryDirectory = FileManager.default.temporaryDirectory
-            .appendingPathComponent("ShotTesseraTests-\(UUID().uuidString)", isDirectory: true)
+            .appendingPathComponent("ShotMapTests-\(UUID().uuidString)", isDirectory: true)
         let sourceURL = temporaryDirectory.appendingPathComponent("synthetic.mov")
         try FileManager.default.createDirectory(at: temporaryDirectory, withIntermediateDirectories: true)
         defer { try? FileManager.default.removeItem(at: temporaryDirectory) }

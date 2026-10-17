@@ -110,7 +110,7 @@ final class PreviewImageStore: @unchecked Sendable {
     init(directory: URL? = nil, fileManager: FileManager = .default) {
         self.fileManager = fileManager
         self.directory = directory ?? fileManager.temporaryDirectory
-            .appendingPathComponent("ShotTessera-previews-\(UUID().uuidString)", isDirectory: true)
+            .appendingPathComponent("ShotMap-previews-\(UUID().uuidString)", isDirectory: true)
     }
 
     func store(_ data: Data, format: ExportFormat) throws -> URL {

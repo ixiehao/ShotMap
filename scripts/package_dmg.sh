@@ -3,8 +3,8 @@ set -euo pipefail
 
 readonly project_dir="$(cd "$(dirname "$0")/.." && pwd)"
 readonly product_name="ShotMap"
-readonly executable_name="ShotTessera"
-readonly bundle_name="ShotTessera_ShotTesseraApp.bundle"
+readonly executable_name="ShotMap"
+readonly bundle_name="ShotMap_ShotMapApp.bundle"
 readonly version="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$project_dir/Packaging/Info.plist")"
 # A versioned Finder volume avoids colliding with a user's still-open older
 # installer. Finder resolves a duplicate disk by its internal name, which can

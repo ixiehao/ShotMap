@@ -12,7 +12,7 @@ private final class FrameExtractionSignposter: @unchecked Sendable {
 
     init(category: String) {
         value = OSSignposter(
-            subsystem: Bundle.main.bundleIdentifier ?? "com.shottessera.app",
+            subsystem: Bundle.main.bundleIdentifier ?? "com.ixiehao.shotmap",
             category: category
         )
     }

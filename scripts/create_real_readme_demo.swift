@@ -12,7 +12,7 @@ enum DemoError: Error {
 private let canvas = NSSize(width: 960, height: 540)
 private let outputPixelWidth = max(
     960,
-    Int(ProcessInfo.processInfo.environment["SHOTTESSERA_DEMO_PIXEL_WIDTH"] ?? "960") ?? 960
+    Int(ProcessInfo.processInfo.environment["SHOTMAP_DEMO_PIXEL_WIDTH"] ?? "960") ?? 960
 )
 private let outputPixelHeight = Int(
     (CGFloat(outputPixelWidth) * canvas.height / canvas.width).rounded()

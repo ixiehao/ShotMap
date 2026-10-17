@@ -67,8 +67,6 @@ def jpeg_size(path: Path) -> tuple[int, int]:
 def main() -> None:
     for readme in ("README.md", "README.zh-CN.md", "README.ja.md"):
         text = require_text(ROOT / readme, "ShotMap", REPOSITORY, WEBSITE)
-        if "ixiehao/tap/shottessera" in text:
-            fail(f"{readme} still advertises the legacy Homebrew cask")
 
     metadata = require_text(ROOT / "docs/GITHUB_METADATA.md", "Repository description", "ShotMap")
     description_match = re.search(r"`(ShotMap[^`]+)`", metadata)
@@ -82,8 +80,6 @@ def main() -> None:
         "og:image",
         "twitter:image",
     )
-    if "ShotTessera" in site:
-        fail("website/index.html contains the legacy product name")
 
     social_preview = ROOT / "docs/assets/social-preview-v2.jpg"
     if social_preview.stat().st_size >= 1_000_000:

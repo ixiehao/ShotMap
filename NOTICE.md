@@ -4,7 +4,7 @@
 
 ### Noto Sans CJK SC Bold
 
-- File: `Sources/ShotTesseraApp/Resources/Fonts/NotoSansCJKsc-Bold.otf`
+- File: `Sources/ShotMapApp/Resources/Fonts/NotoSansCJKsc-Bold.otf`
 - Version: 2.004
 - Upstream release: <https://github.com/notofonts/noto-cjk/releases/tag/Sans2.004>
 - SHA-256: `b5f0d1a190a7f9b43c310a8850630af12553df32c4c050543f9059732d9b4c0a`
@@ -15,7 +15,7 @@ The font file is an unmodified upstream copy. It is bundled only so exported tit
 
 ### Tabler Icons Outline
 
-- Files: `Sources/ShotTesseraApp/Resources/tabler-*.svg`
+- Files: `Sources/ShotMapApp/Resources/tabler-*.svg`
 - Version: 3.49.0
 - Upstream release: <https://github.com/tabler/tabler-icons/tree/v3.49.0>
 - Copyright: © 2020–2026 Paweł Kuna
@@ -35,7 +35,7 @@ These tools generate and verify the DMG during a local release build only. They 
 
 ### Noto Sans CJK SC Bold
 
-- 文件：`Sources/ShotTesseraApp/Resources/Fonts/NotoSansCJKsc-Bold.otf`
+- 文件：`Sources/ShotMapApp/Resources/Fonts/NotoSansCJKsc-Bold.otf`
 - 版本：2.004
 - 上游发布：<https://github.com/notofonts/noto-cjk/releases/tag/Sans2.004>
 - SHA-256：`b5f0d1a190a7f9b43c310a8850630af12553df32c4c050543f9059732d9b4c0a`
@@ -46,7 +46,7 @@ These tools generate and verify the DMG during a local release build only. They 
 
 ### Tabler Icons Outline
 
-- 文件：`Sources/ShotTesseraApp/Resources/tabler-*.svg`
+- 文件：`Sources/ShotMapApp/Resources/tabler-*.svg`
 - 版本：3.49.0
 - 上游发布：<https://github.com/tabler/tabler-icons/tree/v3.49.0>
 - 版权所有：© 2020–2026 Paweł Kuna
@@ -66,7 +66,7 @@ ShotMap 原样内置 Tabler Icons Outline SVG，并以原生模板图像进行�
 
 ### Noto Sans CJK SC Bold
 
-- ファイル：`Sources/ShotTesseraApp/Resources/Fonts/NotoSansCJKsc-Bold.otf`
+- ファイル：`Sources/ShotMapApp/Resources/Fonts/NotoSansCJKsc-Bold.otf`
 - バージョン：2.004
 - アップストリームリリース：<https://github.com/notofonts/noto-cjk/releases/tag/Sans2.004>
 - SHA-256：`b5f0d1a190a7f9b43c310a8850630af12553df32c4c050543f9059732d9b4c0a`
@@ -77,7 +77,7 @@ ShotMap 原样内置 Tabler Icons Outline SVG，并以原生模板图像进行�
 
 ### Tabler Icons Outline
 
-- ファイル：`Sources/ShotTesseraApp/Resources/tabler-*.svg`
+- ファイル：`Sources/ShotMapApp/Resources/tabler-*.svg`
 - バージョン：3.49.0
 - アップストリームリリース：<https://github.com/tabler/tabler-icons/tree/v3.49.0>
 - 著作権：© 2020–2026 Paweł Kuna

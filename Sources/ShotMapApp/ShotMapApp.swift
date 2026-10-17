@@ -161,7 +161,7 @@ enum MainWindowReopenAction: Equatable {
 }
 
 @MainActor
-final class ShotTesseraAppDelegate: NSObject, NSApplicationDelegate {
+final class ShotMapAppDelegate: NSObject, NSApplicationDelegate {
     private var helpWindow: NSWindow?
     private weak var mainWindow: NSWindow?
     private var mainWindowCloseObserver: NSObjectProtocol?
@@ -264,7 +264,7 @@ final class ShotTesseraAppDelegate: NSObject, NSApplicationDelegate {
 /// Retains SwiftUI's scene-opening action after the main window closes, so the
 /// AppKit Dock callback can create a fresh WindowGroup instance on macOS 13+.
 private struct MainWindowLifecycleBridge: View {
-    let appDelegate: ShotTesseraAppDelegate
+    let appDelegate: ShotMapAppDelegate
     @Environment(\.openWindow) private var openWindow
 
     var body: some View {
@@ -280,7 +280,7 @@ private struct MainWindowLifecycleBridge: View {
 }
 
 private struct MainWindowRegistrationView: NSViewRepresentable {
-    let appDelegate: ShotTesseraAppDelegate
+    let appDelegate: ShotMapAppDelegate
 
     func makeNSView(context: Context) -> RegistrationView {
         let view = RegistrationView()
@@ -303,8 +303,8 @@ private struct MainWindowRegistrationView: NSViewRepresentable {
 }
 
 @main
-struct ShotTesseraApp: App {
-    @NSApplicationDelegateAdaptor(ShotTesseraAppDelegate.self) private var appDelegate
+struct ShotMapApp: App {
+    @NSApplicationDelegateAdaptor(ShotMapAppDelegate.self) private var appDelegate
     @AppStorage("appLanguage") private var languageCode = AppLanguage.chinese.rawValue
     @StateObject private var updateChecker = UpdateChecker()
     @StateObject private var storyboardModel = StoryboardViewModel()

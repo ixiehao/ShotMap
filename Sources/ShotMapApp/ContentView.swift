@@ -1958,7 +1958,7 @@ private struct ManualFrameEditorWindowPresenter: NSViewRepresentable {
             // Keep a deliberately resized/repositioned editor where the person
             // left it.  Falling back to the centre only on a first launch also
             // prevents a manual editor from reopening partly off-screen.
-            let autosaveName = "ShotTesseraManualFrameEditor"
+            let autosaveName = "ShotMapManualFrameEditor"
             window.setFrameAutosaveName(autosaveName)
             if !window.setFrameUsingName(autosaveName) {
                 window.center()
@@ -3272,7 +3272,7 @@ private struct QueueVideoList: View {
     @State private var contentHeight: CGFloat = 1
     @State private var contentOffset: CGFloat = 0
 
-    private static let coordinateSpaceName = "shotTesseraQueueList"
+    private static let coordinateSpaceName = "shotMapQueueList"
     private var indexColumnWidth: CGFloat {
         switch String(max(1, jobs.count)).count {
         case 1, 2: 24

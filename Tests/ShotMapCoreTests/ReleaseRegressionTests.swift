@@ -1,7 +1,7 @@
 import AppKit
 import AVFoundation
 import XCTest
-@testable import ShotTesseraApp
+@testable import ShotMapApp
 
 final class ReleaseRegressionTests: XCTestCase {
     func testDockReopenDependsOnMainWindowRatherThanOtherVisibleWindows() {
@@ -72,7 +72,7 @@ final class ReleaseRegressionTests: XCTestCase {
     }
 
     func testBatchFilenameAllocationChecksEachNewCandidateOnlyOnce() {
-        let source = URL(fileURLWithPath: "/tmp/ShotTessera-sequence-test/video.mp4")
+        let source = URL(fileURLWithPath: "/tmp/ShotMap-sequence-test/video.mp4")
         var allocator = ExportSequenceAllocator()
         var existing = Set<String>()
         var checks = 0
@@ -88,7 +88,7 @@ final class ReleaseRegressionTests: XCTestCase {
     }
 
     func testFilenameHintsScanExistingFilesAndStillSkipNewExternalConflicts() {
-        let folder = URL(fileURLWithPath: "/tmp/ShotTessera-sequence-test")
+        let folder = URL(fileURLWithPath: "/tmp/ShotMap-sequence-test")
         let source = folder.appendingPathComponent("video.mp4")
         var allocator = ExportSequenceAllocator()
         var existing = Set(["video-shot-001.jpg", "video-shot-002.jpg"].map { folder.appendingPathComponent($0).path })
@@ -255,7 +255,7 @@ final class ReleaseRegressionTests: XCTestCase {
     }
 
     private func temporaryDirectory() throws -> URL {
-        let url = FileManager.default.temporaryDirectory.appendingPathComponent("ShotTessera-regression-\(UUID().uuidString)", isDirectory: true)
+        let url = FileManager.default.temporaryDirectory.appendingPathComponent("ShotMap-regression-\(UUID().uuidString)", isDirectory: true)
         try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
         return url
     }

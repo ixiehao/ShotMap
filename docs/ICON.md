@@ -16,7 +16,7 @@ bodies, film sprockets, letters, and third-party marks.
 ## Files
 
 - `Assets/AppIcon-1024-source.png` — canonical original project artwork for the macOS app icon.
-- `Sources/ShotTesseraApp/Resources/AppIcon.png` — runtime mark shown inside the app UI, optically enlarged for small in-app placements.
+- `Sources/ShotMapApp/Resources/AppIcon.png` — runtime mark shown inside the app UI, optically enlarged for small in-app placements.
 
 The packaging script creates a standard `.icns` only inside the app and DMG at
 package time. This preserves the source artwork's transparent canvas in the

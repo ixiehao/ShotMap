@@ -2,22 +2,22 @@
 import PackageDescription
 
 let package = Package(
-    name: "ShotTessera",
+    name: "ShotMap",
     defaultLocalization: "zh-Hans",
     platforms: [.macOS(.v13)],
     products: [
-        .executable(name: "ShotTessera", targets: ["ShotTesseraApp"])
+        .executable(name: "ShotMap", targets: ["ShotMapApp"])
     ],
     targets: [
         .executableTarget(
-            name: "ShotTesseraApp",
-            path: "Sources/ShotTesseraApp",
+            name: "ShotMapApp",
+            path: "Sources/ShotMapApp",
             resources: [.process("Resources")]
         ),
         .testTarget(
-            name: "ShotTesseraCoreTests",
-            dependencies: ["ShotTesseraApp"],
-            path: "Tests/ShotTesseraCoreTests"
+            name: "ShotMapCoreTests",
+            dependencies: ["ShotMapApp"],
+            path: "Tests/ShotMapCoreTests"
         )
     ]
 )

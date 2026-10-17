@@ -7,11 +7,11 @@
     <key>CFBundleDisplayName</key>
     <string>ShotMap</string>
     <key>CFBundleExecutable</key>
-    <string>ShotTessera</string>
+    <string>ShotMap</string>
 	<key>CFBundleIconFile</key>
 	<string>AppIcon.icns</string>
     <key>CFBundleIdentifier</key>
-    <string>com.shottessera.videoscreenshotcollage</string>
+    <string>com.ixiehao.shotmap</string>
     <key>CFBundleInfoDictionaryVersion</key>
     <string>6.0</string>
     <key>CFBundleName</key>
