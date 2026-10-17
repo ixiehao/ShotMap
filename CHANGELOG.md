@@ -3,7 +3,7 @@
 All notable user-facing changes are recorded here. Stable releases remain
 available on the [GitHub Releases page](https://github.com/ixiehao/ShotMap/releases).
 
-## v0.2.14 (Unreleased)
+## v0.2.14 — 2026-10-17
 
 ### English
 
