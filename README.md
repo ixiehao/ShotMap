@@ -7,13 +7,13 @@
 
 [English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
 
-![ShotMap's real English workspace creating a storyboard from Tears of Steel](docs/assets/readme-workspace-en.png?v=tears-20261016)
+![ShotMap's real English workspace creating a storyboard from Tears of Steel](website/assets/workspace-en.webp?v=20261017)
 
 ## See what is in a video—before you open it
 
-**ShotMap** turns the representative moments in a video into one clear storyboard image. Browse the story first, then open the original only when it is the one you need. It is a native, open-source macOS app: no account, upload, or cloud queue.
+**ShotMap** turns the key moments in a video into one easy-to-scan storyboard image. See the flow of a video before opening it, and find the one you need without playing every file. It is a native, open-source macOS app: no account and no cloud upload.
 
-Smart Select gives you a useful starting point. If one moment is not right, the Manual Frame Editor lets you replace it with the exact frame you want. Everything happens on your Mac.
+Smart Select gives you a useful first set of frames. If one is not right, the Manual Frame Editor lets you replace it. Your videos and exports stay on your Mac.
 
 > **Start here:** [Download the latest universal DMG](https://github.com/ixiehao/ShotMap/releases/latest) · macOS 13 or later · Apple Silicon and Intel
 
@@ -33,7 +33,7 @@ Smart Select gives you a useful starting point. If one moment is not right, the 
 
 ## Made for finding moments quickly
 
-- Starts with clear, representative frames and avoids black, blurry, and near-duplicate shots.
+- Tries to prefer clear, varied frames and reduce black, blurry, and near-duplicate shots.
 - Lets you refine a result in the Manual Frame Editor: player, visual timeline, frame steps, and candidate gallery are all in one place.
 - Processes a visible queue and fills the storyboard preview as each result is ready.
 - Offers 3 × 3 through 8 × 8 grids, aspect ratio, background colour, image width, optional timecodes, and file titles.

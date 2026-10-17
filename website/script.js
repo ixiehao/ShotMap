@@ -1,115 +1,126 @@
-const translations = {
+export const siteURL = "https://ixiehao.github.io/ShotMap/";
+export const releaseURL = "https://github.com/ixiehao/ShotMap/releases/latest";
+export const localeURLs = {
+  en: siteURL,
+  zh: siteURL + "zh/",
+  ja: siteURL + "ja/"
+};
+
+export const translations = {
   en: {
     pageTitle: "ShotMap — Video Storyboards for macOS",
-    pageDescription: "Turn any video into a clear storyboard before you open it. ShotMap is a free, private macOS app for smart frame selection and local PNG or JPG export.",
-    ogTitle: "ShotMap — Turn video into a clear storyboard on your Mac",
-    ogDescription: "Browse a video’s key moments before opening it. Smart selection, manual control, and private local export for macOS.",
-    locale: "en_US", languageLabel: "Choose language", skipLink: "Skip to content",
+    pageDescription: "Find the right video without opening every file. ShotMap turns a video into a clear visual storyboard on your Mac.",
+    ogTitle: "ShotMap — Know what is inside a video before you open it",
+    ogDescription: "Turn a video into a clear visual storyboard on your Mac. Private by design, with Smart Select and manual frame control.",
+    locale: "en_US", languageLabel: "Choose language", navigationLabel: "Primary navigation", homeLabel: "ShotMap home", factsLabel: "ShotMap facts", skipLink: "Skip to content",
     navWorkflow: "How it works", navFeatures: "Features", navPrivacy: "Privacy", download: "Download",
-    heroEyebrow: "VIDEO STORYBOARDS FOR MAC", heroTitle: "See what’s in a video<br />before you open it.",
-    heroSummary: "ShotMap turns a video into one clear storyboard, so you can browse its important moments at a glance.",
+    heroEyebrow: "VIDEO STORYBOARDS FOR MAC", heroTitle: "Know what’s inside<br />a video—before you open it.",
+    heroSummary: "ShotMap turns key moments from a video into one visual overview, so you can find the right video without opening every file.",
     heroDownload: "Download for macOS", viewSource: "View on GitHub <span aria-hidden=\"true\">↗</span>",
     compatibility: "macOS 13+ · Apple Silicon & Intel · Free and open source", productCaption: "ShotMap workspace",
-    demoCredit: "Demo screenshots use <a href=\"https://mango.blender.org/\" rel=\"noreferrer\">Tears of Steel</a> (2012) © Blender Foundation / Blender Institute, licensed under <a href=\"https://creativecommons.org/licenses/by/3.0/\" rel=\"license noreferrer\">CC BY 3.0</a>.",
-    factOneTitle: "Private by default", factOneText: "Your videos stay on your Mac", factTwoTitle: "Batch ready", factTwoText: "Review one video or an entire folder", factThreeTitle: "Made for macOS", factThreeText: "Apple Silicon and Intel supported",
-    workflowEyebrow: "A CLEARER WAY TO BROWSE", workflowTitle: "Three steps from video to visual overview.",
-    stepOneTitle: "Add your videos", stepOneText: "Drop in one clip, a few family videos, or a whole folder of footage.",
-    stepTwoTitle: "Choose the moments", stepTwoText: "Start with Smart Select, then adjust the exact frames when you want more control.",
-    stepThreeTitle: "Save the storyboard", stepThreeText: "Choose the grid and export a clean PNG or JPG beside the original video.", overviewAlt: "A video represented by a contact sheet in ShotMap",
-    precisionEyebrow: "SMART FIRST, PRECISE WHEN NEEDED", precisionTitle: "Let the app find a starting point. Keep the final say.",
-    precisionText: "Smart Select gives you representative frames. The visual timeline, frame steps, and timecode field make a quick replacement feel natural.",
-    precisionPointOne: "Review frames in a real video timeline", precisionPointTwo: "Step backward or forward by individual frames", precisionPointThree: "Keep selected frames in a clear sequence", manualCaption: "Manual frame selection",
-    capabilitiesEyebrow: "BUILT FOR USEFUL RESULTS", capabilitiesTitle: "Simple controls. Flexible output.",
-    featureOneTitle: "Choose the right grid", featureOneText: "From 3 × 3 to 8 × 8, choose the amount of detail your video needs.",
-    featureTwoTitle: "Keep useful context", featureTwoText: "Show timecodes and file names when they help you find a scene again.",
-    featureThreeTitle: "Match the material", featureThreeText: "Use the video’s aspect ratio, choose a background, and export PNG or JPG.",
-    featureFourTitle: "Process more at once", featureFourText: "Keep a visible queue and create storyboards for multiple videos in one pass.",
-    privacyEyebrow: "PRIVATE BY DESIGN", privacyTitle: "Your footage stays on your Mac.", privacyText: "Frame analysis and export happen locally. There is no account, upload, cloud queue, or telemetry to set up.",
-    installEyebrow: "INSTALL AND START", installTitle: "Ready in a few simple steps.", installText: "Download the latest release, move ShotMap to Applications, and open it. No account or command line is required.", installCompatibility: "Requires macOS 13 or later · Apple Silicon and Intel",
-    faqEyebrow: "GOOD TO KNOW", faqTitle: "A few quick answers.", faqOneQuestion: "Does ShotMap upload my videos?", faqOneAnswer: "No. Reading frames and creating the final image happen entirely on your Mac.", faqTwoQuestion: "Which Macs are supported?", faqTwoAnswer: "ShotMap supports macOS 13 or later on Apple Silicon and Intel Macs.", faqThreeQuestion: "Can I replace a frame myself?", faqThreeAnswer: "Yes. Smart Select is a starting point; the manual frame picker lets you choose the moments yourself.",
-    ctaEyebrow: "READY WHEN YOU ARE", ctaTitle: "Make every video easier to browse.", ctaDownload: "Get the latest version", ctaGithub: "View the project on GitHub <span aria-hidden=\"true\">↗</span>", github: "GitHub", releases: "Releases", feedback: "Feedback"
+    demoCredit: "Demo images use <a href=\"https://mango.blender.org/\" rel=\"noreferrer\">Tears of Steel</a> (2012) by Blender Foundation / Blender Institute, licensed under <a href=\"https://creativecommons.org/licenses/by/3.0/\" rel=\"license noreferrer\">CC BY 3.0</a>.",
+    factOneTitle: "Private on your Mac", factOneText: "Your videos stay on your Mac", factTwoTitle: "One or many videos", factTwoText: "Add several videos to one queue", factThreeTitle: "Made for macOS", factThreeText: "Apple Silicon and Intel supported",
+    workflowEyebrow: "A CLEARER WAY TO BROWSE", workflowTitle: "Three small steps to a visual overview.",
+    stepOneTitle: "Add videos", stepOneText: "Drag in one or more videos.",
+    stepTwoTitle: "Choose frames", stepTwoText: "Let Smart Select suggest a set, then replace any frame you want.",
+    stepThreeTitle: "Save the storyboard", stepThreeText: "Choose a grid, then save a PNG or JPG beside the source video.",
+    overviewAlt: "A ShotMap storyboard generated from Tears of Steel", overviewCaption: "One video, one readable overview",
+    precisionEyebrow: "START SMART. FINE-TUNE WHEN NEEDED.", precisionTitle: "Smart Select gets you started. You choose the final frames.",
+    precisionText: "Smart Select proposes a varied set of frames. Use the timeline, frame steps, and timecode to inspect and replace any one of them.",
+    precisionPointOne: "See candidates on a video timeline", precisionPointTwo: "Move by 1 or 5 frames at a time", precisionPointThree: "Keep chosen frames in storyboard order", manualCaption: "Manual Frame Editor",
+    capabilitiesEyebrow: "MADE FOR EVERYDAY VIDEO LIBRARIES", capabilitiesTitle: "Simple choices. Useful results.",
+    featureOneTitle: "Grid size", featureOneText: "Choose from 3 × 3 to 8 × 8, depending on how much detail you need.",
+    featureTwoTitle: "Helpful labels", featureTwoText: "Add timecodes and file titles when they help you find a moment again.",
+    featureThreeTitle: "Match your video", featureThreeText: "Use the video aspect ratio, choose a background, and export PNG or JPG.",
+    featureFourTitle: "Process a queue", featureFourText: "Keep several videos visible and create storyboards in one pass.",
+    privacyEyebrow: "PRIVATE BY DESIGN", privacyTitle: "Your videos stay on your Mac.", privacyText: "Frame analysis and export happen locally. There is no account, cloud upload, or analytics SDK in the app.",
+    faqEyebrow: "GOOD TO KNOW", faqTitle: "A few quick answers.",
+    faqOneQuestion: "Does ShotMap upload my videos?", faqOneAnswer: "No. Frame analysis and export happen entirely on your Mac.",
+    faqTwoQuestion: "Which Macs are supported?", faqTwoAnswer: "ShotMap supports macOS 13 or later on Apple Silicon and Intel Macs.",
+    faqThreeQuestion: "Can I replace a frame myself?", faqThreeAnswer: "Yes. Smart Select is a starting point; the Manual Frame Editor lets you choose the final frames.",
+    faqFourQuestion: "Where are storyboard images saved?", faqFourAnswer: "By default, beside the source video. Use Save As to choose another location.",
+    ctaEyebrow: "READY TO TRY IT?", ctaTitle: "Make your video library easier to browse.", ctaDetail: "Download the latest release, drag ShotMap to Applications, and start. No account or command line required.",
+    ctaDownload: "Download ShotMap for macOS", ctaGithub: "View on GitHub <span aria-hidden=\"true\">↗</span>", github: "GitHub", releases: "Releases", feedback: "Feedback"
   },
   zh: {
-    pageTitle: "ShotMap — macOS 视频分镜图工具", pageDescription: "打开视频前，先看懂里面有什么。ShotMap 在 Mac 本机生成清晰易读的视频分镜图，支持智能选帧、手动调整和 PNG 或 JPG 导出。",
-    ogTitle: "ShotMap — 打开视频前，先看懂里面有什么", ogDescription: "在 Mac 本机生成清晰视频分镜图：智能选帧、手动调整、私密导出。",
-    locale: "zh_CN", languageLabel: "选择语言", skipLink: "跳到正文",
+    pageTitle: "ShotMap — macOS 视频分镜图工具",
+    pageDescription: "不用逐个打开文件，也能找到想看的视频。ShotMap 在 Mac 本机把视频整理成清晰易读的分镜图。",
+    ogTitle: "ShotMap — 打开之前，先看懂视频",
+    ogDescription: "在 Mac 本机把视频整理成清晰分镜图：智能选帧、手动调整、私密导出。",
+    locale: "zh_CN", languageLabel: "选择语言", navigationLabel: "主导航", homeLabel: "ShotMap 首页", factsLabel: "ShotMap 特点", skipLink: "跳到正文",
     navWorkflow: "使用方法", navFeatures: "功能", navPrivacy: "隐私", download: "下载",
-    heroEyebrow: "MAC 视频一键拼图", heroTitle: "打开视频前，<br />内容一眼看懂。",
-    heroSummary: "ShotMap 把一段视频整理成一张清晰的分镜图，让你一眼浏览重要画面和发生顺序。",
-    heroDownload: "下载 macOS 版", viewSource: "在 GitHub 查看项目 <span aria-hidden=\"true\">↗</span>",
-    compatibility: "支持 macOS 13 及以上 · Apple Silicon 与 Intel · 免费开源", productCaption: "ShotMap 工作区",
-    demoCredit: "演示截图使用 <a href=\"https://mango.blender.org/\" rel=\"noreferrer\">《Tears of Steel》</a>（2012），© Blender Foundation / Blender Institute，采用 <a href=\"https://creativecommons.org/licenses/by/3.0/\" rel=\"license noreferrer\">CC BY 3.0</a> 许可。",
-    factOneTitle: "默认本机处理", factOneText: "视频始终留在你的 Mac 上", factTwoTitle: "支持批量处理", factTwoText: "一部影片或整个文件夹都能整理", factThreeTitle: "专为 macOS 打造", factThreeText: "支持 Apple Silicon 与 Intel",
-    workflowEyebrow: "更容易浏览视频", workflowTitle: "从视频到分镜图，只需三步。",
-    stepOneTitle: "加入视频", stepOneText: "可以拖入一部影片、几段家庭录像，或整个文件夹里的素材。",
-    stepTwoTitle: "选择关键画面", stepTwoText: "先用智能选择；需要更精确时，再自己替换到想要的那一帧。",
-    stepThreeTitle: "保存分镜图", stepThreeText: "选择网格，然后把整洁的 PNG 或 JPG 保存在原视频旁边。", overviewAlt: "ShotMap 将一段视频整理为分镜图",
-    precisionEyebrow: "先智能选择，需要时精确调整", precisionTitle: "智能选择提供起点，最后由你决定。",
-    precisionText: "智能选择会先找出有代表性的画面。视觉时间轴、逐帧微调和时间码输入，让替换一帧变得简单。",
-    precisionPointOne: "在真实的视频时间轴中查看画面", precisionPointTwo: "按单帧向前或向后微调", precisionPointThree: "让选中的画面保持清晰顺序", manualCaption: "手动选择画面",
-    capabilitiesEyebrow: "为了更好用的结果而设计", capabilitiesTitle: "控制简单，导出灵活。",
-    featureOneTitle: "选择合适的网格", featureOneText: "从 3 × 3 到 8 × 8，为不同长度的视频选择合适的信息量。",
-    featureTwoTitle: "保留有用线索", featureTwoText: "需要时显示时间码和文件名，日后更容易找到某个片段。",
-    featureThreeTitle: "适配你的素材", featureThreeText: "随视频比例排版，选择底色，并导出 PNG 或 JPG。",
-    featureFourTitle: "一次处理更多影片", featureFourText: "保持可见的任务队列，一次为多条视频生成分镜图。",
-    privacyEyebrow: "隐私从设计开始", privacyTitle: "你的影片始终留在 Mac 上。", privacyText: "取帧和导出都在本机完成。无需账号、无需上传、没有云端队列，也没有遥测设置。",
-    installEyebrow: "安装并开始使用", installTitle: "简单几步即可开始。", installText: "下载最新版本，将 ShotMap 移入“应用程序”文件夹后打开即可。无需账号，也不需要命令行。", installCompatibility: "需要 macOS 13 或更高版本 · 支持 Apple Silicon 与 Intel",
-    faqEyebrow: "使用前你可能会想知道", faqTitle: "几个简短的答案。", faqOneQuestion: "ShotMap 会上传我的视频吗？", faqOneAnswer: "不会。读取画面和生成最终图片都完全在你的 Mac 本机完成。", faqTwoQuestion: "支持哪些 Mac？", faqTwoAnswer: "ShotMap 支持运行 macOS 13 或更高版本的 Apple Silicon 与 Intel Mac。", faqThreeQuestion: "我可以自己替换某一帧吗？", faqThreeAnswer: "可以。智能选择只是起点；手动选帧功能让你自己决定每个关键画面。",
-    ctaEyebrow: "随时准备开始", ctaTitle: "让每段视频都更容易浏览。", ctaDownload: "获取最新版本", ctaGithub: "在 GitHub 查看项目 <span aria-hidden=\"true\">↗</span>", github: "GitHub", releases: "发布版本", feedback: "反馈"
+    heroEyebrow: "MAC 视频一键拼图", heroTitle: "打开之前，<br />先看懂视频。",
+    heroSummary: "ShotMap 将视频中的关键画面整理成一张分镜图，帮你不用逐个打开文件，也能找到想看的视频。",
+    heroDownload: "下载 macOS 版", viewSource: "在 GitHub 查看 <span aria-hidden=\"true\">↗</span>",
+    compatibility: "macOS 13 及以上 · Apple Silicon 与 Intel · 免费开源", productCaption: "ShotMap 工作区",
+    demoCredit: "演示图片使用 <a href=\"https://mango.blender.org/\" rel=\"noreferrer\">《Tears of Steel》</a>（2012），由 Blender Foundation / Blender Institute 制作，采用 <a href=\"https://creativecommons.org/licenses/by/3.0/\" rel=\"license noreferrer\">CC BY 3.0</a> 许可。",
+    factOneTitle: "只在本机处理", factOneText: "视频始终留在你的 Mac 上", factTwoTitle: "一部或多部视频", factTwoText: "可将多部视频加入同一队列", factThreeTitle: "为 macOS 而做", factThreeText: "支持 Apple Silicon 与 Intel",
+    workflowEyebrow: "更容易浏览视频", workflowTitle: "三步得到一张视频分镜图。",
+    stepOneTitle: "添加视频", stepOneText: "拖入一个或多个视频。",
+    stepTwoTitle: "选择画面", stepTwoText: "先让智能选帧给出候选，再替换任何一张你想调整的画面。",
+    stepThreeTitle: "保存分镜图", stepThreeText: "选择网格，然后将 PNG 或 JPG 保存在原视频旁边。",
+    overviewAlt: "由 ShotMap 为《Tears of Steel》生成的视频分镜图", overviewCaption: "一段视频，一张易读的总览图",
+    precisionEyebrow: "先智能选择，需要时再精调", precisionTitle: "智能选帧帮你开始，最终画面由你决定。",
+    precisionText: "智能选帧会给出一组有变化的候选。你可以通过时间轴、逐帧按钮和时间码查看并替换其中任何一张。",
+    precisionPointOne: "在视频时间轴上查看候选画面", precisionPointTwo: "每次前后移动 1 帧或 5 帧", precisionPointThree: "按分镜图的顺序保留已选画面", manualCaption: "手动选择画面",
+    capabilitiesEyebrow: "为日常整理视频而设计", capabilitiesTitle: "选择简单，结果实用。",
+    featureOneTitle: "分镜网格", featureOneText: "从 3 × 3 到 8 × 8，按需要选择画面密度。",
+    featureTwoTitle: "保留线索", featureTwoText: "需要时显示时间码和文件标题，之后更容易找回画面。",
+    featureThreeTitle: "匹配你的素材", featureThreeText: "随视频比例排版，选择底色，并导出 PNG 或 JPG。",
+    featureFourTitle: "处理一个队列", featureFourText: "让多部视频保持可见，并一次生成分镜图。",
+    privacyEyebrow: "从设计开始保护隐私", privacyTitle: "你的影片始终留在 Mac 上。", privacyText: "取帧和导出都在本机完成。无需账号、无需上传，应用内也没有分析 SDK。",
+    faqEyebrow: "使用前你可能会想知道", faqTitle: "几个简短的答案。",
+    faqOneQuestion: "ShotMap 会上传我的视频吗？", faqOneAnswer: "不会。读取画面和生成最终图片都完全在你的 Mac 本机完成。",
+    faqTwoQuestion: "支持哪些 Mac？", faqTwoAnswer: "ShotMap 支持运行 macOS 13 或更高版本的 Apple Silicon 与 Intel Mac。",
+    faqThreeQuestion: "我可以自己替换某一帧吗？", faqThreeAnswer: "可以。智能选帧只是起点；手动选择画面让你决定最终画面。",
+    faqFourQuestion: "分镜图保存在哪里？", faqFourAnswer: "默认保存在原视频旁边。你也可以用“另存为”选择其他位置。",
+    ctaEyebrow: "准备好试试看？", ctaTitle: "让你的视频库更容易浏览。", ctaDetail: "下载最新版本，将 ShotMap 拖入“应用程序”后即可开始。无需账号，也不需要命令行。",
+    ctaDownload: "下载 ShotMap macOS 版", ctaGithub: "在 GitHub 查看 <span aria-hidden=\"true\">↗</span>", github: "GitHub", releases: "版本发布", feedback: "反馈"
   },
   ja: {
-    pageTitle: "ShotMap — macOS 向け動画ストーリーボード", pageDescription: "動画を開く前に、内容がひと目でわかる。ShotMap は Mac 上で見やすい動画の絵コンテを作成し、スマート選択、手動調整、PNG または JPG 出力に対応します。",
-    ogTitle: "ShotMap — 動画を開く前に、内容がひと目でわかる", ogDescription: "Mac 上だけで動画を見やすい絵コンテに。スマート選択、手動調整、プライベートな書き出し。",
-    locale: "ja_JP", languageLabel: "言語を選択", skipLink: "本文へ移動",
-    navWorkflow: "使い方", navFeatures: "できること", navPrivacy: "プライバシー", download: "ダウンロード",
-    heroEyebrow: "MAC 向け動画コンタクトシート", heroTitle: "開く前に、<br />動画の内容がわかる。",
-    heroSummary: "ShotMap は動画の重要な場面を一枚の見やすいコンタクトシートにまとめ、流れをひと目で確認できるようにします。",
-    heroDownload: "macOS 版をダウンロード", viewSource: "GitHub でプロジェクトを見る <span aria-hidden=\"true\">↗</span>",
+    pageTitle: "ShotMap — macOS 向け動画絵コンテ作成アプリ",
+    pageDescription: "動画を一つずつ開かなくても、見たい動画を探せます。ShotMap は動画を Mac 上で見やすい絵コンテにまとめます。",
+    ogTitle: "ShotMap — 開く前に、動画の中身がわかる",
+    ogDescription: "Mac 上だけで動画を見やすい絵コンテに。スマート選択、手動調整、プライベートな書き出し。",
+    locale: "ja_JP", languageLabel: "言語を選択", navigationLabel: "メインナビゲーション", homeLabel: "ShotMap ホーム", factsLabel: "ShotMap の特徴", skipLink: "本文へ移動",
+    navWorkflow: "使い方", navFeatures: "機能", navPrivacy: "プライバシー", download: "ダウンロード",
+    heroEyebrow: "MAC 向け動画絵コンテ", heroTitle: "開く前に、<br />動画の中身がわかる。",
+    heroSummary: "ShotMap は動画の主な場面を一枚の絵コンテにまとめ、動画を一つずつ開かなくても見たいものを探せるようにします。",
+    heroDownload: "macOS 版をダウンロード", viewSource: "GitHub で見る <span aria-hidden=\"true\">↗</span>",
     compatibility: "macOS 13 以降 · Apple Silicon / Intel 対応 · 無料・オープンソース", productCaption: "ShotMap ワークスペース",
-    demoCredit: "デモのスクリーンショットには <a href=\"https://mango.blender.org/\" rel=\"noreferrer\">Tears of Steel</a>（2012）を使用しています。© Blender Foundation / Blender Institute、<a href=\"https://creativecommons.org/licenses/by/3.0/\" rel=\"license noreferrer\">CC BY 3.0</a> ライセンス。",
-    factOneTitle: "最初からローカル処理", factOneText: "動画は Mac の外に出ません", factTwoTitle: "まとめて処理", factTwoText: "一本の動画もフォルダ全体も確認できます", factThreeTitle: "macOS のために設計", factThreeText: "Apple Silicon と Intel に対応",
-    workflowEyebrow: "動画をもっと見やすく", workflowTitle: "動画から見やすい一覧まで、3 ステップ。",
-    stepOneTitle: "動画を追加", stepOneText: "一本の動画、家族の動画数本、またはフォルダ内の素材を追加できます。",
-    stepTwoTitle: "大切な場面を選ぶ", stepTwoText: "まずはスマート選択を使用。より正確に選びたい時は、一コマずつ置き換えられます。",
-    stepThreeTitle: "コンタクトシートを保存", stepThreeText: "グリッドを選び、整った PNG または JPG を元動画のそばに保存します。", overviewAlt: "ShotMap で動画をコンタクトシートにまとめた例",
-    precisionEyebrow: "まずはスマートに、必要な時は正確に", precisionTitle: "出発点はアプリに任せて、最後は自分で選ぶ。",
-    precisionText: "スマート選択が代表的な場面を提示します。視覚的なタイムライン、コマ送り、タイムコード入力で、一コマの置き換えも簡単です。",
-    precisionPointOne: "実際の動画タイムラインで場面を確認", precisionPointTwo: "一コマ単位で前後に調整", precisionPointThree: "選んだ場面をわかりやすい順序で保持", manualCaption: "手動で場面を選択",
-    capabilitiesEyebrow: "役立つ結果のための機能", capabilitiesTitle: "操作はシンプル。出力は柔軟。",
-    featureOneTitle: "適切なグリッドを選ぶ", featureOneText: "3 × 3 から 8 × 8 まで、動画に必要な情報量を選べます。",
-    featureTwoTitle: "役立つ手がかりを残す", featureTwoText: "必要に応じてタイムコードとファイル名を表示し、後から場面を見つけやすくします。",
-    featureThreeTitle: "素材に合わせる", featureThreeText: "動画の比率に合わせ、背景を選び、PNG または JPG で書き出せます。",
-    featureFourTitle: "まとめて処理", featureFourText: "見えるキューを保ちながら、複数の動画を一度にコンタクトシートへ変換できます。",
-    privacyEyebrow: "プライバシーを前提に設計", privacyTitle: "動画は Mac の外に出ません。", privacyText: "フレームの読み込みと書き出しはすべてローカルで行われます。アカウント、アップロード、クラウドキュー、テレメトリーの設定は不要です。",
-    installEyebrow: "インストールして始める", installTitle: "数ステップで準備完了。", installText: "最新版をダウンロードし、ShotMap をアプリケーションフォルダに移して開くだけです。アカウントもコマンドラインも必要ありません。", installCompatibility: "macOS 13 以降が必要 · Apple Silicon / Intel 対応",
-    faqEyebrow: "知っておきたいこと", faqTitle: "よくある短い質問。", faqOneQuestion: "ShotMap は動画をアップロードしますか？", faqOneAnswer: "いいえ。フレームの読み込みと最終画像の作成はすべて Mac 上で完結します。", faqTwoQuestion: "どの Mac に対応していますか？", faqTwoAnswer: "ShotMap は macOS 13 以降を搭載した Apple Silicon と Intel の Mac に対応しています。", faqThreeQuestion: "自分で一コマを置き換えられますか？", faqThreeAnswer: "はい。スマート選択は出発点です。手動選択で各場面を自分で決められます。",
-    ctaEyebrow: "必要な時に、すぐ使える", ctaTitle: "すべての動画を、もっと見やすく。", ctaDownload: "最新版を入手", ctaGithub: "GitHub でプロジェクトを見る <span aria-hidden=\"true\">↗</span>", github: "GitHub", releases: "リリース", feedback: "フィードバック"
+    demoCredit: "デモ画像には <a href=\"https://mango.blender.org/\" rel=\"noreferrer\">Tears of Steel</a>（2012）を使用しています。Blender Foundation / Blender Institute 制作、<a href=\"https://creativecommons.org/licenses/by/3.0/\" rel=\"license noreferrer\">CC BY 3.0</a> ライセンス。",
+    factOneTitle: "Mac 上だけで処理", factOneText: "動画は Mac の外に出ません", factTwoTitle: "一本でも複数でも", factTwoText: "複数の動画を一つのキューに追加", factThreeTitle: "macOS のために設計", factThreeText: "Apple Silicon と Intel に対応",
+    workflowEyebrow: "動画をもっと見やすく", workflowTitle: "3 ステップで動画の一覧を作成。",
+    stepOneTitle: "動画を追加", stepOneText: "一つまたは複数の動画をドラッグします。",
+    stepTwoTitle: "場面を選ぶ", stepTwoText: "スマート選択の候補から始め、気になるコマだけを置き換えます。",
+    stepThreeTitle: "絵コンテを保存", stepThreeText: "グリッドを選び、PNG または JPG を元動画のそばに保存します。",
+    overviewAlt: "ShotMap で Tears of Steel から作成した動画絵コンテ", overviewCaption: "一本の動画を、一目でわかる一覧に",
+    precisionEyebrow: "まずスマートに、必要な時だけ細かく", precisionTitle: "スマート選択で始め、最後のコマは自分で決める。",
+    precisionText: "スマート選択は変化のあるコマを候補にします。タイムライン、コマ送り、タイムコードで確認し、どのコマでも置き換えられます。",
+    precisionPointOne: "動画タイムラインで候補を確認", precisionPointTwo: "1 コマまたは 5 コマずつ移動", precisionPointThree: "選んだコマを絵コンテの順序で保持", manualCaption: "手動フレーム選択",
+    capabilitiesEyebrow: "日常の動画整理のために", capabilitiesTitle: "選択はシンプル。結果は役立つ。",
+    featureOneTitle: "グリッドサイズ", featureOneText: "必要な情報量に合わせ、3 × 3 から 8 × 8 を選べます。",
+    featureTwoTitle: "役立つラベル", featureTwoText: "必要に応じてタイムコードとファイル名を表示し、場面を探しやすくします。",
+    featureThreeTitle: "動画に合わせる", featureThreeText: "動画の比率と背景を選び、PNG または JPG で書き出せます。",
+    featureFourTitle: "キューを処理", featureFourText: "複数の動画を見える状態に保ち、一度に絵コンテを作成します。",
+    privacyEyebrow: "プライバシーを前提に設計", privacyTitle: "動画は Mac の外に出ません。", privacyText: "フレームの読み込みと書き出しはすべてローカルで行われます。アカウント、アップロード、分析 SDK はありません。",
+    faqEyebrow: "知っておきたいこと", faqTitle: "よくある短い質問。",
+    faqOneQuestion: "ShotMap は動画をアップロードしますか？", faqOneAnswer: "いいえ。フレームの読み込みと最終画像の作成はすべて Mac 上で完結します。",
+    faqTwoQuestion: "どの Mac に対応していますか？", faqTwoAnswer: "ShotMap は macOS 13 以降を搭載した Apple Silicon と Intel の Mac に対応しています。",
+    faqThreeQuestion: "自分で一コマを置き換えられますか？", faqThreeAnswer: "はい。スマート選択は出発点です。手動フレーム選択で最終的なコマを決められます。",
+    faqFourQuestion: "絵コンテ画像はどこに保存されますか？", faqFourAnswer: "標準では元動画のそばに保存されます。「別名で保存」を使えば別の場所も選べます。",
+    ctaEyebrow: "試してみませんか？", ctaTitle: "動画ライブラリを、もっと見やすく。", ctaDetail: "最新版をダウンロードし、ShotMap をアプリケーションへドラッグするだけです。アカウントもコマンドラインも必要ありません。",
+    ctaDownload: "ShotMap をダウンロード", ctaGithub: "GitHub で見る <span aria-hidden=\"true\">↗</span>", github: "GitHub", releases: "リリース", feedback: "フィードバック"
   }
 };
 
-const localizedVisualAssets = {
-  en: {
-    product: ["assets/workspace-en.webp?v=tears-20261016", "ShotMap workspace in English", 1400, 995],
-    manual: ["assets/manual-en.webp?v=tears-20261016", "ShotMap manual frame selection in English", 1280, 828]
-  },
-  zh: {
-    product: ["assets/workspace-zh.webp?v=tears-20261016", "ShotMap 中文工作区", 1400, 995],
-    manual: ["assets/manual-zh.webp?v=tears-20261016", "ShotMap 中文手动选帧界面", 1280, 828]
-  },
-  ja: {
-    product: ["assets/workspace-ja.webp?v=tears-20261016", "ShotMap 日本語ワークスペース", 1400, 995],
-    manual: ["assets/manual-ja.webp?v=tears-20261016", "ShotMap の日本語手動フレーム選択画面", 1280, 828]
-  }
+export const localizedVisualAssets = {
+  en: { product: ["assets/workspace-en.webp?v=20261017", "ShotMap workspace showing the video queue, storyboard preview, and settings panel", 1400, 995], manual: ["assets/manual-en.webp?v=20261017", "ShotMap Manual Frame Editor with player, timeline, and candidate frames", 1280, 828] },
+  zh: { product: ["assets/workspace-zh.webp?v=20261017", "ShotMap 中文工作区：视频队列、分镜预览和设置面板", 1400, 995], manual: ["assets/manual-zh.webp?v=20261017", "ShotMap 中文手动选择画面：播放器、时间轴和候选画面", 1280, 828] },
+  ja: { product: ["assets/workspace-ja.webp?v=20261017", "ShotMap 日本語ワークスペース：動画キュー、絵コンテのプレビュー、設定パネル", 1400, 995], manual: ["assets/manual-ja.webp?v=20261017", "ShotMap の手動フレーム選択：プレーヤー、タイムライン、候補コマ", 1280, 828] }
 };
 
 const languageStorageKey = "shotmap-language";
-const siteURL = "https://ixiehao.github.io/ShotMap/";
-const localeURLs = {
-  en: siteURL,
-  zh: `${siteURL}?lang=zh`,
-  ja: `${siteURL}?lang=ja`
-};
-const releaseURL = "https://github.com/ixiehao/ShotMap/releases/latest";
 
 function setContent(selector, value) {
   const node = document.querySelector(selector);
@@ -125,55 +136,48 @@ function updateVisual(selector, visual) {
   const image = document.querySelector(selector);
   if (!image) return;
   const [src, alt, width, height] = visual;
-  image.src = src;
+  const staticLocale = document.documentElement.dataset.defaultLanguage;
+  image.src = staticLocale && staticLocale !== "en" ? "../" + src : src;
   image.alt = alt;
   image.width = width;
   image.height = height;
 }
 
-function updateSchemas(copy, selectedLanguage) {
-  const productVisual = localizedVisualAssets[selectedLanguage].product;
+function updateSchemas(copy, language) {
+  const product = localizedVisualAssets[language].product;
   const softwareSchema = {
-    "@context": "https://schema.org", "@type": "SoftwareApplication", name: "ShotMap",
-    "@id": `${siteURL}#software`, applicationCategory: "MultimediaApplication", operatingSystem: "macOS 13 or later", softwareVersion: "0.2.13",
-    url: localeURLs[selectedLanguage], description: copy.pageDescription, downloadUrl: releaseURL,
-    screenshot: new URL(productVisual[0], siteURL).href,
-    featureList: "Smart frame selection; manual frame editor; batch processing; PNG and JPG export; local-only processing",
+    "@context": "https://schema.org", "@type": "SoftwareApplication", "@id": siteURL + "#software",
+    name: "ShotMap", applicationCategory: "MultimediaApplication", operatingSystem: "macOS 13 or later",
+    softwareVersion: "0.2.14", url: localeURLs[language], description: copy.pageDescription, downloadUrl: releaseURL,
+    screenshot: new URL(product[0], siteURL).href,
+    featureList: "Smart frame selection; manual frame editor; multi-video queue; PNG and JPG export; local-only processing",
     offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
     author: { "@type": "Person", name: "ixiehao", url: "https://github.com/ixiehao" },
     codeRepository: "https://github.com/ixiehao/ShotMap", license: "https://opensource.org/license/mit",
-    inLanguage: selectedLanguage === "zh" ? "zh-CN" : selectedLanguage
+    inLanguage: language === "zh" ? "zh-CN" : language
   };
-  const faqSchema = {
-    "@context": "https://schema.org", "@type": "FAQPage", mainEntity: [
-      { "@type": "Question", name: copy.faqOneQuestion, acceptedAnswer: { "@type": "Answer", text: copy.faqOneAnswer } },
-      { "@type": "Question", name: copy.faqTwoQuestion, acceptedAnswer: { "@type": "Answer", text: copy.faqTwoAnswer } },
-      { "@type": "Question", name: copy.faqThreeQuestion, acceptedAnswer: { "@type": "Answer", text: copy.faqThreeAnswer } }
-    ]
-  };
+  const questions = ["One", "Two", "Three", "Four"].map((number) => ({
+    "@type": "Question",
+    name: copy["faq" + number + "Question"],
+    acceptedAnswer: { "@type": "Answer", text: copy["faq" + number + "Answer"] }
+  }));
   document.querySelector("#software-schema").textContent = JSON.stringify(softwareSchema);
-  document.querySelector("#faq-schema").textContent = JSON.stringify(faqSchema);
+  document.querySelector("#faq-schema").textContent = JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: questions });
 }
 
-function activateLanguage(language, updateURL = false) {
+export function activateLanguage(language, shouldNavigate) {
   const selectedLanguage = translations[language] ? language : "en";
+  if (shouldNavigate) {
+    window.location.assign(localeURLs[selectedLanguage] + window.location.hash);
+    return;
+  }
   const copy = translations[selectedLanguage];
   document.documentElement.lang = selectedLanguage === "zh" ? "zh-CN" : selectedLanguage;
   document.title = copy.pageTitle;
-
-  document.querySelectorAll("[data-i18n]").forEach((node) => {
-    node.textContent = copy[node.dataset.i18n];
-  });
-  document.querySelectorAll("[data-i18n-html]").forEach((node) => {
-    node.innerHTML = copy[node.dataset.i18nHtml];
-  });
-  document.querySelectorAll("[data-i18n-alt]").forEach((node) => {
-    node.alt = copy[node.dataset.i18nAlt];
-  });
-  document.querySelectorAll("[data-i18n-aria]").forEach((node) => {
-    node.setAttribute("aria-label", copy[node.dataset.i18nAria]);
-  });
-
+  document.querySelectorAll("[data-i18n]").forEach((node) => { node.textContent = copy[node.dataset.i18n]; });
+  document.querySelectorAll("[data-i18n-html]").forEach((node) => { node.innerHTML = copy[node.dataset.i18nHtml]; });
+  document.querySelectorAll("[data-i18n-alt]").forEach((node) => { node.alt = copy[node.dataset.i18nAlt]; });
+  document.querySelectorAll("[data-i18n-aria]").forEach((node) => { node.setAttribute("aria-label", copy[node.dataset.i18nAria]); });
   setContent('meta[name="description"]', copy.pageDescription);
   setContent('meta[property="og:title"]', copy.ogTitle);
   setContent('meta[property="og:description"]', copy.ogDescription);
@@ -181,30 +185,23 @@ function activateLanguage(language, updateURL = false) {
   setContent('meta[property="og:locale"]', copy.locale);
   setContent('meta[name="twitter:title"]', copy.ogTitle);
   setContent('meta[name="twitter:description"]', copy.ogDescription);
-  setContent('#og-image-alt', localizedVisualAssets[selectedLanguage].product[1]);
-  setContent('#twitter-image-alt', localizedVisualAssets[selectedLanguage].product[1]);
+  setContent("#og-image-alt", localizedVisualAssets[selectedLanguage].product[1]);
+  setContent("#twitter-image-alt", localizedVisualAssets[selectedLanguage].product[1]);
   setLink('link[rel="canonical"]', localeURLs[selectedLanguage]);
+  updateVisual(".localized-product", localizedVisualAssets[selectedLanguage].product);
+  updateVisual(".localized-manual", localizedVisualAssets[selectedLanguage].manual);
   updateSchemas(copy, selectedLanguage);
-
-  const visuals = localizedVisualAssets[selectedLanguage];
-  updateVisual(".localized-product", visuals.product);
-  updateVisual(".localized-manual", visuals.manual);
-
   document.querySelectorAll("[data-lang]").forEach((button) => {
     button.setAttribute("aria-pressed", String(button.dataset.lang === selectedLanguage));
   });
   localStorage.setItem(languageStorageKey, selectedLanguage);
-  if (updateURL) {
-    const url = new URL(window.location.href);
-    if (selectedLanguage === "en") url.searchParams.delete("lang");
-    else url.searchParams.set("lang", selectedLanguage);
-    window.history.replaceState(null, "", `${url.pathname}${url.search}${url.hash}`);
-  }
 }
 
 function preferredLanguage() {
   const requested = new URLSearchParams(window.location.search).get("lang");
   if (translations[requested]) return requested;
+  const staticLanguage = document.documentElement.dataset.defaultLanguage;
+  if (staticLanguage && staticLanguage !== "en" && translations[staticLanguage]) return staticLanguage;
   const stored = localStorage.getItem(languageStorageKey);
   if (translations[stored]) return stored;
   const browserLanguage = navigator.language.toLowerCase();
@@ -213,8 +210,9 @@ function preferredLanguage() {
   return "en";
 }
 
-document.querySelectorAll("[data-lang]").forEach((button) => {
-  button.addEventListener("click", () => activateLanguage(button.dataset.lang, true));
-});
-
-activateLanguage(preferredLanguage());
+if (typeof document !== "undefined") {
+  document.querySelectorAll("[data-lang]").forEach((button) => {
+    button.addEventListener("click", () => activateLanguage(button.dataset.lang, true));
+  });
+  activateLanguage(preferredLanguage(), false);
+}

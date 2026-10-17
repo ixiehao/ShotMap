@@ -80,6 +80,12 @@ def main() -> None:
         "og:image",
         "twitter:image",
     )
+    for locale, language in (("zh", "zh-CN"), ("ja", "ja")):
+        localized_site = require_text(ROOT / "website" / locale / "index.html", f'<html lang="{language}"', WEBSITE)
+        if f"/{locale}/" not in localized_site:
+            fail(f"website/{locale}/index.html does not use its locale URL")
+
+    sitemap = require_text(ROOT / "website/sitemap.xml", f"{WEBSITE}zh/", f"{WEBSITE}ja/")
 
     social_preview = ROOT / "docs/assets/social-preview-v2.jpg"
     if social_preview.stat().st_size >= 1_000_000:

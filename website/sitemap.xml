@@ -3,26 +3,26 @@
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://ixiehao.github.io/ShotMap/</loc>
-    <lastmod>2026-10-16</lastmod>
+    <lastmod>2026-10-17</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://ixiehao.github.io/ShotMap/" />
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://ixiehao.github.io/ShotMap/?lang=zh" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://ixiehao.github.io/ShotMap/?lang=ja" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://ixiehao.github.io/ShotMap/zh/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://ixiehao.github.io/ShotMap/ja/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ixiehao.github.io/ShotMap/" />
   </url>
   <url>
-    <loc>https://ixiehao.github.io/ShotMap/?lang=zh</loc>
-    <lastmod>2026-10-16</lastmod>
+    <loc>https://ixiehao.github.io/ShotMap/zh/</loc>
+    <lastmod>2026-10-17</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://ixiehao.github.io/ShotMap/" />
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://ixiehao.github.io/ShotMap/?lang=zh" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://ixiehao.github.io/ShotMap/?lang=ja" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://ixiehao.github.io/ShotMap/zh/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://ixiehao.github.io/ShotMap/ja/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ixiehao.github.io/ShotMap/" />
   </url>
   <url>
-    <loc>https://ixiehao.github.io/ShotMap/?lang=ja</loc>
-    <lastmod>2026-10-16</lastmod>
+    <loc>https://ixiehao.github.io/ShotMap/ja/</loc>
+    <lastmod>2026-10-17</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://ixiehao.github.io/ShotMap/" />
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://ixiehao.github.io/ShotMap/?lang=zh" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://ixiehao.github.io/ShotMap/?lang=ja" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://ixiehao.github.io/ShotMap/zh/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://ixiehao.github.io/ShotMap/ja/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ixiehao.github.io/ShotMap/" />
   </url>
 </urlset>
