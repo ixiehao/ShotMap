@@ -168,6 +168,7 @@ function updateSchemas(copy, language) {
 export function activateLanguage(language, shouldNavigate) {
   const selectedLanguage = translations[language] ? language : "en";
   if (shouldNavigate) {
+    localStorage.setItem(languageStorageKey, selectedLanguage);
     window.location.assign(localeURLs[selectedLanguage] + window.location.hash);
     return;
   }
