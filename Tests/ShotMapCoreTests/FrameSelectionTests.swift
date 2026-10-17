@@ -231,6 +231,19 @@ final class FrameSelectionTests: XCTestCase {
         XCTAssertNotEqual(StoryboardBackground.cinema.rgb.red, StoryboardBackground.ivory.rgb.red)
     }
 
+    func testStoryboardBackgroundPaletteUsesFiveLightToDarkCanvases() {
+        XCTAssertEqual(
+            StoryboardBackground.allCases,
+            [.ivory, .mist, .evergreen, .navy, .cinema]
+        )
+
+        let luminances = StoryboardBackground.allCases.map { background in
+            let rgb = background.rgb
+            return 0.2126 * rgb.red + 0.7152 * rgb.green + 0.0722 * rgb.blue
+        }
+        XCTAssertEqual(luminances, luminances.sorted(by: >))
+    }
+
     func testImageCodecJPEGRoundTripPreservesDimensions() throws {
         let colorSpace = CGColorSpaceCreateDeviceRGB()
         let context = try XCTUnwrap(

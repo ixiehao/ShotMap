@@ -527,12 +527,16 @@ struct ContentView: View {
     private var outputWidthChoices: [Int] { [1920, 2560, 3840, 5120, 7680, 12_000] }
 
     private var backgroundPalette: some View {
-        HStack(spacing: 7) {
+        // Keep this row intrinsically smaller than the narrowest inspector.
+        // The English label used to sit beside six 28 pt targets, giving the
+        // row a wider minimum than its 250 pt inspector and letting the final
+        // swatch render past the window edge.
+        HStack(spacing: 8) {
             Text(t("export.background"))
                 .font(.system(size: 11, weight: .medium))
                 .lineLimit(1)
                 .fixedSize(horizontal: true, vertical: false)
-            Spacer(minLength: 0)
+            Spacer(minLength: 8)
             HStack(spacing: 5) {
                 ForEach(StoryboardBackground.allCases) { background in
                     let isSelected = model.background == background
@@ -552,6 +556,7 @@ struct ContentView: View {
                     .accessibilityValue(isSelected ? t("accessibility.selected") : "")
                 }
             }
+            .fixedSize(horizontal: true, vertical: false)
         }
         .frame(maxWidth: .infinity)
         .accessibilityElement(children: .contain)

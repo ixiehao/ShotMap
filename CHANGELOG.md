@@ -11,6 +11,7 @@ available on the [GitHub Releases page](https://github.com/ixiehao/ShotMap/relea
 - Improved image memory management, task cancellation, and saving reliability.
 - Fixed repeated frame stepping, manual editor window lifecycle, and status messages after language changes.
 - Refined the in-app ShotMap mark, grid-choice outline, and background-colour selection ring for cleaner small-control edges.
+- Kept the Canvas row inside narrow English settings panels and reduced its background palette to five useful colours, ordered light to dark.
 
 ### 中文
 
@@ -18,6 +19,7 @@ available on the [GitHub Releases page](https://github.com/ixiehao/ShotMap/relea
 - 优化图片内存管理、任务取消与保存可靠性。
 - 修复连续逐帧定位、手动窗口生命周期及语言切换后的状态提示。
 - 细化应用内 ShotMap 标识、分镜网格选中边框与底色选择环的小尺寸边缘表现。
+- 修复英文窄侧栏中“底色”选项越界；底色精简为 5 种实用颜色，并按从浅到深排列。
 
 ### 日本語
 
@@ -25,6 +27,7 @@ available on the [GitHub Releases page](https://github.com/ixiehao/ShotMap/relea
 - 画像のメモリ管理、タスクのキャンセル、保存処理の信頼性を改善しました。
 - 連続したコマ送り、手動選択ウインドウの開閉、言語切り替え後のステータス表示を修正しました。
 - アプリ内の ShotMap マーク、グリッド選択の枠線、背景色選択リングを、小さな操作部でも滑らかに見えるよう整えました。
+- 英語表示の狭い設定パネルでキャンバス色の行がはみ出す問題を修正し、背景色を明るい順に並べた 5 色へ絞りました。
 
 ## v0.2.13
 

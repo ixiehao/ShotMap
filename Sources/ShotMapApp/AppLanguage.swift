@@ -25,7 +25,7 @@ enum AppLanguage: String, CaseIterable, Identifiable, Sendable {
         "section.grid", "section.frame", "section.aspect", "aspect.source", "aspect.landscape", "aspect.standard",
         "aspect.square", "aspect.vertical", "aspect.portrait", "aspect.ultraWide",
         "section.export", "export.autosave", "export.format", "export.width", "export.width.value", "export.background",
-        "background.cinema", "background.ivory", "background.navy", "background.mist", "background.evergreen", "background.rose",
+        "background.cinema", "background.ivory", "background.navy", "background.mist", "background.evergreen",
         "export.time", "export.title", "button.generate.single",
         "button.generate.batch", "button.cancel", "button.cancelGeneration", "button.cancelGenerationConfirm", "button.keepGenerating",
         "button.pauseGeneration", "button.pausePending", "button.pauseConfirm", "button.resumeGeneration", "button.resumeConfirm",

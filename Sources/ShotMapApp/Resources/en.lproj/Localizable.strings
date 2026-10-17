@@ -20,13 +20,12 @@
 "export.format" = "Image format";
 "export.width" = "Width";
 "export.width.value" = "%d px";
-"export.background" = "Background";
+"export.background" = "Canvas";
 "background.cinema" = "Cinema black";
 "background.ivory" = "Warm ivory";
 "background.navy" = "Deep navy";
 "background.mist" = "Mist blue";
 "background.evergreen" = "Deep evergreen";
-"background.rose" = "Dusty rose";
 "accessibility.selected" = "Selected";
 "export.time" = "Show time on tiles";
 "export.title" = "Show file title";

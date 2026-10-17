@@ -9,26 +9,25 @@ enum ExportFormat: String, CaseIterable, Identifiable, Sendable {
     var fileExtension: String { self == .png ? "png" : "jpg" }
 }
 
-/// Purposeful, low-saturation canvases for a contact sheet. These colors keep
-/// a visual boundary around film frames without competing with the footage.
+/// Purposeful, low-saturation canvases for a storyboard. These five colours
+/// are arranged from light to dark for a predictable, compact palette. They
+/// keep a visual boundary around film frames without competing with footage.
 enum StoryboardBackground: String, CaseIterable, Identifiable, Sendable {
-    case cinema
     case ivory
-    case navy
     case mist
     case evergreen
-    case rose
+    case navy
+    case cinema
 
     var id: Self { self }
 
     var rgb: (red: Double, green: Double, blue: Double) {
         switch self {
-        case .cinema: (0.055, 0.063, 0.086)
         case .ivory: (0.945, 0.922, 0.879)
-        case .navy: (0.055, 0.145, 0.255)
         case .mist: (0.824, 0.890, 0.945)
         case .evergreen: (0.094, 0.275, 0.224)
-        case .rose: (0.925, 0.796, 0.800)
+        case .navy: (0.055, 0.145, 0.255)
+        case .cinema: (0.055, 0.063, 0.086)
         }
     }
 
