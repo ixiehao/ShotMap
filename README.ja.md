@@ -71,3 +71,9 @@
 - 同梱する [Tabler Icons Outline](https://github.com/tabler/tabler-icons) SVG は未改変で [MIT License](ThirdPartyLicenses/TablerIcons-MIT.txt) に基づいて使用しています。同梱の Noto Sans CJK フォントは [SIL Open Font License 1.1](ThirdPartyLicenses/NotoSansCJK-OFL-1.1.txt) です。詳細は [NOTICE.md](NOTICE.md) を参照してください。
 - 文書内のデモ映像は *Tears of Steel*（2012）© Blender Foundation / Blender Institute、[CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) ライセンスです。
 - 所有している、または解析の許可を得た動画だけを扱ってください。絵コンテの生成は、元動画を公開・再配布する権利を付与しません。
+
+## 開発・保守ドキュメント
+
+[ドキュメント一覧](docs/README.md) · [開発と検証](docs/DEVELOPMENT.md) · [公式サイトの保守](docs/WEBSITE.md)。
+
+公式サイトのソースは `website/` に、開発・保守ドキュメントは `docs/` に置いています。

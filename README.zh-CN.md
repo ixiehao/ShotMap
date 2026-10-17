@@ -71,3 +71,9 @@
 - 内置的 [Tabler Icons Outline](https://github.com/tabler/tabler-icons) SVG 保持原样，按 [MIT License](ThirdPartyLicenses/TablerIcons-MIT.txt) 使用；内置 Noto Sans CJK 字体采用 [SIL Open Font License 1.1](ThirdPartyLicenses/NotoSansCJK-OFL-1.1.txt)。详情见 [NOTICE.md](NOTICE.md)。
 - 文档演示视频《Tears of Steel》（2012）© Blender Foundation / Blender Institute，采用 [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) 许可。
 - 请仅处理你拥有或获授权分析的视频。生成分镜图并不授予发布或再分发原视频的权限。
+
+## 开发与维护文档
+
+[文档索引](docs/README.md) · [开发与验证](docs/DEVELOPMENT.md) · [官网维护](docs/WEBSITE.md)。
+
+官网源码统一位于 `website/`，`docs/` 用于开发与维护文档。

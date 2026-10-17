@@ -71,3 +71,9 @@ Your videos stay on your Mac. ShotMap has no account, tracking, cloud upload, El
 - The bundled [Tabler Icons Outline](https://github.com/tabler/tabler-icons) SVGs are used unmodified under the [MIT License](ThirdPartyLicenses/TablerIcons-MIT.txt). The bundled Noto Sans CJK font is licensed under the [SIL Open Font License 1.1](ThirdPartyLicenses/NotoSansCJK-OFL-1.1.txt). See [NOTICE.md](NOTICE.md) for details.
 - Documentation demo footage is *Tears of Steel* (2012) © Blender Foundation / Blender Institute, used under [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/).
 - Process only videos you own or are authorised to analyse. Creating a storyboard does not grant rights to publish or redistribute the source video.
+
+## Development documentation
+
+[Documentation index](docs/README.md) · [Development and validation](docs/DEVELOPMENT.md) · [Website maintenance](docs/WEBSITE.md).
+
+The official website source lives in `website/`; `docs/` is reserved for maintainer documentation.
