@@ -3,6 +3,26 @@
 All notable user-facing changes are recorded here. Stable releases remain
 available on the [GitHub Releases page](https://github.com/ixiehao/ShotMap/releases).
 
+## v0.2.14 (Unreleased)
+
+### English
+
+- Reduced repeated frame decoding and selection calculations while preserving existing selection rules.
+- Improved image memory management, task cancellation, and saving reliability.
+- Fixed repeated frame stepping, manual editor window lifecycle, and status messages after language changes.
+
+### 中文
+
+- 减少重复取帧与筛选计算，保留现有选帧规则。
+- 优化图片内存管理、任务取消与保存可靠性。
+- 修复连续逐帧定位、手动窗口生命周期及语言切换后的状态提示。
+
+### 日本語
+
+- 既存の選択ルールを維持しながら、重複するフレーム取得と選択処理を削減しました。
+- 画像のメモリ管理、タスクのキャンセル、保存処理の信頼性を改善しました。
+- 連続したコマ送り、手動選択ウインドウの開閉、言語切り替え後のステータス表示を修正しました。
+
 ## v0.2.13
 
 ### English
