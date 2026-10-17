@@ -9,21 +9,21 @@
 
 ![ShotMap's real English workspace creating a storyboard from Tears of Steel](website/assets/workspace-en.webp?v=20261017)
 
-## See what is in a video—before you open it
+## Your videos, easier to find.
 
-**ShotMap** turns the key moments in a video into one easy-to-scan storyboard image. See the flow of a video before opening it, and find the one you need without playing every file. It is a native, open-source macOS app: no account and no cloud upload.
+One folder can hold years of family clips, trips, and everyday moments—but a filename or single thumbnail rarely tells you which video to open. **ShotMap** puts moments from a video into one storyboard image, so you can scan the scenes and find the clip you remember without playing files one by one.
 
-Smart Select gives you a useful first set of frames. If one is not right, the Manual Frame Editor lets you replace it. Your videos and exports stay on your Mac.
+Start with Smart Select, then replace any frame in the Manual Frame Editor. ShotMap is a native, open-source macOS app: video processing and image export stay on your Mac; no account or video upload is needed.
 
 > **Start here:** [Download the latest universal DMG](https://github.com/ixiehao/ShotMap/releases/latest) · macOS 13 or later · Apple Silicon and Intel
 
 > **Demo footage:** *Tears of Steel* (2012) © Blender Foundation / Blender Institute, licensed under [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/). The screenshots and animation below use this footage.
 
-## Made for videos you want to find again
+## For the moments you want to find again
 
 - **Family and personal archives:** locate a birthday, trip, sunset, or first step without opening every file.
 - **Creators and editors:** scan a batch of clips before bringing the right material into an editing timeline.
-- **Organising a video folder:** save a compact visual index beside each original video, with optional timecodes and filenames.
+- **Organising a video folder:** save an easy-to-scan storyboard beside each original video, with optional timecodes and filenames.
 
 ## From video to storyboard in three steps
 
@@ -31,7 +31,7 @@ Smart Select gives you a useful first set of frames. If one is not right, the Ma
 | --- | --- | --- |
 | Drop in one video or queue several. | Start with Smart Select, then adjust any frame yourself. | Export a PNG or JPG beside the original video. |
 
-## Made for finding moments quickly
+## Choose the frames and layout that work for you
 
 - Tries to prefer clear, varied frames and reduce black, blurry, and near-duplicate shots.
 - Lets you refine a result in the Manual Frame Editor: player, visual timeline, frame steps, and candidate gallery are all in one place.

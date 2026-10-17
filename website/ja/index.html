@@ -3,8 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="動画を一つずつ開かなくても、見たい動画を探せます。ShotMap は動画を Mac 上で一枚の絵コンテにまとめます。" />
-    <meta name="keywords" content="video storyboard mac, macOS video storyboard app, video frame picker, frame extraction macOS, video thumbnail sheet, 视频分镜图, 视频一键拼图, 動画 絵コンテ" />
+    <meta name="description" content="動画の見どころを一枚にまとめ、見たい場面を探しやすく。フレームの手動調整と画像の書き出しもMac上で完結します。" />
     <meta name="author" content="ixiehao" />
     <meta name="robots" content="index,follow,max-image-preview:large" />
     <meta name="theme-color" content="#f7f9fc" />
@@ -19,30 +18,30 @@
     <meta property="og:locale" content="ja_JP" />
     <meta property="og:locale:alternate" content="zh_CN" />
     <meta property="og:locale:alternate" content="ja_JP" />
-    <meta property="og:title" content="ShotMap — 動画を、もっと見つけやすく" />
-    <meta property="og:description" content="動画を一枚の絵コンテにまとめ、Mac 上で見たい動画を見つけやすくします。" />
+    <meta property="og:title" content="ShotMap — 動画を、もっと見つけやすく。" />
+    <meta property="og:description" content="動画の見どころを一枚の絵コンテに。一本ずつ再生せず、画面を見て探せます。" />
     <meta property="og:image" content="https://ixiehao.github.io/ShotMap/assets/social-preview.jpg?v=20261017" />
     <meta property="og:image:secure_url" content="https://ixiehao.github.io/ShotMap/assets/social-preview.jpg?v=20261017" />
     <meta property="og:image:type" content="image/jpeg" />
     <meta property="og:image:width" content="1280" />
     <meta property="og:image:height" content="640" />
-    <meta id="og-image-alt" property="og:image:alt" content="ShotMap 日本語ワークスペース：動画キュー、絵コンテのプレビュー、設定パネル" />
+    <meta id="og-image-alt" property="og:image:alt" content="ShotMap の手動フレーム選択画面。動画プレーヤー、タイムライン、候補コマを表示" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="ShotMap — 動画を、もっと見つけやすく" />
-    <meta name="twitter:description" content="動画を一枚の絵コンテにまとめ、Mac 上で見たい動画を見つけやすくします。" />
+    <meta name="twitter:title" content="ShotMap — 動画を、もっと見つけやすく。" />
+    <meta name="twitter:description" content="動画の見どころを一枚の絵コンテに。一本ずつ再生せず、画面を見て探せます。" />
     <meta name="twitter:image" content="https://ixiehao.github.io/ShotMap/assets/social-preview.jpg?v=20261017" />
-    <meta id="twitter-image-alt" name="twitter:image:alt" content="ShotMap 日本語ワークスペース：動画キュー、絵コンテのプレビュー、設定パネル" />
+    <meta id="twitter-image-alt" name="twitter:image:alt" content="ShotMap の手動フレーム選択画面。動画プレーヤー、タイムライン、候補コマを表示" />
     <link rel="icon" type="image/svg+xml" href="../favicon.svg?v=20261017" />
     <link rel="icon" type="image/png" sizes="256x256" href="../assets/app-icon.png?v=20261017" />
     <link rel="apple-touch-icon" href="../assets/app-icon.png?v=20261017" />
     <link rel="stylesheet" href="../styles.css" />
     <script id="software-schema" type="application/ld+json">
-      {"@context":"https://schema.org","@type":"SoftwareApplication","@id":"https://ixiehao.github.io/ShotMap/#software","name":"ShotMap","applicationCategory":"MultimediaApplication","operatingSystem":"macOS 13 or later","softwareVersion":"0.2.14","url":"https://ixiehao.github.io/ShotMap/ja/","description":"動画を一つずつ開かなくても、見たい動画を探せます。ShotMap は動画を Mac 上で一枚の絵コンテにまとめます。","downloadUrl":"https://github.com/ixiehao/ShotMap/releases/latest","screenshot":"https://ixiehao.github.io/ShotMap/assets/workspace-ja.webp?v=20261017","featureList":"Smart frame selection; manual frame editor; multi-video queue; PNG and JPG export; local-only processing","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Person","name":"ixiehao","url":"https://github.com/ixiehao"},"codeRepository":"https://github.com/ixiehao/ShotMap","license":"https://opensource.org/license/mit","inLanguage":"ja"}
+      {"@context":"https://schema.org","@type":"SoftwareApplication","@id":"https://ixiehao.github.io/ShotMap/#software","name":"ShotMap","applicationCategory":"MultimediaApplication","operatingSystem":"macOS 13 or later","url":"https://ixiehao.github.io/ShotMap/ja/","description":"動画の見どころを一枚にまとめ、見たい場面を探しやすく。フレームの手動調整と画像の書き出しもMac上で完結します。","downloadUrl":"https://github.com/ixiehao/ShotMap/releases/latest","screenshot":"https://ixiehao.github.io/ShotMap/assets/workspace-ja.webp?v=20261017","featureList":"動画の絵コンテ作成；手動フレーム選択；複数動画のキュー；PNG / JPG 書き出し；Mac 上で処理","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Person","name":"ixiehao","url":"https://github.com/ixiehao"},"codeRepository":"https://github.com/ixiehao/ShotMap","license":"https://opensource.org/license/mit","inLanguage":"ja"}
     </script>
     <script id="faq-schema" type="application/ld+json">
-      {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"ShotMap は動画をアップロードしますか？","acceptedAnswer":{"@type":"Answer","text":"いいえ。フレームの読み込みと最終画像の作成はすべて Mac 上で完結します。"}},{"@type":"Question","name":"どの Mac に対応していますか？","acceptedAnswer":{"@type":"Answer","text":"ShotMap は macOS 13 以降を搭載した Apple Silicon と Intel の Mac に対応しています。"}},{"@type":"Question","name":"自分で一コマを置き換えられますか？","acceptedAnswer":{"@type":"Answer","text":"はい。スマート選択は出発点です。手動フレーム選択で最終的なコマを決められます。"}},{"@type":"Question","name":"絵コンテ画像はどこに保存されますか？","acceptedAnswer":{"@type":"Answer","text":"標準では元動画のそばに保存されます。「別名で保存」を使えば別の場所も選べます。"}}]}
+      {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"ShotMap は動画をアップロードしますか？","acceptedAnswer":{"@type":"Answer","text":"いいえ。動画の処理と画像の書き出しは Mac 上で行います。任意のアップデート確認では GitHub の公開リリース情報だけを読み取ります。"}},{"@type":"Question","name":"どの Mac に対応していますか？","acceptedAnswer":{"@type":"Answer","text":"ShotMap は macOS 13 以降を搭載した Apple Silicon と Intel の Mac に対応しています。"}},{"@type":"Question","name":"自分で一コマを置き換えられますか？","acceptedAnswer":{"@type":"Answer","text":"はい。スマート選択は出発点です。手動フレーム選択で最終的なコマを決められます。"}},{"@type":"Question","name":"絵コンテ画像はどこに保存されますか？","acceptedAnswer":{"@type":"Answer","text":"標準では元動画のそばに保存されます。「別名で保存」を使えば別の場所も選べます。"}}]}
     </script>
-    <title>ShotMap — macOS 向け動画絵コンテ作成アプリ</title>
+    <title>ShotMap｜Macで動画の見どころを一覧に</title>
   </head>
   <body>
     <a class="skip-link" href="#main" data-i18n="skipLink">本文へ移動</a>
@@ -70,9 +69,9 @@
     <main id="main">
       <section class="hero shell" aria-labelledby="hero-title">
         <div class="hero-copy">
-          <p class="eyebrow" data-i18n="heroEyebrow">MAC 向け動画絵コンテ</p>
-          <h1 id="hero-title" data-i18n-html="heroTitle">あなたの動画を、<br />もっと見つけやすく。</h1>
-          <p class="hero-summary" data-i18n="heroSummary">動画を一枚の絵コンテにまとめます。</p>
+          <p class="eyebrow" data-i18n="heroEyebrow">Mac で動画を見つけやすく</p>
+          <h1 id="hero-title" data-i18n-html="heroTitle">動画を、<br />見つけやすく。</h1>
+          <p class="hero-summary" data-i18n="heroSummary">動画の見どころを一枚の絵コンテに。</p>
           <div class="hero-actions">
             <a class="button" href="https://github.com/ixiehao/ShotMap/releases/latest" data-i18n="heroDownload">macOS 版をダウンロード</a>
             <a class="text-link" href="https://github.com/ixiehao/ShotMap" data-i18n-html="viewSource">GitHub で見る <span aria-hidden="true">↗</span></a>
@@ -94,27 +93,27 @@
 
       <section id="how-it-works" class="section shell workflow" aria-labelledby="workflow-title">
         <div class="section-heading">
-          <p class="eyebrow" data-i18n="workflowEyebrow">動画をもっと見やすく</p>
-          <h2 id="workflow-title" data-i18n="workflowTitle">3 ステップで動画の一覧を作成。</h2>
+          <p class="eyebrow" data-i18n="workflowEyebrow">思い出の場面を探す</p>
+          <h2 id="workflow-title" data-i18n="workflowTitle">一本ずつ再生せず、画面で探せます。</h2>
         </div>
         <div class="workflow-layout">
           <ol class="steps">
             <li><span>01</span><div><h3 data-i18n="stepOneTitle">動画を追加</h3><p data-i18n="stepOneText">一つまたは複数の動画をドラッグします。</p></div></li>
-            <li><span>02</span><div><h3 data-i18n="stepTwoTitle">場面を選ぶ</h3><p data-i18n="stepTwoText">スマート選択の候補から始め、気になるコマだけを置き換えます。</p></div></li>
-            <li><span>03</span><div><h3 data-i18n="stepThreeTitle">絵コンテを保存</h3><p data-i18n="stepThreeText">グリッドを選び、PNG または JPG を元動画のそばに保存します。</p></div></li>
+            <li><span>02</span><div><h3 data-i18n="stepTwoTitle">場面を確認</h3><p data-i18n="stepTwoText">スマート選択の候補を見て、違うと思ったコマは自分で置き換えます。</p></div></li>
+            <li><span>03</span><div><h3 data-i18n="stepThreeTitle">絵コンテを保存</h3><p data-i18n="stepThreeText">PNG または JPG で書き出します。標準では元動画の横に保存され、別の場所も選べます。</p></div></li>
           </ol>
           <figure class="product-shot overview-shot">
             <img src="../assets/tears-of-steel-storyboard.webp?v=20261017" width="1400" height="634" loading="lazy" decoding="async" alt="ShotMap で Tears of Steel から作成した動画絵コンテ" data-i18n-alt="overviewAlt" />
-            <figcaption data-i18n="overviewCaption">一本の動画を、一目でわかる一覧に</figcaption>
+            <figcaption data-i18n="overviewCaption">場面の流れを、一目で確認</figcaption>
           </figure>
         </div>
       </section>
 
       <section id="features" class="section shell precision" aria-labelledby="precision-title">
         <div class="precision-copy">
-          <p class="eyebrow" data-i18n="precisionEyebrow">まずスマートに、必要な時だけ細かく</p>
-          <h2 id="precision-title" data-i18n="precisionTitle">スマート選択で始め、最後のコマは自分で決める。</h2>
-          <p data-i18n="precisionText">スマート選択は変化のあるコマを候補にします。タイムライン、コマ送り、タイムコードで確認し、どのコマでも置き換えられます。</p>
+          <p class="eyebrow" data-i18n="precisionEyebrow">最後は自分で選べます</p>
+          <h2 id="precision-title" data-i18n="precisionTitle">別の場面にしたいときは、自分で選ぶ。</h2>
+          <p data-i18n="precisionText">スマート選択が最初の候補を用意します。手動フレーム選択でタイムラインやコマ送り、タイムコードを使い、好きな場面に置き換えられます。</p>
           <ul class="check-list">
             <li data-i18n="precisionPointOne">動画タイムラインで候補を確認</li>
             <li data-i18n="precisionPointTwo">1 コマまたは 5 コマずつ移動</li>
@@ -129,28 +128,28 @@
 
       <section class="section shell capabilities" aria-labelledby="capabilities-title">
         <div class="section-heading compact-heading">
-          <p class="eyebrow" data-i18n="capabilitiesEyebrow">日常の動画整理のために</p>
-          <h2 id="capabilities-title" data-i18n="capabilitiesTitle">選択はシンプル。結果は役立つ。</h2>
+          <p class="eyebrow" data-i18n="capabilitiesEyebrow">必要な設定だけを選ぶ</p>
+          <h2 id="capabilities-title" data-i18n="capabilitiesTitle">シンプルな設定で、自分好みに。</h2>
         </div>
         <div class="capability-grid">
           <article><span class="feature-number">01</span><h3 data-i18n="featureOneTitle">グリッドサイズ</h3><p data-i18n="featureOneText">必要な情報量に合わせ、3 × 3 から 8 × 8 を選べます。</p></article>
-          <article><span class="feature-number">02</span><h3 data-i18n="featureTwoTitle">役立つラベル</h3><p data-i18n="featureTwoText">必要に応じてタイムコードとファイル名を表示し、場面を探しやすくします。</p></article>
+          <article><span class="feature-number">02</span><h3 data-i18n="featureTwoTitle">時間とファイル名</h3><p data-i18n="featureTwoText">必要に応じて表示しておくと、後で場面を探す手がかりになります。</p></article>
           <article><span class="feature-number">03</span><h3 data-i18n="featureThreeTitle">動画に合わせる</h3><p data-i18n="featureThreeText">動画の比率と背景を選び、PNG または JPG で書き出せます。</p></article>
-          <article><span class="feature-number">04</span><h3 data-i18n="featureFourTitle">キューを処理</h3><p data-i18n="featureFourText">複数の動画を見える状態に保ち、一度に絵コンテを作成します。</p></article>
+          <article><span class="feature-number">04</span><h3 data-i18n="featureFourTitle">複数の動画をまとめて</h3><p data-i18n="featureFourText">複数の動画をキューに追加し、進行状況と完成した絵コンテを確認できます。</p></article>
         </div>
       </section>
 
       <section id="privacy" class="section privacy-section" aria-labelledby="privacy-title">
         <div class="shell privacy-card">
-          <div><p class="eyebrow inverse" data-i18n="privacyEyebrow">プライバシーを前提に設計</p><h2 id="privacy-title" data-i18n="privacyTitle">動画は Mac の外に出ません。</h2></div>
-          <p data-i18n="privacyText">フレームの読み込みと書き出しはすべてローカルで行われます。アカウント、アップロード、分析 SDK はありません。</p>
+          <div><p class="eyebrow inverse" data-i18n="privacyEyebrow">動画はお使いのMacに保存</p><h2 id="privacy-title" data-i18n="privacyTitle">動画が Mac の外に出ることはありません。</h2></div>
+          <p data-i18n="privacyText">フレームの読み込みと画像の書き出しは Mac 上で行います。アカウントも動画のアップロードも不要です。任意のアップデート確認では、GitHub の公開リリース情報だけを読み取ります。</p>
         </div>
       </section>
 
       <section class="section shell faq-section" aria-labelledby="faq-title">
-        <div class="section-heading compact-heading"><p class="eyebrow" data-i18n="faqEyebrow">知っておきたいこと</p><h2 id="faq-title" data-i18n="faqTitle">よくある短い質問。</h2></div>
+        <div class="section-heading compact-heading"><p class="eyebrow" data-i18n="faqEyebrow">ダウンロード前に</p><h2 id="faq-title" data-i18n="faqTitle">よくある質問にお答えします。</h2></div>
         <div class="faq-grid">
-          <article><h3 data-i18n="faqOneQuestion">ShotMap は動画をアップロードしますか？</h3><p data-i18n="faqOneAnswer">いいえ。フレームの読み込みと最終画像の作成はすべて Mac 上で完結します。</p></article>
+          <article><h3 data-i18n="faqOneQuestion">ShotMap は動画をアップロードしますか？</h3><p data-i18n="faqOneAnswer">いいえ。動画の処理と画像の書き出しは Mac 上で行います。任意のアップデート確認では GitHub の公開リリース情報だけを読み取ります。</p></article>
           <article><h3 data-i18n="faqTwoQuestion">どの Mac に対応していますか？</h3><p data-i18n="faqTwoAnswer">ShotMap は macOS 13 以降を搭載した Apple Silicon と Intel の Mac に対応しています。</p></article>
           <article><h3 data-i18n="faqThreeQuestion">自分で一コマを置き換えられますか？</h3><p data-i18n="faqThreeAnswer">はい。スマート選択は出発点です。手動フレーム選択で最終的なコマを決められます。</p></article>
           <article><h3 data-i18n="faqFourQuestion">絵コンテ画像はどこに保存されますか？</h3><p data-i18n="faqFourAnswer">標準では元動画のそばに保存されます。「別名で保存」を使えば別の場所も選べます。</p></article>
@@ -158,9 +157,9 @@
       </section>
 
       <section class="final-cta shell" aria-labelledby="cta-title">
-        <p class="eyebrow" data-i18n="ctaEyebrow">試してみませんか？</p>
-        <h2 id="cta-title" data-i18n="ctaTitle">動画ライブラリを、もっと見やすく。</h2>
-        <p class="cta-detail" data-i18n="ctaDetail">最新版をダウンロードし、ShotMap をアプリケーションへドラッグするだけです。アカウントもコマンドラインも必要ありません。</p>
+        <p class="eyebrow" data-i18n="ctaEyebrow">探していた動画を見つけませんか？</p>
+        <h2 id="cta-title" data-i18n="ctaTitle">見たい動画を、画面から探す。</h2>
+        <p class="cta-detail" data-i18n="ctaDetail">ShotMap をダウンロードし、「アプリケーション」へ移動して動画を追加するだけ。アカウントもコマンドラインも必要ありません。</p>
         <div class="cta-actions">
           <a class="button" href="https://github.com/ixiehao/ShotMap/releases/latest" data-i18n="ctaDownload">ShotMap をダウンロード</a>
           <a class="button button-secondary" href="https://github.com/ixiehao/ShotMap" data-i18n-html="ctaGithub">GitHub で見る <span aria-hidden="true">↗</span></a>

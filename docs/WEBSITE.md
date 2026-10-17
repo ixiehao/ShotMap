@@ -11,6 +11,12 @@
 
 `website/` is a source directory, not part of the public URL. Keep the public address and existing external links unchanged.
 
+## Copy and localization
+
+Lead with the visitor's problem and the plain-language outcome. For ShotMap, the agreed message is: “Your videos, easier to find” / “你的视频，不再难找。把视频，编成一张分镜图。” / “動画を、もっと見つけやすく。” Avoid obscure technical metaphors, keyword stuffing, unsupported speed claims, and literal translations that sound unnatural. Keep product facts and user control consistent across locales; localize examples and sentence structure naturally.
+
+Show a real, current screenshot for each language. Use the captions and alt text to describe what the screenshot proves. Check image rights and keep the *Tears of Steel* attribution visible. Keep page titles, descriptions, social metadata, schema, and visible content aligned.
+
 ## Local preview
 
 Run from the repository root:

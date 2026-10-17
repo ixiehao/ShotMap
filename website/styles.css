@@ -81,7 +81,7 @@ h1 { max-width: 550px; margin-bottom: 23px; font-size: clamp(46px, 5vw, 64px); l
 .demo-credit a { color: #285daa; font-weight: 650; text-decoration: underline; text-decoration-color: #acc8ed; text-underline-offset: 2px; }
 .product-shot { position: relative; margin: 0; overflow: hidden; border: 1px solid #d4dfec; border-radius: 16px; background: var(--surface); box-shadow: var(--shadow); line-height: 0; }
 .product-shot img { display: block; width: 100%; height: auto; }
-.product-shot figcaption { position: absolute; right: 12px; bottom: 12px; padding: 5px 8px; border-radius: 6px; color: #fff; background: rgba(19, 34, 56, .8); font-size: 11px; font-weight: 650; letter-spacing: .01em; line-height: 1.2; }
+.product-shot figcaption { padding: 11px 14px; border-top: 1px solid var(--line); color: var(--muted); background: var(--surface); font-size: 12px; font-weight: 620; letter-spacing: .005em; line-height: 1.4; }
 .hero-shot { box-shadow: 0 22px 54px rgba(34, 57, 86, .14); }
 
 .facts { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
@@ -128,7 +128,7 @@ h1 { max-width: 550px; margin-bottom: 23px; font-size: clamp(46px, 5vw, 64px); l
 .faq-grid h3 { margin: 0; font-size: 16px; font-weight: 700; letter-spacing: -.02em; }
 .faq-grid p { margin: 9px 0 0; color: var(--muted); font-size: 14px; line-height: 1.58; }
 
-.final-cta { padding-block: 100px 112px; text-align: center; }
+.final-cta { margin-block: 28px 72px; padding: 72px 30px 76px; border: 1px solid #d6e5fb; border-radius: 22px; background: linear-gradient(135deg, #eef5ff 0%, #f5f8ff 58%, #f0f7ff 100%); text-align: center; }
 .final-cta .eyebrow { margin-bottom: 14px; }
 .final-cta h2 { margin-bottom: 16px; font-size: clamp(38px, 4.4vw, 54px); line-height: 1.05; letter-spacing: -.055em; }
 .cta-detail { max-width: 500px; margin: 0 auto 30px; color: var(--muted); font-size: 16px; }
@@ -170,7 +170,7 @@ footer span:nth-child(2) { margin-right: auto; color: var(--muted); font-weight:
   .capability-grid { margin-top: 36px; }
   .faq-grid { margin-top: 32px; }
   .privacy-section { padding-block: 72px; }
-  .final-cta { padding-block: 72px 80px; }
+  .final-cta { margin-block: 16px 48px; padding: 56px 20px 58px; border-radius: 18px; }
   .cta-actions { align-items: stretch; flex-direction: column; gap: 12px; }
   .cta-actions .button { width: 100%; }
   footer { gap: 12px 16px; }

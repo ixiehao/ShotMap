@@ -48,9 +48,9 @@ function buildSchema(copy, language) {
   return {
     "@context": "https://schema.org", "@type": "SoftwareApplication", "@id": siteURL + "#software",
     name: "ShotMap", applicationCategory: "MultimediaApplication", operatingSystem: "macOS 13 or later",
-    softwareVersion: "0.2.14", url: localeURLs[language], description: copy.pageDescription, downloadUrl: releaseURL,
+    url: localeURLs[language], description: copy.pageDescription, downloadUrl: releaseURL,
     screenshot: new URL(product[0], siteURL).href,
-    featureList: "Smart frame selection; manual frame editor; multi-video queue; PNG and JPG export; local-only processing",
+    featureList: copy.schemaFeatureList,
     offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
     author: { "@type": "Person", name: "ixiehao", url: "https://github.com/ixiehao" },
     codeRepository: "https://github.com/ixiehao/ShotMap", license: "https://opensource.org/license/mit",
@@ -100,8 +100,8 @@ function makeStaticPage(language) {
   html = setMeta(html, 'property="og:locale"', copy.locale);
   html = setMeta(html, 'name="twitter:title"', copy.ogTitle);
   html = setMeta(html, 'name="twitter:description"', copy.ogDescription);
-  html = setMeta(html, 'id="og-image-alt" property="og:image:alt"', localizedVisualAssets[language].product[1]);
-  html = setMeta(html, 'id="twitter-image-alt" name="twitter:image:alt"', localizedVisualAssets[language].product[1]);
+  html = setMeta(html, 'id="og-image-alt" property="og:image:alt"', copy.socialPreviewAlt);
+  html = setMeta(html, 'id="twitter-image-alt" name="twitter:image:alt"', copy.socialPreviewAlt);
   html = setLink(html, 'id="canonical-url" rel="canonical"', localeURLs[language]);
   html = replaceSchema(html, "software-schema", buildSchema(copy, language));
   html = replaceSchema(html, "faq-schema", {
