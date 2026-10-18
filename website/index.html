@@ -39,7 +39,7 @@
       {"@context":"https://schema.org","@type":"SoftwareApplication","@id":"https://ixiehao.github.io/ShotMap/#software","name":"ShotMap","applicationCategory":"MultimediaApplication","operatingSystem":"macOS 13 or later","description":"Make videos easier to browse. ShotMap turns each clip into a visual storyboard on your Mac, with manual frame selection and local export.","downloadUrl":"https://github.com/ixiehao/ShotMap/releases/latest","url":"https://ixiehao.github.io/ShotMap/","codeRepository":"https://github.com/ixiehao/ShotMap","screenshot":"https://ixiehao.github.io/ShotMap/assets/workspace-en.webp","featureList":"Visual video storyboards; manual frame selection; multi-video queue; PNG and JPG export; local processing","inLanguage":"en","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Person","name":"ixiehao","url":"https://github.com/ixiehao"},"license":"https://opensource.org/license/mit"}
     </script>
     <script id="faq-schema" type="application/ld+json">
-      {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Does ShotMap upload my videos?","acceptedAnswer":{"@type":"Answer","text":"No. Video processing and image export happen on your Mac. The optional update check only reads public GitHub release information."}},{"@type":"Question","name":"Which Macs are supported?","acceptedAnswer":{"@type":"Answer","text":"ShotMap supports macOS 13 or later on Apple Silicon and Intel Macs."}},{"@type":"Question","name":"Can I replace a frame myself?","acceptedAnswer":{"@type":"Answer","text":"Yes. Smart Select is a starting point; the Manual Frame Editor lets you choose the final frames."}},{"@type":"Question","name":"Where are storyboard images saved?","acceptedAnswer":{"@type":"Answer","text":"By default, beside the source video. Use Save As to choose another location."}}]}
+      {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Do I need an account to use ShotMap?","acceptedAnswer":{"@type":"Answer","text":"No. Download the app and start making storyboards on your Mac."}},{"@type":"Question","name":"Which Macs are supported?","acceptedAnswer":{"@type":"Answer","text":"ShotMap supports macOS 13 or later on Apple Silicon and Intel Macs."}},{"@type":"Question","name":"Can I replace a frame myself?","acceptedAnswer":{"@type":"Answer","text":"Yes. Smart Select is a starting point; the Manual Frame Editor lets you choose the final frames."}},{"@type":"Question","name":"Where are storyboard images saved?","acceptedAnswer":{"@type":"Answer","text":"By default, beside the source video. Use Save As to choose another location."}}]}
     </script>
     <title>ShotMap — Video Storyboard Maker for Mac</title>
   </head>
@@ -85,12 +85,6 @@
         </figure>
       </section>
 
-      <section class="facts shell" aria-label="ShotMap facts" data-i18n-aria="factsLabel">
-        <div><strong data-i18n="factOneTitle">Private on your Mac</strong><span data-i18n="factOneText">Your videos stay on your Mac</span></div>
-        <div><strong data-i18n="factTwoTitle">One or many videos</strong><span data-i18n="factTwoText">Add several videos to one queue</span></div>
-        <div><strong data-i18n="factThreeTitle">Made for macOS</strong><span data-i18n="factThreeText">Apple Silicon and Intel supported</span></div>
-      </section>
-
       <section id="how-it-works" class="section shell workflow" aria-labelledby="workflow-title">
         <div class="section-heading">
           <p class="eyebrow" data-i18n="workflowEyebrow">FIND THE CLIP YOU REMEMBER</p>
@@ -98,9 +92,9 @@
         </div>
         <div class="workflow-layout">
           <ol class="steps">
-            <li><span>01</span><div><h3 data-i18n="stepOneTitle">Add videos</h3><p data-i18n="stepOneText">Drag in one or more videos.</p></div></li>
-            <li><span>02</span><div><h3 data-i18n="stepTwoTitle">Review the moments</h3><p data-i18n="stepTwoText">Start with suggested frames, then swap any frame that misses the moment you want.</p></div></li>
-            <li><span>03</span><div><h3 data-i18n="stepThreeTitle">Save the storyboard</h3><p data-i18n="stepThreeText">Export a PNG or JPG beside the video, or choose another location.</p></div></li>
+            <li><h3 data-i18n="stepOneTitle">Add your videos</h3><p data-i18n="stepOneText">Drag in one clip or several at once.</p></li>
+            <li><h3 data-i18n="stepTwoTitle">Review the storyboard</h3><p data-i18n="stepTwoText">ShotMap selects a first pass. Replace any frame you want.</p></li>
+            <li><h3 data-i18n="stepThreeTitle">Export your image</h3><p data-i18n="stepThreeText">Save as PNG or JPG, with timecodes if you want them.</p></li>
           </ol>
           <figure class="product-shot overview-shot">
             <img src="assets/tears-of-steel-storyboard.webp?v=20261017" width="1400" height="634" loading="lazy" decoding="async" alt="A ShotMap storyboard generated from Tears of Steel" data-i18n-alt="overviewAlt" />
@@ -109,7 +103,7 @@
         </div>
       </section>
 
-      <section id="features" class="section shell precision" aria-labelledby="precision-title">
+      <section class="section shell precision" aria-labelledby="precision-title">
         <div class="precision-copy">
           <p class="eyebrow" data-i18n="precisionEyebrow">YOU ARE IN CONTROL</p>
           <h2 id="precision-title" data-i18n="precisionTitle">Looking for a different moment? Choose it yourself.</h2>
@@ -126,30 +120,30 @@
         </figure>
       </section>
 
-      <section class="section shell capabilities" aria-labelledby="capabilities-title">
+      <section id="features" class="section shell capabilities" aria-labelledby="capabilities-title">
         <div class="section-heading compact-heading">
           <p class="eyebrow" data-i18n="capabilitiesEyebrow">MAKE EACH STORYBOARD YOURS</p>
           <h2 id="capabilities-title" data-i18n="capabilitiesTitle">The details you need, without a complicated workflow.</h2>
         </div>
         <div class="capability-grid">
-          <article><span class="feature-number">01</span><h3 data-i18n="featureOneTitle">Grid size</h3><p data-i18n="featureOneText">Choose from 3 × 3 to 8 × 8, depending on how much detail you need.</p></article>
-          <article><span class="feature-number">02</span><h3 data-i18n="featureTwoTitle">Useful labels</h3><p data-i18n="featureTwoText">Show timecodes and file titles when you want a reminder of where a scene appears.</p></article>
-          <article><span class="feature-number">03</span><h3 data-i18n="featureThreeTitle">Match your video</h3><p data-i18n="featureThreeText">Use the video aspect ratio, choose a background, and export PNG or JPG.</p></article>
-          <article><span class="feature-number">04</span><h3 data-i18n="featureFourTitle">One visible queue</h3><p data-i18n="featureFourText">Add several videos, keep track of progress, and review finished storyboards together.</p></article>
+          <article><h3 data-i18n="featureOneTitle">Grid size</h3><p data-i18n="featureOneText">Choose from 3 × 3 to 8 × 8, depending on how much detail you need.</p></article>
+          <article><h3 data-i18n="featureTwoTitle">Useful labels</h3><p data-i18n="featureTwoText">Show timecodes and file titles when you want a reminder of where a scene appears.</p></article>
+          <article><h3 data-i18n="featureThreeTitle">Match your video</h3><p data-i18n="featureThreeText">Use the video's aspect ratio and choose a background color.</p></article>
+          <article><h3 data-i18n="featureFourTitle">One visible queue</h3><p data-i18n="featureFourText">Add several videos, keep track of progress, and review finished storyboards together.</p></article>
         </div>
       </section>
 
       <section id="privacy" class="section privacy-section" aria-labelledby="privacy-title">
         <div class="shell privacy-card">
           <div><p class="eyebrow inverse" data-i18n="privacyEyebrow">YOUR VIDEOS STAY YOURS</p><h2 id="privacy-title" data-i18n="privacyTitle">Your videos stay on your Mac.</h2></div>
-          <p data-i18n="privacyText">ShotMap reads frames and exports images on your Mac. No account or video upload is needed. The optional update check reads public GitHub release information.</p>
+          <p data-i18n="privacyText">Frame extraction and image export happen on your Mac. Videos are never uploaded. The optional update check reads public GitHub release information.</p>
         </div>
       </section>
 
       <section class="section shell faq-section" aria-labelledby="faq-title">
         <div class="section-heading compact-heading"><p class="eyebrow" data-i18n="faqEyebrow">BEFORE YOU DOWNLOAD</p><h2 id="faq-title" data-i18n="faqTitle">What you may want to know.</h2></div>
         <div class="faq-grid">
-          <article><h3 data-i18n="faqOneQuestion">Does ShotMap upload my videos?</h3><p data-i18n="faqOneAnswer">No. Video processing and image export happen on your Mac. The optional update check only reads public GitHub release information.</p></article>
+          <article><h3 data-i18n="faqOneQuestion">Do I need an account to use ShotMap?</h3><p data-i18n="faqOneAnswer">No. Download the app and start making storyboards on your Mac.</p></article>
           <article><h3 data-i18n="faqTwoQuestion">Which Macs are supported?</h3><p data-i18n="faqTwoAnswer">ShotMap supports macOS 13 or later on Apple Silicon and Intel Macs.</p></article>
           <article><h3 data-i18n="faqThreeQuestion">Can I replace a frame myself?</h3><p data-i18n="faqThreeAnswer">Yes. Smart Select is a starting point; the Manual Frame Editor lets you choose the final frames.</p></article>
           <article><h3 data-i18n="faqFourQuestion">Where are storyboard images saved?</h3><p data-i18n="faqFourAnswer">By default, beside the source video. Use Save As to choose another location.</p></article>
@@ -159,7 +153,7 @@
       <section class="final-cta shell" aria-labelledby="cta-title">
         <p class="eyebrow" data-i18n="ctaEyebrow">READY TO FIND THAT CLIP?</p>
         <h2 id="cta-title" data-i18n="ctaTitle">Find the video you’re looking for.</h2>
-        <p class="cta-detail" data-i18n="ctaDetail">Download ShotMap, move it to Applications, and add a video. No account or command line needed.</p>
+        <p class="cta-detail" data-i18n="ctaDetail">Install ShotMap, add a video, and make your first storyboard.</p>
         <div class="cta-actions">
           <a class="button" href="https://github.com/ixiehao/ShotMap/releases/latest" data-i18n="ctaDownload">Download ShotMap for macOS</a>
           <a class="button button-secondary" href="https://github.com/ixiehao/ShotMap" data-i18n-html="ctaGithub">View on GitHub <span aria-hidden="true">↗</span></a>
