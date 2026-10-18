@@ -18,7 +18,7 @@ export const translations = {
     navWorkflow: "How it works", navFeatures: "Features", navPrivacy: "Privacy", download: "Download",
     heroEyebrow: "VIDEO STORYBOARDS FOR MAC", heroTitle: "Your videos,<br />easier to find.",
     heroSummary: "Turn each video into one clear storyboard.",
-    heroDownload: "Download for macOS", viewSource: "View on GitHub <span aria-hidden=\"true\">↗</span>",
+    heroDownload: "Download for macOS", viewSource: "View on GitHub",
     compatibility: "macOS 13+ · Apple Silicon & Intel · Free and open source", productCaption: "ShotMap workspace",
     demoCredit: "Demo images use <a href=\"https://mango.blender.org/\" rel=\"noreferrer\">Tears of Steel</a> (2012) by Blender Foundation / Blender Institute, licensed under <a href=\"https://creativecommons.org/licenses/by/3.0/\" rel=\"license noreferrer\">CC BY 3.0</a>.",
     workflowEyebrow: "FIND THE CLIP YOU REMEMBER", workflowTitle: "Find the right video without playing them all.",
@@ -41,7 +41,7 @@ export const translations = {
     faqThreeQuestion: "Can I replace a frame myself?", faqThreeAnswer: "Yes. Smart Select is a starting point; the Manual Frame Editor lets you choose the final frames.",
     faqFourQuestion: "Where are storyboard images saved?", faqFourAnswer: "By default, beside the source video. Use Save As to choose another location.",
     ctaEyebrow: "READY TO FIND THAT CLIP?", ctaTitle: "Find the video you’re looking for.", ctaDetail: "Install ShotMap, add a video, and make your first storyboard.",
-    ctaDownload: "Download ShotMap for macOS", ctaGithub: "View on GitHub <span aria-hidden=\"true\">↗</span>", github: "GitHub", releases: "Releases", feedback: "Feedback"
+    ctaDownload: "Download ShotMap for macOS", ctaGithub: "View on GitHub", github: "GitHub", releases: "Releases", feedback: "Feedback"
   },
   zh: {
     pageTitle: "ShotMap｜Mac 视频分镜图工具",
@@ -54,7 +54,7 @@ export const translations = {
     navWorkflow: "使用方法", navFeatures: "功能", navPrivacy: "隐私", download: "下载",
     heroEyebrow: "Mac 视频一键拼图", heroTitle: "你的视频，<br />不再难找。",
     heroSummary: "把视频，编成一张分镜图。",
-    heroDownload: "下载 macOS 版", viewSource: "在 GitHub 查看 <span aria-hidden=\"true\">↗</span>",
+    heroDownload: "下载 macOS 版", viewSource: "在 GitHub 查看",
     compatibility: "macOS 13 及以上 · Apple Silicon 与 Intel · 免费开源", productCaption: "ShotMap 工作区",
     demoCredit: "演示图片使用 <a href=\"https://mango.blender.org/\" rel=\"noreferrer\">《Tears of Steel》</a>（2012），由 Blender Foundation / Blender Institute 制作，采用 <a href=\"https://creativecommons.org/licenses/by/3.0/\" rel=\"license noreferrer\">CC BY 3.0</a> 许可。",
     workflowEyebrow: "找回记得的那个片段", workflowTitle: "不用挨个播放，先看画面总览。",
@@ -77,7 +77,7 @@ export const translations = {
     faqThreeQuestion: "我可以自己替换某一帧吗？", faqThreeAnswer: "可以。智能选帧只是起点；手动选择画面让你决定最终画面。",
     faqFourQuestion: "分镜图保存在哪里？", faqFourAnswer: "默认保存在原视频旁边。你也可以用“另存为”选择其他位置。",
     ctaEyebrow: "现在就找找看？", ctaTitle: "下次找视频，先看分镜图。", ctaDetail: "安装 ShotMap，添加视频，就能生成第一张分镜图。",
-    ctaDownload: "下载 ShotMap macOS 版", ctaGithub: "在 GitHub 查看 <span aria-hidden=\"true\">↗</span>", github: "GitHub", releases: "版本发布", feedback: "反馈"
+    ctaDownload: "下载 ShotMap macOS 版", ctaGithub: "在 GitHub 查看", github: "GitHub", releases: "版本发布", feedback: "反馈"
   },
   ja: {
     pageTitle: "ShotMap｜Macで動画の見どころを一覧に",
@@ -90,7 +90,7 @@ export const translations = {
     navWorkflow: "使い方", navFeatures: "機能", navPrivacy: "プライバシー", download: "ダウンロード",
     heroEyebrow: "Mac で動画を見つけやすく", heroTitle: "動画を、<br />見つけやすく。",
     heroSummary: "動画の見どころを一枚の絵コンテに。",
-    heroDownload: "macOS 版をダウンロード", viewSource: "GitHub で見る <span aria-hidden=\"true\">↗</span>",
+    heroDownload: "macOS 版をダウンロード", viewSource: "GitHub で見る",
     compatibility: "macOS 13 以降 · Apple Silicon / Intel 対応 · 無料・オープンソース", productCaption: "ShotMap ワークスペース",
     demoCredit: "デモ画像には <a href=\"https://mango.blender.org/\" rel=\"noreferrer\">Tears of Steel</a>（2012）を使用しています。Blender Foundation / Blender Institute 制作、<a href=\"https://creativecommons.org/licenses/by/3.0/\" rel=\"license noreferrer\">CC BY 3.0</a> ライセンス。",
     workflowEyebrow: "思い出の場面を探す", workflowTitle: "一本ずつ再生せず、画面で探せます。",
@@ -113,7 +113,7 @@ export const translations = {
     faqThreeQuestion: "自分で一コマを置き換えられますか？", faqThreeAnswer: "はい。スマート選択は出発点です。手動フレーム選択で最終的なコマを決められます。",
     faqFourQuestion: "絵コンテ画像はどこに保存されますか？", faqFourAnswer: "標準では元動画のそばに保存されます。「別名で保存」を使えば別の場所も選べます。",
     ctaEyebrow: "探していた動画を見つけませんか？", ctaTitle: "見たい動画を、画面から探す。", ctaDetail: "ShotMap をインストールし、動画を追加すれば、すぐに絵コンテを作れます。",
-    ctaDownload: "ShotMap をダウンロード", ctaGithub: "GitHub で見る <span aria-hidden=\"true\">↗</span>", github: "GitHub", releases: "リリース", feedback: "フィードバック"
+    ctaDownload: "ShotMap をダウンロード", ctaGithub: "GitHub で見る", github: "GitHub", releases: "リリース", feedback: "フィードバック"
   }
 };
 
