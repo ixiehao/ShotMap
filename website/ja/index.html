@@ -39,7 +39,7 @@
       {"@context":"https://schema.org","@type":"SoftwareApplication","@id":"https://ixiehao.github.io/ShotMap/#software","name":"ShotMap","applicationCategory":"MultimediaApplication","operatingSystem":"macOS 13 or later","url":"https://ixiehao.github.io/ShotMap/ja/","description":"動画の見どころを一枚にまとめ、見たい場面を探しやすく。フレームの手動調整と画像の書き出しもMac上で完結します。","downloadUrl":"https://github.com/ixiehao/ShotMap/releases/latest","screenshot":"https://ixiehao.github.io/ShotMap/assets/workspace-ja.webp?v=20261017","featureList":"動画の絵コンテ作成；手動フレーム選択；複数動画のキュー；PNG / JPG 書き出し；Mac 上で処理","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Person","name":"ixiehao","url":"https://github.com/ixiehao"},"codeRepository":"https://github.com/ixiehao/ShotMap","license":"https://opensource.org/license/mit","inLanguage":"ja"}
     </script>
     <script id="faq-schema" type="application/ld+json">
-      {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"ShotMap は動画をアップロードしますか？","acceptedAnswer":{"@type":"Answer","text":"いいえ。動画の処理と画像の書き出しは Mac 上で行います。任意のアップデート確認では GitHub の公開リリース情報だけを読み取ります。"}},{"@type":"Question","name":"どの Mac に対応していますか？","acceptedAnswer":{"@type":"Answer","text":"ShotMap は macOS 13 以降を搭載した Apple Silicon と Intel の Mac に対応しています。"}},{"@type":"Question","name":"自分で一コマを置き換えられますか？","acceptedAnswer":{"@type":"Answer","text":"はい。スマート選択は出発点です。手動フレーム選択で最終的なコマを決められます。"}},{"@type":"Question","name":"絵コンテ画像はどこに保存されますか？","acceptedAnswer":{"@type":"Answer","text":"標準では元動画のそばに保存されます。「別名で保存」を使えば別の場所も選べます。"}}]}
+      {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"ShotMap の利用にアカウントは必要ですか？","acceptedAnswer":{"@type":"Answer","text":"いいえ。アプリをダウンロードすれば、Mac 上ですぐに絵コンテを作れます。"}},{"@type":"Question","name":"どの Mac に対応していますか？","acceptedAnswer":{"@type":"Answer","text":"ShotMap は macOS 13 以降を搭載した Apple Silicon と Intel の Mac に対応しています。"}},{"@type":"Question","name":"自分で一コマを置き換えられますか？","acceptedAnswer":{"@type":"Answer","text":"はい。スマート選択は出発点です。手動フレーム選択で最終的なコマを決められます。"}},{"@type":"Question","name":"絵コンテ画像はどこに保存されますか？","acceptedAnswer":{"@type":"Answer","text":"標準では元動画のそばに保存されます。「別名で保存」を使えば別の場所も選べます。"}}]}
     </script>
     <title>ShotMap｜Macで動画の見どころを一覧に</title>
   </head>
@@ -85,12 +85,6 @@
         </figure>
       </section>
 
-      <section class="facts shell" aria-label="ShotMap の特徴" data-i18n-aria="factsLabel">
-        <div><strong data-i18n="factOneTitle">Mac 上だけで処理</strong><span data-i18n="factOneText">動画は Mac の外に出ません</span></div>
-        <div><strong data-i18n="factTwoTitle">一本でも複数でも</strong><span data-i18n="factTwoText">複数の動画を一つのキューに追加</span></div>
-        <div><strong data-i18n="factThreeTitle">macOS のために設計</strong><span data-i18n="factThreeText">Apple Silicon と Intel に対応</span></div>
-      </section>
-
       <section id="how-it-works" class="section shell workflow" aria-labelledby="workflow-title">
         <div class="section-heading">
           <p class="eyebrow" data-i18n="workflowEyebrow">思い出の場面を探す</p>
@@ -98,9 +92,9 @@
         </div>
         <div class="workflow-layout">
           <ol class="steps">
-            <li><span>01</span><div><h3 data-i18n="stepOneTitle">動画を追加</h3><p data-i18n="stepOneText">一つまたは複数の動画をドラッグします。</p></div></li>
-            <li><span>02</span><div><h3 data-i18n="stepTwoTitle">場面を確認</h3><p data-i18n="stepTwoText">スマート選択の候補を見て、違うと思ったコマは自分で置き換えます。</p></div></li>
-            <li><span>03</span><div><h3 data-i18n="stepThreeTitle">絵コンテを保存</h3><p data-i18n="stepThreeText">PNG または JPG で書き出します。標準では元動画の横に保存され、別の場所も選べます。</p></div></li>
+            <li><h3 data-i18n="stepOneTitle">動画を追加</h3><p data-i18n="stepOneText">動画を一本ずつでも、複数まとめても追加できます。</p></li>
+            <li><h3 data-i18n="stepTwoTitle">絵コンテを確認</h3><p data-i18n="stepTwoText">ShotMap が場面を選び、気になるコマは自分で置き換えられます。</p></li>
+            <li><h3 data-i18n="stepThreeTitle">画像を書き出す</h3><p data-i18n="stepThreeText">PNG または JPG で保存。必要なら時間も表示できます。</p></li>
           </ol>
           <figure class="product-shot overview-shot">
             <img src="../assets/tears-of-steel-storyboard.webp?v=20261017" width="1400" height="634" loading="lazy" decoding="async" alt="ShotMap で Tears of Steel から作成した動画絵コンテ" data-i18n-alt="overviewAlt" />
@@ -109,7 +103,7 @@
         </div>
       </section>
 
-      <section id="features" class="section shell precision" aria-labelledby="precision-title">
+      <section class="section shell precision" aria-labelledby="precision-title">
         <div class="precision-copy">
           <p class="eyebrow" data-i18n="precisionEyebrow">最後は自分で選べます</p>
           <h2 id="precision-title" data-i18n="precisionTitle">別の場面にしたいときは、自分で選ぶ。</h2>
@@ -126,30 +120,30 @@
         </figure>
       </section>
 
-      <section class="section shell capabilities" aria-labelledby="capabilities-title">
+      <section id="features" class="section shell capabilities" aria-labelledby="capabilities-title">
         <div class="section-heading compact-heading">
           <p class="eyebrow" data-i18n="capabilitiesEyebrow">必要な設定だけを選ぶ</p>
           <h2 id="capabilities-title" data-i18n="capabilitiesTitle">シンプルな設定で、自分好みに。</h2>
         </div>
         <div class="capability-grid">
-          <article><span class="feature-number">01</span><h3 data-i18n="featureOneTitle">グリッドサイズ</h3><p data-i18n="featureOneText">必要な情報量に合わせ、3 × 3 から 8 × 8 を選べます。</p></article>
-          <article><span class="feature-number">02</span><h3 data-i18n="featureTwoTitle">時間とファイル名</h3><p data-i18n="featureTwoText">必要に応じて表示しておくと、後で場面を探す手がかりになります。</p></article>
-          <article><span class="feature-number">03</span><h3 data-i18n="featureThreeTitle">動画に合わせる</h3><p data-i18n="featureThreeText">動画の比率と背景を選び、PNG または JPG で書き出せます。</p></article>
-          <article><span class="feature-number">04</span><h3 data-i18n="featureFourTitle">複数の動画をまとめて</h3><p data-i18n="featureFourText">複数の動画をキューに追加し、進行状況と完成した絵コンテを確認できます。</p></article>
+          <article><h3 data-i18n="featureOneTitle">グリッドサイズ</h3><p data-i18n="featureOneText">必要な情報量に合わせ、3 × 3 から 8 × 8 を選べます。</p></article>
+          <article><h3 data-i18n="featureTwoTitle">時間とファイル名</h3><p data-i18n="featureTwoText">必要に応じて表示しておくと、後で場面を探す手がかりになります。</p></article>
+          <article><h3 data-i18n="featureThreeTitle">動画に合わせる</h3><p data-i18n="featureThreeText">動画の比率に合わせ、背景色も選べます。</p></article>
+          <article><h3 data-i18n="featureFourTitle">複数の動画をまとめて</h3><p data-i18n="featureFourText">複数の動画をキューに追加し、進行状況と完成した絵コンテを確認できます。</p></article>
         </div>
       </section>
 
       <section id="privacy" class="section privacy-section" aria-labelledby="privacy-title">
         <div class="shell privacy-card">
           <div><p class="eyebrow inverse" data-i18n="privacyEyebrow">動画はお使いのMacに保存</p><h2 id="privacy-title" data-i18n="privacyTitle">動画が Mac の外に出ることはありません。</h2></div>
-          <p data-i18n="privacyText">フレームの読み込みと画像の書き出しは Mac 上で行います。アカウントも動画のアップロードも不要です。任意のアップデート確認では、GitHub の公開リリース情報だけを読み取ります。</p>
+          <p data-i18n="privacyText">場面の読み込みと画像の書き出しは Mac 上で行います。動画はアップロードされません。任意のアップデート確認では、GitHub の公開リリース情報だけを読み取ります。</p>
         </div>
       </section>
 
       <section class="section shell faq-section" aria-labelledby="faq-title">
         <div class="section-heading compact-heading"><p class="eyebrow" data-i18n="faqEyebrow">ダウンロード前に</p><h2 id="faq-title" data-i18n="faqTitle">よくある質問にお答えします。</h2></div>
         <div class="faq-grid">
-          <article><h3 data-i18n="faqOneQuestion">ShotMap は動画をアップロードしますか？</h3><p data-i18n="faqOneAnswer">いいえ。動画の処理と画像の書き出しは Mac 上で行います。任意のアップデート確認では GitHub の公開リリース情報だけを読み取ります。</p></article>
+          <article><h3 data-i18n="faqOneQuestion">ShotMap の利用にアカウントは必要ですか？</h3><p data-i18n="faqOneAnswer">いいえ。アプリをダウンロードすれば、Mac 上ですぐに絵コンテを作れます。</p></article>
           <article><h3 data-i18n="faqTwoQuestion">どの Mac に対応していますか？</h3><p data-i18n="faqTwoAnswer">ShotMap は macOS 13 以降を搭載した Apple Silicon と Intel の Mac に対応しています。</p></article>
           <article><h3 data-i18n="faqThreeQuestion">自分で一コマを置き換えられますか？</h3><p data-i18n="faqThreeAnswer">はい。スマート選択は出発点です。手動フレーム選択で最終的なコマを決められます。</p></article>
           <article><h3 data-i18n="faqFourQuestion">絵コンテ画像はどこに保存されますか？</h3><p data-i18n="faqFourAnswer">標準では元動画のそばに保存されます。「別名で保存」を使えば別の場所も選べます。</p></article>
@@ -159,7 +153,7 @@
       <section class="final-cta shell" aria-labelledby="cta-title">
         <p class="eyebrow" data-i18n="ctaEyebrow">探していた動画を見つけませんか？</p>
         <h2 id="cta-title" data-i18n="ctaTitle">見たい動画を、画面から探す。</h2>
-        <p class="cta-detail" data-i18n="ctaDetail">ShotMap をダウンロードし、「アプリケーション」へ移動して動画を追加するだけ。アカウントもコマンドラインも必要ありません。</p>
+        <p class="cta-detail" data-i18n="ctaDetail">ShotMap をインストールし、動画を追加すれば、すぐに絵コンテを作れます。</p>
         <div class="cta-actions">
           <a class="button" href="https://github.com/ixiehao/ShotMap/releases/latest" data-i18n="ctaDownload">ShotMap をダウンロード</a>
           <a class="button button-secondary" href="https://github.com/ixiehao/ShotMap" data-i18n-html="ctaGithub">GitHub で見る <span aria-hidden="true">↗</span></a>
