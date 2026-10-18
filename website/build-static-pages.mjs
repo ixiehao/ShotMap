@@ -113,7 +113,7 @@ function makeStaticPage(language) {
   html = replaceProductVisual(html, "localized-manual", localizedVisualAssets[language].manual, "../");
   html = setButtonState(html, language);
   html = html
-    .replaceAll('href="styles.css"', 'href="../styles.css"')
+    .replace(/href="styles\.css([^"]*)"/g, 'href="../styles.css$1"')
     .replaceAll('src="script.js"', 'src="../script.js"')
     .replaceAll('href="favicon.svg', 'href="../favicon.svg')
     .replaceAll('href="assets/', 'href="../assets/')
