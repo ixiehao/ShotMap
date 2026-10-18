@@ -21,7 +21,7 @@ The font file is an unmodified upstream copy. It is bundled only so exported tit
 - Copyright: © 2020–2026 Paweł Kuna
 - License: MIT License
 
-ShotMap bundles unmodified Tabler Icons Outline SVGs and renders them as native template images, so their strokes adopt the active light or dark appearance. The complete license text is provided in [ThirdPartyLicenses/TablerIcons-MIT.txt](ThirdPartyLicenses/TablerIcons-MIT.txt).
+ShotMap bundles unmodified Tabler Icons Outline SVGs and renders them as native template images, so their strokes adopt the active light or dark appearance. The website also uses the original `arrow-up-right` and `circle-check` SVG paths inline in `website/index.html` and its generated language pages. The complete license text is provided in [ThirdPartyLicenses/TablerIcons-MIT.txt](ThirdPartyLicenses/TablerIcons-MIT.txt).
 
 ### Build-only packaging tools
 
@@ -52,7 +52,7 @@ These tools generate and verify the DMG during a local release build only. They 
 - 版权所有：© 2020–2026 Paweł Kuna
 - 许可证：MIT License
 
-ShotMap 原样内置 Tabler Icons Outline SVG，并以原生模板图像进行渲染，使描边能随浅色或深色外观自动适配。完整许可证原文见 [ThirdPartyLicenses/TablerIcons-MIT.txt](ThirdPartyLicenses/TablerIcons-MIT.txt)。
+ShotMap 原样内置 Tabler Icons Outline SVG，并以原生模板图像进行渲染，使描边能随浅色或深色外观自动适配。官网也在 `website/index.html` 及生成的多语言页面中内嵌使用原始 `arrow-up-right` 与 `circle-check` SVG 路径。完整许可证原文见 [ThirdPartyLicenses/TablerIcons-MIT.txt](ThirdPartyLicenses/TablerIcons-MIT.txt)。
 
 ### 仅构建时使用的打包工具
 
@@ -83,7 +83,7 @@ ShotMap 原样内置 Tabler Icons Outline SVG，并以原生模板图像进行�
 - 著作権：© 2020–2026 Paweł Kuna
 - ライセンス：MIT License
 
-ShotMap には未改変の Tabler Icons Outline SVG が同梱されており、ネイティブのテンプレート画像として描画されます。これにより、アウトラインはライト／ダーク外観に自動的に適応します。完全なライセンス原文は [ThirdPartyLicenses/TablerIcons-MIT.txt](ThirdPartyLicenses/TablerIcons-MIT.txt) にあります。
+ShotMap には未改変の Tabler Icons Outline SVG が同梱されており、ネイティブのテンプレート画像として描画されます。これにより、アウトラインはライト／ダーク外観に自動的に適応します。ウェブサイトでも `website/index.html` と生成された各言語ページに、オリジナルの `arrow-up-right` および `circle-check` SVG パスをインラインで使用しています。完全なライセンス原文は [ThirdPartyLicenses/TablerIcons-MIT.txt](ThirdPartyLicenses/TablerIcons-MIT.txt) にあります。
 
 ### ビルド時のみ使用するパッケージングツール
 

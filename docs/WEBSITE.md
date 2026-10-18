@@ -17,6 +17,10 @@ Lead with the visitor's problem and the plain-language outcome. For ShotMap, the
 
 Show a real, current screenshot for each language. Use the captions and alt text to describe what the screenshot proves. Check image rights and keep the *Tears of Steel* attribution visible. Keep page titles, descriptions, social metadata, schema, and visible content aligned.
 
+## Icons
+
+Website pictograms follow the app's Tabler Icons Outline v3.49.0 set. Use the original local or inline SVG paths with the same outline treatment; do not substitute Unicode symbols or mix in another icon library. The ShotMap logo and favicon are project artwork, not UI pictograms. Keep decorative SVGs hidden from assistive technology and preserve the MIT attribution in [`NOTICE.md`](../NOTICE.md).
+
 ## Local preview
 
 Run from the repository root:
