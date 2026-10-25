@@ -5,7 +5,7 @@
 [![macOS 13+](https://img.shields.io/badge/macOS-13%2B-111827?logo=apple)](https://github.com/ixiehao/ShotMap/releases/latest)
 [![License: MIT](https://img.shields.io/badge/license-MIT-059669)](LICENSE)
 
-[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
+[English](README.md) · [简体中文](README.zh-CN.md) · [Français](README.fr.md) · [Русский](README.ru.md) · [Español](README.es.md) · [日本語](README.ja.md) · [한국어](README.ko.md)
 
 **App interface in 7 languages:** English · 简体中文 · Français · Русский · Español · 日本語 · 한국어. All included in one download.
 
@@ -35,7 +35,7 @@ Start with Smart Select, then replace any frame in the Manual Frame Editor. Shot
 
 ## Choose the frames and layout that work for you
 
-- Tries to prefer clear, varied frames and reduce black, blurry, and near-duplicate shots.
+- Aims to select clear, varied frames and reduce black, blurry, and near-duplicate shots.
 - Lets you refine a result in the Manual Frame Editor: player, visual timeline, frame steps, and candidate gallery are all in one place.
 - Imports videos in batches, lets you pause after the current video and resume later, and fills the preview as frames are ready.
 - Offers 3 × 3 through 8 × 8 grids, aspect ratio, background colour, image width, optional timecodes, and file titles.
@@ -56,7 +56,7 @@ The release page includes a SHA-256 checksum for people who want to verify their
 
 ### Choose your language
 
-Use the language menu in the top-right corner to switch instantly, without restarting or clearing your queue. **English is listed first**, followed by 中文, Français, Русский, Español, 日本語, and 한국어. On first launch, ShotMap matches a supported system language or falls back to English; it remembers your choice after that.
+Use the language menu in the top-right corner to switch instantly, without restarting or clearing your queue. On first launch, ShotMap matches a supported system language or falls back to English; it remembers your choice after that.
 
 ## Private by design
 

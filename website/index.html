@@ -10,14 +10,22 @@
     <link id="canonical-url" rel="canonical" href="https://ixiehao.github.io/ShotMap/" />
     <link rel="alternate" hreflang="en" href="https://ixiehao.github.io/ShotMap/" />
     <link rel="alternate" hreflang="zh-CN" href="https://ixiehao.github.io/ShotMap/zh/" />
+    <link rel="alternate" hreflang="fr" href="https://ixiehao.github.io/ShotMap/fr/" />
+    <link rel="alternate" hreflang="ru" href="https://ixiehao.github.io/ShotMap/ru/" />
+    <link rel="alternate" hreflang="es" href="https://ixiehao.github.io/ShotMap/es/" />
     <link rel="alternate" hreflang="ja" href="https://ixiehao.github.io/ShotMap/ja/" />
+    <link rel="alternate" hreflang="ko" href="https://ixiehao.github.io/ShotMap/ko/" />
     <link rel="alternate" hreflang="x-default" href="https://ixiehao.github.io/ShotMap/" />
     <meta property="og:type" content="website" />
     <meta id="og-url" property="og:url" content="https://ixiehao.github.io/ShotMap/" />
     <meta property="og:site_name" content="ShotMap" />
     <meta property="og:locale" content="en_US" />
     <meta property="og:locale:alternate" content="zh_CN" />
+    <meta property="og:locale:alternate" content="fr_FR" />
+    <meta property="og:locale:alternate" content="ru_RU" />
+    <meta property="og:locale:alternate" content="es_ES" />
     <meta property="og:locale:alternate" content="ja_JP" />
+    <meta property="og:locale:alternate" content="ko_KR" />
     <meta property="og:title" content="ShotMap — Your videos, easier to find" />
     <meta property="og:description" content="Find the clip you need with a clear storyboard. Seven interface languages in one free Mac app." />
     <meta property="og:image" content="https://ixiehao.github.io/ShotMap/assets/social-preview.jpg?v=20261017" />
@@ -34,9 +42,9 @@
     <link rel="icon" type="image/svg+xml" href="favicon.svg?v=20261017" />
     <link rel="icon" type="image/png" sizes="256x256" href="assets/app-icon.png?v=20261017" />
     <link rel="apple-touch-icon" href="assets/app-icon.png?v=20261017" />
-    <link rel="stylesheet" href="styles.css?v=20261026-international" />
+    <link rel="stylesheet" href="styles.css?v=20261026-seven-locales" />
     <script id="software-schema" type="application/ld+json">
-      {"@context":"https://schema.org","@type":"SoftwareApplication","@id":"https://ixiehao.github.io/ShotMap/#software","name":"ShotMap","applicationCategory":"MultimediaApplication","operatingSystem":"macOS 13 or later","description":"Turn videos into storyboards on your Mac. ShotMap supports seven interface languages, manual frame selection, and private local export. Free and open source.","downloadUrl":"https://github.com/ixiehao/ShotMap/releases/latest","url":"https://ixiehao.github.io/ShotMap/","codeRepository":"https://github.com/ixiehao/ShotMap","screenshot":"https://ixiehao.github.io/ShotMap/assets/workspace-en.webp","featureList":"Seven interface languages; visual video storyboards; manual frame selection; multi-video queue; PNG and JPG export; local processing","inLanguage":["en","zh-Hans","fr","ru","es","ja","ko"],"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Person","name":"ixiehao","url":"https://github.com/ixiehao"},"license":"https://opensource.org/license/mit"}
+      {"@context":"https://schema.org","@type":"SoftwareApplication","@id":"https://ixiehao.github.io/ShotMap/#software","name":"ShotMap","applicationCategory":"MultimediaApplication","operatingSystem":"macOS 13 or later","url":"https://ixiehao.github.io/ShotMap/","description":"Turn videos into storyboards on your Mac. ShotMap supports seven interface languages, manual frame selection, and private local export. Free and open source.","downloadUrl":"https://github.com/ixiehao/ShotMap/releases/latest","screenshot":"https://ixiehao.github.io/ShotMap/assets/workspace-en.webp?v=20261017","featureList":"Seven interface languages; visual video storyboards; manual frame selection; multi-video queue; PNG and JPG export; local processing","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Person","name":"ixiehao","url":"https://github.com/ixiehao"},"codeRepository":"https://github.com/ixiehao/ShotMap","license":"https://opensource.org/license/mit","inLanguage":["en","zh-Hans","fr","ru","es","ja","ko"]}
     </script>
     <script id="faq-schema" type="application/ld+json">
       {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Do I need an account to use ShotMap?","acceptedAnswer":{"@type":"Answer","text":"No. Download the app and start making storyboards on your Mac."}},{"@type":"Question","name":"Which Macs are supported?","acceptedAnswer":{"@type":"Answer","text":"ShotMap supports macOS 13 or later on Apple Silicon and Intel Macs."}},{"@type":"Question","name":"Can I replace a frame myself?","acceptedAnswer":{"@type":"Answer","text":"Yes. Smart Select is a starting point; the Manual Frame Editor lets you choose the final frames."}},{"@type":"Question","name":"Where are storyboard images saved?","acceptedAnswer":{"@type":"Answer","text":"By default, beside the source video. Use Save As to choose another location."}}]}
@@ -57,12 +65,19 @@
         <a href="#privacy" data-i18n="navPrivacy">Privacy</a>
       </nav>
       <div class="header-actions">
-        <div class="language-picker" role="group" aria-label="Website language" data-i18n-aria="languageLabel">
-          <button type="button" data-lang="en" aria-pressed="true">EN</button>
-          <button type="button" data-lang="zh" aria-pressed="false">中文</button>
-          <button type="button" data-lang="ja" aria-pressed="false">日本語</button>
-        </div>
-        <a class="button button-small" href="https://github.com/ixiehao/ShotMap/releases/latest"><span data-i18n="download">Download</span><svg class="link-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><use href="assets/tabler-icons.svg?v=20261026-international#download"></use></svg></a>
+        <details class="language-picker">
+          <summary aria-label="Website language: English"><svg class="link-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><use href="assets/tabler-icons.svg?v=20261026-seven-locales#language"></use></svg><span lang="en">English</span><svg class="link-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><use href="assets/tabler-icons.svg?v=20261026-seven-locales#chevron-down"></use></svg></summary>
+          <div class="language-options">
+            <a href="./" data-lang="en" lang="en" hreflang="en" aria-current="page">English</a>
+            <a href="zh/" data-lang="zh" lang="zh-CN" hreflang="zh-CN">简体中文</a>
+            <a href="fr/" data-lang="fr" lang="fr" hreflang="fr">Français</a>
+            <a href="ru/" data-lang="ru" lang="ru" hreflang="ru">Русский</a>
+            <a href="es/" data-lang="es" lang="es" hreflang="es">Español</a>
+            <a href="ja/" data-lang="ja" lang="ja" hreflang="ja">日本語</a>
+            <a href="ko/" data-lang="ko" lang="ko" hreflang="ko">한국어</a>
+          </div>
+        </details>
+        <a class="button button-small" href="https://github.com/ixiehao/ShotMap/releases/latest"><span data-i18n="download">Download</span><svg class="link-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><use href="assets/tabler-icons.svg?v=20261026-seven-locales#download"></use></svg></a>
       </div>
     </header>
 
@@ -73,16 +88,16 @@
           <h1 id="hero-title" data-i18n-html="heroTitle">Your videos,<br />easier to find.</h1>
           <p class="hero-summary" data-i18n="heroSummary">Turn each video into one clear storyboard.</p>
           <div class="hero-actions">
-            <a class="button" href="https://github.com/ixiehao/ShotMap/releases/latest"><span data-i18n="heroDownload">Download for macOS</span><svg class="link-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><use href="assets/tabler-icons.svg?v=20261026-international#download"></use></svg></a>
-            <a class="text-link" href="https://github.com/ixiehao/ShotMap"><span data-i18n="viewSource">View on GitHub</span><svg class="link-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><use href="assets/tabler-icons.svg?v=20261026-international#brand-github"></use></svg></a>
+            <a class="button" href="https://github.com/ixiehao/ShotMap/releases/latest"><span data-i18n="heroDownload">Download for macOS</span><svg class="link-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><use href="assets/tabler-icons.svg?v=20261026-seven-locales#download"></use></svg></a>
+            <a class="text-link" href="https://github.com/ixiehao/ShotMap"><span data-i18n="viewSource">View on GitHub</span><svg class="link-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><use href="assets/tabler-icons.svg?v=20261026-seven-locales#brand-github"></use></svg></a>
           </div>
           <p class="compatibility" data-i18n="compatibility">macOS 13+ · Apple Silicon &amp; Intel · Free and open source</p>
           <div class="app-languages">
-            <p class="app-languages-title" id="app-languages-title"><svg class="link-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><use href="assets/tabler-icons.svg?v=20261026-international#language"></use></svg><span data-i18n="appLanguagesTitle">Seven languages. One download.</span></p>
+            <p class="app-languages-title" id="app-languages-title"><svg class="link-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><use href="assets/tabler-icons.svg?v=20261026-seven-locales#language"></use></svg><span data-i18n="appLanguagesTitle">Seven languages. One download.</span></p>
             <ul class="app-language-list" aria-labelledby="app-languages-title">
               <li lang="en">English</li><li lang="zh-Hans">简体中文</li><li lang="fr">Français</li><li lang="ru">Русский</li><li lang="es">Español</li><li lang="ja">日本語</li><li lang="ko">한국어</li>
             </ul>
-            <p class="app-languages-detail" data-i18n="appLanguagesDetail">Switch languages in the app without restarting. English is listed first.</p>
+            <p class="app-languages-detail" data-i18n="appLanguagesDetail">Switch languages in the app without restarting.</p>
           </div>
           <p class="demo-credit" data-i18n-html="demoCredit">Demo images use <a href="https://mango.blender.org/" rel="noreferrer">Tears of Steel</a> (2012) by Blender Foundation / Blender Institute, licensed under <a href="https://creativecommons.org/licenses/by/3.0/" rel="license noreferrer">CC BY 3.0</a>.</p>
         </div>
@@ -100,7 +115,7 @@
         <div class="workflow-layout">
           <ol class="steps">
             <li><h3 data-i18n="stepOneTitle">Add your videos</h3><p data-i18n="stepOneText">Drag in one clip or several at once.</p></li>
-            <li><h3 data-i18n="stepTwoTitle">Review the storyboard</h3><p data-i18n="stepTwoText">ShotMap selects a first pass. Replace any frame you want.</p></li>
+            <li><h3 data-i18n="stepTwoTitle">Review the storyboard</h3><p data-i18n="stepTwoText">ShotMap picks the frames. Replace any you want.</p></li>
             <li><h3 data-i18n="stepThreeTitle">Export your image</h3><p data-i18n="stepThreeText">Save as PNG or JPG, with timecodes if you want them.</p></li>
           </ol>
           <figure class="product-shot overview-shot">
@@ -118,7 +133,7 @@
           <ul class="check-list">
             <li><svg class="check-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/><path d="M9 12l2 2l4 -4"/></svg><span data-i18n="precisionPointOne">See candidates on a video timeline</span></li>
             <li><svg class="check-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/><path d="M9 12l2 2l4 -4"/></svg><span data-i18n="precisionPointTwo">Move by 1 or 5 frames at a time</span></li>
-            <li><svg class="check-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/><path d="M9 12l2 2l4 -4"/></svg><span data-i18n="precisionPointThree">Keep chosen frames in storyboard order</span></li>
+            <li><svg class="check-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/><path d="M9 12l2 2l4 -4"/></svg><span data-i18n="precisionPointThree">Selected frames follow the video’s timeline</span></li>
           </ul>
         </div>
         <figure class="product-shot manual-shot">
@@ -136,7 +151,7 @@
           <article><h3 data-i18n="featureOneTitle">Grid size</h3><p data-i18n="featureOneText">Choose from 3 × 3 to 8 × 8, depending on how much detail you need.</p></article>
           <article><h3 data-i18n="featureTwoTitle">Add a filename watermark</h3><p data-i18n="featureTwoText">Choose to show the filename and timecodes so you can quickly find the right video later.</p></article>
           <article><h3 data-i18n="featureThreeTitle">Match your video</h3><p data-i18n="featureThreeText">Use the video's aspect ratio and choose a background color.</p></article>
-          <article><h3 data-i18n="featureFourTitle">One visible queue</h3><p data-i18n="featureFourText">Add several videos, keep track of progress, and review finished storyboards together.</p></article>
+          <article><h3 data-i18n="featureFourTitle">Batch processing</h3><p data-i18n="featureFourText">Add several videos, keep track of progress, and review finished storyboards together.</p></article>
         </div>
       </section>
 
@@ -162,8 +177,8 @@
         <h2 id="cta-title" data-i18n="ctaTitle">Find the video you’re looking for.</h2>
         <p class="cta-detail" data-i18n="ctaDetail">Get the latest international edition for your Mac. All seven languages are included.</p>
         <div class="cta-actions">
-          <a class="button" href="https://github.com/ixiehao/ShotMap/releases/latest"><span data-i18n="ctaDownload">Download international edition</span><svg class="link-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><use href="assets/tabler-icons.svg?v=20261026-international#download"></use></svg></a>
-          <a class="button button-secondary" href="https://github.com/ixiehao/ShotMap"><span data-i18n="ctaGithub">View on GitHub</span><svg class="link-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><use href="assets/tabler-icons.svg?v=20261026-international#brand-github"></use></svg></a>
+          <a class="button" href="https://github.com/ixiehao/ShotMap/releases/latest"><span data-i18n="ctaDownload">Download international edition</span><svg class="link-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><use href="assets/tabler-icons.svg?v=20261026-seven-locales#download"></use></svg></a>
+          <a class="button button-secondary" href="https://github.com/ixiehao/ShotMap"><span data-i18n="ctaGithub">View on GitHub</span><svg class="link-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><use href="assets/tabler-icons.svg?v=20261026-seven-locales#brand-github"></use></svg></a>
         </div>
       </section>
     </main>
@@ -174,6 +189,6 @@
       <a href="https://github.com/ixiehao/ShotMap/releases/latest" data-i18n="releases">Releases</a>
       <a href="https://github.com/ixiehao/ShotMap/issues/new/choose" data-i18n="feedback">Feedback</a>
     </footer>
-    <script type="module" src="script.js?v=20261026-international"></script>
+    <script type="module" src="navigation.js?v=20261026-seven-locales"></script>
   </body>
 </html>

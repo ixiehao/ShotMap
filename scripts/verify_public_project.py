@@ -10,12 +10,69 @@ from __future__ import annotations
 
 import re
 import sys
+import json
+import xml.etree.ElementTree as ET
+from html.parser import HTMLParser
 from pathlib import Path
+from urllib.parse import unquote, urlsplit
 
 
 ROOT = Path(__file__).resolve().parent.parent
 REPOSITORY = "https://github.com/ixiehao/ShotMap"
 WEBSITE = "https://ixiehao.github.io/ShotMap/"
+LANGUAGES = {"en": "en", "zh": "zh-CN", "fr": "fr", "ru": "ru", "es": "es", "ja": "ja", "ko": "ko"}
+READMES = ("README.md", "README.zh-CN.md", "README.fr.md", "README.ru.md", "README.es.md", "README.ja.md", "README.ko.md")
+
+
+class PublicPage(HTMLParser):
+    def __init__(self) -> None:
+        super().__init__()
+        self.elements: list[tuple[str, dict[str, str]]] = []
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        self.elements.append((tag, dict(attrs)))
+
+
+def verify_local_target(source: Path, target: str) -> None:
+    parsed = urlsplit(target)
+    if parsed.scheme or parsed.netloc or not parsed.path:
+        return
+    resolved = (source.parent / unquote(parsed.path)).resolve()
+    if not resolved.exists():
+        fail(f"{source.relative_to(ROOT)} links to missing {target}")
+
+
+def verify_page(path: Path, locale: str) -> None:
+    text = require_text(path, f'<html lang="{LANGUAGES[locale]}"', WEBSITE)
+    page = PublicPage()
+    page.feed(text)
+    elements = page.elements
+    links = [attrs for tag, attrs in elements if tag == "link"]
+    canonical = next(attrs["href"] for attrs in links if attrs.get("rel") == "canonical")
+    expected_url = WEBSITE + (locale + "/" if locale != "en" else "")
+    if canonical != expected_url:
+        fail(f"wrong canonical URL in {path.relative_to(ROOT)}")
+    alternates = {attrs.get("hreflang"): attrs.get("href") for attrs in links if attrs.get("rel") == "alternate"}
+    expected_alternates = {language: WEBSITE + (key + "/" if key != "en" else "") for key, language in LANGUAGES.items()}
+    expected_alternates["x-default"] = WEBSITE
+    if alternates != expected_alternates:
+        fail(f"incomplete hreflang links in {path.relative_to(ROOT)}")
+    menu = [attrs for tag, attrs in elements if tag == "a" and "data-lang" in attrs]
+    if [link["data-lang"] for link in menu] != list(LANGUAGES):
+        fail(f"incomplete language menu in {path.relative_to(ROOT)}")
+    if [link["data-lang"] for link in menu if link.get("aria-current") == "page"] != [locale]:
+        fail(f"incorrect current language in {path.relative_to(ROOT)}")
+    for tag, attrs in elements:
+        target = attrs.get("src") or attrs.get("href")
+        if target:
+            verify_local_target(path, target)
+        if tag == "a" and target and "/releases/" in target and target != REPOSITORY + "/releases/latest":
+            fail(f"stale download link in {path.relative_to(ROOT)}")
+    for schema in re.findall(r'<script[^>]+type="application/ld\+json"[^>]*>(.*?)</script>', text, re.S):
+        value = json.loads(schema)
+        if value.get("@type") == "SoftwareApplication":
+            if value.get("url") != expected_url or value.get("inLanguage") != ["en", "zh-Hans", "fr", "ru", "es", "ja", "ko"]:
+                fail(f"incorrect software metadata in {path.relative_to(ROOT)}")
 
 
 def fail(message: str) -> None:
@@ -65,8 +122,15 @@ def jpeg_size(path: Path) -> tuple[int, int]:
 
 
 def main() -> None:
-    for readme in ("README.md", "README.zh-CN.md", "README.ja.md"):
+    for readme in READMES:
         text = require_text(ROOT / readme, "ShotMap", REPOSITORY, WEBSITE)
+        for sibling in READMES:
+            if f"]({sibling})" not in text:
+                fail(f"{readme} is missing a link to {sibling}")
+        for target in re.findall(r"\]\(([^\s)]+)\)", text):
+            verify_local_target(ROOT / readme, target)
+            if "/releases/" in target and target != REPOSITORY + "/releases/latest":
+                fail(f"stale download link in {readme}")
 
     metadata = require_text(ROOT / "docs/GITHUB_METADATA.md", "Repository description", "ShotMap")
     description_match = re.search(r"`(ShotMap[^`]+)`", metadata)
@@ -80,12 +144,14 @@ def main() -> None:
         "og:image",
         "twitter:image",
     )
-    for locale, language in (("zh", "zh-CN"), ("ja", "ja")):
-        localized_site = require_text(ROOT / "website" / locale / "index.html", f'<html lang="{language}"', WEBSITE)
-        if f"/{locale}/" not in localized_site:
-            fail(f"website/{locale}/index.html does not use its locale URL")
+    for locale in LANGUAGES:
+        verify_page(ROOT / "website" / ("" if locale == "en" else locale) / "index.html", locale)
 
-    sitemap = require_text(ROOT / "website/sitemap.xml", f"{WEBSITE}zh/", f"{WEBSITE}ja/")
+    sitemap = ET.parse(ROOT / "website/sitemap.xml")
+    indexed_urls = {node.text for node in sitemap.findall("{*}url/{*}loc")}
+    expected_urls = {WEBSITE + (locale + "/" if locale != "en" else "") for locale in LANGUAGES}
+    if indexed_urls != expected_urls:
+        fail("sitemap must include all seven language URLs")
 
     social_preview = ROOT / "docs/assets/social-preview-v2.jpg"
     if social_preview.stat().st_size >= 1_000_000:

@@ -10,14 +10,22 @@
     <link id="canonical-url" rel="canonical" href="https://ixiehao.github.io/ShotMap/zh/" />
     <link rel="alternate" hreflang="en" href="https://ixiehao.github.io/ShotMap/" />
     <link rel="alternate" hreflang="zh-CN" href="https://ixiehao.github.io/ShotMap/zh/" />
+    <link rel="alternate" hreflang="fr" href="https://ixiehao.github.io/ShotMap/fr/" />
+    <link rel="alternate" hreflang="ru" href="https://ixiehao.github.io/ShotMap/ru/" />
+    <link rel="alternate" hreflang="es" href="https://ixiehao.github.io/ShotMap/es/" />
     <link rel="alternate" hreflang="ja" href="https://ixiehao.github.io/ShotMap/ja/" />
+    <link rel="alternate" hreflang="ko" href="https://ixiehao.github.io/ShotMap/ko/" />
     <link rel="alternate" hreflang="x-default" href="https://ixiehao.github.io/ShotMap/" />
     <meta property="og:type" content="website" />
     <meta id="og-url" property="og:url" content="https://ixiehao.github.io/ShotMap/zh/" />
     <meta property="og:site_name" content="ShotMap" />
     <meta property="og:locale" content="zh_CN" />
-    <meta property="og:locale:alternate" content="zh_CN" />
+    <meta property="og:locale:alternate" content="en_US" />
+    <meta property="og:locale:alternate" content="fr_FR" />
+    <meta property="og:locale:alternate" content="ru_RU" />
+    <meta property="og:locale:alternate" content="es_ES" />
     <meta property="og:locale:alternate" content="ja_JP" />
+    <meta property="og:locale:alternate" content="ko_KR" />
     <meta property="og:title" content="ShotMap — 你的视频，不再难找。" />
     <meta property="og:description" content="把视频，编成一张分镜图。一个免费 Mac 应用，支持七种界面语言。" />
     <meta property="og:image" content="https://ixiehao.github.io/ShotMap/assets/social-preview.jpg?v=20261017" />
@@ -34,7 +42,7 @@
     <link rel="icon" type="image/svg+xml" href="../favicon.svg?v=20261017" />
     <link rel="icon" type="image/png" sizes="256x256" href="../assets/app-icon.png?v=20261017" />
     <link rel="apple-touch-icon" href="../assets/app-icon.png?v=20261017" />
-    <link rel="stylesheet" href="../styles.css?v=20261026-international" />
+    <link rel="stylesheet" href="../styles.css?v=20261026-seven-locales" />
     <script id="software-schema" type="application/ld+json">
       {"@context":"https://schema.org","@type":"SoftwareApplication","@id":"https://ixiehao.github.io/ShotMap/#software","name":"ShotMap","applicationCategory":"MultimediaApplication","operatingSystem":"macOS 13 or later","url":"https://ixiehao.github.io/ShotMap/zh/","description":"把视频编成一张分镜图，找回想看的片段。ShotMap 支持英、中、法、俄、西、日、韩七种界面语言，可手动选帧，在 Mac 本机导出，免费开源。","downloadUrl":"https://github.com/ixiehao/ShotMap/releases/latest","screenshot":"https://ixiehao.github.io/ShotMap/assets/workspace-zh.webp?v=20261017","featureList":"七种界面语言；视频分镜图；手动选择画面；多视频队列；PNG 和 JPG 导出；本机处理","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Person","name":"ixiehao","url":"https://github.com/ixiehao"},"codeRepository":"https://github.com/ixiehao/ShotMap","license":"https://opensource.org/license/mit","inLanguage":["en","zh-Hans","fr","ru","es","ja","ko"]}
     </script>
@@ -57,12 +65,19 @@
         <a href="#privacy" data-i18n="navPrivacy">隐私</a>
       </nav>
       <div class="header-actions">
-        <div class="language-picker" role="group" aria-label="网页语言" data-i18n-aria="languageLabel">
-          <button type="button" data-lang="en" aria-pressed="false">EN</button>
-          <button type="button" data-lang="zh" aria-pressed="true">中文</button>
-          <button type="button" data-lang="ja" aria-pressed="false">日本語</button>
-        </div>
-        <a class="button button-small" href="https://github.com/ixiehao/ShotMap/releases/latest"><span data-i18n="download">下载</span><svg class="link-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><use href="../assets/tabler-icons.svg?v=20261026-international#download"></use></svg></a>
+        <details class="language-picker">
+          <summary aria-label="网页语言: 简体中文"><svg class="link-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><use href="../assets/tabler-icons.svg?v=20261026-seven-locales#language"></use></svg><span lang="zh-CN">简体中文</span><svg class="link-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><use href="../assets/tabler-icons.svg?v=20261026-seven-locales#chevron-down"></use></svg></summary>
+          <div class="language-options">
+            <a href="../" data-lang="en" lang="en" hreflang="en">English</a>
+            <a href="../zh/" data-lang="zh" lang="zh-CN" hreflang="zh-CN" aria-current="page">简体中文</a>
+            <a href="../fr/" data-lang="fr" lang="fr" hreflang="fr">Français</a>
+            <a href="../ru/" data-lang="ru" lang="ru" hreflang="ru">Русский</a>
+            <a href="../es/" data-lang="es" lang="es" hreflang="es">Español</a>
+            <a href="../ja/" data-lang="ja" lang="ja" hreflang="ja">日本語</a>
+            <a href="../ko/" data-lang="ko" lang="ko" hreflang="ko">한국어</a>
+          </div>
+        </details>
+        <a class="button button-small" href="https://github.com/ixiehao/ShotMap/releases/latest"><span data-i18n="download">下载</span><svg class="link-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><use href="../assets/tabler-icons.svg?v=20261026-seven-locales#download"></use></svg></a>
       </div>
     </header>
 
@@ -73,16 +88,16 @@
           <h1 id="hero-title" data-i18n-html="heroTitle">你的视频，<br />不再难找。</h1>
           <p class="hero-summary" data-i18n="heroSummary">把视频，编成一张分镜图。</p>
           <div class="hero-actions">
-            <a class="button" href="https://github.com/ixiehao/ShotMap/releases/latest"><span data-i18n="heroDownload">下载 macOS 版</span><svg class="link-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><use href="../assets/tabler-icons.svg?v=20261026-international#download"></use></svg></a>
-            <a class="text-link" href="https://github.com/ixiehao/ShotMap"><span data-i18n="viewSource">在 GitHub 查看</span><svg class="link-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><use href="../assets/tabler-icons.svg?v=20261026-international#brand-github"></use></svg></a>
+            <a class="button" href="https://github.com/ixiehao/ShotMap/releases/latest"><span data-i18n="heroDownload">下载 macOS 版</span><svg class="link-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><use href="../assets/tabler-icons.svg?v=20261026-seven-locales#download"></use></svg></a>
+            <a class="text-link" href="https://github.com/ixiehao/ShotMap"><span data-i18n="viewSource">在 GitHub 查看</span><svg class="link-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><use href="../assets/tabler-icons.svg?v=20261026-seven-locales#brand-github"></use></svg></a>
           </div>
           <p class="compatibility" data-i18n="compatibility">macOS 13 及以上 · Apple Silicon 与 Intel · 免费开源</p>
           <div class="app-languages">
-            <p class="app-languages-title" id="app-languages-title"><svg class="link-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><use href="../assets/tabler-icons.svg?v=20261026-international#language"></use></svg><span data-i18n="appLanguagesTitle">一个安装包，七种语言。</span></p>
+            <p class="app-languages-title" id="app-languages-title"><svg class="link-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><use href="../assets/tabler-icons.svg?v=20261026-seven-locales#language"></use></svg><span data-i18n="appLanguagesTitle">一个安装包，七种语言。</span></p>
             <ul class="app-language-list" aria-labelledby="app-languages-title">
               <li lang="en">English</li><li lang="zh-Hans">简体中文</li><li lang="fr">Français</li><li lang="ru">Русский</li><li lang="es">Español</li><li lang="ja">日本語</li><li lang="ko">한국어</li>
             </ul>
-            <p class="app-languages-detail" data-i18n="appLanguagesDetail">在应用内即可切换，无需重启。语言菜单中 English 排在首位。</p>
+            <p class="app-languages-detail" data-i18n="appLanguagesDetail">在应用内即可切换，无需重启。</p>
           </div>
           <p class="demo-credit" data-i18n-html="demoCredit">演示图片使用 <a href="https://mango.blender.org/" rel="noreferrer">《Tears of Steel》</a>（2012），由 Blender Foundation / Blender Institute 制作，采用 <a href="https://creativecommons.org/licenses/by/3.0/" rel="license noreferrer">CC BY 3.0</a> 许可。</p>
         </div>
@@ -118,7 +133,7 @@
           <ul class="check-list">
             <li><svg class="check-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/><path d="M9 12l2 2l4 -4"/></svg><span data-i18n="precisionPointOne">在视频时间轴上查看候选画面</span></li>
             <li><svg class="check-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/><path d="M9 12l2 2l4 -4"/></svg><span data-i18n="precisionPointTwo">每次前后移动 1 帧或 5 帧</span></li>
-            <li><svg class="check-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/><path d="M9 12l2 2l4 -4"/></svg><span data-i18n="precisionPointThree">按分镜图的顺序保留已选画面</span></li>
+            <li><svg class="check-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/><path d="M9 12l2 2l4 -4"/></svg><span data-i18n="precisionPointThree">已选画面按视频时间顺序排列</span></li>
           </ul>
         </div>
         <figure class="product-shot manual-shot">
@@ -162,8 +177,8 @@
         <h2 id="cta-title" data-i18n="ctaTitle">下次找视频，先看分镜图。</h2>
         <p class="cta-detail" data-i18n="ctaDetail">下载适用于 Mac 的最新国际版，七种界面语言已全部包含。</p>
         <div class="cta-actions">
-          <a class="button" href="https://github.com/ixiehao/ShotMap/releases/latest"><span data-i18n="ctaDownload">下载最新国际版</span><svg class="link-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><use href="../assets/tabler-icons.svg?v=20261026-international#download"></use></svg></a>
-          <a class="button button-secondary" href="https://github.com/ixiehao/ShotMap"><span data-i18n="ctaGithub">在 GitHub 查看</span><svg class="link-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><use href="../assets/tabler-icons.svg?v=20261026-international#brand-github"></use></svg></a>
+          <a class="button" href="https://github.com/ixiehao/ShotMap/releases/latest"><span data-i18n="ctaDownload">下载最新国际版</span><svg class="link-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><use href="../assets/tabler-icons.svg?v=20261026-seven-locales#download"></use></svg></a>
+          <a class="button button-secondary" href="https://github.com/ixiehao/ShotMap"><span data-i18n="ctaGithub">在 GitHub 查看</span><svg class="link-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><use href="../assets/tabler-icons.svg?v=20261026-seven-locales#brand-github"></use></svg></a>
         </div>
       </section>
     </main>
@@ -174,6 +189,6 @@
       <a href="https://github.com/ixiehao/ShotMap/releases/latest" data-i18n="releases">版本发布</a>
       <a href="https://github.com/ixiehao/ShotMap/issues/new/choose" data-i18n="feedback">反馈</a>
     </footer>
-    <script type="module" src="../script.js?v=20261026-international"></script>
+    <script type="module" src="../navigation.js?v=20261026-seven-locales"></script>
   </body>
 </html>
