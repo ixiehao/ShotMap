@@ -49,10 +49,16 @@ struct VideoStoryboardAnalyzer: Sendable {
         }
 
         let asset = AVURLAsset(url: videoURL)
-        let isPlayable = try await asset.load(.isPlayable)
-        guard isPlayable else { throw StoryboardError.unsupportedCodec }
+        // Unplayable also includes empty, truncated and non-video files.
+        // Preserve metadata errors before deciding that conversion can help.
         let duration = try await asset.load(.duration).seconds
         guard duration.isFinite, duration > 0 else { throw StoryboardError.unreadableVideo }
+        let isPlayable = try await asset.load(.isPlayable)
+        if !isPlayable {
+            let videoTracks = try await asset.loadTracks(withMediaType: .video)
+            guard !videoTracks.isEmpty else { throw StoryboardError.unreadableVideo }
+            throw StoryboardError.unsupportedCodec
+        }
 
         let targetCount = gridSide * gridSide
         let sampleCount = analysisSampleCount(for: targetCount)

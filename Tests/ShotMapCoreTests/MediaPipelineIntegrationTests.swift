@@ -4,6 +4,85 @@ import XCTest
 
 /// Small generated fixtures exercise system codecs without bundling private media.
 final class MediaPipelineIntegrationTests: XCTestCase {
+    @MainActor
+    func testInvalidMediaFailsWithoutConversionAdviceAndBatchContinues() async throws {
+        let directory = FileManager.default.temporaryDirectory.appendingPathComponent("ShotMap-invalid-media-\(UUID())")
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let valid = directory.appendingPathComponent("valid.mov")
+        _ = try await writeFixture(at: valid, codec: .h264, variableRate: false, portrait: false)
+        let invalid = directory.appendingPathComponent("invalid.mp4")
+        let empty = directory.appendingPathComponent("empty.mp4")
+        let truncated = directory.appendingPathComponent("truncated.mov")
+        try Data("invalid media fixture, not a video".utf8).write(to: invalid)
+        try Data().write(to: empty)
+        try Data(contentsOf: valid).prefix(32).write(to: truncated)
+
+        let model = StoryboardViewModel()
+        defer { model.cancelGeneration() }
+        model.language = .english
+        model.gridSide = 3
+        model.width = 1920
+        model.addVideos([invalid, empty, truncated, valid])
+        model.generate()
+        let deadline = ContinuousClock.now + .seconds(20)
+        while model.isProcessing, ContinuousClock.now < deadline {
+            try await Task.sleep(nanoseconds: 10_000_000)
+        }
+        XCTAssertFalse(model.isProcessing, "Invalid files must not block later jobs")
+        for job in model.videoJobs.prefix(3) {
+            guard case let .failed(failure) = job.state else {
+                XCTFail("Expected an invalid-media failure for \(job.url.lastPathComponent)")
+                continue
+            }
+            XCTAssertEqual(failure.kind, .permanent, job.url.lastPathComponent)
+            XCTAssertFalse(failure.needsTranscoding, job.url.lastPathComponent)
+            XCTAssertEqual(failure.message, AppLanguage.english.text("error.unreadableVideo"))
+        }
+        XCTAssertEqual(model.completedPreviews.count, 1)
+        let saved = try XCTUnwrap(model.lastSavedURL)
+        XCTAssertTrue(saved.lastPathComponent.hasPrefix("valid-shot-"))
+        let image = try XCTUnwrap(ImageCodec.cgImage(from: Data(contentsOf: saved)))
+        XCTAssertEqual(image.width, 1920)
+    }
+
+    func testReadableVideoContainerWithUnknownCodecStillOffersConversion() async throws {
+        let directory = FileManager.default.temporaryDirectory.appendingPathComponent("ShotMap-unknown-codec-\(UUID())")
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let source = directory.appendingPathComponent("unknown-codec.mov")
+        _ = try await writeFixture(at: source, codec: .h264, variableRate: false, portrait: false)
+        // Retain the real MOV container, timing, video track and samples, but
+        // declare an unknown codec in its sole video sample description.
+        var data = try Data(contentsOf: source)
+        let stsd = try XCTUnwrap(data.range(of: Data("stsd".utf8)))
+        let codecRange = (stsd.lowerBound + 16)..<(stsd.lowerBound + 20)
+        XCTAssertEqual(data.subdata(in: codecRange), Data("avc1".utf8))
+        data.replaceSubrange(codecRange, with: Data("zzzz".utf8))
+        try data.write(to: source)
+        let asset = AVURLAsset(url: source)
+        let duration = try await asset.load(.duration).seconds
+        let tracks = try await asset.loadTracks(withMediaType: .video)
+        let playable = try await asset.load(.isPlayable)
+        XCTAssertGreaterThan(duration, 0)
+        XCTAssertEqual(tracks.count, 1)
+        XCTAssertFalse(playable)
+
+        do {
+            _ = try await VideoStoryboardAnalyzer().analyze(
+                videoURL: source, gridSide: 3, outputWidth: 1920,
+                progress: { _ in }, onPreviewFrame: { _, _, _ in }
+            )
+            XCTFail("The unknown codec cannot be decoded")
+        } catch {
+            for language in AppLanguage.allCases {
+                let failure = VideoFailure.classify(error, language: language)
+                XCTAssertEqual(failure.kind, .needsTranscoding)
+                XCTAssertEqual(failure.message, language.text("error.unsupportedCodec"))
+            }
+        }
+    }
+
     func testHEVCProcessingAndManualRefinement() async throws {
         try await exercisePipeline(codec: .hevc, variableRate: false, portrait: false)
     }

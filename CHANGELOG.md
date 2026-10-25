@@ -3,6 +3,36 @@
 All notable user-facing changes are recorded here. Stable releases remain
 available on the [GitHub Releases page](https://github.com/ixiehao/ShotMap/releases).
 
+## v0.2.16 — 2026-10-26
+
+### English
+
+- Seven interface languages; English appears first in the language menu.
+- Fixed unnecessary conversion advice for invalid or damaged video files.
+
+macOS 13+ · Apple Silicon and Intel.
+
+### 中文
+
+- 支持七种界面语言，语言菜单中 English 排在首位。
+- 修复无效或损坏的视频文件被错误建议转码的问题。
+
+macOS 13+ · 支持 Apple Silicon 与 Intel。
+
+### 日本語
+
+- 7 言語に対応。言語メニューは English を先頭に表示します。
+- 無効・破損した動画ファイルに不要な変換案内を表示する問題を修正しました。
+
+macOS 13 以降 · Apple Silicon / Intel 対応。
+
+### 한국어
+
+- 7개 인터페이스 언어를 지원하며, 언어 메뉴 맨 위에 English를 표시합니다.
+- 유효하지 않거나 손상된 동영상 파일에 불필요한 변환을 안내하던 문제를 수정했습니다.
+
+macOS 13 이상 · Apple Silicon 및 Intel 지원.
+
 ## v0.2.15 — 2026-10-25
 
 ### English
