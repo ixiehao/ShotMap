@@ -7,6 +7,8 @@
 
 [English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
 
+**アプリは7言語に対応：**English · 简体中文 · Français · Русский · Español · 日本語 · 한국어。ひとつのダウンロードにすべて含まれています。
+
 ![Tears of Steel を処理して絵コンテを作成する ShotMap の日本語ワークスペース](website/assets/workspace-ja.webp?v=20261017)
 
 ## 動画を、見つけやすく。
@@ -15,7 +17,7 @@
 
 まずスマート選択の候補を確認し、必要なコマは手動フレーム選択で置き換えられます。ShotMap は macOS ネイティブのオープンソースアプリです。動画の処理と画像の書き出しは Mac 上で行い、アカウントや動画のアップロードは不要です。
 
-> **ここから始める：**[最新 Universal DMG をダウンロード](https://github.com/ixiehao/ShotMap/releases/latest) · macOS 13 以降 · Apple Silicon / Intel Mac 対応
+> **ここから始める：**[最新国際版をダウンロード](https://github.com/ixiehao/ShotMap/releases/latest) · Universal DMG · macOS 13 以降 · Apple Silicon / Intel Mac 対応
 
 > **デモ映像のクレジット：** *Tears of Steel*（2012）© Blender Foundation / Blender Institute、[CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) ライセンス。以下の製品スクリーンショットとアニメーションにはこの映像を使用しています。
 
@@ -38,7 +40,7 @@
 - 動画をまとめて追加し、現在の動画が終わったら一時停止・再開できます。取得したコマからプレビューへ順に表示します。
 - 3 × 3 から 8 × 8 のグリッド、比率、背景色、画像の幅、タイムコード、ファイル名タイトルを選べます。
 - MP4、MOV、MPEG など、現在の macOS が対応する動画形式を扱えます。
-- 英語、簡体字中国語、フランス語、ロシア語、スペイン語、日本語、韓国語に対応。外観はライト、ダーク、システムから選べます。
+- 7言語を再起動なしで切り替えられます。外観はライト、ダーク、システムから選べます。
 
 ### 実際の操作を見る
 
@@ -48,7 +50,7 @@
 
 ## ダウンロードとインストール
 
-**ほとんどの方へ：**[最新リリース](https://github.com/ixiehao/ShotMap/releases/latest)を開き、Universal `.dmg` をダウンロードして **ShotMap.app** を「アプリケーション」へドラッグしてください。
+[最新国際版](https://github.com/ixiehao/ShotMap/releases/latest)を開き、Universal `.dmg` をダウンロードして **ShotMap.app** を「アプリケーション」へドラッグしてください。ひとつのインストーラに7言語すべてを含み、Apple Silicon と Intel の両方に対応しています。
 
 リリースページには、ダウンロードを確認したい方のために SHA-256 チェックサムも用意されています。ShotMap はまだ Apple の公証を受けていません。macOS に開発元の確認を求められた場合は、「アプリケーション」で Control-click して「開く」を選び、もう一度「開く」を確認してください。macOS 全体のセキュリティ設定を下げる必要はありません。
 

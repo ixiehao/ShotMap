@@ -7,7 +7,11 @@
 - Source: [`website/`](../website/), not the repository root or `docs/`.
 - Public URL: https://ixiehao.github.io/ShotMap/
 - Deployment: [`.github/workflows/pages.yml`](../.github/workflows/pages.yml).
-- Languages: English, Simplified Chinese and Japanese.
+- Website languages: English, Simplified Chinese and Japanese.
+- App interface languages: English, Simplified Chinese, French, Russian, Spanish,
+  Japanese and Korean, in that order. Keep this list visible near the main
+  download button and at the top of all three READMEs; website language choices
+  and app language support are separate.
 
 `website/` is a source directory, not part of the public URL. Keep the public address and existing external links unchanged.
 
@@ -43,6 +47,14 @@ git diff --check
 The default page and `website/script.js` supply localized content. After editing them, regenerate the Chinese/Japanese static pages with `node website/build-static-pages.mjs`, review the generated changes, and run `--check` again. Do not hand-edit the generated language pages as a separate source of truth.
 
 Check images, favicon, navigation, official download destinations, desktop and narrow layouts, keyboard focus, language switching, localized metadata and download/signing wording. Check canonical and share URLs, robots and sitemap where present. A path-only migration should preserve site content.
+
+Keep download links pointed at `https://github.com/ixiehao/ShotMap/releases/latest`
+so they follow the latest stable international release. Verify the actual redirect
+and DMG asset against GitHub's latest-release response before publishing; do not
+hard-code an older version into product download buttons. SoftwareApplication
+metadata lists all seven app languages, while each page retains its own HTML
+language and locale links. Bump asset query versions when adding translation keys
+or styling so a cached script cannot replace new copy with missing values.
 
 ## Deployment
 

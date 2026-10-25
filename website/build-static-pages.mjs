@@ -1,7 +1,7 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { localeURLs, localizedVisualAssets, releaseURL, siteURL, translations } from "./script.js";
+import { appLanguageCodes, localeURLs, localizedVisualAssets, releaseURL, siteURL, translations } from "./script.js";
 
 const root = resolve(fileURLToPath(new URL(".", import.meta.url)));
 const source = await readFile(resolve(root, "index.html"), "utf8");
@@ -54,7 +54,7 @@ function buildSchema(copy, language) {
     offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
     author: { "@type": "Person", name: "ixiehao", url: "https://github.com/ixiehao" },
     codeRepository: "https://github.com/ixiehao/ShotMap", license: "https://opensource.org/license/mit",
-    inLanguage: language === "zh" ? "zh-CN" : language
+    inLanguage: appLanguageCodes
   };
 }
 
@@ -114,7 +114,7 @@ function makeStaticPage(language) {
   html = setButtonState(html, language);
   html = html
     .replace(/href="styles\.css([^"]*)"/g, 'href="../styles.css$1"')
-    .replaceAll('src="script.js"', 'src="../script.js"')
+    .replace(/src="script\.js([^"]*)"/g, 'src="../script.js$1"')
     .replaceAll('href="favicon.svg', 'href="../favicon.svg')
     .replaceAll('href="assets/', 'href="../assets/')
     .replaceAll('src="assets/', 'src="../assets/');

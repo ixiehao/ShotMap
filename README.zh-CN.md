@@ -7,6 +7,8 @@
 
 [English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
 
+**应用界面支持七种语言：**English · 简体中文 · Français · Русский · Español · 日本語 · 한국어。一个安装包，全部包含。
+
 ![ShotMap 中文工作区正在处理《Tears of Steel》并生成分镜图](website/assets/workspace-zh.webp?v=20261017)
 
 ## 你的视频，不再难找。
@@ -15,7 +17,7 @@
 
 先用智能选帧给出的候选，再在“手动选择画面”窗口里替换不合适的画面。ShotMap 是一款原生 macOS 开源软件，视频处理和图片导出都在 Mac 本机完成，无需账号，也不会上传视频。
 
-> **从这里开始：**[下载最新通用 DMG](https://github.com/ixiehao/ShotMap/releases/latest) · macOS 13 或更高版本 · 支持 Apple Silicon 与 Intel Mac
+> **从这里开始：**[下载最新国际版](https://github.com/ixiehao/ShotMap/releases/latest) · 通用 DMG · macOS 13 或更高版本 · 支持 Apple Silicon 与 Intel Mac
 
 > **演示视频署名：**《Tears of Steel》（2012）© Blender Foundation / Blender Institute，采用 [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) 许可。下方的软件截图和动图均使用该视频制作。
 
@@ -38,7 +40,7 @@
 - 支持批量导入，可在当前视频处理完后暂停，再继续处理；取到的画面会逐张填入预览。
 - 可选择 3 × 3 至 8 × 8 网格、比例、底色、图片宽度，以及是否显示时间码和文件标题。
 - 支持 MP4、MOV、MPEG 等当前 macOS 支持的视频格式。
-- 支持英语、简体中文、法语、俄语、西班牙语、日语、韩语，可选择浅色、深色或跟随系统外观。
+- 七种界面语言可随时切换，无需重启；可选择浅色、深色或跟随系统外观。
 
 ### 看看真实操作
 
@@ -48,7 +50,7 @@
 
 ## 下载与安装
 
-**大多数用户：**打开[最新版本页面](https://github.com/ixiehao/ShotMap/releases/latest)，下载通用 `.dmg`，再将 **ShotMap.app** 拖进“应用程序”文件夹。
+打开[最新国际版页面](https://github.com/ixiehao/ShotMap/releases/latest)，下载通用 `.dmg`，再将 **ShotMap.app** 拖进“应用程序”文件夹。同一个安装包包含全部七种语言，适用于 Apple Silicon 与 Intel Mac。
 
 版本页面附有 SHA-256 校验文件，供需要验证下载的用户使用。ShotMap 暂未经过 Apple 公证。若 macOS 提示无法验证开发者，请在“应用程序”中按住 Control 点按应用，选择“打开”，再确认一次“打开”。无需降低 macOS 的系统级安全设置。
 
