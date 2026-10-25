@@ -24,6 +24,9 @@ The UI and processing code have separate ownership:
 | `StoryboardViewModel.swift` | Batch state, result navigation, and run-checked UI updates |
 | `ManualFrameEditor.swift` | Manual selection, player controls, and editor task lifetime |
 | `ManualEditorTimeline.swift` | Bounded timeline positioning and frame stepping |
+| `ManualVideoPlayback.swift` | Playback, bounded time observation, and player teardown |
+| `OrderedVideoDrops.swift` | Ordered batches of asynchronous file providers |
+| `FrameThumbnail.swift` | Serialized background thumbnail decoding and view-owned image lifetime |
 | `ManualFrameEditorWindow.swift` | AppKit window ownership and SwiftUI presentation |
 | `ManualFrameEditorRequest.swift` | Stable identity and settings for an editing session |
 | `VideoQueueViews.swift`, `StoryboardPreviewViews.swift` | Queue and preview presentation |
@@ -38,6 +41,17 @@ Views keep the existing layout constants and appearance choices. Processing
 workers do not own windows; editor tasks and their detached workers are cancelled
 together when superseded or closed. Timeline actions update the same position
 used by the next action, so repeated frame stepping accumulates correctly.
+Manual gallery cells reuse display-sized thumbnails instead of decoding JPEGs
+inside SwiftUI body evaluation. Thumbnail dimensions account for display scale,
+portrait images, and aspect-fill cropping; a single decoder actor bounds work.
+Cells release decoded images when they leave the screen, and a completed batch
+releases the individual live-grid images after showing the finished storyboard.
+File-provider callbacks collect into ordered batches before publishing queue
+changes. Consecutive drops retain their arrival order; stalled providers time
+out after 30 seconds, and cancellation invalidates late callbacks. The editor
+player publishes its position at 10 Hz and removes its observers and current
+item when closed. Adding a frame during playback pauses at the actual player
+position before starting exact capture.
 
 ```text
 video URL
@@ -91,6 +105,22 @@ opened. Smart selection reuses the same visual metrics and duplicate rules, whil
 the user can override any individual choice. Candidate and smart-selection tasks
 are cancelled when the editor closes. Each edit is tied to a stable preview ID so
 switching between batch results cannot overwrite the wrong storyboard.
+The exact-time batch request map uses the submitted `CMTime`, not a rounded
+nominal frame number, so distinct VFR moments remain distinct. Shared requests
+decode once and deliver the image to every requesting candidate. Adding one
+frame submits the same seven sharpness probes asynchronously, followed by a
+single final-size decode. Selection-changing controls are locked while Apply is
+preparing an export, so the displayed selection matches the exported snapshot.
+
+## Interface languages
+
+The application supports English, Simplified Chinese, French, Russian, Spanish,
+Japanese, and Korean. A saved language choice wins over the system preferences;
+first launch matches the first supported preferred language and otherwise uses
+English. Every locale has the same 175 resource keys and format arguments.
+Views use semantic status values so switching language updates existing results
+without restarting or discarding the queue. Help and the separate manual-editor
+window receive the chosen locale explicitly. Timeline order is unchanged.
 
 ## Concurrency and compatibility
 
@@ -106,6 +136,9 @@ covering decode, selection, composition, JPEG export, and manual refinement.
 Codec fixtures check that returned timestamps identify real source frames.
 Storage tests cover cancelled writes, invalid image data, temporary previews,
 large histories, and cancellation of one paused worker without resuming others.
+If a stored preview can no longer load, navigation restores the last successfully
+displayed record by stable ID, keeping the image, filename, and edit target
+consistent. A stale or cancelled load cannot replace a newer successful result.
 
 ## Known limits
 

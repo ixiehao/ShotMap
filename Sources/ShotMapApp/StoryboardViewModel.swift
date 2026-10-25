@@ -36,7 +36,7 @@ struct LivePreviewFrame: Identifiable {
 @MainActor
 final class StoryboardViewModel: ObservableObject {
     @Published private(set) var videoJobs: [VideoJob] = []
-    @Published var language: AppLanguage = .chinese
+    @Published var language: AppLanguage = .systemDefault
     @Published var gridSide = 4
     @Published var layoutAspect: StoryboardAspect = .source
     @Published var format: ExportFormat = .png
@@ -56,6 +56,7 @@ final class StoryboardViewModel: ObservableObject {
     @Published private(set) var isPaused = false
     @Published var progress = 0.0
     @Published var isDropTargeted = false
+    @Published private(set) var isImportingVideos = false
     @Published var showError = false
     @Published var errorMessage = ""
     @Published private var outputStatus: OutputStatus = .empty
@@ -76,11 +77,32 @@ final class StoryboardViewModel: ObservableObject {
     private var pendingFormat: ExportFormat?
     private var previewImageStore = PreviewImageStore()
     private var previewLoadID = UUID()
+    private var pendingDrops = OrderedVideoDrops()
+    private struct DropLoading: Sendable {
+        let timeout: Task<Void, Never>
+        var progress: [Progress] = []
+    }
+    private var dropLoading: [UUID: DropLoading] = [:]
+    private let dropTimeoutNanoseconds: UInt64
+    private var displayedPreview: (id: UUID, presentation: PreparedPreviewPresentation)?
+    private let previewLoader: @Sendable (RenderedStoryboardPreview) throws -> PreparedPreviewPresentation
+
+    init(dropTimeoutNanoseconds: UInt64 = 30_000_000_000,
+         previewLoader: @escaping @Sendable (RenderedStoryboardPreview) throws -> PreparedPreviewPresentation = {
+        try $0.loadPresentation()
+    }) {
+        self.dropTimeoutNanoseconds = dropTimeoutNanoseconds
+        self.previewLoader = previewLoader
+    }
 
     deinit {
         generationTask?.cancel()
         frameAdjustmentTask?.cancel()
         previewLoadingTask?.cancel()
+        for loading in dropLoading.values {
+            loading.timeout.cancel()
+            loading.progress.forEach { $0.cancel() }
+        }
     }
 
     private func t(_ key: String, _ arguments: CVarArg...) -> String {
@@ -191,7 +213,7 @@ final class StoryboardViewModel: ObservableObject {
         let additions = supported
             .filter { knownPaths.insert($0.path).inserted }
             .map { VideoJob(url: $0) }
-        videoJobs.append(contentsOf: additions)
+        if !additions.isEmpty { videoJobs.append(contentsOf: additions) }
         if supported.count < candidates.count {
             errorMessage = t("error.unsupportedInput")
             showError = true
@@ -200,10 +222,12 @@ final class StoryboardViewModel: ObservableObject {
 
     func clearVideos() {
         guard !isBusy else { return }
+        cancelVideoImport()
         previewLoadingTask?.cancel()
         previewLoadingTask = nil
         videoJobs.removeAll()
         previewImage = nil
+        displayedPreview = nil
         livePreviewSlots.reset(total: 0)
         outputStatus = .empty
         completedBatchCounts = nil
@@ -221,25 +245,66 @@ final class StoryboardViewModel: ObservableObject {
     func acceptDrop(providers: [NSItemProvider]) -> Bool {
         guard !isBusy else { return false }
         let fileProviders = providers.filter { $0.hasItemConformingToTypeIdentifier(UTType.fileURL.identifier) }
-        guard !fileProviders.isEmpty else { return false }
-        for provider in fileProviders {
-            provider.loadItem(forTypeIdentifier: UTType.fileURL.identifier, options: nil) { [weak self] item, _ in
-                guard let url = DroppedVideoURL.decode(item) else { return }
+        guard let batchID = pendingDrops.register(count: fileProviders.count) else { return false }
+        if !isImportingVideos { isImportingVideos = true }
+        let timeoutNanoseconds = dropTimeoutNanoseconds
+        let timeout = Task { @MainActor [weak self] in
+            do { try await Task.sleep(nanoseconds: timeoutNanoseconds) } catch { return }
+            guard !Task.isCancelled, let self else { return }
+            self.releaseDropLoading(batchID, cancelLoads: true)
+            self.finishVideoDrop(self.pendingDrops.expire(batchID))
+        }
+        dropLoading[batchID] = DropLoading(timeout: timeout)
+        for (index, provider) in fileProviders.enumerated() {
+            let progress = provider.loadDataRepresentation(forTypeIdentifier: UTType.fileURL.identifier) { [weak self] data, _ in
+                let url = DroppedVideoURL.decode(data)
                 Task { @MainActor [weak self] in
-                    self?.addVideos([url])
+                    guard let self else { return }
+                    let completion = self.pendingDrops.resolve(url, at: index, batchID: batchID)
+                    if !self.pendingDrops.isPending(batchID) { self.releaseDropLoading(batchID, cancelLoads: false) }
+                    self.finishVideoDrop(completion)
                 }
             }
+            dropLoading[batchID]?.progress.append(progress)
         }
         return true
     }
 
+    func cancelVideoImport() {
+        pendingDrops.cancelAll()
+        let activeLoads = dropLoading.values
+        dropLoading.removeAll()
+        for loading in activeLoads {
+            loading.timeout.cancel()
+            loading.progress.forEach { $0.cancel() }
+        }
+        if isImportingVideos { isImportingVideos = false }
+    }
+
+    private func releaseDropLoading(_ id: UUID, cancelLoads: Bool) {
+        guard let loading = dropLoading.removeValue(forKey: id) else { return }
+        loading.timeout.cancel()
+        if cancelLoads { loading.progress.forEach { $0.cancel() } }
+    }
+
+    private func finishVideoDrop(_ completion: OrderedVideoDrops.Completion?) {
+        let hasPendingDrops = !pendingDrops.isEmpty
+        if isImportingVideos != hasPendingDrops { isImportingVideos = hasPendingDrops }
+        guard let completion else { return }
+        addVideos(completion.urls)
+        if completion.failedCount > 0 {
+            errorMessage = t("error.videoImport", completion.failedCount)
+            showError = true
+        }
+    }
+
     func generate() {
-        guard !videoJobs.isEmpty, !isBusy else { return }
+        guard !videoJobs.isEmpty, !isBusy, !isImportingVideos else { return }
         startGeneration(indices: Array(videoJobs.indices), resetPreviews: true)
     }
 
     func retryFailedJobs() {
-        guard !isBusy else { return }
+        guard !isBusy, !isImportingVideos else { return }
         let indices = videoJobs.indices.filter { videoJobs[$0].state.canRetry }
         guard !indices.isEmpty else { return }
         for index in indices { videoJobs[index].state = .queued }
@@ -261,6 +326,7 @@ final class StoryboardViewModel: ObservableObject {
 
     private func startGeneration(indices: [Int], resetPreviews: Bool) {
         guard !indices.isEmpty else { return }
+        cancelVideoImport()
         let runID = UUID()
         generationRunID = runID
         isProcessing = true
@@ -270,10 +336,10 @@ final class StoryboardViewModel: ObservableObject {
         completedBatchCounts = nil
         // Present the live grid immediately. This replaces a stale completed
         // image or a blank stage before the first AVFoundation decode returns.
-        activeGridSide = gridSide
+        activeGridSide = StoryboardGrid.boundedSide(gridSide)
         activeUsesSourceAspect = layoutAspect == .source
         activeCardAspectRatio = layoutAspect.resolvedCardAspectRatio(sourceAspectRatio: nil)
-        livePreviewSlots.reset(total: gridSide * gridSide)
+        livePreviewSlots.reset(total: activeGridSide * activeGridSide)
         lastSavedURL = nil
         pendingData = nil
         pendingSource = nil
@@ -289,6 +355,7 @@ final class StoryboardViewModel: ObservableObject {
             isLoadingPreview = false
             selectedPreviewIndex = 0
             previewImage = nil
+            displayedPreview = nil
             renderedFormat = nil
         }
         let analyzer = VideoStoryboardAnalyzer()
@@ -408,22 +475,22 @@ final class StoryboardViewModel: ObservableObject {
         activeJobIndex = batchIndex
         activeJobCount = total
         activeJobName = source.lastPathComponent
-        activeGridSide = gridSide
+        activeGridSide = StoryboardGrid.boundedSide(gridSide)
         activeUsesSourceAspect = layoutAspect == .source
         activeCardAspectRatio = layoutAspect.resolvedCardAspectRatio(sourceAspectRatio: nil)
-        livePreviewSlots.reset(total: gridSide * gridSide)
+        livePreviewSlots.reset(total: activeGridSide * activeGridSide)
         progress = 0
         if videoJobs.indices.contains(jobIndex) { videoJobs[jobIndex].state = .processing }
         outputStatus = .processing(source.lastPathComponent)
     }
 
-    func appendPreview(_ frame: CapturedFrame, index: Int, total: Int) {
-        guard let image = NSImage(data: frame.jpegData) else { return }
+    func appendPreview(_ image: CGImage, aspectRatio: Double, index: Int, total: Int) {
+        guard total > 0, total <= 64 else { return }
         if activeUsesSourceAspect {
-            activeCardAspectRatio = StoryboardAspect.source.resolvedCardAspectRatio(sourceAspectRatio: frame.aspectRatio)
+            activeCardAspectRatio = StoryboardAspect.source.resolvedCardAspectRatio(sourceAspectRatio: aspectRatio)
         }
         var slots = livePreviewSlots
-        guard slots.replace(LivePreviewFrame(image: image), at: index, total: total) else { return }
+        guard slots.replace(LivePreviewFrame(image: NSImage(cgImage: image, size: .zero)), at: index, total: total) else { return }
         withAnimation(.easeOut(duration: 0.18)) {
             livePreviewSlots = slots
         }
@@ -484,6 +551,10 @@ final class StoryboardViewModel: ObservableObject {
 
     func finishBatch() {
         isProcessing = false
+        // The completed, display-sized storyboard has replaced the live grid.
+        // Release its individual decoded cards instead of keeping a second
+        // full set of media alive for the rest of the app session.
+        livePreviewSlots.reset(total: 0)
         generationTask = nil
         generationControl = nil
         isPauseRequested = false
@@ -543,6 +614,9 @@ final class StoryboardViewModel: ObservableObject {
         guard let index = completedPreviews.firstIndex(where: { $0.id == targetPreviewID }) else { return }
         let saved = completedPreviews[index].saved(at: destination)
         completedPreviews[index] = saved
+        if let displayed = displayedPreview, displayed.id == saved.id {
+            displayedPreview = (saved.id, PreparedPreviewPresentation(image: displayed.presentation.image, pendingData: nil))
+        }
         if videoJobs.indices.contains(saved.jobIndex) {
             videoJobs[saved.jobIndex].state = .completed(destination.lastPathComponent)
         }
@@ -685,31 +759,56 @@ final class StoryboardViewModel: ObservableObject {
             outputStatus = .generatedNotSaved(index: preview.jobIndex + 1, total: preview.jobCount)
         }
         if let presentation {
-            applyPreviewPresentation(presentation)
+            applyPreviewPresentation(presentation, previewID: preview.id)
             return
         }
         isLoadingPreview = true
+        let previewLoader = previewLoader
         previewLoadingTask = Task { @MainActor [weak self] in
             do {
                 let loading = Task.detached(priority: .userInitiated) {
-                    try preview.loadPresentation()
+                    try previewLoader(preview)
                 }
                 let presentation = try await loading.valuePropagatingCancellation()
-                guard let self, self.previewLoadID == loadID else { return }
-                self.applyPreviewPresentation(presentation)
+                guard !Task.isCancelled, let self, self.previewLoadID == loadID else { return }
+                self.applyPreviewPresentation(presentation, previewID: preview.id)
             } catch {
-                guard let self, self.previewLoadID == loadID else { return }
+                guard !Task.isCancelled, let self, self.previewLoadID == loadID else { return }
                 self.isLoadingPreview = false
+                self.previewLoadingTask = nil
+                self.restoreDisplayedPreview()
                 self.errorMessage = error.localizedDescription
                 self.showError = true
             }
         }
     }
 
-    private func applyPreviewPresentation(_ presentation: PreparedPreviewPresentation) {
+    private func applyPreviewPresentation(_ presentation: PreparedPreviewPresentation, previewID: UUID) {
         previewImage = NSImage(cgImage: presentation.image, size: .zero)
+        displayedPreview = (previewID, presentation)
         pendingData = presentation.pendingData
         isLoadingPreview = false
+        previewLoadingTask = nil
+    }
+
+    /// A deleted export or disconnected drive must not leave an earlier image
+    /// labelled with the failed result's filename or attached to its editor.
+    /// Resolve by stable ID because history can gain results while I/O waits.
+    private func restoreDisplayedPreview() {
+        guard let displayed = displayedPreview,
+              let index = completedPreviews.firstIndex(where: { $0.id == displayed.id }) else { return }
+        let preview = completedPreviews[index]
+        selectedPreviewIndex = index
+        pendingData = preview.savedURL == nil ? displayed.presentation.pendingData : nil
+        pendingSource = preview.sourceURL
+        pendingFormat = preview.format
+        renderedFormat = preview.format
+        lastSavedURL = preview.savedURL
+        if let savedURL = preview.savedURL {
+            outputStatus = .saved(index: preview.jobIndex + 1, total: preview.jobCount, filename: savedURL.lastPathComponent)
+        } else {
+            outputStatus = .generatedNotSaved(index: preview.jobIndex + 1, total: preview.jobCount)
+        }
     }
 
     fileprivate func acceptsGenerationUpdate(for runID: UUID?) -> Bool {
@@ -760,9 +859,13 @@ private final class UIStateBridge: @unchecked Sendable {
     }
 
     func appendPreview(_ frame: CapturedFrame, index: Int, total: Int) async {
+        guard !Task.isCancelled else { return }
+        let gridSide = max(1, Int(Double(max(1, total)).squareRoot().rounded(.up)))
+        let request = FrameThumbnailRequest(data: frame.jpegData, maximumPixelSize: max(160, 1_280 / gridSide))
+        guard let image = try? await FrameThumbnailDecoder.shared.decode(request), !Task.isCancelled else { return }
         await MainActor.run { [weak self] in
             guard let self, let model = self.model, self.acceptsCurrentGeneration(model) else { return }
-            model.appendPreview(frame, index: index, total: total)
+            model.appendPreview(image, aspectRatio: frame.aspectRatio, index: index, total: total)
         }
     }
 
@@ -788,7 +891,7 @@ private final class UIStateBridge: @unchecked Sendable {
 
     func currentLanguage() async -> AppLanguage {
         await MainActor.run { [weak self] in
-            self?.model?.language ?? .chinese
+            self?.model?.language ?? .english
         }
     }
 

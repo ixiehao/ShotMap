@@ -12,6 +12,7 @@ readonly version="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionStrin
 readonly volume_name="ShotMap $version Installer"
 readonly output_dir="$project_dir/dist"
 readonly app_path="$output_dir/$product_name.app"
+readonly symbols_path="$output_dir/$product_name.app.dSYM"
 readonly dmg_path="$output_dir/ShotMap-$version.dmg"
 readonly checksum_path="$dmg_path.sha256"
 readonly background_path="$output_dir/.dmg-install-background.png"
@@ -19,6 +20,32 @@ readonly iconset_build_dir="$output_dir/.iconset-build"
 
 validation_device=""
 validation_mount=""
+
+verify_binary() {
+  local binary_path="$1"
+  local architectures minimum_version architecture
+  architectures="$(lipo -archs "$binary_path")"
+  if [[ " $architectures " != *" arm64 "* || " $architectures " != *" x86_64 "* ]]; then
+    printf 'Expected a universal arm64 + x86_64 binary: %s\n' "$binary_path" >&2
+    return 1
+  fi
+  for architecture in arm64 x86_64; do
+    minimum_version="$(otool -arch "$architecture" -l "$binary_path" | awk '
+      /cmd LC_BUILD_VERSION/ { build_version = 1; next }
+      build_version && $1 == "minos" && !printed { print $2; printed = 1 }
+      /cmd LC_VERSION_MIN_MACOSX/ { legacy_version = 1; next }
+      legacy_version && $1 == "version" && !printed { print $2; printed = 1 }
+    ')"
+    case "$minimum_version" in
+      13.0|13.0.0) ;;
+      *)
+        printf 'Expected macOS 13.0 minimum for %s, found %s: %s\n' \
+          "$architecture" "${minimum_version:-unknown}" "$binary_path" >&2
+        return 1
+        ;;
+    esac
+  done
+}
 
 cleanup() {
   if [[ -n "$validation_device" ]]; then
@@ -33,7 +60,8 @@ cleanup() {
 trap cleanup EXIT
 
 cd "$project_dir"
-swift build -c release --arch arm64 --arch x86_64
+swift build -c release --arch arm64 --arch x86_64 \
+  -Xswiftc -strict-concurrency=complete -Xswiftc -warnings-as-errors
 
 readonly binary_dir="$(swift build -c release --arch arm64 --arch x86_64 --show-bin-path)"
 # Recreate the bundle on every run. `ditto` merges into an existing directory,
@@ -42,11 +70,15 @@ rm -rf "$app_path"
 mkdir -p "$app_path/Contents/MacOS" "$app_path/Contents/Resources/Licenses"
 
 ditto "$binary_dir/$executable_name" "$app_path/Contents/MacOS/$executable_name"
-readonly binary_architectures="$(lipo -archs "$app_path/Contents/MacOS/$executable_name")"
-if [[ " $binary_architectures " != *" arm64 "* || " $binary_architectures " != *" x86_64 "* ]]; then
-  printf 'Expected a universal arm64 + x86_64 binary.\n' >&2
-  exit 1
-fi
+# Keep matching crash symbols outside both the installable app and disposable
+# build cache. Maintainers can archive this beside the release's source commit.
+xcrun dsymutil "$app_path/Contents/MacOS/$executable_name" -o "$symbols_path"
+# Remove debugging and local symbol tables from the distributable copy only.
+# Runtime code, Swift metadata, and exported symbols remain intact. The original
+# build binary stays in .build; the dSYM survives later cache cleanup in dist.
+# Signing below covers the final, stripped bytes.
+xcrun strip -S -x "$app_path/Contents/MacOS/$executable_name"
+verify_binary "$app_path/Contents/MacOS/$executable_name"
 ditto "$binary_dir/$bundle_name" "$app_path/Contents/Resources/$bundle_name"
 ditto "Packaging/Info.plist" "$app_path/Contents/Info.plist"
 
@@ -77,6 +109,7 @@ ditto "$iconset_build_dir/AppIcon.icns" "$app_path/Contents/Resources/AppIcon.ic
 ditto "LICENSE" "$app_path/Contents/Resources/Licenses/MIT-LICENSE.txt"
 ditto "NOTICE.md" "$app_path/Contents/Resources/Licenses/NOTICE.md"
 ditto "ThirdPartyLicenses/NotoSansCJK-OFL-1.1.txt" "$app_path/Contents/Resources/Licenses/NotoSansCJK-OFL-1.1.txt"
+ditto "ThirdPartyLicenses/TablerIcons-MIT.txt" "$app_path/Contents/Resources/Licenses/TablerIcons-MIT.txt"
 
 codesign --force --sign - --timestamp=none "$app_path"
 codesign --verify --deep --strict --verbose=2 "$app_path"
@@ -124,11 +157,7 @@ if [[ -z "$validation_device" || ! -d "$validation_mount" ]]; then
 fi
 "$packaging_env/bin/python3" scripts/verify_dmg_layout.py "$validation_mount" "$product_name.app"
 codesign --verify --deep --strict --verbose=2 "$validation_mount/$product_name.app"
-readonly packaged_architectures="$(lipo -archs "$validation_mount/$product_name.app/Contents/MacOS/$executable_name")"
-if [[ " $packaged_architectures " != *" arm64 "* || " $packaged_architectures " != *" x86_64 "* ]]; then
-  printf 'Final DMG does not contain a universal arm64 + x86_64 app.\n' >&2
-  exit 1
-fi
+verify_binary "$validation_mount/$product_name.app/Contents/MacOS/$executable_name"
 
 hdiutil detach "$validation_device" -quiet
 validation_device=""

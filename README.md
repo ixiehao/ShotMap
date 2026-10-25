@@ -35,10 +35,10 @@ Start with Smart Select, then replace any frame in the Manual Frame Editor. Shot
 
 - Tries to prefer clear, varied frames and reduce black, blurry, and near-duplicate shots.
 - Lets you refine a result in the Manual Frame Editor: player, visual timeline, frame steps, and candidate gallery are all in one place.
-- Processes a visible queue and fills the storyboard preview as each result is ready.
+- Imports videos in batches, lets you pause after the current video and resume later, and fills the preview as frames are ready.
 - Offers 3 × 3 through 8 × 8 grids, aspect ratio, background colour, image width, optional timecodes, and file titles.
 - Supports MP4, MOV, MPEG, and other formats supported by macOS.
-- Works in English, 简体中文, and 日本語, with Light, Dark, or System appearance.
+- Seven interface languages: English, 简体中文, Français, Русский, Español, 日本語, and 한국어. Choose Light, Dark, or System appearance.
 
 ### See the real workflow
 
@@ -51,6 +51,10 @@ This recording shows the real app moving from a completed storyboard to the Manu
 **Most people:** open the [latest release](https://github.com/ixiehao/ShotMap/releases/latest), download the universal `.dmg`, then drag **ShotMap.app** to **Applications**.
 
 The release page includes a SHA-256 checksum for people who want to verify their download. ShotMap is not Apple-notarized yet. If macOS asks you to confirm the developer, Control-click the app in Applications, choose **Open**, then choose **Open** again. You do not need to lower system-wide security settings.
+
+### Choose your language
+
+Use the language menu in the top-right corner to switch instantly, without restarting or clearing your queue. **English is listed first**, followed by 中文, Français, Русский, Español, 日本語, and 한국어. On first launch, ShotMap matches a supported system language or falls back to English; it remembers your choice after that.
 
 ## Private by design
 

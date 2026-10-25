@@ -36,7 +36,7 @@ enum StoryboardComposer {
         )
         context.fill(CGRect(x: 0, y: 0, width: width, height: height))
 
-        for cellIndex in 0..<(side * side) {
+        for cellIndex in 0..<settings.frameCount {
             // Rendering a large 8 × 8 export can take noticeable time on an
             // Intel Mac. Let a cancelled batch stop between cards instead of
             // always completing a now-unneeded bitmap and encoder pass.
@@ -47,13 +47,18 @@ enum StoryboardComposer {
             let y = layout.margin + row * (layout.cellHeight + layout.gap)
             let rect = CGRect(x: x, y: y, width: layout.cellWidth, height: layout.cellHeight)
             let frame = result.frames[safe: cellIndex] ?? result.frames.last
-            drawCard(
-                in: context,
-                rect: rect,
-                imageData: frame?.jpegData,
-                timestamp: frame?.time,
-                showsTimestamp: settings.showTimestamps
-            )
+            // ImageIO/CoreText may create autoreleased scratch objects. Drain
+            // each card before decoding the next, even on a detached worker
+            // that has no AppKit event-loop autorelease pool.
+            autoreleasepool {
+                drawCard(
+                    in: context,
+                    rect: rect,
+                    imageData: frame?.jpegData,
+                    timestamp: frame?.time,
+                    showsTimestamp: settings.showTimestamps
+                )
+            }
         }
 
         if let title = settings.titleWatermark(for: result.sourceURL) {
@@ -66,6 +71,7 @@ enum StoryboardComposer {
         guard let data = ImageCodec.data(from: image, format: settings.format, jpegCompressionQuality: 0.94) else {
             throw StoryboardError.noExportData
         }
+        try Task.checkCancellation()
         return data
     }
 
@@ -87,7 +93,6 @@ enum StoryboardComposer {
         gridSide: Int,
         cardAspectRatio: Double
     ) -> StoryboardLayout {
-        let safeSide = max(1, gridSide)
         let safeRatio = max(1.0 / 3.0, min(3, cardAspectRatio))
         // A bitmap context needs four bytes per pixel before ImageIO creates its
         // encoded data. 64 MP keeps the working bitmap near 244 MiB rather than
@@ -102,7 +107,7 @@ enum StoryboardComposer {
         // pass can land fractionally over the budget. Re-evaluate the resulting
         // layout to keep the advertised dimension and memory limits real.
         for _ in 0..<8 {
-            let layout = StoryboardLayout(width: width, gridSide: safeSide, cardAspectRatio: safeRatio)
+            let layout = StoryboardLayout(width: width, gridSide: gridSide, cardAspectRatio: safeRatio)
             let pixelCount = Double(layout.width) * Double(layout.height)
             let scale = min(
                 1,
@@ -119,7 +124,7 @@ enum StoryboardComposer {
             guard nextWidth < width else { return layout }
             width = nextWidth
         }
-        return StoryboardLayout(width: width, gridSide: safeSide, cardAspectRatio: safeRatio)
+        return StoryboardLayout(width: width, gridSide: gridSide, cardAspectRatio: safeRatio)
     }
 
     private static func drawCard(

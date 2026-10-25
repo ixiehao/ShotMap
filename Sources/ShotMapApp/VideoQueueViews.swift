@@ -122,10 +122,10 @@ private struct QueueVideoList: View {
             ZStack(alignment: .trailing) {
                 ScrollView(.vertical, showsIndicators: false) {
                     LazyVStack(spacing: isCompact ? 8 : 10) {
-                        ForEach(Array(jobs.enumerated()), id: \.element.id) { index, job in
+                        ForEach(IndexedVideoJobs(jobs: jobs)) { entry in
                             QueueVideoRow(
-                                index: index + 1,
-                                job: job,
+                                index: entry.index + 1,
+                                job: entry.job,
                                 isLightAppearance: isLightAppearance,
                                 indexColumnWidth: indexColumnWidth
                             )
@@ -164,6 +164,25 @@ private struct QueueVideoList: View {
         }
         .onPreferenceChange(QueueContentHeightPreferenceKey.self) { contentHeight = $0 }
         .onPreferenceChange(QueueScrollOffsetPreferenceKey.self) { contentOffset = $0 }
+    }
+}
+
+/// A view over the array's existing storage. Progress updates must not allocate
+/// a second copy of a large queue just to display row numbers. The job's ID,
+/// rather than its current position, remains the SwiftUI identity.
+struct IndexedVideoJobs: RandomAccessCollection {
+    struct Element: Identifiable {
+        let index: Int
+        let job: VideoJob
+        var id: UUID { job.id }
+    }
+
+    let jobs: [VideoJob]
+    var startIndex: Int { jobs.startIndex }
+    var endIndex: Int { jobs.endIndex }
+
+    subscript(position: Int) -> Element {
+        Element(index: position, job: jobs[position])
     }
 }
 

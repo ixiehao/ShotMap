@@ -56,41 +56,32 @@ enum ManualFrameExtractor {
         analysisGenerator.requestedTimeToleranceBefore = .zero
         analysisGenerator.requestedTimeToleranceAfter = .zero
 
-        var best: (fallbackImage: CGImage, time: Double, score: Float)?
-        for sampleTime in sharpnessComparisonTimes(
-            around: centre,
-            duration: duration,
-            frameRate: frameRate
-        ) {
-            try Task.checkCancellation()
-            let candidate: (image: CGImage, time: Double, score: Float)? = autoreleasepool {
-                var actualTime = CMTime.zero
-                guard let image = try? analysisGenerator.copyCGImage(
-                    at: CMTime(seconds: sampleTime, preferredTimescale: 60_000),
-                    actualTime: &actualTime
-                ) else { return nil }
+        defer { analysisGenerator.cancelAllCGImageGeneration() }
 
-                let resolvedTime = actualTime.isValid && actualTime.seconds.isFinite
-                    ? actualTime.seconds
-                    : sampleTime
-                let metrics = PixelMetrics.make(from: image)
-                // Raw edge energy alone wrongly rewards cross-dissolves and
-                // double-image trails. Prefer concentrated edges and balanced
-                // exposure, which keeps the final export aligned with the
-                // cleaner cards shown in the manual candidate gallery.
-                let visibleDetail = visualClarityScore(metrics)
-                let distancePenalty = Float(abs(resolvedTime - centre)) * 0.0001
-                return (image, resolvedTime, visibleDetail - distancePenalty)
-            }
-            try Task.checkCancellation()
-            guard let candidate else { continue }
-            let score = candidate.score
-            if best == nil || score > best!.score {
-                best = (candidate.image, candidate.time, score)
-            }
+        // Adding one manually positioned frame still compares the complete
+        // seven-frame neighbourhood. Submit it as one async decoder batch so
+        // the cooperative worker is not blocked by seven synchronous seeks.
+        let plans = [SharpnessPlan(
+            index: 0,
+            identifier: identifier,
+            centre: centre,
+            primaryTimes: sharpnessComparisonTimes(
+                around: centre,
+                duration: duration,
+                frameRate: frameRate
+            ),
+            localRecoveryTimes: []
+        )]
+        let comparisonRequests = sharpnessRequestBatch(plans: plans, planIndices: [0]) { _, plan in
+            plan.primaryTimes
         }
-
-        guard let best else {
+        let bestByPlan = try await scoreSharpnessBatch(
+            using: analysisGenerator,
+            requestBatch: comparisonRequests,
+            plans: plans,
+            existingBest: [nil]
+        )
+        guard let best = bestByPlan[0] else {
             throw StoryboardError.noUsableFrames
         }
         try Task.checkCancellation()
@@ -103,22 +94,26 @@ enum ManualFrameExtractor {
         finalGenerator.maximumSize = CGSize(width: maximumEdge, height: maximumEdge)
         finalGenerator.requestedTimeToleranceBefore = .zero
         finalGenerator.requestedTimeToleranceAfter = .zero
-        var finalActualTime = CMTime.zero
-        let finalImage = try? finalGenerator.copyCGImage(
-            at: CMTime(seconds: best.time, preferredTimescale: 60_000),
-            actualTime: &finalActualTime
+        defer { finalGenerator.cancelAllCGImageGeneration() }
+        let finalRequests = sharpnessRequestBatch(plans: plans, planIndices: [0]) { _, _ in [best.time] }
+        let finalImages = try await decodeFinalSharpnessBatch(
+            using: finalGenerator,
+            requestBatch: finalRequests,
+            planCount: 1,
+            compressionQuality: compressionQuality
         )
         try Task.checkCancellation()
-        let image = finalImage ?? best.fallbackImage
-        guard let jpegData = ImageCodec.jpegData(from: image, compressionQuality: compressionQuality) else {
+        let final = finalImages[0]
+        guard let jpegData = final?.jpegData ?? ImageCodec.jpegData(
+            from: best.image,
+            compressionQuality: compressionQuality
+        ) else {
             throw StoryboardError.noUsableFrames
         }
-        let resolvedTime = finalImage != nil && finalActualTime.isValid && finalActualTime.seconds.isFinite
-            ? finalActualTime.seconds
-            : best.time
-        let aspectRatio = image.height > 0
-            ? Double(image.width) / Double(image.height)
-            : 16.0 / 9.0
+        let resolvedTime = final?.time ?? best.time
+        let aspectRatio = final?.aspectRatio ?? (best.image.height > 0
+            ? Double(best.image.width) / Double(best.image.height)
+            : 16.0 / 9.0)
         return CapturedFrame(id: identifier, time: resolvedTime, jpegData: jpegData, aspectRatio: aspectRatio)
     }
 
@@ -169,8 +164,7 @@ enum ManualFrameExtractor {
 
         let primaryRequests = sharpnessRequestBatch(
             plans: plans,
-            planIndices: Array(plans.indices),
-            frameRate: frameRate
+            planIndices: Array(plans.indices)
         ) { _, plan in plan.primaryTimes }
         let primaryInterval = sharpnessBatchSignposter.value.beginInterval("selectedFramePrimaryDecode")
         var bestByPlan = Array<SharpnessProbe?>(repeating: nil, count: plans.count)
@@ -182,8 +176,7 @@ enum ManualFrameExtractor {
                 using: analysisGenerator,
                 requestBatch: primaryRequests,
                 plans: plans,
-                existingBest: bestByPlan,
-                frameRate: frameRate
+                existingBest: bestByPlan
             )
         }
 
@@ -197,8 +190,7 @@ enum ManualFrameExtractor {
         }
         let localRecoveryRequests = sharpnessRequestBatch(
             plans: plans,
-            planIndices: recoveryPlanIndices,
-            frameRate: frameRate
+            planIndices: recoveryPlanIndices
         ) { _, plan in plan.localRecoveryTimes }
         if !localRecoveryRequests.requestedTimes.isEmpty {
             let recoveryInterval = sharpnessBatchSignposter.value.beginInterval("selectedFrameRecoveryDecode")
@@ -209,8 +201,7 @@ enum ManualFrameExtractor {
                 using: analysisGenerator,
                 requestBatch: localRecoveryRequests,
                 plans: plans,
-                existingBest: bestByPlan,
-                frameRate: frameRate
+                existingBest: bestByPlan
             )
         }
 
@@ -223,8 +214,7 @@ enum ManualFrameExtractor {
 
         let finalRequests = sharpnessRequestBatch(
             plans: plans,
-            planIndices: plans.indices.filter { bestByPlan[$0] != nil },
-            frameRate: frameRate
+            planIndices: plans.indices.filter { bestByPlan[$0] != nil }
         ) { index, _ in bestByPlan[index].map { [$0.time] } ?? [] }
         let finalInterval = sharpnessBatchSignposter.value.beginInterval("selectedFrameFinalDecode")
         let finalImages: [FinalSharpnessImage?]
@@ -236,7 +226,6 @@ enum ManualFrameExtractor {
                 using: finalGenerator,
                 requestBatch: finalRequests,
                 planCount: plans.count,
-                frameRate: frameRate,
                 compressionQuality: compressionQuality
             )
         }
@@ -292,11 +281,6 @@ enum ManualFrameExtractor {
         let score: Float
     }
 
-    private struct SharpnessRequestBatch {
-        let requestedTimes: [CMTime]
-        let planIndicesByRequestKey: [Int64: [Int]]
-    }
-
     private struct FinalSharpnessImage {
         let jpegData: Data
         let time: Double
@@ -306,36 +290,18 @@ enum ManualFrameExtractor {
     private static func sharpnessRequestBatch(
         plans: [SharpnessPlan],
         planIndices: [Int],
-        frameRate: Double,
         selecting times: (Int, SharpnessPlan) -> [Double]
-    ) -> SharpnessRequestBatch {
-        var requestedTimes: [CMTime] = []
-        var planIndicesByRequestKey: [Int64: [Int]] = [:]
-        var addedRequestKeys = Set<Int64>()
-
-        for index in planIndices {
-            var planRequestKeys = Set<Int64>()
-            for seconds in times(index, plans[index]) {
-                let key = candidateRequestKey(for: seconds, frameRate: frameRate)
-                guard planRequestKeys.insert(key).inserted else { continue }
-                planIndicesByRequestKey[key, default: []].append(index)
-                if addedRequestKeys.insert(key).inserted {
-                    requestedTimes.append(CMTime(seconds: seconds, preferredTimescale: 60_000))
-                }
-            }
-        }
-        return SharpnessRequestBatch(
-            requestedTimes: requestedTimes.sorted { $0.seconds < $1.seconds },
-            planIndicesByRequestKey: planIndicesByRequestKey
+    ) -> FrameImageRequestBatch {
+        FrameImageRequestBatch(
+            planTimes: planIndices.map { (index: $0, times: times($0, plans[$0])) }
         )
     }
 
     private static func scoreSharpnessBatch(
         using generator: AVAssetImageGenerator,
-        requestBatch: SharpnessRequestBatch,
+        requestBatch: FrameImageRequestBatch,
         plans: [SharpnessPlan],
-        existingBest: [SharpnessProbe?],
-        frameRate: Double
+        existingBest: [SharpnessProbe?]
     ) async throws -> [SharpnessProbe?] {
         var bestByPlan = existingBest
         if bestByPlan.count != plans.count {
@@ -346,8 +312,7 @@ enum ManualFrameExtractor {
         for await result in generator.images(for: requestBatch.requestedTimes) {
             try Task.checkCancellation()
             guard case let .success(requestedTime, image, actualTime) = result else { continue }
-            let key = candidateRequestKey(for: requestedTime.seconds, frameRate: frameRate)
-            guard let planIndices = requestBatch.planIndicesByRequestKey[key] else { continue }
+            let planIndices = requestBatch.planIndices(for: requestedTime)
             let resolvedTime = actualTime.isValid && actualTime.seconds.isFinite
                 ? actualTime.seconds
                 : requestedTime.seconds
@@ -361,19 +326,20 @@ enum ManualFrameExtractor {
                     metrics: metrics,
                     score: score - distancePenalty
                 )
-                if probe.score > (bestByPlan[index]?.score ?? -.greatestFiniteMagnitude) {
+                if probe.score > (bestByPlan[index]?.score ?? -.greatestFiniteMagnitude)
+                    || (probe.score == bestByPlan[index]?.score && probe.time < bestByPlan[index]!.time) {
                     bestByPlan[index] = probe
                 }
             }
         }
+        try Task.checkCancellation()
         return bestByPlan
     }
 
     private static func decodeFinalSharpnessBatch(
         using generator: AVAssetImageGenerator,
-        requestBatch: SharpnessRequestBatch,
+        requestBatch: FrameImageRequestBatch,
         planCount: Int,
-        frameRate: Double,
         compressionQuality: CGFloat
     ) async throws -> [FinalSharpnessImage?] {
         var results = Array<FinalSharpnessImage?>(repeating: nil, count: planCount)
@@ -382,8 +348,7 @@ enum ManualFrameExtractor {
         for await result in generator.images(for: requestBatch.requestedTimes) {
             try Task.checkCancellation()
             guard case let .success(requestedTime, image, actualTime) = result else { continue }
-            let key = candidateRequestKey(for: requestedTime.seconds, frameRate: frameRate)
-            guard let planIndices = requestBatch.planIndicesByRequestKey[key] else { continue }
+            let planIndices = requestBatch.planIndices(for: requestedTime)
             let resolvedTime = actualTime.isValid && actualTime.seconds.isFinite
                 ? actualTime.seconds
                 : requestedTime.seconds
@@ -402,6 +367,7 @@ enum ManualFrameExtractor {
                 results[index] = captured
             }
         }
+        try Task.checkCancellation()
         return results
     }
 
@@ -533,22 +499,14 @@ enum ManualFrameExtractor {
         generator.requestedTimeToleranceAfter = tolerance
         defer { generator.cancelAllCGImageGeneration() }
 
-        var idsByRequestKey: [Int64: [Int]] = [:]
-        var requestedTimes: [CMTime] = []
-        var seenRequestKeys = Set<Int64>()
-        for frame in frames {
-            let key = presentationRequestKey(for: frame.time)
-            idsByRequestKey[key, default: []].append(frame.id)
-            if seenRequestKeys.insert(key).inserted {
-                requestedTimes.append(CMTime(seconds: frame.time, preferredTimescale: 60_000))
-            }
-        }
+        let requests = FrameImageRequestBatch(
+            planTimes: frames.enumerated().map { (index: $0.offset, times: [$0.element.time]) }
+        )
 
         var capturedByID: [Int: CapturedFrame] = [:]
-        for await result in generator.images(for: requestedTimes.sorted { $0.seconds < $1.seconds }) {
+        for await result in generator.images(for: requests.requestedTimes) {
             try Task.checkCancellation()
             guard case let .success(requestedTime, image, actualTime) = result,
-                  let identifiers = idsByRequestKey[presentationRequestKey(for: requestedTime.seconds)],
                   let jpegData = ImageCodec.jpegData(from: image, compressionQuality: compressionQuality) else {
                 continue
             }
@@ -556,7 +514,8 @@ enum ManualFrameExtractor {
             let aspectRatio = image.height > 0
                 ? Double(image.width) / Double(image.height)
                 : 16.0 / 9.0
-            for identifier in identifiers {
+            for index in requests.planIndices(for: requestedTime) {
+                let identifier = frames[index].id
                 capturedByID[identifier] = CapturedFrame(
                     id: identifier,
                     time: time,
@@ -635,8 +594,7 @@ enum ManualFrameExtractor {
         let primaryBatch = candidateRequestBatch(
             plans: plans,
             planIndices: allPlanIndices,
-            selecting: \.primaryTimes,
-            frameRate: frameRate
+            selecting: \.primaryTimes
         )
         var bestByPlan = Array<CandidateProbe?>(repeating: nil, count: plans.count)
         do {
@@ -648,8 +606,7 @@ enum ManualFrameExtractor {
                 using: generator,
                 requestBatch: primaryBatch,
                 plans: plans,
-                existingBest: bestByPlan,
-                frameRate: frameRate
+                existingBest: bestByPlan
             )
         }
 
@@ -659,13 +616,12 @@ enum ManualFrameExtractor {
         let recoveryPlanIndices = plans.indices.filter {
             bestByPlan[$0].map { candidateNeedsRecovery($0.metrics) } ?? true
         }
-        var localRecoveryBatch = CandidateRequestBatch.empty
+        var localRecoveryBatch = FrameImageRequestBatch.empty
         if !recoveryPlanIndices.isEmpty {
             localRecoveryBatch = candidateRequestBatch(
                 plans: plans,
                 planIndices: recoveryPlanIndices,
-                selecting: \.localRecoveryTimes,
-                frameRate: frameRate
+                selecting: \.localRecoveryTimes
             )
             if !localRecoveryBatch.requestedTimes.isEmpty {
                 let recoveryInterval = candidateBatchSignposter.value.beginInterval("manualCandidateRecoveryDecode")
@@ -677,8 +633,7 @@ enum ManualFrameExtractor {
                         using: generator,
                         requestBatch: localRecoveryBatch,
                         plans: plans,
-                        existingBest: bestByPlan,
-                        frameRate: frameRate
+                        existingBest: bestByPlan
                     )
                 }
             }
@@ -690,13 +645,12 @@ enum ManualFrameExtractor {
         let wideRecoveryPlanIndices = plans.indices.filter {
             bestByPlan[$0].map { candidateNeedsRecovery($0.metrics) } ?? true
         }
-        var wideRecoveryBatch = CandidateRequestBatch.empty
+        var wideRecoveryBatch = FrameImageRequestBatch.empty
         if !wideRecoveryPlanIndices.isEmpty {
             wideRecoveryBatch = candidateRequestBatch(
                 plans: plans,
                 planIndices: wideRecoveryPlanIndices,
-                selecting: \.wideRecoveryTimes,
-                frameRate: frameRate
+                selecting: \.wideRecoveryTimes
             )
             if !wideRecoveryBatch.requestedTimes.isEmpty {
                 let recoveryInterval = candidateBatchSignposter.value.beginInterval("manualCandidateWideRecoveryDecode")
@@ -707,8 +661,7 @@ enum ManualFrameExtractor {
                     using: generator,
                     requestBatch: wideRecoveryBatch,
                     plans: plans,
-                    existingBest: bestByPlan,
-                    frameRate: frameRate
+                    existingBest: bestByPlan
                 )
             }
         }
@@ -761,48 +714,21 @@ enum ManualFrameExtractor {
         let score: Float
     }
 
-    private struct CandidateRequestBatch {
-        let requestedTimes: [CMTime]
-        let planIndicesByRequestKey: [Int64: [Int]]
-
-        static let empty = CandidateRequestBatch(requestedTimes: [], planIndicesByRequestKey: [:])
-    }
-
     private static func candidateRequestBatch(
         plans: [CandidatePlan],
         planIndices: [Int],
-        selecting times: KeyPath<CandidatePlan, [Double]>,
-        frameRate: Double
-    ) -> CandidateRequestBatch {
-        var requestedTimes: [CMTime] = []
-        var planIndicesByRequestKey: [Int64: [Int]] = [:]
-        var addedRequestKeys = Set<Int64>()
-
-        for index in planIndices {
-            var planRequestKeys = Set<Int64>()
-            for seconds in plans[index][keyPath: times] {
-                let key = candidateRequestKey(for: seconds, frameRate: frameRate)
-                // A request can collapse to the same source frame near a clip
-                // boundary. Like the previous per-card probe, score it once.
-                guard planRequestKeys.insert(key).inserted else { continue }
-                planIndicesByRequestKey[key, default: []].append(index)
-                if addedRequestKeys.insert(key).inserted {
-                    requestedTimes.append(CMTime(seconds: seconds, preferredTimescale: 60_000))
-                }
-            }
-        }
-        return CandidateRequestBatch(
-            requestedTimes: requestedTimes.sorted { $0.seconds < $1.seconds },
-            planIndicesByRequestKey: planIndicesByRequestKey
+        selecting times: KeyPath<CandidatePlan, [Double]>
+    ) -> FrameImageRequestBatch {
+        FrameImageRequestBatch(
+            planTimes: planIndices.map { (index: $0, times: plans[$0][keyPath: times]) }
         )
     }
 
     private static func scoreCandidateBatch(
         using generator: AVAssetImageGenerator,
-        requestBatch: CandidateRequestBatch,
+        requestBatch: FrameImageRequestBatch,
         plans: [CandidatePlan],
-        existingBest: [CandidateProbe?],
-        frameRate: Double
+        existingBest: [CandidateProbe?]
     ) async throws -> [CandidateProbe?] {
         guard !requestBatch.requestedTimes.isEmpty else { return existingBest }
         var bestByPlan = existingBest
@@ -810,8 +736,7 @@ enum ManualFrameExtractor {
         for await result in generator.images(for: requestBatch.requestedTimes) {
             try Task.checkCancellation()
             guard case let .success(requestedTime, image, actualTime) = result else { continue }
-            let requestKey = candidateRequestKey(for: requestedTime.seconds, frameRate: frameRate)
-            guard let planIndices = requestBatch.planIndicesByRequestKey[requestKey] else { continue }
+            let planIndices = requestBatch.planIndices(for: requestedTime)
 
             let resolvedTime = actualTime.isValid && actualTime.seconds.isFinite
                 ? actualTime.seconds
@@ -837,10 +762,6 @@ enum ManualFrameExtractor {
 
     private static func candidateRequestKey(for seconds: Double, frameRate: Double) -> Int64 {
         Int64((seconds * max(1, frameRate)).rounded())
-    }
-
-    private static func presentationRequestKey(for seconds: Double) -> Int64 {
-        Int64((seconds * 60_000).rounded())
     }
 
     /// A compact three-point probe is intentionally wider than the final
@@ -982,6 +903,47 @@ enum ManualFrameExtractor {
             finalRequests: finalRequests,
             fixedBaselineRequestsPerItem: 8
         )
+    }
+}
+
+/// Maps submitted decoder times back to their consumers. The key is derived
+/// from the same CMTime that AVFoundation receives, rather than a rounded
+/// nominal frame number: VFR timestamps can share a nominal frame bucket, and
+/// converting seconds to CMTime can cross a rounding boundary in that bucket.
+/// Identical requests still decode once and serve every interested plan.
+struct FrameImageRequestBatch {
+    private static let timescale: CMTimeScale = 60_000
+    let requestedTimes: [CMTime]
+    private let indicesByRequestKey: [Int64: [Int]]
+
+    static let empty = FrameImageRequestBatch(planTimes: [])
+
+    init(planTimes: [(index: Int, times: [Double])]) {
+        var requestsByKey: [Int64: CMTime] = [:]
+        var indicesByKey: [Int64: [Int]] = [:]
+        for plan in planTimes {
+            var keysForPlan = Set<Int64>()
+            for seconds in plan.times {
+                guard seconds.isFinite, seconds >= 0 else { continue }
+                let time = CMTime(seconds: seconds, preferredTimescale: Self.timescale)
+                guard let key = Self.requestKey(for: time), keysForPlan.insert(key).inserted else { continue }
+                requestsByKey[key] = time
+                indicesByKey[key, default: []].append(plan.index)
+            }
+        }
+        requestedTimes = requestsByKey.keys.sorted().compactMap { requestsByKey[$0] }
+        indicesByRequestKey = indicesByKey
+    }
+
+    func planIndices(for requestedTime: CMTime) -> [Int] {
+        guard let key = Self.requestKey(for: requestedTime) else { return [] }
+        return indicesByRequestKey[key] ?? []
+    }
+
+    private static func requestKey(for time: CMTime) -> Int64? {
+        guard time.isValid, time.seconds.isFinite else { return nil }
+        let normalized = CMTimeConvertScale(time, timescale: timescale, method: .roundHalfAwayFromZero)
+        return normalized.isValid ? normalized.value : nil
     }
 }
 
