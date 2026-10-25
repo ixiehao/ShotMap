@@ -42,6 +42,7 @@ struct VideoStoryboardAnalyzer: Sendable {
         onPreviewFrame: @escaping @Sendable (CapturedFrame, Int, Int) async -> Void
     ) async throws -> StoryboardResult {
         try Task.checkCancellation()
+        let gridSide = StoryboardGrid.boundedSide(gridSide)
         let wholePipeline = Self.pipelineSignposter.value.beginInterval("storyboardPipeline")
         defer {
             Self.pipelineSignposter.value.endInterval("storyboardPipeline", wholePipeline)

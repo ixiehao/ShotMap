@@ -39,6 +39,10 @@ enum StoryboardBackground: String, CaseIterable, Identifiable, Sendable {
 enum StoryboardGrid {
     /// Six options keep the controls to two compact rows.
     static let availableSides = Array(3...8)
+
+    static func boundedSide(_ side: Int) -> Int {
+        min(8, max(3, side))
+    }
 }
 
 /// The card ratio also determines the exported contact-sheet direction because
@@ -94,14 +98,38 @@ enum StoryboardAspect: CaseIterable, Identifiable, Sendable {
 }
 
 struct ExportSettings: Sendable {
-    var gridSide: Int = 4
+    private var storedGridSide: Int = 4
+    var gridSide: Int {
+        get { storedGridSide }
+        set { storedGridSide = StoryboardGrid.boundedSide(newValue) }
+    }
     var layoutAspect: StoryboardAspect = .source
-    var language: AppLanguage = .chinese
+    var language: AppLanguage = .english
     var format: ExportFormat = .png
     var width: Int = 2560
     var background: StoryboardBackground = .cinema
     var showTimestamps = false
     var showTitleWatermark = false
+
+    init(
+        gridSide: Int = 4,
+        layoutAspect: StoryboardAspect = .source,
+        language: AppLanguage = .english,
+        format: ExportFormat = .png,
+        width: Int = 2560,
+        background: StoryboardBackground = .cinema,
+        showTimestamps: Bool = false,
+        showTitleWatermark: Bool = false
+    ) {
+        storedGridSide = StoryboardGrid.boundedSide(gridSide)
+        self.layoutAspect = layoutAspect
+        self.language = language
+        self.format = format
+        self.width = width
+        self.background = background
+        self.showTimestamps = showTimestamps
+        self.showTitleWatermark = showTitleWatermark
+    }
 
     var frameCount: Int { gridSide * gridSide }
     var safeWidth: Int { max(1920, min(width, 12_000)) }
@@ -480,5 +508,5 @@ enum StoryboardError: LocalizedError {
         }
     }
 
-    var errorDescription: String? { message(in: .chinese) }
+    var errorDescription: String? { message(in: .english) }
 }

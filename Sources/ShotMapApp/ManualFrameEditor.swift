@@ -20,6 +20,7 @@ final class ManualFrameEditorConfiguration: ObservableObject {
 
 struct ManualFrameEditor: View {
     @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.displayScale) private var displayScale
     @ObservedObject var model: StoryboardViewModel
     let sourceURL: URL
     let selectionLimit: Int
@@ -52,7 +53,7 @@ struct ManualFrameEditor: View {
     @State private var applyPresentationTask: Task<Void, Never>?
     @State private var selectedFrameRefinementToken: UUID?
     @State private var operationError = ""
-    @State private var player: AVPlayer?
+    @StateObject private var playback = ManualVideoPlayback()
     @State private var isScrubbingPreview = false
     @State private var nextManualFrameID = 1_000_000
     @State private var previewFrameStep = 1.0 / 30.0
@@ -74,6 +75,7 @@ struct ManualFrameEditor: View {
     }
 
     private var safeDuration: Double { max(0.01, duration) }
+    private var isApplyingSelection: Bool { isRefiningSelectedFrames || model.isApplyingFrameAdjustments }
     private let manualPreviewHeight = ManualEditorLayout.mediaHeight
 
     // The editor has its own deliberately quiet, contact-sheet-like palette.
@@ -137,6 +139,8 @@ struct ManualFrameEditor: View {
             alignment: .topLeading
         )
         .accessibilityIdentifier("manual-frame-editor")
+        .environment(\.locale, language.locale)
+        .environment(\.layoutDirection, .leftToRight)
         // The observable configuration keeps this independent AppKit window in
         // sync with the parent workspace even while it remains open.
         .environment(\.colorScheme, configuration.colorScheme)
@@ -146,6 +150,14 @@ struct ManualFrameEditor: View {
             prepareVideoPreview()
         }
         .onDisappear(perform: cancelBackgroundWork)
+        .onChange(of: playback.currentTime) { time in
+            guard playback.isPlaying, !isScrubbingPreview else { return }
+            timeline.seek(to: time, duration: safeDuration)
+        }
+        .onChange(of: playback.endCount) { _ in
+            timeline.seek(to: playback.currentTime, duration: safeDuration)
+            requestPreviewFrame(at: timeline.time)
+        }
         .alert(t("alert.generation.title"), isPresented: Binding(
             get: { !operationError.isEmpty },
             set: { if !$0 { operationError = "" } }
@@ -177,7 +189,7 @@ struct ManualFrameEditor: View {
                 .padding(.horizontal, 9)
             }
             .buttonStyle(ManualFrameEditorActionButtonStyle(role: .toolbarPrimary))
-            .disabled(isLoadingCandidates || candidates.isEmpty || isSmartSelecting)
+            .disabled(isLoadingCandidates || candidates.isEmpty || isSmartSelecting || isApplyingSelection)
             .accessibilityIdentifier("manual-frame-smart-select")
 
             Button(action: regenerateCandidates) {
@@ -187,7 +199,7 @@ struct ManualFrameEditor: View {
                     .padding(.horizontal, 9)
             }
             .buttonStyle(ManualFrameEditorActionButtonStyle(role: .toolbarSecondary))
-            .disabled(isLoadingCandidates || isSmartSelecting)
+            .disabled(isLoadingCandidates || isSmartSelecting || isApplyingSelection)
             .accessibilityIdentifier("manual-frame-regenerate")
         }
         .padding(.horizontal, ManualEditorLayout.horizontalInset)
@@ -292,7 +304,7 @@ struct ManualFrameEditor: View {
                 }
         }
         .buttonStyle(.plain)
-        .disabled(!isSelected && selectedIDs.count >= selectionLimit)
+        .disabled(isSmartSelecting || isApplyingSelection || (!isSelected && selectedIDs.count >= selectionLimit))
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("\(t("editor.candidates")) · \(TimestampFormatter.string(for: candidate.time))")
         .accessibilityValue(
@@ -323,10 +335,11 @@ struct ManualFrameEditor: View {
                             .font(.system(size: 13, weight: .semibold))
                     }
                 }
-                .frame(width: 156, height: ManualEditorLayout.compactControlHeight)
+                .padding(.horizontal, 18)
+                .frame(minWidth: 156, minHeight: ManualEditorLayout.compactControlHeight)
             }
             .buttonStyle(ManualFrameEditorActionButtonStyle(role: .primary))
-            .disabled(selectedIDs.count != selectionLimit || model.isApplyingFrameAdjustments || isRefiningSelectedFrames)
+            .disabled(selectedIDs.count != selectionLimit || isLoadingCandidates || isSmartSelecting || isApplyingSelection)
             .keyboardShortcut(.return, modifiers: [.command])
             .accessibilityIdentifier("manual-frame-apply")
         }
@@ -335,24 +348,24 @@ struct ManualFrameEditor: View {
         .background(editorCanvas)
     }
 
-    @ViewBuilder
     private func frameImage(_ frame: CapturedFrame) -> some View {
-        if let image = NSImage(data: frame.jpegData) {
-            Image(nsImage: image)
-                .resizable()
-                .scaledToFit()
-                .background(.black.opacity(0.08))
-                .clipShape(RoundedRectangle(cornerRadius: 5, style: .continuous))
-        } else {
-            RoundedRectangle(cornerRadius: 5, style: .continuous)
-                .fill(.quaternary)
-                .aspectRatio(frame.aspectRatio, contentMode: .fit)
-        }
+        let aspect = StoryboardAspect.source.resolvedCardAspectRatio(sourceAspectRatio: frame.aspectRatio)
+        let pixelSize = FrameThumbnailSizing.maximumPixelSize(
+            for: CGSize(width: 340, height: 340 / aspect),
+            aspectRatio: aspect, scale: displayScale, fills: false
+        )
+        return FrameThumbnailImage(frame: frame, maximumPixelSize: pixelSize)
+            .background(.black.opacity(0.08))
+            .clipShape(RoundedRectangle(cornerRadius: 5, style: .continuous))
     }
 
     private var manualVideoPreview: some View {
         GeometryReader { proxy in
-            let monitorWidth = min(max(proxy.size.width * 0.42, 360), 548)
+            // Reserve the controls' real minimum width before sizing the
+            // monitor; the old percentage could push buttons off a 1000pt window.
+            let controlsWidth: CGFloat = 612
+            let availableMonitorWidth = proxy.size.width - ManualEditorLayout.workspaceGap - controlsWidth
+            let monitorWidth = min(548, max(280, min(proxy.size.width * 0.42, availableMonitorWidth)))
             HStack(alignment: .top, spacing: ManualEditorLayout.workspaceGap) {
                 previewMonitor
                     .frame(width: monitorWidth, height: manualPreviewHeight)
@@ -367,11 +380,11 @@ struct ManualFrameEditor: View {
 
     private var previewMonitor: some View {
         ZStack(alignment: .bottom) {
-            ManualVideoPlayerView(player: player)
+            ManualVideoPlayerView(player: playback.player)
 
             // A decoded still remains on top while scrubbing has stopped: it is
             // substantially clearer than the player surface for fast movement.
-            if let previewFrame, !isScrubbingPreview {
+            if let previewFrame, !isScrubbingPreview, !playback.isPlaying {
                 previewStill(previewFrame)
             } else if isLoadingPreviewFrame {
                 ProgressView()
@@ -380,8 +393,15 @@ struct ManualFrameEditor: View {
             }
 
             HStack(spacing: 10) {
-                ProjectIcon(symbol: .play, size: 16)
-                    .foregroundStyle(.white)
+                Button(action: toggleVideoPlayback) {
+                    ProjectIcon(symbol: playback.isPlaying ? .pause : .play, size: 16)
+                        .foregroundStyle(.white)
+                        .frame(width: 20, height: 28)
+                        .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel(t(playback.isPlaying ? "editor.pausePreview" : "editor.playPreview"))
+                .accessibilityIdentifier("manual-frame-playback")
                 Text("\(TimestampFormatter.string(for: timeline.time))  /  \(TimestampFormatter.string(for: safeDuration))")
                     .font(.system(size: 11, weight: .medium, design: .monospaced))
                     .foregroundStyle(.white)
@@ -401,15 +421,10 @@ struct ManualFrameEditor: View {
         }
     }
 
-    @ViewBuilder
     private func previewStill(_ frame: CapturedFrame) -> some View {
-        if let image = NSImage(data: frame.jpegData) {
-            Image(nsImage: image)
-                .resizable()
-                .scaledToFit()
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(Color.black)
-        }
+        FrameThumbnailImage(frame: frame, maximumPixelSize: 1_100)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(Color.black)
     }
 
     private var timelineControlDeck: some View {
@@ -418,7 +433,7 @@ struct ManualFrameEditor: View {
                 Text(t("editor.timelineHint"))
                     .font(.system(size: 13, weight: .semibold))
                     .foregroundStyle(controlText)
-                    .lineLimit(1)
+                    .lineLimit(2)
                 Spacer(minLength: 12)
                 Text("\(TimestampFormatter.string(for: timeline.time))  /  \(TimestampFormatter.string(for: safeDuration))")
                     .font(.system(size: 11, weight: .medium, design: .monospaced))
@@ -478,7 +493,7 @@ struct ManualFrameEditor: View {
                         .frame(width: 188, height: ManualEditorLayout.compactControlHeight)
                 }
                 .buttonStyle(ManualFrameEditorActionButtonStyle(role: .primary))
-                .disabled(previewFrame == nil || isLoadingPreviewFrame || isRefiningCurrentFrame)
+                .disabled((!playback.isPlaying && (previewFrame == nil || isLoadingPreviewFrame)) || isRefiningCurrentFrame || isApplyingSelection)
                 .accessibilityIdentifier("manual-frame-add-current")
             }
             .padding(.top, 14)
@@ -496,7 +511,7 @@ struct ManualFrameEditor: View {
                 ZStack(alignment: .leading) {
                     HStack(spacing: 1) {
                         ForEach(frames) { frame in
-                            filmstripImage(frame)
+                            filmstripImage(frame, size: CGSize(width: frameWidth, height: 62))
                                 .frame(width: frameWidth, height: 62)
                                 .clipped()
                         }
@@ -625,15 +640,14 @@ struct ManualFrameEditor: View {
         return max(0, min(width - markerWidth, center - markerWidth / 2))
     }
 
-    @ViewBuilder
-    private func filmstripImage(_ frame: CapturedFrame) -> some View {
-        if let image = NSImage(data: frame.jpegData) {
-            Image(nsImage: image)
-                .resizable()
-                .scaledToFill()
-        } else {
-            Color.black.opacity(0.08)
-        }
+    private func filmstripImage(_ frame: CapturedFrame, size: CGSize) -> some View {
+        FrameThumbnailImage(
+            frame: frame,
+            maximumPixelSize: FrameThumbnailSizing.maximumPixelSize(
+                for: size, aspectRatio: frame.aspectRatio, scale: displayScale, fills: true
+            ),
+            contentMode: .fill
+        )
     }
 
     private func frameNudgeButton(
@@ -645,6 +659,8 @@ struct ManualFrameEditor: View {
         } label: {
             Text(label)
                 .font(.system(size: 12, weight: .semibold))
+                .lineLimit(1)
+                .minimumScaleFactor(0.85)
                 .frame(width: 52, height: ManualEditorLayout.compactControlHeight)
                 .contentShape(RoundedRectangle(cornerRadius: StudioLayout.controlCornerRadius, style: .continuous))
         }
@@ -661,12 +677,25 @@ struct ManualFrameEditor: View {
     }
 
     private func prepareVideoPreview() {
-        guard player == nil else { return }
-        let newPlayer = AVPlayer(url: sourceURL)
-        newPlayer.actionAtItemEnd = .pause
-        player = newPlayer
+        guard !playback.hasObservers else { return }
+        playback.prepare(url: sourceURL)
         loadPreviewFrameStep()
         seekVideoPreview(to: 0)
+    }
+
+    private func toggleVideoPlayback() {
+        if playback.isPlaying {
+            let time = playback.pause()
+            timeline.seek(to: time, duration: safeDuration)
+            requestPreviewFrame(at: timeline.time)
+        } else {
+            previewCaptureTask?.cancel()
+            isLoadingPreviewFrame = false
+            previewFrame = nil
+            isScrubbingPreview = false
+            let time = playback.play(from: timeline.time, duration: safeDuration)
+            timeline.seek(to: time, duration: safeDuration)
+        }
     }
 
     private func loadPreviewFrameStep() {
@@ -691,8 +720,7 @@ struct ManualFrameEditor: View {
     private func seekVideoPreview(to time: Double) {
         let clampedTime = timeline.seek(to: time, duration: safeDuration)
         isScrubbingPreview = false
-        player?.pause()
-        player?.seek(to: CMTime(seconds: clampedTime, preferredTimescale: 600), toleranceBefore: .zero, toleranceAfter: .zero)
+        playback.seek(to: clampedTime)
         requestPreviewFrame(at: clampedTime)
     }
 
@@ -703,13 +731,7 @@ struct ManualFrameEditor: View {
         timeline.editableText = TimestampFormatter.editableString(for: clampedTime)
         previewCaptureTask?.cancel()
         isLoadingPreviewFrame = false
-        player?.pause()
-        let tolerance = CMTime(seconds: 0.16, preferredTimescale: 600)
-        player?.seek(
-            to: CMTime(seconds: clampedTime, preferredTimescale: 600),
-            toleranceBefore: tolerance,
-            toleranceAfter: tolerance
-        )
+        playback.seek(to: clampedTime, tolerance: 0.16)
     }
 
     private func finishPreviewScrub(_ isEditing: Bool) {
@@ -749,7 +771,7 @@ struct ManualFrameEditor: View {
         ) != nil
     }
 
-    private func requestPreviewFrame(at time: Double) {
+    private func requestPreviewFrame(at time: Double, addAfterCapture: Bool = false) {
         previewCaptureTask?.cancel()
         let identifier = nextManualFrameID
         nextManualFrameID += 1
@@ -763,6 +785,8 @@ struct ManualFrameEditor: View {
                 let frame = try await capture.valuePropagatingCancellation()
                 guard !Task.isCancelled else { return }
                 previewFrame = frame
+                isLoadingPreviewFrame = false
+                if addAfterCapture { addCurrentFrame() }
             } catch {
                 guard !Task.isCancelled else { return }
                 previewFrame = nil
@@ -773,7 +797,13 @@ struct ManualFrameEditor: View {
     }
 
     private func addCurrentFrame() {
-        guard let previewFrame, !isRefiningCurrentFrame else { return }
+        guard !isRefiningCurrentFrame, !isApplyingSelection else { return }
+        if playback.isPlaying {
+            timeline.seek(to: playback.pause(), duration: safeDuration)
+            requestPreviewFrame(at: timeline.time, addAfterCapture: true)
+            return
+        }
+        guard let previewFrame else { return }
         let requestedTime = previewFrame.time
         let identifier = previewFrame.id
         let source = sourceURL
@@ -805,7 +835,8 @@ struct ManualFrameEditor: View {
 
     private func applySelectedFrames() {
         let framesToApply = selectedFrames
-        guard framesToApply.count == selectionLimit, !isRefiningSelectedFrames else { return }
+        guard framesToApply.count == selectionLimit, !isLoadingCandidates,
+              !isSmartSelecting, !isApplyingSelection else { return }
         let source = sourceURL
         let editorDuration = duration
         let gridSide = max(1, Int(Double(selectionLimit).squareRoot().rounded()))
@@ -856,6 +887,7 @@ struct ManualFrameEditor: View {
     }
 
     private func toggle(_ candidate: CapturedFrame) {
+        guard !isSmartSelecting, !isApplyingSelection else { return }
         if selectedIDs.contains(candidate.id) {
             selectedIDs.remove(candidate.id)
         } else if selectedIDs.count < selectionLimit {
@@ -864,13 +896,14 @@ struct ManualFrameEditor: View {
     }
 
     private func regenerateCandidates() {
+        guard !isLoadingCandidates, !isSmartSelecting, !isApplyingSelection else { return }
         candidateBatch += 1
         selectedIDs.removeAll()
         loadCandidates()
     }
 
     private func smartSelectCandidates() {
-        guard !candidates.isEmpty, !isSmartSelecting else { return }
+        guard !candidates.isEmpty, !isLoadingCandidates, !isSmartSelecting, !isApplyingSelection else { return }
         let token = captureToken
         let source = candidates
         let targetCount = selectionLimit
@@ -949,9 +982,7 @@ struct ManualFrameEditor: View {
         selectedFrameRefinementToken = nil
         selectedFrameRefinementTask?.cancel()
         applyPresentationTask?.cancel()
-        player?.pause()
-        player?.cancelPendingPrerolls()
-        player?.currentItem?.cancelPendingSeeks()
+        playback.stopAndRelease()
     }
 }
 
@@ -964,6 +995,7 @@ private struct ManualVideoPlayerView: NSViewRepresentable {
     func makeNSView(context: Context) -> AVPlayerView {
         let view = AVPlayerView()
         view.controlsStyle = .none
+        view.allowsVideoFrameAnalysis = false
         view.videoGravity = .resizeAspect
         view.player = player
         return view

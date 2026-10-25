@@ -21,7 +21,7 @@ swift build -c release --arch arm64 --arch x86_64 -Xswiftc -strict-concurrency=c
 python3 scripts/verify_public_project.py
 ```
 
-For media-pipeline changes, manually export an authorized H.264/HEVC sample, cancel an active task, retry an output-folder error, and inspect manual frame selection. Check English, Simplified Chinese and Japanese. Synthetic/API tests do not prove that the complete decode-to-export workflow works.
+For media-pipeline changes, manually export an authorized H.264/HEVC sample, cancel an active task, retry an output-folder error, and inspect manual frame selection. Check all seven interface languages: English, Simplified Chinese, French, Russian, Spanish, Japanese, and Korean. Confirm English appears first and long labels fit the minimum window size. Synthetic/API tests do not prove that the complete decode-to-export workflow works.
 
 Website-only changes use [WEBSITE.md](WEBSITE.md); documentation-only edits need link and whitespace checks. Neither requires an application release.
 

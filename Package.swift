@@ -3,7 +3,7 @@ import PackageDescription
 
 let package = Package(
     name: "ShotMap",
-    defaultLocalization: "zh-Hans",
+    defaultLocalization: "en",
     platforms: [.macOS(.v13)],
     products: [
         .executable(name: "ShotMap", targets: ["ShotMapApp"])

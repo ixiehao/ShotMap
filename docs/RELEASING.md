@@ -21,10 +21,18 @@ Releases.
 3. The packaging script derives the filename from `Packaging/Info.plist`,
    verifies the signature and DMG, remounts the final compressed artifact,
    checks its Finder metadata and `/Applications` link, confirms both `arm64`
-   and `x86_64`, and writes a matching `.sha256` file. Also use `otool -l` to
-   confirm both slices retain a macOS 13.0 minimum deployment target.
-4. Create a release with concise English, 中文, and 日本語 notes, always in that
-   order. Shared three-language documentation and changelog entries follow the
-   same order, with English first. Attach the DMG and its SHA-256 checksum.
+   and `x86_64` retain a macOS 13.0 minimum deployment target, and writes a
+   matching `.sha256` file. Before signing, it strips debug and local symbol
+   tables from the binary copied into the app. This removes no executable code,
+   Swift runtime metadata, fonts, or supported features. Keep the matching
+   `dist/ShotMap.app.dSYM` with the matching source commit and release artifacts
+   for crash investigation. It is generated before stripping, survives build
+   cache cleanup, and is not included in the DMG. The unstripped binary also
+   remains in `.build`. Both font and Tabler Icons license texts
+   are included in the app's `Contents/Resources/Licenses` directory.
+4. Create a release with concise English, 中文, 日本語, and 한국어 notes, in that
+   order. Use the same notes in the new changelog entry. Existing three-language
+   documentation keeps English first, followed by Chinese and Japanese.
+   Attach the DMG and its SHA-256 checksum.
 5. Keep every stable release available. A rebuild of an existing stable tag is
    only appropriate for a packaging correction, and must retain clear notes.

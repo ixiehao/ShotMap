@@ -144,6 +144,8 @@ private struct HelpPanel: View {
         }
         .padding(24)
         .frame(width: 500)
+        .environment(\.locale, language.locale)
+        .environment(\.layoutDirection, .leftToRight)
     }
 }
 
@@ -305,12 +307,12 @@ private struct MainWindowRegistrationView: NSViewRepresentable {
 @main
 struct ShotMapApp: App {
     @NSApplicationDelegateAdaptor(ShotMapAppDelegate.self) private var appDelegate
-    @AppStorage("appLanguage") private var languageCode = AppLanguage.chinese.rawValue
+    @AppStorage("appLanguage") private var languageCode = AppLanguage.systemDefault.rawValue
     @StateObject private var updateChecker = UpdateChecker()
     @StateObject private var storyboardModel = StoryboardViewModel()
 
     private var language: AppLanguage {
-        AppLanguage(rawValue: languageCode) ?? .chinese
+        AppLanguage(rawValue: languageCode) ?? .english
     }
 
     var body: some Scene {

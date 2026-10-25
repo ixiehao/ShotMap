@@ -132,8 +132,8 @@ final class FrameSelectionTests: XCTestCase {
 
         // A fallback to Bundle.module could look like a valid translation on
         // an English CI host. Assert distinctive localized text explicitly.
-        XCTAssertEqual(AppLanguage.chinese.text("status.batchCompleted", 2), "批量处理完成：已保存 2 部。")
-        XCTAssertEqual(AppLanguage.japanese.text("status.batchCompleted", 2), "バッチ処理完了：2 本を保存しました。")
+        XCTAssertEqual(AppLanguage.chinese.text("status.batchCompleted", 2), "已完成 · 保存 2 张")
+        XCTAssertEqual(AppLanguage.japanese.text("status.batchCompleted", 2), "完了 · 2 枚を保存")
     }
 
     @MainActor
@@ -141,13 +141,13 @@ final class FrameSelectionTests: XCTestCase {
         let model = StoryboardViewModel()
         model.language = .chinese
         model.finishBatch()
-        XCTAssertEqual(model.previewStatus, "批量处理完成：已保存 0 部。")
+        XCTAssertEqual(model.previewStatus, "已完成 · 保存 0 张")
 
         model.language = .english
-        XCTAssertEqual(model.previewStatus, "Batch complete: 0 saved.")
+        XCTAssertEqual(model.previewStatus, "Complete · Saved: 0")
 
         model.language = .japanese
-        XCTAssertEqual(model.previewStatus, "バッチ処理完了：0 本を保存しました。")
+        XCTAssertEqual(model.previewStatus, "完了 · 0 枚を保存")
     }
 
     func testReleaseVersionComparesNumericTagsAndRejectsInvalidTags() {

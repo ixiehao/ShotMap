@@ -5,7 +5,7 @@ struct ContentView: View {
     @StateObject private var model: StoryboardViewModel
     @EnvironmentObject private var updateChecker: UpdateChecker
     @Environment(\.colorScheme) private var systemColorScheme
-    @AppStorage("appLanguage") private var languageCode = AppLanguage.chinese.rawValue
+    @AppStorage("appLanguage") private var languageCode = AppLanguage.systemDefault.rawValue
     @AppStorage("appAppearance") private var appearanceCode = AppAppearance.system.rawValue
     @State private var isLanguagePickerPresented = false
     @State private var isAppearancePickerPresented = false
@@ -25,7 +25,7 @@ struct ContentView: View {
     }
 
     private var language: AppLanguage {
-        AppLanguage(rawValue: languageCode) ?? .chinese
+        AppLanguage(rawValue: languageCode) ?? .english
     }
 
     private var appearance: AppAppearance {
@@ -140,6 +140,7 @@ struct ContentView: View {
             .background(appBackground)
         }
         .environment(\.locale, language.locale)
+        .environment(\.layoutDirection, .leftToRight)
         // `preferredColorScheme` updates the hosting window, but its semantic
         // `Color.primary` / `Color.secondary` values can briefly keep the
         // previous system appearance when a user switches this in-app setting.
@@ -153,7 +154,15 @@ struct ContentView: View {
             Task { await updateChecker.checkForUpdate() }
         }
         .onChange(of: languageCode) { newValue in
-            model.language = AppLanguage(rawValue: newValue) ?? .chinese
+            model.language = AppLanguage(rawValue: newValue) ?? .english
+        }
+        .onChange(of: model.isProcessing) { isProcessing in
+            guard !isProcessing else { return }
+            // Processing can finish while a confirmation is open. Do not let
+            // that stale dialog overwrite a completed result with Cancelled.
+            isPauseConfirmationPresented = false
+            isResumeConfirmationPresented = false
+            isCancelConfirmationPresented = false
         }
         .onDrop(of: [.fileURL], isTargeted: $model.isDropTargeted, perform: model.acceptDrop)
         .alert(t("alert.generation.title"), isPresented: $model.showError) {
@@ -174,7 +183,9 @@ struct ContentView: View {
             Text(t("alert.resumeBatch.message"))
         }
         .confirmationDialog(t("alert.cancelBatch.title"), isPresented: $isCancelConfirmationPresented, titleVisibility: .visible) {
-            Button(t("button.cancelGenerationConfirm"), role: .destructive) { model.cancelGeneration() }
+            Button(t("button.cancelGenerationConfirm"), role: .destructive) {
+                if model.isProcessing { model.cancelGeneration() }
+            }
             Button(t("button.keepGenerating"), role: .cancel) { }
         } message: {
             Text(t("alert.cancelBatch.message"))
@@ -390,6 +401,8 @@ struct ContentView: View {
             HStack(spacing: 8) {
                 Text(t("section.aspect"))
                     .font(.system(size: 11, weight: .medium))
+                    .lineLimit(1)
+                    .fixedSize(horizontal: true, vertical: false)
                 Spacer(minLength: 0)
                 HStack(spacing: 5) {
                     Spacer(minLength: 0)
@@ -402,7 +415,7 @@ struct ContentView: View {
                         .foregroundStyle(.secondary)
                 }
                 .padding(.horizontal, 9)
-                .frame(width: 154, height: StudioLayout.controlHeight)
+                .frame(minWidth: 108, maxWidth: 154, minHeight: StudioLayout.controlHeight, maxHeight: StudioLayout.controlHeight)
                 .background(inlineControlFill, in: RoundedRectangle(cornerRadius: StudioLayout.controlCornerRadius, style: .continuous))
                 .overlay { RoundedRectangle(cornerRadius: StudioLayout.controlCornerRadius, style: .continuous).strokeBorder(workspaceDivider) }
             }
@@ -460,6 +473,8 @@ struct ContentView: View {
             HStack(spacing: 8) {
                 Text(t("export.width"))
                     .font(.system(size: 11, weight: .medium))
+                    .lineLimit(1)
+                    .fixedSize(horizontal: true, vertical: false)
                 Spacer(minLength: 0)
                 HStack(spacing: 5) {
                     Spacer(minLength: 0)
@@ -473,7 +488,7 @@ struct ContentView: View {
                         .foregroundStyle(.secondary)
                 }
                 .padding(.horizontal, 9)
-                .frame(width: 154, height: StudioLayout.controlHeight)
+                .frame(minWidth: 108, maxWidth: 154, minHeight: StudioLayout.controlHeight, maxHeight: StudioLayout.controlHeight)
                 .background(inlineControlFill, in: RoundedRectangle(cornerRadius: StudioLayout.controlCornerRadius, style: .continuous))
                 .overlay { RoundedRectangle(cornerRadius: StudioLayout.controlCornerRadius, style: .continuous).strokeBorder(workspaceDivider) }
             }
@@ -629,6 +644,19 @@ struct ContentView: View {
                 .help(t("queue.addAction"))
             }
 
+            if model.isImportingVideos {
+                HStack(spacing: 7) {
+                    ProgressView().controlSize(.small)
+                    Text(t("queue.importing"))
+                        .foregroundStyle(.secondary)
+                    Spacer(minLength: 0)
+                    Button(t("button.cancel"), action: model.cancelVideoImport)
+                        .buttonStyle(.borderless)
+                }
+                .font(.system(size: 11))
+                .accessibilityIdentifier("video-import-progress")
+            }
+
             VideoBatchCard(
                 jobs: model.videoJobs,
                 language: language,
@@ -720,7 +748,7 @@ struct ContentView: View {
                             .frame(maxWidth: .infinity, minHeight: 44)
                     }
                     .buttonStyle(PrimaryButtonStyle())
-                    .disabled(!model.hasVideos || model.isBusy)
+                    .disabled(!model.hasVideos || model.isBusy || model.isImportingVideos)
                     .accessibilityLabel(t("accessibility.generate"))
                 } else {
                     GlyphLabel(title: model.processingLabel, glyph: .refreshCandidates, glyphSize: 15)
@@ -823,7 +851,7 @@ struct ContentView: View {
         HStack(spacing: 8) {
             Text(title)
                 .font(.system(size: 11, weight: .medium))
-                .lineLimit(1)
+                    .lineLimit(2)
             Spacer(minLength: 0)
             Toggle("", isOn: isOn)
                 .labelsHidden()

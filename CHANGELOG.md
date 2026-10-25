@@ -3,6 +3,36 @@
 All notable user-facing changes are recorded here. Stable releases remain
 available on the [GitHub Releases page](https://github.com/ixiehao/ShotMap/releases).
 
+## v0.2.15 — 2026-10-25
+
+### English
+
+- Now in seven languages, adding French, Russian, Spanish, and Korean. English appears first in the language menu.
+- Faster manual frame capture, smoother previews and playback, more reliable batch imports, and a smaller app.
+
+macOS 13+ · Apple Silicon and Intel.
+
+### 中文
+
+- 新增法语、俄语、西班牙语、韩语，现已支持七种语言；语言菜单中 English 排在首位。
+- 手动取帧更快，预览与播放更流畅，批量导入更稳定，应用体积更小。
+
+macOS 13+ · 支持 Apple Silicon 与 Intel。
+
+### 日本語
+
+- フランス語、ロシア語、スペイン語、韓国語を追加し、7 言語に対応。言語メニューは English を先頭に表示します。
+- 手動のフレーム取得を高速化し、プレビューと再生、動画の一括読み込みを改善。アプリ容量も削減しました。
+
+macOS 13 以降 · Apple Silicon / Intel 対応。
+
+### 한국어
+
+- 프랑스어, 러시아어, 스페인어, 한국어를 추가해 7개 언어를 지원합니다. 언어 메뉴에서 English가 맨 위에 표시됩니다.
+- 수동 프레임 추출 속도, 미리보기와 재생, 동영상 일괄 가져오기를 개선하고 앱 용량을 줄였습니다.
+
+macOS 13 이상 · Apple Silicon 및 Intel 지원.
+
 ## v0.2.14 — 2026-10-17
 
 ### English

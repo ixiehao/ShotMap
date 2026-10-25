@@ -1,8 +1,39 @@
+import AVFoundation
 import Foundation
 import XCTest
 @testable import ShotMapApp
 
 final class FrameSelectionOptimizationTests: XCTestCase {
+    func testExactRequestsDoNotMergeDistinctVFRMomentsInOneNominalFrameBucket() {
+        // These can be distinct source frames in a VFR clip even though a
+        // nominal 30fps index would round both timestamps to frame 30.
+        let requests = FrameImageRequestBatch(planTimes: [(index: 0, times: [1.001]), (index: 1, times: [1.009])])
+        XCTAssertEqual(requests.requestedTimes.count, 2)
+        XCTAssertEqual(requests.planIndices(for: requests.requestedTimes[0]), [0])
+        XCTAssertEqual(requests.planIndices(for: requests.requestedTimes[1]), [1])
+    }
+
+    func testRoundedDecoderRequestStillMapsBackToItsPlan() throws {
+        // 29.97fps half-frame boundary: conversion to the decoder timebase
+        // rounds up, whereas a key made from the original Double rounds down.
+        let seconds = 47.5 * 1_001 / 30_000 - 0.000_001
+        let requests = FrameImageRequestBatch(planTimes: [(index: 7, times: [seconds])])
+        let submitted = try XCTUnwrap(requests.requestedTimes.first)
+        XCTAssertEqual(requests.planIndices(for: submitted), [7])
+        XCTAssertEqual(requests.planIndices(for: CMTime(value: submitted.value * 2, timescale: submitted.timescale * 2)), [7])
+    }
+
+    func testSharedExactRequestsDecodeOnceWithoutDuplicatingAPlan() throws {
+        let requests = FrameImageRequestBatch(planTimes: [
+            (index: 4, times: [2, 1, 1.000_000_1]),
+            (index: 9, times: [1])
+        ])
+        XCTAssertEqual(requests.requestedTimes.map(\.seconds), [1, 2])
+        XCTAssertEqual(requests.planIndices(for: CMTime(seconds: 1, preferredTimescale: 600)), [4, 9])
+        XCTAssertEqual(requests.planIndices(for: CMTime(seconds: 2, preferredTimescale: 600)), [4])
+        XCTAssertTrue(requests.planIndices(for: .invalid).isEmpty)
+    }
+
     func testIncrementalDiversityMatchesFullRecalculation() {
         for seed in 0..<16 {
             let frames = makeFrames(seed: UInt64(seed), count: 24)

@@ -11,7 +11,7 @@ final class ManualSaveLifecycleTests: XCTestCase {
         let model = StoryboardViewModel()
         let data = try imageData(red: 0.3)
         let id = try await appendUnsaved(data, to: model, directory: directory, index: 0)
-        for language in [AppLanguage.english, .chinese, .japanese] {
+        for language in AppLanguage.allCases {
             model.language = language
             XCTAssertEqual(model.outputDescription, language.text("status.generatedNotSaved", 1, 2))
             XCTAssertEqual(model.previewStatus, model.outputDescription)
@@ -19,14 +19,14 @@ final class ManualSaveLifecycleTests: XCTestCase {
         let destination = directory.appendingPathComponent("旅行-saved.jpg")
         try data.write(to: destination, options: .atomic)
         model.completeManualSave(to: destination, targetPreviewID: id)
-        for language in [AppLanguage.english, .chinese, .japanese] {
+        for language in AppLanguage.allCases {
             model.language = language
             XCTAssertEqual(model.outputDescription, language.text("status.manualSaved", destination.lastPathComponent))
             XCTAssertEqual(model.previewStatus, model.outputDescription)
         }
         _ = try await appendUnsaved(imageData(red: 0.8), to: model, directory: directory, index: 1)
         model.showPreviousPreview()
-        for language in [AppLanguage.english, .chinese, .japanese] {
+        for language in AppLanguage.allCases {
             model.language = language
             XCTAssertEqual(model.outputDescription, language.text("status.saved", 1, 2, destination.lastPathComponent))
         }
@@ -36,13 +36,13 @@ final class ManualSaveLifecycleTests: XCTestCase {
     func testPauseAndCancellationStatusFollowLanguageChanges() {
         let model = StoryboardViewModel()
         model.markPausedAtCheckpoint()
-        for language in [AppLanguage.english, .chinese, .japanese] {
+        for language in AppLanguage.allCases {
             model.language = language
             XCTAssertEqual(model.outputDescription, language.text("status.paused"))
             XCTAssertEqual(model.previewStatus, language.text("status.paused"))
         }
         model.cancelGeneration()
-        for language in [AppLanguage.english, .chinese, .japanese] {
+        for language in AppLanguage.allCases {
             model.language = language
             XCTAssertEqual(model.outputDescription, language.text("status.cancelled"))
         }
@@ -60,7 +60,7 @@ final class ManualSaveLifecycleTests: XCTestCase {
                                     settings: ExportSettings(format: .jpeg), index: 0, total: 2)
         model.markJobFailed(index: 1, message: "fixture failure")
         model.finishBatch()
-        for language in [AppLanguage.english, .chinese, .japanese] {
+        for language in AppLanguage.allCases {
             model.language = language
             let expected = language.text("status.batchCompletedWithFailures", 1, 1)
             XCTAssertEqual(model.outputDescription, expected)
