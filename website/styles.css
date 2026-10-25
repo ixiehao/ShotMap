@@ -79,6 +79,12 @@ h1 { max-width: 550px; margin-bottom: 23px; font-size: clamp(46px, 5vw, 64px); l
 .text-link { display: inline-flex; align-items: center; gap: 6px; color: #21487e; font-size: 14px; font-weight: 690; }
 .link-icon { width: 15px; height: 15px; flex: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .compatibility { margin: 17px 0 0; color: var(--faint); font-size: 12px; }
+.app-languages { max-width: 510px; margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--line); }
+.app-languages-title { display: flex; align-items: center; gap: 8px; margin-bottom: 9px; color: var(--ink); font-size: 14px; font-weight: 700; }
+.app-languages-title .link-icon { width: 18px; height: 18px; color: var(--blue); }
+.app-language-list { display: flex; flex-wrap: wrap; gap: 5px 15px; margin: 0; padding: 0; color: var(--ink); font-size: 13px; list-style: none; }
+.app-language-list li { white-space: nowrap; }
+.app-languages-detail { margin: 9px 0 0; color: var(--muted); font-size: 12px; line-height: 1.6; }
 .demo-credit { max-width: 510px; margin: 11px 0 0; color: var(--faint); font-size: 11px; line-height: 1.6; }
 .demo-credit a { color: #285daa; font-weight: 650; text-decoration: underline; text-decoration-color: #acc8ed; text-underline-offset: 2px; }
 .product-shot { position: relative; margin: 0; overflow: hidden; border: 1px solid #d4dfec; border-radius: 16px; background: var(--surface); box-shadow: var(--shadow); line-height: 0; }

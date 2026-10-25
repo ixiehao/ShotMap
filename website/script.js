@@ -1,5 +1,6 @@
 export const siteURL = "https://ixiehao.github.io/ShotMap/";
 export const releaseURL = "https://github.com/ixiehao/ShotMap/releases/latest";
+export const appLanguageCodes = ["en", "zh-Hans", "fr", "ru", "es", "ja", "ko"];
 export const localeURLs = {
   en: siteURL,
   zh: siteURL + "zh/",
@@ -9,17 +10,19 @@ export const localeURLs = {
 export const translations = {
   en: {
     pageTitle: "ShotMap — Video Storyboard Maker for Mac",
-    pageDescription: "Make videos easier to browse. ShotMap turns each clip into a visual storyboard on your Mac, with manual frame selection and local export.",
+    pageDescription: "Turn videos into storyboards on your Mac. ShotMap supports seven interface languages, manual frame selection, and private local export. Free and open source.",
     ogTitle: "ShotMap — Your videos, easier to find",
-    ogDescription: "Turn a video into one clear storyboard. Find the clip you need without opening them one by one.",
+    ogDescription: "Find the clip you need with a clear storyboard. Seven interface languages in one free Mac app.",
     socialPreviewAlt: "ShotMap Manual Frame Editor with the video player, timeline, and candidate frames",
-    schemaFeatureList: "Visual video storyboards; manual frame selection; multi-video queue; PNG and JPG export; local processing",
-    locale: "en_US", languageLabel: "Choose language", navigationLabel: "Primary navigation", homeLabel: "ShotMap home", skipLink: "Skip to content",
+    schemaFeatureList: "Seven interface languages; visual video storyboards; manual frame selection; multi-video queue; PNG and JPG export; local processing",
+    locale: "en_US", languageLabel: "Website language", navigationLabel: "Primary navigation", homeLabel: "ShotMap home", skipLink: "Skip to content",
     navWorkflow: "How it works", navFeatures: "Features", navPrivacy: "Privacy", download: "Download",
     heroEyebrow: "VIDEO STORYBOARDS FOR MAC", heroTitle: "Your videos,<br />easier to find.",
     heroSummary: "Turn each video into one clear storyboard.",
     heroDownload: "Download for macOS", viewSource: "View on GitHub",
     compatibility: "macOS 13+ · Apple Silicon & Intel · Free and open source", productCaption: "ShotMap workspace",
+    appLanguagesTitle: "Seven languages. One download.",
+    appLanguagesDetail: "Switch languages in the app without restarting. English is listed first.",
     demoCredit: "Demo images use <a href=\"https://mango.blender.org/\" rel=\"noreferrer\">Tears of Steel</a> (2012) by Blender Foundation / Blender Institute, licensed under <a href=\"https://creativecommons.org/licenses/by/3.0/\" rel=\"license noreferrer\">CC BY 3.0</a>.",
     workflowEyebrow: "FIND THE CLIP YOU REMEMBER", workflowTitle: "Find the right video without playing them all.",
     stepOneTitle: "Add your videos", stepOneText: "Drag in one clip or several at once.",
@@ -40,22 +43,24 @@ export const translations = {
     faqTwoQuestion: "Which Macs are supported?", faqTwoAnswer: "ShotMap supports macOS 13 or later on Apple Silicon and Intel Macs.",
     faqThreeQuestion: "Can I replace a frame myself?", faqThreeAnswer: "Yes. Smart Select is a starting point; the Manual Frame Editor lets you choose the final frames.",
     faqFourQuestion: "Where are storyboard images saved?", faqFourAnswer: "By default, beside the source video. Use Save As to choose another location.",
-    ctaEyebrow: "READY TO FIND THAT CLIP?", ctaTitle: "Find the video you’re looking for.", ctaDetail: "Install ShotMap, add a video, and make your first storyboard.",
-    ctaDownload: "Download ShotMap for macOS", ctaGithub: "View on GitHub", github: "GitHub", releases: "Releases", feedback: "Feedback"
+    ctaEyebrow: "READY TO FIND THAT CLIP?", ctaTitle: "Find the video you’re looking for.", ctaDetail: "Get the latest international edition for your Mac. All seven languages are included.",
+    ctaDownload: "Download international edition", ctaGithub: "View on GitHub", github: "GitHub", releases: "Releases", feedback: "Feedback"
   },
   zh: {
     pageTitle: "ShotMap｜Mac 视频分镜图工具",
-    pageDescription: "把视频编成一张分镜图，先看画面再找视频，不必逐个打开播放。可手动调整并在 Mac 本机导出。",
+    pageDescription: "把视频编成一张分镜图，找回想看的片段。ShotMap 支持英、中、法、俄、西、日、韩七种界面语言，可手动选帧，在 Mac 本机导出，免费开源。",
     ogTitle: "ShotMap — 你的视频，不再难找。",
-    ogDescription: "把视频，编成一张分镜图。先浏览画面，再找到想看的那一段。",
+    ogDescription: "把视频，编成一张分镜图。一个免费 Mac 应用，支持七种界面语言。",
     socialPreviewAlt: "ShotMap 手动选择画面窗口，展示视频播放器、时间轴和候选画面",
-    schemaFeatureList: "视频分镜图；手动选择画面；多视频队列；PNG 和 JPG 导出；本机处理",
-    locale: "zh_CN", languageLabel: "选择语言", navigationLabel: "主导航", homeLabel: "ShotMap 首页", skipLink: "跳到正文",
+    schemaFeatureList: "七种界面语言；视频分镜图；手动选择画面；多视频队列；PNG 和 JPG 导出；本机处理",
+    locale: "zh_CN", languageLabel: "网页语言", navigationLabel: "主导航", homeLabel: "ShotMap 首页", skipLink: "跳到正文",
     navWorkflow: "使用方法", navFeatures: "功能", navPrivacy: "隐私", download: "下载",
     heroEyebrow: "Mac 视频一键拼图", heroTitle: "你的视频，<br />不再难找。",
     heroSummary: "把视频，编成一张分镜图。",
     heroDownload: "下载 macOS 版", viewSource: "在 GitHub 查看",
     compatibility: "macOS 13 及以上 · Apple Silicon 与 Intel · 免费开源", productCaption: "ShotMap 工作区",
+    appLanguagesTitle: "一个安装包，七种语言。",
+    appLanguagesDetail: "在应用内即可切换，无需重启。语言菜单中 English 排在首位。",
     demoCredit: "演示图片使用 <a href=\"https://mango.blender.org/\" rel=\"noreferrer\">《Tears of Steel》</a>（2012），由 Blender Foundation / Blender Institute 制作，采用 <a href=\"https://creativecommons.org/licenses/by/3.0/\" rel=\"license noreferrer\">CC BY 3.0</a> 许可。",
     workflowEyebrow: "找回记得的那个片段", workflowTitle: "不用挨个播放，先看画面总览。",
     stepOneTitle: "添加视频", stepOneText: "拖入一部视频，也可以一次加入多部。",
@@ -76,22 +81,24 @@ export const translations = {
     faqTwoQuestion: "支持哪些 Mac？", faqTwoAnswer: "ShotMap 支持运行 macOS 13 或更高版本的 Apple Silicon 与 Intel Mac。",
     faqThreeQuestion: "我可以自己替换某一帧吗？", faqThreeAnswer: "可以。智能选帧只是起点；手动选择画面让你决定最终画面。",
     faqFourQuestion: "分镜图保存在哪里？", faqFourAnswer: "默认保存在原视频旁边。你也可以用“另存为”选择其他位置。",
-    ctaEyebrow: "现在就找找看？", ctaTitle: "下次找视频，先看分镜图。", ctaDetail: "安装 ShotMap，添加视频，就能生成第一张分镜图。",
-    ctaDownload: "下载 ShotMap macOS 版", ctaGithub: "在 GitHub 查看", github: "GitHub", releases: "版本发布", feedback: "反馈"
+    ctaEyebrow: "现在就找找看？", ctaTitle: "下次找视频，先看分镜图。", ctaDetail: "下载适用于 Mac 的最新国际版，七种界面语言已全部包含。",
+    ctaDownload: "下载最新国际版", ctaGithub: "在 GitHub 查看", github: "GitHub", releases: "版本发布", feedback: "反馈"
   },
   ja: {
     pageTitle: "ShotMap｜Macで動画の見どころを一覧に",
-    pageDescription: "動画の見どころを一枚にまとめ、見たい場面を探しやすく。フレームの手動調整と画像の書き出しもMac上で完結します。",
+    pageDescription: "動画の見どころを一枚にまとめ、見たい場面を探しやすく。ShotMap は7言語に対応する無料のMacアプリ。コマの手動調整と画像の書き出しもMac上で完結します。",
     ogTitle: "ShotMap — 動画を、もっと見つけやすく。",
-    ogDescription: "動画の見どころを一枚の絵コンテに。一本ずつ再生せず、画面を見て探せます。",
+    ogDescription: "動画の見どころを一枚の絵コンテに。ひとつの無料Macアプリで、7言語に対応。",
     socialPreviewAlt: "ShotMap の手動フレーム選択画面。動画プレーヤー、タイムライン、候補コマを表示",
-    schemaFeatureList: "動画の絵コンテ作成；手動フレーム選択；複数動画のキュー；PNG / JPG 書き出し；Mac 上で処理",
-    locale: "ja_JP", languageLabel: "言語を選択", navigationLabel: "メインナビゲーション", homeLabel: "ShotMap ホーム", skipLink: "本文へ移動",
+    schemaFeatureList: "7言語のインターフェース；動画の絵コンテ作成；手動フレーム選択；複数動画のキュー；PNG / JPG 書き出し；Mac 上で処理",
+    locale: "ja_JP", languageLabel: "サイトの表示言語", navigationLabel: "メインナビゲーション", homeLabel: "ShotMap ホーム", skipLink: "本文へ移動",
     navWorkflow: "使い方", navFeatures: "機能", navPrivacy: "プライバシー", download: "ダウンロード",
     heroEyebrow: "Mac で動画を見つけやすく", heroTitle: "動画を、<br />見つけやすく。",
     heroSummary: "動画の見どころを一枚の絵コンテに。",
     heroDownload: "macOS 版をダウンロード", viewSource: "GitHub で見る",
     compatibility: "macOS 13 以降 · Apple Silicon / Intel 対応 · 無料・オープンソース", productCaption: "ShotMap ワークスペース",
+    appLanguagesTitle: "ひとつのアプリで、7言語。",
+    appLanguagesDetail: "アプリ内ですぐに切り替え。再起動は不要で、メニューの先頭は English です。",
     demoCredit: "デモ画像には <a href=\"https://mango.blender.org/\" rel=\"noreferrer\">Tears of Steel</a>（2012）を使用しています。Blender Foundation / Blender Institute 制作、<a href=\"https://creativecommons.org/licenses/by/3.0/\" rel=\"license noreferrer\">CC BY 3.0</a> ライセンス。",
     workflowEyebrow: "思い出の場面を探す", workflowTitle: "一本ずつ再生せず、画面で探せます。",
     stepOneTitle: "動画を追加", stepOneText: "動画を一本ずつでも、複数まとめても追加できます。",
@@ -112,8 +119,8 @@ export const translations = {
     faqTwoQuestion: "どの Mac に対応していますか？", faqTwoAnswer: "ShotMap は macOS 13 以降を搭載した Apple Silicon と Intel の Mac に対応しています。",
     faqThreeQuestion: "自分で一コマを置き換えられますか？", faqThreeAnswer: "はい。スマート選択は出発点です。手動フレーム選択で最終的なコマを決められます。",
     faqFourQuestion: "絵コンテ画像はどこに保存されますか？", faqFourAnswer: "標準では元動画のそばに保存されます。「別名で保存」を使えば別の場所も選べます。",
-    ctaEyebrow: "探していた動画を見つけませんか？", ctaTitle: "見たい動画を、画面から探す。", ctaDetail: "ShotMap をインストールし、動画を追加すれば、すぐに絵コンテを作れます。",
-    ctaDownload: "ShotMap をダウンロード", ctaGithub: "GitHub で見る", github: "GitHub", releases: "リリース", feedback: "フィードバック"
+    ctaEyebrow: "探していた動画を見つけませんか？", ctaTitle: "見たい動画を、画面から探す。", ctaDetail: "Mac 向けの最新国際版をダウンロード。7言語すべてが含まれています。",
+    ctaDownload: "最新国際版をダウンロード", ctaGithub: "GitHub で見る", github: "GitHub", releases: "リリース", feedback: "フィードバック"
   }
 };
 
@@ -157,7 +164,7 @@ function updateSchemas(copy, language) {
     offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
     author: { "@type": "Person", name: "ixiehao", url: "https://github.com/ixiehao" },
     codeRepository: "https://github.com/ixiehao/ShotMap", license: "https://opensource.org/license/mit",
-    inLanguage: language === "zh" ? "zh-CN" : language
+    inLanguage: appLanguageCodes
   };
   const questions = ["One", "Two", "Three", "Four"].map((number) => ({
     "@type": "Question",
