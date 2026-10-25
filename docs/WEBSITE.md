@@ -7,11 +7,12 @@
 - Source: [`website/`](../website/), not the repository root or `docs/`.
 - Public URL: https://ixiehao.github.io/ShotMap/
 - Deployment: [`.github/workflows/pages.yml`](../.github/workflows/pages.yml).
-- Website languages: English, Simplified Chinese and Japanese.
-- App interface languages: English, Simplified Chinese, French, Russian, Spanish,
-  Japanese and Korean, in that order. Keep this list visible near the main
-  download button and at the top of all three READMEs; website language choices
-  and app language support are separate.
+- Website, README and app languages: English, Simplified Chinese, French, Russian,
+  Spanish, Japanese and Korean. The website uses `/`, `/zh/`, `/fr/`, `/ru/`,
+  `/es/`, `/ja/` and `/ko/`; each README links to all seven translations.
+- Keep English first in language menus and documentation links, without explaining
+  that implementation detail in product copy. Keep supported languages visible
+  near the main download button and at the top of each README.
 
 `website/` is a source directory, not part of the public URL. Keep the public address and existing external links unchanged.
 
@@ -19,7 +20,7 @@
 
 Lead with the visitor's problem and the plain-language outcome. For ShotMap, the agreed message is: “Your videos, easier to find” / “你的视频，不再难找。把视频，编成一张分镜图。” / “動画を、もっと見つけやすく。” Avoid obscure technical metaphors, keyword stuffing, unsupported speed claims, and literal translations that sound unnatural. Keep product facts and user control consistent across locales; localize examples and sentence structure naturally.
 
-Show a real, current screenshot for each language. Use the captions and alt text to describe what the screenshot proves. Check image rights and keep the *Tears of Steel* attribution visible. Keep page titles, descriptions, social metadata, schema, and visible content aligned.
+Use real app screenshots and describe what they show. English, Chinese and Japanese have existing localized captures. French, Russian, Spanish and Korean currently reuse the English captures, clearly identified in localized captions and alt text; never imply those captures show a translated interface. Check image rights and keep the *Tears of Steel* attribution visible. Keep page titles, descriptions, social metadata, schema, and visible content aligned.
 
 ## Icons
 
@@ -39,12 +40,15 @@ Open <http://127.0.0.1:8000/>. Use HTTP rather than opening files directly, espe
 
 ```sh
 node --check website/script.js
+node --check website/navigation.js
 node website/build-static-pages.mjs --check
 python3 scripts/verify_public_project.py
 git diff --check
 ```
 
-The default page and `website/script.js` supply localized content. After editing them, regenerate the Chinese/Japanese static pages with `node website/build-static-pages.mjs`, review the generated changes, and run `--check` again. Do not hand-edit the generated language pages as a separate source of truth.
+`website/locales/*.js` is the copy source for all seven languages. `website/script.js` registers their URLs and assets; `website/index.html` supplies the shared layout. After editing, regenerate all seven static pages and the sitemap with `node website/build-static-pages.mjs`, review the generated changes, and run `--check` again. Do not hand-edit localized pages as separate sources of truth. Every locale must have exactly the same nonempty translation keys.
+
+Language switching uses native links in a compact, keyboard-accessible disclosure menu. It works without JavaScript. The URL determines the language, including English at the root; a saved preference must never silently translate a different locale URL. `navigation.js` only handles legacy `?lang=` links and closing the menu. Keep reciprocal hreflang links, localized canonical URLs, Open Graph locales, and sitemap entries consistent across all pages.
 
 Check images, favicon, navigation, official download destinations, desktop and narrow layouts, keyboard focus, language switching, localized metadata and download/signing wording. Check canonical and share URLs, robots and sitemap where present. A path-only migration should preserve site content.
 

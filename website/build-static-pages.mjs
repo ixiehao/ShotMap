@@ -1,12 +1,21 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { appLanguageCodes, localeURLs, localizedVisualAssets, releaseURL, siteURL, translations } from "./script.js";
+import { appLanguageCodes, htmlLanguage, languageNames, localeURLs, localizedVisualAssets, releaseURL, siteURL, translations } from "./script.js";
 
 const root = resolve(fileURLToPath(new URL(".", import.meta.url)));
 const source = await readFile(resolve(root, "index.html"), "utf8");
-const languages = ["zh", "ja"];
+const languages = Object.keys(translations);
 const checkOnly = process.argv.includes("--check");
+
+// Fail on missing or extra keys instead of publishing mixed-language copy.
+const expectedKeys = Object.keys(translations.en).sort().join("|");
+for (const language of languages) {
+  const copy = translations[language];
+  if (Object.keys(copy).sort().join("|") !== expectedKeys || Object.values(copy).some(value => typeof value !== "string" || !value.trim())) {
+    throw new Error("Incomplete translation: " + language);
+  }
+}
 
 function escapeAttribute(value) {
   return String(value).replaceAll("&", "&amp;").replaceAll('"', "&quot;");
@@ -78,20 +87,30 @@ function replaceProductVisual(html, className, visual, prefix) {
   });
 }
 
-function setButtonState(html, language) {
-  return html.replace(/(<button[^>]*data-lang="([^"]+)"[^>]*aria-pressed=")[^"]*(")/g, (match, prefix, key, suffix) => {
-    return prefix + String(key === language) + suffix;
-  });
+function languagePicker(language, prefix) {
+  const icon = name => `<svg class="link-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><use href="assets/tabler-icons.svg?v=20261026-seven-locales#${name}"></use></svg>`;
+  const links = languages.map(key => {
+    const href = key === "en" ? (prefix || "./") : prefix + key + "/";
+    return `<a href="${href}" data-lang="${key}" lang="${htmlLanguage(key)}" hreflang="${htmlLanguage(key)}"${key === language ? ' aria-current="page"' : ""}>${languageNames[key]}</a>`;
+  }).join("\n            ");
+  return `<details class="language-picker">\n          <summary aria-label="${escapeAttribute(translations[language].languageLabel + ": " + languageNames[language])}">${icon("language")}<span lang="${htmlLanguage(language)}">${languageNames[language]}</span>${icon("chevron-down")}</summary>\n          <div class="language-options">\n            ${links}\n          </div>\n        </details>`;
 }
 
 function makeStaticPage(language) {
   const copy = translations[language];
+  const prefix = language === "en" ? "" : "../";
   let html = source;
   html = replaceLocalizedContent(html, copy, "data-i18n", false);
   html = replaceLocalizedContent(html, copy, "data-i18n-html", true);
   html = replaceTagAttribute(html, "data-i18n-alt", "alt", copy);
   html = replaceTagAttribute(html, "data-i18n-aria", "aria-label", copy);
-  html = html.replace(/<html lang="[^"]+" data-default-language="[^"]+">/, "<html lang=\"" + (language === "zh" ? "zh-CN" : language) + "\" data-default-language=\"" + language + "\">");
+  html = html.replace(/<html lang="[^"]+" data-default-language="[^"]+">/, `<html lang="${htmlLanguage(language)}" data-default-language="${language}">`);
+  html = html.replace(/<details class="language-picker">[\s\S]*?<\/details>/, languagePicker(language, prefix));
+  html = html.replace(/    <link rel="alternate" hreflang="[^"]+"[^>]*\/>\n/g, "");
+  const alternates = [...languages.map(key => [htmlLanguage(key), localeURLs[key]]), ["x-default", siteURL]];
+  html = html.replace(/(<link id="canonical-url"[^>]+\/>)\n/, "$1\n" + alternates.map(([key, url]) => `    <link rel="alternate" hreflang="${key}" href="${url}" />`).join("\n") + "\n");
+  html = html.replace(/    <meta property="og:locale:alternate"[^>]*\/>\n/g, "");
+  html = html.replace(/(<meta property="og:locale"[^>]+\/>)\n/, "$1\n" + languages.filter(key => key !== language).map(key => `    <meta property="og:locale:alternate" content="${translations[key].locale}" />`).join("\n") + "\n");
   html = html.replace(/<title>[\s\S]*?<\/title>/, "<title>" + copy.pageTitle + "</title>");
   html = setMeta(html, 'name="description"', copy.pageDescription);
   html = setMeta(html, 'property="og:title"', copy.ogTitle);
@@ -109,12 +128,11 @@ function makeStaticPage(language) {
       "@type": "Question", name: copy["faq" + number + "Question"], acceptedAnswer: { "@type": "Answer", text: copy["faq" + number + "Answer"] }
     }))
   });
-  html = replaceProductVisual(html, "localized-product", localizedVisualAssets[language].product, "../");
-  html = replaceProductVisual(html, "localized-manual", localizedVisualAssets[language].manual, "../");
-  html = setButtonState(html, language);
-  html = html
+  html = replaceProductVisual(html, "localized-product", localizedVisualAssets[language].product, prefix);
+  html = replaceProductVisual(html, "localized-manual", localizedVisualAssets[language].manual, prefix);
+  if (prefix) html = html
     .replace(/href="styles\.css([^"]*)"/g, 'href="../styles.css$1"')
-    .replace(/src="script\.js([^"]*)"/g, 'src="../script.js$1"')
+    .replace(/src="navigation\.js([^"]*)"/g, 'src="../navigation.js$1"')
     .replaceAll('href="favicon.svg', 'href="../favicon.svg')
     .replaceAll('href="assets/', 'href="../assets/')
     .replaceAll('src="assets/', 'src="../assets/');
@@ -123,7 +141,7 @@ function makeStaticPage(language) {
 
 for (const language of languages) {
   const output = makeStaticPage(language);
-  const directory = resolve(root, language);
+  const directory = language === "en" ? root : resolve(root, language);
   const path = resolve(directory, "index.html");
   if (checkOnly) {
     const existing = await readFile(path, "utf8");
@@ -133,3 +151,12 @@ for (const language of languages) {
     await writeFile(path, output);
   }
 }
+
+const alternates = [...languages.map(key => [htmlLanguage(key), localeURLs[key]]), ["x-default", siteURL]];
+const sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n' + languages.map(language => `  <url>\n    <loc>${localeURLs[language]}</loc>\n${alternates.map(([key, url]) => `    <xhtml:link rel="alternate" hreflang="${key}" href="${url}" />`).join("\n")}\n  </url>`).join("\n") + '\n</urlset>\n';
+if (checkOnly) {
+  if (await readFile(resolve(root, "sitemap.xml"), "utf8") !== sitemap) throw new Error("sitemap.xml is out of date.");
+} else {
+  await writeFile(resolve(root, "sitemap.xml"), sitemap);
+}
+console.log(`Verified ${languages.length} complete website translations and sitemap.`);

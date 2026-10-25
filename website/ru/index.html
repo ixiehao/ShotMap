@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="ru" data-default-language="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Соберите кадры из видео в одно изображение на Mac. ShotMap работает на семи языках, позволяет выбирать кадры вручную и не загружает видео в интернет. Бесплатно и с открытым кодом." />
+    <meta name="author" content="ixiehao" />
+    <meta name="robots" content="index,follow,max-image-preview:large" />
+    <meta name="theme-color" content="#f7f9fc" />
+    <link id="canonical-url" rel="canonical" href="https://ixiehao.github.io/ShotMap/ru/" />
+    <link rel="alternate" hreflang="en" href="https://ixiehao.github.io/ShotMap/" />
+    <link rel="alternate" hreflang="zh-CN" href="https://ixiehao.github.io/ShotMap/zh/" />
+    <link rel="alternate" hreflang="fr" href="https://ixiehao.github.io/ShotMap/fr/" />
+    <link rel="alternate" hreflang="ru" href="https://ixiehao.github.io/ShotMap/ru/" />
+    <link rel="alternate" hreflang="es" href="https://ixiehao.github.io/ShotMap/es/" />
+    <link rel="alternate" hreflang="ja" href="https://ixiehao.github.io/ShotMap/ja/" />
+    <link rel="alternate" hreflang="ko" href="https://ixiehao.github.io/ShotMap/ko/" />
+    <link rel="alternate" hreflang="x-default" href="https://ixiehao.github.io/ShotMap/" />
+    <meta property="og:type" content="website" />
+    <meta id="og-url" property="og:url" content="https://ixiehao.github.io/ShotMap/ru/" />
+    <meta property="og:site_name" content="ShotMap" />
+    <meta property="og:locale" content="ru_RU" />
+    <meta property="og:locale:alternate" content="en_US" />
+    <meta property="og:locale:alternate" content="zh_CN" />
+    <meta property="og:locale:alternate" content="fr_FR" />
+    <meta property="og:locale:alternate" content="es_ES" />
+    <meta property="og:locale:alternate" content="ja_JP" />
+    <meta property="og:locale:alternate" content="ko_KR" />
+    <meta property="og:title" content="ShotMap — Нужное видео легче найти" />
+    <meta property="og:description" content="Просматривайте кадры на одном изображении и находите нужное видео. Бесплатное приложение для Mac на семи языках." />
+    <meta property="og:image" content="https://ixiehao.github.io/ShotMap/assets/social-preview.jpg?v=20261017" />
+    <meta property="og:image:secure_url" content="https://ixiehao.github.io/ShotMap/assets/social-preview.jpg?v=20261017" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1280" />
+    <meta property="og:image:height" content="640" />
+    <meta id="og-image-alt" property="og:image:alt" content="Ручной выбор кадров в ShotMap: плеер, временная шкала и варианты кадров" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="ShotMap — Нужное видео легче найти" />
+    <meta name="twitter:description" content="Просматривайте кадры на одном изображении и находите нужное видео. Бесплатное приложение для Mac на семи языках." />
+    <meta name="twitter:image" content="https://ixiehao.github.io/ShotMap/assets/social-preview.jpg?v=20261017" />
+    <meta id="twitter-image-alt" name="twitter:image:alt" content="Ручной выбор кадров в ShotMap: плеер, временная шкала и варианты кадров" />
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg?v=20261017" />
+    <link rel="icon" type="image/png" sizes="256x256" href="../assets/app-icon.png?v=20261017" />
+    <link rel="apple-touch-icon" href="../assets/app-icon.png?v=20261017" />
+    <link rel="stylesheet" href="../styles.css?v=20261026-seven-locales" />
+    <script id="software-schema" type="application/ld+json">
+      {"@context":"https://schema.org","@type":"SoftwareApplication","@id":"https://ixiehao.github.io/ShotMap/#software","name":"ShotMap","applicationCategory":"MultimediaApplication","operatingSystem":"macOS 13 or later","url":"https://ixiehao.github.io/ShotMap/ru/","description":"Соберите кадры из видео в одно изображение на Mac. ShotMap работает на семи языках, позволяет выбирать кадры вручную и не загружает видео в интернет. Бесплатно и с открытым кодом.","downloadUrl":"https://github.com/ixiehao/ShotMap/releases/latest","screenshot":"https://ixiehao.github.io/ShotMap/assets/workspace-en.webp?v=20261017","featureList":"Семь языков интерфейса; раскадровки видео; ручной выбор кадров; очередь видео; экспорт PNG и JPG; обработка на Mac","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Person","name":"ixiehao","url":"https://github.com/ixiehao"},"codeRepository":"https://github.com/ixiehao/ShotMap","license":"https://opensource.org/license/mit","inLanguage":["en","zh-Hans","fr","ru","es","ja","ko"]}
+    </script>
+    <script id="faq-schema" type="application/ld+json">
+      {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Нужен ли аккаунт?","acceptedAnswer":{"@type":"Answer","text":"Нет. Скачайте приложение и сразу создавайте раскадровки на Mac."}},{"@type":"Question","name":"Какие Mac поддерживаются?","acceptedAnswer":{"@type":"Answer","text":"ShotMap работает на Mac с Apple Silicon или Intel и macOS 13 или новее."}},{"@type":"Question","name":"Можно заменить кадр вручную?","acceptedAnswer":{"@type":"Answer","text":"Да. «Умный выбор» предлагает начальный набор, а окончательные кадры вы выбираете сами."}},{"@type":"Question","name":"Куда сохраняются изображения?","acceptedAnswer":{"@type":"Answer","text":"По умолчанию — в папку с исходным видео. Через «Сохранить как» можно выбрать другое место."}}]}
+    </script>
+    <title>ShotMap — Кадры из видео в одном изображении на Mac</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main" data-i18n="skipLink">Перейти к содержимому</a>
+
+    <header class="site-header" id="top">
+      <a class="brand" href="#top" aria-label="ShotMap — главная" data-i18n-aria="homeLabel">
+        <img class="brand-mark" src="../assets/app-icon.png?v=20261017" width="36" height="36" alt="" />
+        <span>ShotMap</span>
+      </a>
+      <nav aria-label="Основная навигация" data-i18n-aria="navigationLabel">
+        <a href="#how-it-works" data-i18n="navWorkflow">Как пользоваться</a>
+        <a href="#features" data-i18n="navFeatures">Возможности</a>
+        <a href="#privacy" data-i18n="navPrivacy">Конфиденциальность</a>
+      </nav>
+      <div class="header-actions">
+        <details class="language-picker">
+          <summary aria-label="Язык сайта: Русский"><svg class="link-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><use href="../assets/tabler-icons.svg?v=20261026-seven-locales#language"></use></svg><span lang="ru">Русский</span><svg class="link-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><use href="../assets/tabler-icons.svg?v=20261026-seven-locales#chevron-down"></use></svg></summary>
+          <div class="language-options">
+            <a href="../" data-lang="en" lang="en" hreflang="en">English</a>
+            <a href="../zh/" data-lang="zh" lang="zh-CN" hreflang="zh-CN">简体中文</a>
+            <a href="../fr/" data-lang="fr" lang="fr" hreflang="fr">Français</a>
+            <a href="../ru/" data-lang="ru" lang="ru" hreflang="ru" aria-current="page">Русский</a>
+            <a href="../es/" data-lang="es" lang="es" hreflang="es">Español</a>
+            <a href="../ja/" data-lang="ja" lang="ja" hreflang="ja">日本語</a>
+            <a href="../ko/" data-lang="ko" lang="ko" hreflang="ko">한국어</a>
+          </div>
+        </details>
+        <a class="button button-small" href="https://github.com/ixiehao/ShotMap/releases/latest"><span data-i18n="download">Скачать</span><svg class="link-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><use href="../assets/tabler-icons.svg?v=20261026-seven-locales#download"></use></svg></a>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="hero shell" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow" data-i18n="heroEyebrow">КАДРЫ ИЗ ВИДЕО НА ВАШЕМ MAC</p>
+          <h1 id="hero-title" data-i18n-html="heroTitle">Нужное видео<br />легче найти.</h1>
+          <p class="hero-summary" data-i18n="heroSummary">Соберите кадры из видео в одно изображение.</p>
+          <div class="hero-actions">
+            <a class="button" href="https://github.com/ixiehao/ShotMap/releases/latest"><span data-i18n="heroDownload">Скачать для macOS</span><svg class="link-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><use href="../assets/tabler-icons.svg?v=20261026-seven-locales#download"></use></svg></a>
+            <a class="text-link" href="https://github.com/ixiehao/ShotMap"><span data-i18n="viewSource">Открыть на GitHub</span><svg class="link-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><use href="../assets/tabler-icons.svg?v=20261026-seven-locales#brand-github"></use></svg></a>
+          </div>
+          <p class="compatibility" data-i18n="compatibility">macOS 13+ · Apple Silicon и Intel · Бесплатно, с открытым кодом</p>
+          <div class="app-languages">
+            <p class="app-languages-title" id="app-languages-title"><svg class="link-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><use href="../assets/tabler-icons.svg?v=20261026-seven-locales#language"></use></svg><span data-i18n="appLanguagesTitle">Семь языков в одном приложении.</span></p>
+            <ul class="app-language-list" aria-labelledby="app-languages-title">
+              <li lang="en">English</li><li lang="zh-Hans">简体中文</li><li lang="fr">Français</li><li lang="ru">Русский</li><li lang="es">Español</li><li lang="ja">日本語</li><li lang="ko">한국어</li>
+            </ul>
+            <p class="app-languages-detail" data-i18n="appLanguagesDetail">Меняйте язык прямо в приложении, без перезапуска.</p>
+          </div>
+          <p class="demo-credit" data-i18n-html="demoCredit">В примерах использован фильм <a href="https://mango.blender.org/" rel="noreferrer">Tears of Steel</a> (2012), Blender Foundation / Blender Institute. Лицензия: <a href="https://creativecommons.org/licenses/by/3.0/" rel="license noreferrer">CC BY 3.0</a>.</p>
+        </div>
+        <figure class="product-shot hero-shot">
+          <img class="localized-product" src="../assets/workspace-en.webp?v=20261017" width="1400" height="995" fetchpriority="high" decoding="async" alt="ShotMap с английским интерфейсом: очередь видео, просмотр раскадровки и настройки" />
+          <figcaption data-i18n="productCaption">Рабочее окно ShotMap · Интерфейс на английском</figcaption>
+        </figure>
+      </section>
+
+      <section id="how-it-works" class="section shell workflow" aria-labelledby="workflow-title">
+        <div class="section-heading">
+          <p class="eyebrow" data-i18n="workflowEyebrow">НАЙДИТЕ ЗНАКОМЫЙ МОМЕНТ</p>
+          <h2 id="workflow-title" data-i18n="workflowTitle">Не нужно смотреть все видео по очереди.</h2>
+        </div>
+        <div class="workflow-layout">
+          <ol class="steps">
+            <li><h3 data-i18n="stepOneTitle">Добавьте видео</h3><p data-i18n="stepOneText">Перетащите один файл или сразу несколько.</p></li>
+            <li><h3 data-i18n="stepTwoTitle">Проверьте кадры</h3><p data-i18n="stepTwoText">ShotMap подберёт кадры. Любой из них можно заменить вручную.</p></li>
+            <li><h3 data-i18n="stepThreeTitle">Сохраните изображение</h3><p data-i18n="stepThreeText">Экспортируйте PNG или JPG. При желании добавьте таймкоды.</p></li>
+          </ol>
+          <figure class="product-shot overview-shot">
+            <img src="../assets/tears-of-steel-storyboard.webp?v=20261017" width="1400" height="634" loading="lazy" decoding="async" alt="Раскадровка фильма Tears of Steel, созданная в ShotMap" data-i18n-alt="overviewAlt" />
+            <figcaption data-i18n="overviewCaption">Сцены из видео — на одном изображении</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="section shell precision" aria-labelledby="precision-title">
+        <div class="precision-copy">
+          <p class="eyebrow" data-i18n="precisionEyebrow">ВЫБОР ЗА ВАМИ</p>
+          <h2 id="precision-title" data-i18n="precisionTitle">Нужен другой момент? Выберите его сами.</h2>
+          <p data-i18n="precisionText">«Умный выбор» предложит кадры для начала. Откройте «Выбрать кадры вручную» и найдите нужный момент с помощью временной шкалы, покадровых кнопок или таймкода.</p>
+          <ul class="check-list">
+            <li><svg class="check-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/><path d="M9 12l2 2l4 -4"/></svg><span data-i18n="precisionPointOne">Просматривайте кадры на временной шкале</span></li>
+            <li><svg class="check-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/><path d="M9 12l2 2l4 -4"/></svg><span data-i18n="precisionPointTwo">Перемещайтесь на 1 или 5 кадров за раз</span></li>
+            <li><svg class="check-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/><path d="M9 12l2 2l4 -4"/></svg><span data-i18n="precisionPointThree">Кадры идут в том же порядке, что и в видео</span></li>
+          </ul>
+        </div>
+        <figure class="product-shot manual-shot">
+          <img class="localized-manual" src="../assets/manual-en.webp?v=20261017" width="1280" height="828" loading="lazy" decoding="async" alt="Окно ручного выбора кадров ShotMap с английским интерфейсом: плеер, временная шкала и галерея кадров" />
+          <figcaption data-i18n="manualCaption">Ручной выбор кадров · Интерфейс на английском</figcaption>
+        </figure>
+      </section>
+
+      <section id="features" class="section shell capabilities" aria-labelledby="capabilities-title">
+        <div class="section-heading compact-heading">
+          <p class="eyebrow" data-i18n="capabilitiesEyebrow">НАСТРОЙТЕ РАСКАДРОВКУ ПОД СЕБЯ</p>
+          <h2 id="capabilities-title" data-i18n="capabilitiesTitle">Нужные настройки без лишних сложностей.</h2>
+        </div>
+        <div class="capability-grid">
+          <article><h3 data-i18n="featureOneTitle">Размер сетки</h3><p data-i18n="featureOneText">Выберите от 3 × 3 до 8 × 8 — в зависимости от того, сколько кадров нужно.</p></article>
+          <article><h3 data-i18n="featureTwoTitle">Имя файла на изображении</h3><p data-i18n="featureTwoText">Добавьте имя файла и таймкоды, чтобы позже быстро найти нужное видео.</p></article>
+          <article><h3 data-i18n="featureThreeTitle">Оформление под ваше видео</h3><p data-i18n="featureThreeText">Сохраните пропорции видео и выберите цвет фона.</p></article>
+          <article><h3 data-i18n="featureFourTitle">Обработка нескольких видео</h3><p data-i18n="featureFourText">Добавляйте видео, следите за обработкой и просматривайте готовые раскадровки в одном окне.</p></article>
+        </div>
+      </section>
+
+      <section id="privacy" class="section privacy-section" aria-labelledby="privacy-title">
+        <div class="shell privacy-card">
+          <div><p class="eyebrow inverse" data-i18n="privacyEyebrow">ВАШИ ВИДЕО ОСТАЮТСЯ У ВАС</p><h2 id="privacy-title" data-i18n="privacyTitle">Видео остаются на вашем Mac.</h2></div>
+          <p data-i18n="privacyText">Извлечение кадров и экспорт изображений выполняются на Mac. Видео не загружаются в интернет. Необязательная проверка обновлений получает только общедоступные сведения о релизах с GitHub.</p>
+        </div>
+      </section>
+
+      <section class="section shell faq-section" aria-labelledby="faq-title">
+        <div class="section-heading compact-heading"><p class="eyebrow" data-i18n="faqEyebrow">ПЕРЕД УСТАНОВКОЙ</p><h2 id="faq-title" data-i18n="faqTitle">Ответы на частые вопросы.</h2></div>
+        <div class="faq-grid">
+          <article><h3 data-i18n="faqOneQuestion">Нужен ли аккаунт?</h3><p data-i18n="faqOneAnswer">Нет. Скачайте приложение и сразу создавайте раскадровки на Mac.</p></article>
+          <article><h3 data-i18n="faqTwoQuestion">Какие Mac поддерживаются?</h3><p data-i18n="faqTwoAnswer">ShotMap работает на Mac с Apple Silicon или Intel и macOS 13 или новее.</p></article>
+          <article><h3 data-i18n="faqThreeQuestion">Можно заменить кадр вручную?</h3><p data-i18n="faqThreeAnswer">Да. «Умный выбор» предлагает начальный набор, а окончательные кадры вы выбираете сами.</p></article>
+          <article><h3 data-i18n="faqFourQuestion">Куда сохраняются изображения?</h3><p data-i18n="faqFourAnswer">По умолчанию — в папку с исходным видео. Через «Сохранить как» можно выбрать другое место.</p></article>
+        </div>
+      </section>
+
+      <section class="final-cta shell" aria-labelledby="cta-title">
+        <p class="eyebrow" data-i18n="ctaEyebrow">ПОРА НАЙТИ ТОТ САМЫЙ РОЛИК</p>
+        <h2 id="cta-title" data-i18n="ctaTitle">Найдите видео, которое искали.</h2>
+        <p class="cta-detail" data-i18n="ctaDetail">Скачайте последнюю международную версию для Mac. Все семь языков уже включены.</p>
+        <div class="cta-actions">
+          <a class="button" href="https://github.com/ixiehao/ShotMap/releases/latest"><span data-i18n="ctaDownload">Скачать международную версию</span><svg class="link-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><use href="../assets/tabler-icons.svg?v=20261026-seven-locales#download"></use></svg></a>
+          <a class="button button-secondary" href="https://github.com/ixiehao/ShotMap"><span data-i18n="ctaGithub">Открыть на GitHub</span><svg class="link-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><use href="../assets/tabler-icons.svg?v=20261026-seven-locales#brand-github"></use></svg></a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="shell">
+      <span>© 2026 ixiehao</span><span>ShotMap · MIT</span>
+      <a href="https://github.com/ixiehao/ShotMap" data-i18n="github">GitHub</a>
+      <a href="https://github.com/ixiehao/ShotMap/releases/latest" data-i18n="releases">Релизы</a>
+      <a href="https://github.com/ixiehao/ShotMap/issues/new/choose" data-i18n="feedback">Обратная связь</a>
+    </footer>
+    <script type="module" src="../navigation.js?v=20261026-seven-locales"></script>
+  </body>
+</html>

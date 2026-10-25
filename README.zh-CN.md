@@ -5,7 +5,7 @@
 [![macOS 13+](https://img.shields.io/badge/macOS-13%2B-111827?logo=apple)](https://github.com/ixiehao/ShotMap/releases/latest)
 [![许可证：MIT](https://img.shields.io/badge/license-MIT-059669)](LICENSE)
 
-[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
+[English](README.md) · [简体中文](README.zh-CN.md) · [Français](README.fr.md) · [Русский](README.ru.md) · [Español](README.es.md) · [日本語](README.ja.md) · [한국어](README.ko.md)
 
 **应用界面支持七种语言：**English · 简体中文 · Français · Русский · Español · 日本語 · 한국어。一个安装包，全部包含。
 
@@ -56,7 +56,7 @@
 
 ### 选择界面语言
 
-点击右上角的语言菜单即可切换，无需重启，也不会清空队列。**English 排在首位**，之后依次是中文、Français、Русский、Español、日本語、한국어。首次启动会匹配支持的系统语言，否则使用英语；手动选择后会记住你的设置。
+点击右上角的语言菜单即可切换，无需重启，也不会清空队列。首次启动会匹配支持的系统语言，否则使用英语；手动选择后会记住你的设置。
 
 ## 隐私优先
 
@@ -64,7 +64,7 @@
 
 ## 帮助、反馈与社区
 
-- **第一次使用？**访问[官网](https://ixiehao.github.io/ShotMap/)查看简洁的产品介绍与真实运行截图。
+- **第一次使用？**访问[官网](https://ixiehao.github.io/ShotMap/zh/)查看简洁的产品介绍与真实运行截图。
 - **需要帮助、发现问题或有功能建议？**请先看[支持与反馈](SUPPORT.md)，可复现的问题和明确的功能建议请使用 [Issue 表单](https://github.com/ixiehao/ShotMap/issues/new/choose)。
 - **想提问或分享经验？**欢迎加入 [GitHub Discussions](https://github.com/ixiehao/ShotMap/discussions)。
 - **想参与开发？**请阅读 [CONTRIBUTING.md](CONTRIBUTING.md)。安全问题请通过私密的[漏洞报告通道](https://github.com/ixiehao/ShotMap/security/advisories/new)提交。
