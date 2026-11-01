@@ -67,7 +67,7 @@ export default {
   "ctaEyebrow": "现在就找找看？",
   "ctaTitle": "下次找视频，先看分镜图。",
   "ctaDetail": "下载适用于 Mac 的最新国际版，七种界面语言已全部包含。",
-  "ctaDownload": "下载最新国际版",
+  "ctaDownload": "下载 v{version}",
   "ctaGithub": "在 GitHub 查看",
   "github": "GitHub",
   "releases": "版本发布",

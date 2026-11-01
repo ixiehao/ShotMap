@@ -3,6 +3,40 @@
 All notable user-facing changes are recorded here. Stable releases remain
 available on the [GitHub Releases page](https://github.com/ixiehao/ShotMap/releases).
 
+## v0.2.17 — 2026-11-01
+
+### English
+
+- New workspace, frame editor, and logo.
+- Timeline markers; Smart Select keeps your manual choices.
+- Improved frame selection; exports use your latest settings.
+
+macOS 13+ · Apple Silicon and Intel.
+
+### 中文
+
+- 更新工作区、手动选帧界面与 Logo。
+- 新增时间轴标记，智能选帧保留手动选择。
+- 改进取帧，导出使用最新设置。
+
+macOS 13+ · 支持 Apple Silicon 与 Intel。
+
+### 日本語
+
+- ワークスペース、手動コマ選択画面、ロゴを刷新。
+- 選択位置をタイムラインに表示。自動選択でも手動の選択を保持。
+- コマ選択を改善し、最新の設定で書き出し。
+
+macOS 13 以降 · Apple Silicon / Intel 対応。
+
+### 한국어
+
+- 작업 화면, 수동 프레임 선택 화면과 로고를 새롭게 바꿨습니다.
+- 타임라인에 선택 위치를 표시하고, 자동 선택 시 수동 선택을 유지합니다.
+- 프레임 선택을 개선하고, 최신 설정으로 내보냅니다.
+
+macOS 13 이상 · Apple Silicon 및 Intel 지원.
+
 ## v0.2.16 — 2026-10-26
 
 ### English

@@ -21,6 +21,7 @@
 "export.width" = "Width";
 "export.width.value" = "%d px";
 "export.background" = "Canvas";
+"background.white" = "Pure white";
 "background.cinema" = "Cinema black";
 "background.ivory" = "Warm ivory";
 "background.navy" = "Deep navy";
@@ -52,6 +53,7 @@
 "button.openSaved" = "Show in Finder";
 "button.openSaved.hint" = "Show the most recently created image in Finder";
 "button.adjustFrames" = "Select frames manually";
+"button.adjustFrames.short" = "Select frames";
 "button.adjustFrames.hint" = "Choose frames, then apply and save the storyboard";
 "button.previousResult" = "Show previous storyboard";
 "button.nextResult" = "Show next storyboard";
@@ -154,6 +156,12 @@
 "editor.nextFrame" = "Next frame";
 "editor.forwardTenFrames" = "Forward 10 frames";
 "editor.backFiveFrames" = "-5 fr";
+"editor.frameUnit.short" = "fr";
+"editor.selectedFrameMarker" = "Selected frame %d · %@";
+"editor.selectedFrameMarkers" = "Selected frames %d–%d";
+"editor.manuallyAdded.short" = "Manual";
+"editor.manuallyAdded" = "Manually added frame";
+"editor.smartFill" = "Keep selected frames and fill the remaining slots.";
 "editor.backOneFrame" = "-1 fr";
 "editor.forwardOneFrame" = "+1 fr";
 "editor.forwardFiveFrames" = "+5 fr";
@@ -173,3 +181,16 @@
 "transcoding.step.two" = "Export as MP4 or MOV with H.264 or H.265 video.";
 "transcoding.step.three" = "Drop the converted files into ShotMap and create the storyboard again.";
 "transcoding.tip" = "Retrying cannot fix an unsupported format. Save converted videos as new files to keep the originals. Completed storyboards are kept.";
+
+"error.insufficientUsableFrames" = "Only %d usable frames found; %d required. Try a smaller grid or another video.";
+
+"workspace.toggleQueue" = "Show or Hide Video Queue";
+"workspace.toggleInspector" = "Show or Hide Storyboard Settings";
+"workspace.focusPreview" = "Focus on Preview";
+"workspace.restorePanels" = "Restore Panels";
+
+"editor.timeline" = "Timeline";
+"editor.addCurrentFrame.short" = "Add frame";
+"editor.smartSelect.short" = "Smart select";
+"editor.regenerate.short" = "New frames";
+"editor.apply.short" = "Save";

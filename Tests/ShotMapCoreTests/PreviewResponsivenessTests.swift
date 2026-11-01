@@ -99,6 +99,22 @@ final class PreviewResponsivenessTests: XCTestCase {
     }
 
     @MainActor
+    func testBeforeTheFirstPreviewShowsTheActualAnalysisStageInsteadOfZeroCaptured() {
+        let model = StoryboardViewModel()
+        model.language = .english
+        model.isProcessing = true
+        model.beginJob(source: URL(fileURLWithPath: "/tmp/object.mov"), jobIndex: 0,
+                       batchIndex: 0, total: 1, gridSide: 3, layoutAspect: .source)
+        model.progress = 0.1
+        XCTAssertEqual(model.previewStatus, "object.mov · " + model.language.text("processing.fast", ""))
+        model.progress = 0.5
+        XCTAssertEqual(model.previewStatus, "object.mov · " + model.language.text("processing.people", ""))
+        model.progress = 0.8
+        XCTAssertEqual(model.previewStatus, "object.mov · " + model.language.text("processing.assembling", ""))
+        XCTAssertFalse(model.previewStatus.contains("0/9"))
+    }
+
+    @MainActor
     func testFinishingBatchReleasesLiveCardsAndKeepsCompletedPresentation() async throws {
         let directory = try temporaryDirectory()
         defer { try? FileManager.default.removeItem(at: directory) }
@@ -194,6 +210,7 @@ final class PreviewResponsivenessTests: XCTestCase {
         XCTAssertFalse(model.isLoadingPreview)
     }
 
+    @MainActor
     private func waitForGate(_ gate: ThumbnailDecodeGate) async throws {
         let deadline = ContinuousClock.now + .seconds(3)
         while !(await gate.isWaiting), ContinuousClock.now < deadline {

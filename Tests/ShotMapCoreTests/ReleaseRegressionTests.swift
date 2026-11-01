@@ -179,24 +179,25 @@ final class ReleaseRegressionTests: XCTestCase {
     }
 
     @MainActor
-    func testManualEditKeepsTheTargetResultsGridFormatAndDimensions() async throws {
+    func testManualEditUsesTheCurrentGridFormatAndDimensions() async throws {
         let directory = try temporaryDirectory()
         defer { try? FileManager.default.removeItem(at: directory) }
         let model = StoryboardViewModel()
         let source = directory.appendingPathComponent("original.mp4")
         model.addVideos([source])
         let data = try smallImageData()
-        let frames = (0..<9).map { CapturedFrame(id: $0, time: Double($0), jpegData: data) }
-        let result = StoryboardResult(frames: frames, sourceURL: source, duration: 10)
+        let frames = (0..<16).map { CapturedFrame(id: $0, time: Double($0), jpegData: data) }
+        let result = StoryboardResult(frames: Array(frames.prefix(9)), sourceURL: source, duration: 20)
         let originalSettings = ExportSettings(gridSide: 3, layoutAspect: .portrait, format: .jpeg, width: 1920, showTimestamps: true)
         await model.completeJob(data: data, result: result, settings: originalSettings, index: 0, total: 1)
         let id = try XCTUnwrap(model.completedPreviews.first?.id)
-        model.gridSide = 8
+        model.gridSide = 4
         model.format = .png
-        model.width = 5120
+        model.width = 2560
         model.layoutAspect = .landscape
         model.showTimestamps = false
-        model.applyManuallySelectedFrames(frames, targetPreviewID: id, sourceURL: source, duration: 10)
+        model.applyManuallySelectedFrames(frames, targetPreviewID: id, sourceURL: source, duration: 20)
+        XCTAssertTrue(model.isApplyingFrameAdjustments)
         let deadline = Date().addingTimeInterval(10)
         while model.isApplyingFrameAdjustments && Date() < deadline {
             try await Task.sleep(nanoseconds: 20_000_000)
@@ -204,14 +205,16 @@ final class ReleaseRegressionTests: XCTestCase {
         XCTAssertFalse(model.isApplyingFrameAdjustments)
         let edited = try XCTUnwrap(model.completedPreviews.first)
         XCTAssertEqual(edited.id, id)
-        XCTAssertEqual(edited.settings.gridSide, 3)
-        XCTAssertEqual(edited.settings.layoutAspect, .portrait)
-        XCTAssertEqual(edited.settings.width, 1920)
-        XCTAssertTrue(edited.settings.showTimestamps)
-        XCTAssertEqual(edited.format, .jpeg)
+        XCTAssertEqual(edited.settings.gridSide, 4)
+        XCTAssertEqual(edited.frameCount, 16)
+        XCTAssertEqual(edited.settings.layoutAspect, .landscape)
+        XCTAssertEqual(edited.settings.width, 2560)
+        XCTAssertFalse(edited.settings.showTimestamps)
+        XCTAssertEqual(edited.format, .png)
+        XCTAssertEqual(edited.savedURL?.pathExtension, "png")
         let image = try XCTUnwrap(ImageCodec.cgImage(from: edited.loadData()))
-        XCTAssertEqual(image.width, 1920)
-        XCTAssertGreaterThan(image.height, image.width)
+        XCTAssertEqual(image.width, 2560)
+        XCTAssertLessThan(image.height, image.width)
         let preview = try XCTUnwrap(model.previewImage)
         XCTAssertLessThanOrEqual(max(preview.size.width, preview.size.height), 1280)
     }

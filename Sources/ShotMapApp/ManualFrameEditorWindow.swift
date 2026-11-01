@@ -10,7 +10,7 @@ struct ManualFrameEditorWindowPresenter: NSViewRepresentable {
     @ObservedObject var model: StoryboardViewModel
     let language: AppLanguage
     let colorScheme: ColorScheme
-    let onApply: (ManualFrameEditorRequest, [CapturedFrame]) -> Void
+    let onApply: (ManualFrameEditorRequest, [CapturedFrame], ExportSettings) -> Void
 
     func makeNSView(context: Context) -> HostView {
         HostView()
@@ -59,7 +59,7 @@ struct ManualFrameEditorWindowPresenter: NSViewRepresentable {
             model: StoryboardViewModel,
             language: AppLanguage,
             colorScheme: ColorScheme,
-            onApply: @escaping (ManualFrameEditorRequest, [CapturedFrame]) -> Void
+            onApply: @escaping (ManualFrameEditorRequest, [CapturedFrame], ExportSettings) -> Void
         ) {
             requestBinding = request
             guard let requestValue = request.wrappedValue else {
@@ -68,7 +68,7 @@ struct ManualFrameEditorWindowPresenter: NSViewRepresentable {
             }
             guard currentRequestID != requestValue.id || editorWindow == nil else {
                 editorWindow?.appearance = Self.appKitAppearance(for: colorScheme)
-                editorWindow?.title = language.text("editor.title")
+                editorWindow?.title = requestValue.sourceURL.lastPathComponent
                 if editorConfiguration?.colorScheme != colorScheme {
                     editorConfiguration?.colorScheme = colorScheme
                 }
@@ -91,7 +91,7 @@ struct ManualFrameEditorWindowPresenter: NSViewRepresentable {
                 backing: .buffered,
                 defer: false
             )
-            window.title = language.text("editor.title")
+            window.title = requestValue.sourceURL.lastPathComponent
             // This is a separate NSWindow, so it does not automatically inherit
             // ContentView's preferredColorScheme. Set its AppKit appearance as
             // well as the hosted SwiftUI preference to keep the entire editor—
@@ -121,13 +121,11 @@ struct ManualFrameEditorWindowPresenter: NSViewRepresentable {
                 rootView: ManualFrameEditor(
                     model: model,
                     sourceURL: requestValue.sourceURL,
-                    selectionLimit: requestValue.selectionLimit,
                     duration: requestValue.duration,
-                    outputWidth: requestValue.outputWidth,
                     configuration: configuration,
                     onClose: { [weak self] in self?.closeEditor() }
-                ) { [weak self] frames in
-                    onApply(requestValue, frames)
+                ) { [weak self] frames, settings in
+                    onApply(requestValue, frames, settings)
                     self?.closeEditor()
                 }
             )

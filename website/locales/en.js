@@ -67,7 +67,7 @@ export default {
   "ctaEyebrow": "READY TO FIND THAT CLIP?",
   "ctaTitle": "Find the video you’re looking for.",
   "ctaDetail": "Get the latest international edition for your Mac. All seven languages are included.",
-  "ctaDownload": "Download international edition",
+  "ctaDownload": "Download v{version}",
   "ctaGithub": "View on GitHub",
   "github": "GitHub",
   "releases": "Releases",

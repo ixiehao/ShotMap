@@ -69,7 +69,7 @@ export default {
   ctaEyebrow: "ПОРА НАЙТИ ТОТ САМЫЙ РОЛИК",
   ctaTitle: "Найдите видео, которое искали.",
   ctaDetail: "Скачайте последнюю международную версию для Mac. Все семь языков уже включены.",
-  ctaDownload: "Скачать международную версию",
+  ctaDownload: "Скачать v{version}",
   ctaGithub: "Открыть на GitHub",
   github: "GitHub",
   releases: "Релизы",

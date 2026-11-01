@@ -21,6 +21,7 @@
 "export.width" = "Largeur";
 "export.width.value" = "%d px";
 "export.background" = "Fond";
+"background.white" = "Blanc pur";
 "background.cinema" = "Noir cinéma";
 "background.ivory" = "Ivoire chaud";
 "background.navy" = "Bleu nuit";
@@ -52,6 +53,7 @@
 "button.openSaved" = "Afficher dans le Finder";
 "button.openSaved.hint" = "Afficher la dernière image créée dans le Finder";
 "button.adjustFrames" = "Choisir les images";
+"button.adjustFrames.short" = "Choisir les images";
 "button.adjustFrames.hint" = "Choisir les images, puis appliquer et enregistrer la planche";
 "button.previousResult" = "Afficher la planche précédente";
 "button.nextResult" = "Afficher la planche suivante";
@@ -154,6 +156,12 @@
 "editor.nextFrame" = "Image suivante";
 "editor.forwardTenFrames" = "Avancer de 10 images";
 "editor.backFiveFrames" = "-5 im.";
+"editor.frameUnit.short" = "im.";
+"editor.selectedFrameMarker" = "Image sélectionnée %d · %@";
+"editor.selectedFrameMarkers" = "Images sélectionnées %d–%d";
+"editor.manuallyAdded.short" = "Ajout manuel";
+"editor.manuallyAdded" = "Image ajoutée manuellement";
+"editor.smartFill" = "Conserve les images sélectionnées et complète les places restantes.";
 "editor.backOneFrame" = "-1 im.";
 "editor.forwardOneFrame" = "+1 im.";
 "editor.forwardFiveFrames" = "+5 im.";
@@ -173,3 +181,16 @@
 "transcoding.step.two" = "Exportez en MP4 ou MOV avec le codec vidéo H.264 ou H.265.";
 "transcoding.step.three" = "Déposez les fichiers convertis dans ShotMap et recréez les planches.";
 "transcoding.tip" = "Réessayer ne résout pas un format non pris en charge. Enregistrez les vidéos converties dans de nouveaux fichiers pour conserver les originaux. Les planches terminées sont conservées.";
+
+"error.insufficientUsableFrames" = "%d images utilisables trouvées sur %d requises. Choisissez une grille plus petite ou une autre vidéo.";
+
+"workspace.toggleQueue" = "Afficher ou masquer la file vidéo";
+"workspace.toggleInspector" = "Afficher ou masquer les réglages du storyboard";
+"workspace.focusPreview" = "Se concentrer sur l’aperçu";
+"workspace.restorePanels" = "Rétablir les panneaux";
+
+"editor.timeline" = "Chronologie";
+"editor.addCurrentFrame.short" = "Ajouter";
+"editor.smartSelect.short" = "Sélection auto";
+"editor.regenerate.short" = "Actualiser";
+"editor.apply.short" = "Enregistrer";

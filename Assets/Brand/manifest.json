@@ -1,0 +1,14 @@
+{
+  "identity": "ShotMap outer frame with video keyframe",
+  "approved": "2026-11-01",
+  "geometry": "eight horizontal frames plus one blue playback frame",
+  "outputs": {
+    "Assets/AppIcon-1024-source.png": "929c6745c46973d6ad3d73217dd6061c6af5f53b859d112216aaa47bfa0ff550",
+    "Sources/ShotMapApp/Resources/AppIcon.png": "d767826e2fc47aa0b0ff7d634af93f14e9cf1af6a9af8cda2c92209e1ad4011c",
+    "website/assets/app-icon.png": "24ad83d66c2e3d26c8604fba5c33839e97187be05f13e042a1be9e786a14ada9",
+    "website/favicon.ico": "48f22a443dd94709bf32da1252212dbf021b9d54cb1bc76777a31bed40b3e97b",
+    "website/favicon.svg": "8c1bf3bc6ae5cd875e31acb06a067a9047db01b826bd282431b390ae6e2ad904",
+    "website/assets/brand-mark.svg": "605692f18e070cd568a620021e2d7434d0bdf0e0e4dab2f8c8c7ef2c9752515f",
+    "website/assets/brand-mark-dark.svg": "71cb9dcca81ddb63fa8a6f01797c7ff2666a92798b1688fa5f220caed4d9be0d"
+  }
+}

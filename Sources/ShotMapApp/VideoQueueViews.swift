@@ -18,6 +18,7 @@ struct VideoBatchCard: View {
                 VStack(spacing: 10) {
                     QueueVideoList(
                         jobs: jobs,
+                        language: language,
                         isCompact: isCompact,
                         isLightAppearance: isLightAppearance
                     )
@@ -34,54 +35,44 @@ struct VideoBatchCard: View {
 
     private var emptyQueueTarget: some View {
         Button(action: choose) {
-            // The queue heading already identifies this as video import.  A
-            // text-only empty state keeps the drop zone calm and gives the
-            // filename support text more room in narrow windows.
-            VStack(alignment: .leading, spacing: 3) {
+            // Keep the drop target text-only: the heading already identifies
+            // video import, while a soft card keeps the empty queue welcoming.
+            VStack(alignment: .leading, spacing: 5) {
                 Text(title)
-                    .font(.system(size: 13, weight: .semibold))
+                    .font(.system(size: 12, weight: .semibold))
+                    .lineLimit(3)
                 Text(subtitle)
                     .font(.system(size: 11))
                     .foregroundStyle(.secondary)
-                    .lineLimit(1)
+                    .lineLimit(2)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(isCompact ? 12 : 15)
+            .padding(12)
             .background(
                 isLightAppearance
-                    ? Color.white.opacity(isTargeted ? 0.94 : 0.74)
-                    : Color(red: 0.09, green: 0.14, blue: 0.20).opacity(isTargeted ? 1 : 0.88),
-                in: RoundedRectangle(cornerRadius: 14, style: .continuous)
+                    ? (isTargeted ? Color(red: 0.91, green: 0.95, blue: 1) : Color.white.opacity(0.88))
+                    : Color.white.opacity(isTargeted ? 0.09 : 0.05),
+                in: RoundedRectangle(cornerRadius: 11, style: .continuous)
             )
             .overlay {
-                RoundedRectangle(cornerRadius: 14, style: .continuous)
-                    .strokeBorder(
-                        isTargeted
-                            ? Color(red: 0.42, green: 0.85, blue: 0.91)
-                            : .clear,
-                        lineWidth: 1
-                    )
+                RoundedRectangle(cornerRadius: 11, style: .continuous)
+                    .strokeBorder(isTargeted ? SelectionPalette.active.opacity(0.7) : Color.primary.opacity(0.055), lineWidth: 1)
             }
+            .shadow(color: .black.opacity(isLightAppearance ? 0.035 : 0.09), radius: 3, y: 1)
         }
         .buttonStyle(.plain)
         .disabled(isLocked)
     }
 
     private var clearQueueButton: some View {
-        Button(action: clear) {
-            GlyphLabel(title: language.text("queue.clear"), glyph: .trash)
-                .font(.system(size: 10, weight: .bold))
-                .padding(.horizontal, 10)
-                .frame(height: 30)
-                .contentShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+        Button(role: .destructive, action: clear) {
+            GlyphLabel(title: language.text("queue.clear"), glyph: .trash, glyphSize: 12)
+                .font(.system(size: 11, weight: .medium))
+                .frame(height: 26)
+                .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
-        .foregroundStyle(.white)
-        .background(Color(red: 0.80, green: 0.18, blue: 0.24), in: RoundedRectangle(cornerRadius: 8, style: .continuous))
-        .overlay {
-            RoundedRectangle(cornerRadius: 8, style: .continuous)
-                .strokeBorder(Color.white.opacity(0.22))
-        }
+        .foregroundStyle(Color.red.opacity(0.85))
         .help(language.text("queue.clear.hint"))
         .disabled(isLocked)
     }
@@ -102,68 +93,25 @@ struct VideoBatchCard: View {
 
 private struct QueueVideoList: View {
     let jobs: [VideoJob]
+    let language: AppLanguage
     let isCompact: Bool
     let isLightAppearance: Bool
 
-    @State private var contentHeight: CGFloat = 1
-    @State private var contentOffset: CGFloat = 0
-
-    private static let coordinateSpaceName = "shotMapQueueList"
-    private var indexColumnWidth: CGFloat {
-        switch String(max(1, jobs.count)).count {
-        case 1, 2: 24
-        case 3: 28
-        default: 36
-        }
-    }
-
     var body: some View {
-        GeometryReader { viewport in
-            ZStack(alignment: .trailing) {
-                ScrollView(.vertical, showsIndicators: false) {
-                    LazyVStack(spacing: isCompact ? 8 : 10) {
-                        ForEach(IndexedVideoJobs(jobs: jobs)) { entry in
-                            QueueVideoRow(
-                                index: entry.index + 1,
-                                job: entry.job,
-                                isLightAppearance: isLightAppearance,
-                                indexColumnWidth: indexColumnWidth
-                            )
-                        }
-                    }
-                    .padding(.vertical, 1)
-                    .padding(.trailing, 10)
-                    .background {
-                        GeometryReader { proxy in
-                            Color.clear.preference(
-                                key: QueueContentHeightPreferenceKey.self,
-                                value: proxy.size.height
-                            )
-                        }
-                    }
-                    .background {
-                        GeometryReader { proxy in
-                            Color.clear.preference(
-                                key: QueueScrollOffsetPreferenceKey.self,
-                                value: proxy.frame(in: .named(Self.coordinateSpaceName)).minY
-                            )
-                        }
-                    }
+        ScrollView(.vertical, showsIndicators: true) {
+            LazyVStack(spacing: isCompact ? 7 : 9) {
+                ForEach(IndexedVideoJobs(jobs: jobs)) { entry in
+                    QueueVideoRow(
+                        index: entry.index + 1,
+                        job: entry.job,
+                        language: language,
+                        isLightAppearance: isLightAppearance
+                    )
                 }
-                .coordinateSpace(name: Self.coordinateSpaceName)
-
-                QueueScrollIndicator(
-                    viewportHeight: viewport.size.height,
-                    contentHeight: contentHeight,
-                    contentOffset: contentOffset,
-                    isLightAppearance: isLightAppearance
-                )
-                .padding(.trailing, 2)
-                .allowsHitTesting(false)
             }
+            .padding(.vertical, 3)
+            .padding(.horizontal, 1)
         }
-        .onPreferenceChange(QueueContentHeightPreferenceKey.self) { contentHeight = $0 }
-        .onPreferenceChange(QueueScrollOffsetPreferenceKey.self) { contentOffset = $0 }
     }
 }
 
@@ -186,106 +134,76 @@ struct IndexedVideoJobs: RandomAccessCollection {
     }
 }
 
-private struct QueueScrollIndicator: View {
-    let viewportHeight: CGFloat
-    let contentHeight: CGFloat
-    let contentOffset: CGFloat
-    let isLightAppearance: Bool
-
-    private var isScrollable: Bool { contentHeight > viewportHeight + 1 }
-    private var thumbHeight: CGFloat {
-        guard isScrollable else { return 0 }
-        return min(viewportHeight, max(34, viewportHeight * viewportHeight / contentHeight))
-    }
-    private var thumbOffset: CGFloat {
-        guard isScrollable else { return 0 }
-        let progress = min(1, max(0, -contentOffset / max(1, contentHeight - viewportHeight)))
-        return progress * max(0, viewportHeight - thumbHeight)
-    }
-
-    var body: some View {
-        ZStack(alignment: .top) {
-            Capsule()
-                .fill(isLightAppearance ? Color.primary.opacity(0.045) : Color.white.opacity(0.055))
-                .frame(width: 4, height: viewportHeight)
-            Capsule()
-                .fill(
-                    isLightAppearance
-                        ? SelectionPalette.active.opacity(0.56)
-                        : Color(red: 0.353, green: 0.655, blue: 1.0).opacity(0.62)
-                )
-                .frame(width: 4, height: thumbHeight)
-                .shadow(color: isLightAppearance ? Color.black.opacity(0.08) : Color.black.opacity(0.18), radius: 1, y: 1)
-                .offset(y: thumbOffset)
-        }
-        .frame(width: 4, height: viewportHeight, alignment: .top)
-        .opacity(isScrollable ? 1 : 0)
-    }
-}
-
-private struct QueueContentHeightPreferenceKey: PreferenceKey {
-    static let defaultValue: CGFloat = 1
-    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) { value = nextValue() }
-}
-
-private struct QueueScrollOffsetPreferenceKey: PreferenceKey {
-    static let defaultValue: CGFloat = 0
-    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) { value = nextValue() }
-}
-
 private struct QueueVideoRow: View {
     let index: Int
     let job: VideoJob
+    let language: AppLanguage
     let isLightAppearance: Bool
-    let indexColumnWidth: CGFloat
 
     var body: some View {
-        HStack(spacing: 9) {
+        HStack(alignment: .center, spacing: 8) {
             Text("\(index)")
-                .font(.system(size: 11, weight: .medium, design: .monospaced))
-                .foregroundStyle(.secondary)
+                .font(.system(size: index < 100 ? 15 : 12, weight: .semibold, design: .monospaced))
+                .monospacedDigit()
                 .lineLimit(1)
-                .fixedSize(horizontal: true, vertical: false)
-                .frame(width: indexColumnWidth, alignment: .trailing)
+                .minimumScaleFactor(0.7)
+                .foregroundStyle(StudioPalette(isLight: isLightAppearance).accent)
+                .frame(width: 26, height: 30)
+                .background(SelectionPalette.active.opacity(isLightAppearance ? 0.07 : 0.14),
+                            in: RoundedRectangle(cornerRadius: 6, style: .continuous))
 
-            ZStack {
-                RoundedRectangle(cornerRadius: 7, style: .continuous)
-                    .fill(thumbnailFill)
-                ProjectIcon(symbol: .film, size: 17)
-                    .foregroundStyle(.white.opacity(0.9))
+            VStack(alignment: .leading, spacing: 4) {
+                Text(job.url.lastPathComponent)
+                    .font(.system(size: 11, weight: .semibold))
+                    .lineLimit(2)
+                    .truncationMode(.middle)
+                    .multilineTextAlignment(.leading)
+                    .allowsTightening(true)
+                Text(job.state.label(in: language))
+                    .foregroundStyle(stateColor)
+                    .font(.system(size: 11))
+                    .lineLimit(1)
             }
-            .frame(width: 42, height: 38)
-
-            Text(job.url.lastPathComponent)
-                .font(.system(size: 11, weight: .semibold))
-                .lineLimit(2)
-                .truncationMode(.tail)
-                .multilineTextAlignment(.leading)
-                .frame(maxWidth: .infinity, alignment: .leading)
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .padding(7)
-        .frame(minHeight: 52)
+        .padding(.horizontal, 8)
+        .padding(.vertical, 9)
+        .frame(maxWidth: .infinity, minHeight: 60, alignment: .leading)
         .background(rowFill, in: RoundedRectangle(cornerRadius: 10, style: .continuous))
+        .overlay {
+            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                .strokeBorder(rowBorder, lineWidth: 0.5)
+        }
+        .shadow(color: .black.opacity(isLightAppearance ? 0.035 : 0.08), radius: 2, y: 1)
+        .accessibilityElement(children: .combine)
+        .help(job.url.lastPathComponent + " — " + job.state.label(in: language))
     }
 
     private var rowFill: Color {
         switch job.state {
         case .processing:
-            return isLightAppearance ? Color(red: 0.86, green: 0.94, blue: 0.97) : Color(red: 0.10, green: 0.17, blue: 0.27)
-        default:
-            return isLightAppearance ? Color.white.opacity(0.52) : Color.clear
-        }
-    }
-
-    private var thumbnailFill: LinearGradient {
-        switch job.state {
+            return isLightAppearance ? Color(red: 0.89, green: 0.94, blue: 1) : Color(red: 0.10, green: 0.17, blue: 0.27)
         case .failed:
-            return LinearGradient(colors: [Color(red: 0.47, green: 0.20, blue: 0.15), Color(red: 0.22, green: 0.11, blue: 0.12)], startPoint: .topLeading, endPoint: .bottomTrailing)
-        case .processing:
-            return LinearGradient(colors: [Color(red: 0.13, green: 0.34, blue: 0.54), Color(red: 0.07, green: 0.14, blue: 0.29)], startPoint: .topLeading, endPoint: .bottomTrailing)
+            return isLightAppearance ? Color(red: 1, green: 0.965, blue: 0.955) : Color(red: 0.20, green: 0.13, blue: 0.14)
         default:
-            return LinearGradient(colors: [Color(red: 0.20, green: 0.33, blue: 0.49), Color(red: 0.07, green: 0.14, blue: 0.26)], startPoint: .topLeading, endPoint: .bottomTrailing)
+            return isLightAppearance ? Color.white.opacity(0.9) : Color.white.opacity(0.05)
         }
     }
 
+    private var rowBorder: Color {
+        switch job.state {
+        case .processing: return SelectionPalette.active.opacity(isLightAppearance ? 0.17 : 0.26)
+        case .failed: return Color.red.opacity(0.12)
+        default: return Color.primary.opacity(isLightAppearance ? 0.055 : 0.07)
+        }
+    }
+
+    private var stateColor: Color {
+        switch job.state {
+        case .failed: return .red
+        case .processing: return SelectionPalette.active
+        case .completed: return isLightAppearance ? Color(red: 0.18, green: 0.43, blue: 0.31) : Color(red: 0.43, green: 0.73, blue: 0.56)
+        case .queued: return .secondary
+        }
+    }
 }

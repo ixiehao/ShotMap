@@ -21,6 +21,10 @@ The UI and processing code have separate ownership:
 | File | Responsibility |
 | --- | --- |
 | `ContentView.swift` | Main workspace layout and user commands |
+| `AppPreferencesCommands.swift` | Native View-menu appearance/language choices using existing preferences |
+| `StoryboardCanvas.swift`, `PreviewCanvasLayout.swift` | Whole-image fit without user zoom or cropping |
+| `PreviewWindowAutoFit.swift` | Completed-result aspect-based native window sizing with screen bounds and stable result identity |
+| `StoryboardCanvasImageLoader.swift` | One current result's bounded, background high-resolution display image |
 | `StoryboardViewModel.swift` | Batch state, result navigation, and run-checked UI updates |
 | `ManualFrameEditor.swift` | Manual selection, player controls, and editor task lifetime |
 | `ManualEditorTimeline.swift` | Bounded timeline positioning and frame stepping |
@@ -33,11 +37,35 @@ The UI and processing code have separate ownership:
 | `StudioControls.swift`, `ManualEditorControls.swift`, `StudioLayout.swift` | Shared controls and fixed layout measurements |
 | `BatchSupportViews.swift` | Failure reports and conversion guidance |
 | `VideoStoryboardAnalyzer.swift`, `ManualFrameExtractor.swift` | Automatic analysis and exact manual capture |
+| `AutomaticFramePipeline.swift`, `AutomaticFrameSamplingPolicy.swift` | Audited automatic candidates, shared recovery budgets and exact output |
+| `AutomaticVisionCancellation.swift` | Thread-safe registration and cancellation of active Vision requests |
+| `FrameQualityAnalyzer.swift` | Active-area quality, subject clarity and dense-text risk |
 | `FrameSelection.swift` | Deterministic scene, quality, and diversity selection |
 | `StoryboardComposer.swift`, `ImageCodec.swift` | Bitmap layout, encoding, and display thumbnails |
 | `StoryboardPreview.swift`, `BatchRunControl.swift` | Serialized output, temporary previews, pause and cancellation |
 
-Views keep the existing layout constants and appearance choices. Processing
+The preview-first workspace uses compact, collapsible queue and inspector panels.
+Focus mode restores the previous panel combination; generation remains in the
+global toolbar. Appearance and language live in the native View menu, sharing
+the existing settings rather than migrating preferences. See
+[the workspace design and acceptance record](WORKSPACE-REDESIGN.md).
+
+The completed-result canvas keeps the full image visible, without a zoom toolbar
+or gesture magnification. On completion and result/panel changes, a native
+window fitter uses the measured canvas and the complete image aspect ratio to
+reduce unused space. It stays inside the current screen, respects minimum
+control sizes and skips fullscreen and live window resizing. A global bottom
+bar places file actions left, result navigation at the window centre and
+manual frame selection in a prominent blue button on the right.
+For a saved result it may decode one display image up to 2560 px off MainActor,
+retaining at most 32 MiB of additional pixel storage. This excludes ImageIO
+temporary buffers and system rendering allocations. URL, original preview-image
+identity and request ID reject stale completions. Display upgrades preserve the
+logical document size and whole-image fit; missing files retain the
+original preview. The extra image is released when the canvas closes or changes
+results, and is not a decoded batch-history cache.
+
+Views use shared layout constants and theme-aware surfaces. Processing
 workers do not own windows; editor tasks and their detached workers are cancelled
 together when superseded or closed. Timeline actions update the same position
 used by the next action, so repeated frame stepping accumulates correctly.
@@ -53,22 +81,43 @@ player publishes its position at 10 Hz and removes its observers and current
 item when closed. Adding a frame during playback pauses at the actual player
 position before starting exact capture.
 
+The manual editor uses a theme-aware neutral AVPlayerLayer surface. Playback
+moves to the timeline toolbar, leaving the full monitor height for the video.
+Portrait candidate galleries use five columns at the 1000 pt minimum window
+width and six at the normal 1280 pt width. Cancel and Apply share the top toolbar;
+there is no gallery title row or bottom action bar. Selected cards use a 36 pt
+numbered badge, a 3 pt blue border and a 1 pt white inner keyline.
+
+Fresh export defaults are 3×3, source aspect ratio, 1920 px, ivory background,
+timestamps enabled, filename title disabled, and JPEG. View-model and export
+settings defaults are checked together to prevent UI/export divergence.
+
 ```text
 video URL
-  -> AVAssetImageGenerator samples a bounded set of frames
-  -> each adaptive-size analysis image is retained as a compact JPEG; PixelMetrics
-     makes a 48 x 48 luminance histogram, exposure/black score, edge-detail score,
-     and perceptual fingerprint
-  -> FrameSelection finds histogram-based shot ranges, ranks a representative
-     from each range, supplements short-cut videos by time bucket, and removes
-     near duplicates
-  -> Vision scores only promising JPEG candidates for faces and full-body people
-  -> selected JPEGs stream to stable live-grid slots; low-detail selections are
-     refined and remaining small-grid selections receive a presentation-size decode
-  -> StoryboardComposer lays out rounded cards using the chosen aspect ratio
-  -> the shared ImageCodec uses ImageIO for background decode/encode and writes
-     the requested PNG or JPEG
+  -> one AVFoundation batch decodes an aspect-preserving coarse candidate set
+  -> FrameQualityAnalyzer checks active-area blankness and multi-scale clarity
+  -> terminal candidates receive explicit face/body/text observations
+  -> bounded local and distributed recovery fills quality/content gaps
+  -> FrameSelection ranks only eligible candidates and preserves timeline order
+  -> same-size audited raw images are reused; size upgrades decode exact PTS
+  -> the final quality gate rejects failed or unreviewed substitutions
+  -> audited frames stream into stable live-grid slots and StoryboardComposer
 ```
+
+`AutomaticFramePipeline` owns the automatic run. `AutomaticFrameSamplingPolicy`
+shares an additional request budget across recovery and detailed text review.
+A 64 MiB analysis-image cache bounds retained bitmaps; compact JPEGs are used
+only when needed for previews or cache eviction. A resident original CGImage at
+the audited PTS and sufficient requested size can enter the same final verifier
+without another seek. A compressed preview is not treated as the original.
+`FrameQualityAnalyzer` uses
+Accelerate/vImage and vDSP for small grayscale planes; Vision retains automatic
+system device selection. There is no bundled ML model or mandatory new OS API.
+The pipeline reduces repeated decoding and reuses audited image evidence only
+at matching timestamps and sufficient resolution. These changes do not imply a
+guaranteed hardware-inference speedup. First-use system OCR model compilation
+can still add latency; standalone warm-run timings do not predict cold GUI
+response. The workspace exposes cancellation and progress while processing.
 
 `ExportSettings` constrains the grid to the UI's 3 x 3 through 8 x 8 choices
 and clamps exported width to at least 1920 px. Rendering uses CoreGraphics, so
@@ -82,23 +131,71 @@ CJK SC Bold 2.004 font. The font is registered only for the app process; its
 SIL Open Font License 1.1, source release, and checksum are retained in
 [NOTICE.md](../NOTICE.md).
 
-Selections returned by refinement are excluded from the presentation-upgrade
-pass, preserving the existing priority of refinement results (including their
-fallbacks) over presentation upgrades. Manual refinement encodes final images as they arrive,
-retaining compressed JPEGs rather than an entire gallery of final-size bitmaps.
-The diversity scorer keeps each candidate's minimum distance to the selected set
-and updates it once per new selection, preserving its scoring and tie order.
+The automatic pipeline preserves each decoded source `CMTime` as rational
+identity. Discovery requests may fall between source frames: their actual returned
+PTS becomes the candidate identity and receives a fresh audit. Final-size and
+detailed-text decodes must match an already audited PTS; they cannot silently move
+to a nearby keyframe during a size upgrade. A rejected final image cannot recover from its
+lower-resolution counterpart. Bounded audited alternatives may replace it;
+insufficient valid output is an explicit error rather than duplicated filler.
+
+Recovery reserves a distributed quota before filling local requests, so a large
+set of weak local candidates cannot consume all coverage work. Coverage gaps are
+computed from the entire export-verified pool, rather than just the K current
+choices. Existing unreviewed representatives are audited before new seeking;
+confirmed credit intervals and already attempted soft improvements do not cause
+unconditional repeat searches. Request caps and final-frame gates still apply.
+Credit evidence is propagated only within content-supported segments; an
+intervening credible person scene or a sufficiently covered text-negative
+observation interrupts propagation. An empty OCR result from a restricted region
+is not evidence that the rest of the image has no text. If that region misses
+uncertain text, a lightweight whole-image text-region and fast-recognition pass
+can locate it in the same decoded image, followed by at most one additional
+bounded accurate region. This does not add another image decode or an unbounded
+full-page accurate OCR pass. Dense unreadable layouts remain uncertain.
+OCR rectangles from a restricted region are mapped back into whole-image
+coordinates before layout checks. Detected words are transient analysis evidence,
+not included in application diagnostics.
+
+The optional opening-overlay review has its own one-request allowance, charged
+to the same recovery cap. A later trusted person scene, prior lower-left OCR
+fragments and aligned pixel-row evidence schedule one exact high-size check.
+An explicit, reliable film-funding sentence confirms exclusion. Weak layout
+hints alone do not put all person-free candidates behind an unfinished OCR gate.
+
+Subject readability is sampled from an original-image crop without upsampling
+small subjects, and is used for soft ranking. Severe rejection thresholds remain
+separate. Audited, at-least-as-readable alternatives may replace weaker crowded
+frames even when they score below 70% of the film's best close-up. Diversity
+repairs preserve quality and temporal spacing; static footage can still fill
+the grid with distinct source timestamps when it lacks distinct compositions.
+
+Developer profiling is enabled with `SHOTMAP_FRAME_PERFORMANCE=1`. Its decode,
+quality, Vision, OCR, selection and encoding scopes include nested work; their
+sum is not pipeline wall time. The normal profiling path avoids clocks, locks
+and JSON output. These measurements contain counts and timings, not recognized
+text or user media paths.
+
+Task cancellation cancels the active generator and asks registered Vision
+requests to cancel. Vision request registration is protected by a small lock;
+framework calls run outside it. Cancellation propagates as `CancellationError`,
+not a fabricated negative subject/text observation. This is best-effort framework
+cancellation, not a hard latency guarantee for a running inference.
 
 ## Selection behavior
 
-Scene boundaries come from differences between compact luminance histograms.
-Candidates are rejected or penalized when they are almost black, too dim,
-low-detail (a blur proxy), or perceptually close to an already chosen image.
-Face close-ups and large human rectangles receive an additional preference
-score. When a video does not contain people or has too few detectable cuts,
-the selector gracefully falls back to good, time-distributed visual frames. A
-strict pass removes near duplicates; a final relaxed time-bucket pass is only
-used to fill every requested cell on sparse, long-shot source material.
+Eligibility is separate from ranking. Confirmed blank/title cards and strong
+blur evidence cannot be offset by people, brightness or novelty bonuses. Each
+terminal candidate keeps explicit `notEvaluated`, `observed`, or `failed`
+evidence states. No-person observations remain valid for scenery and other
+person-free footage; missing analysis does not masquerade as zero detections.
+
+Coarse sampling discovers time regions, not every shot in a long film. Local
+recovery and conservative corresponding-subject comparisons improve blurry or
+person-free provisional moments. Face regions take clarity priority over large
+body boxes that may contain sharp background. Ordinary subtitles and small
+watermarks are distinct from central title/credit layouts. Detailed text analysis
+is restricted to a small risk shortlist and shares the recovery budget.
 
 The optional manual editor samples a bounded second candidate set only when it is
 opened. Smart selection reuses the same visual metrics and duplicate rules, while
@@ -117,7 +214,7 @@ preparing an export, so the displayed selection matches the exported snapshot.
 The application supports English, Simplified Chinese, French, Russian, Spanish,
 Japanese, and Korean. A saved language choice wins over the system preferences;
 first launch matches the first supported preferred language and otherwise uses
-English. Every locale has the same 175 resource keys and format arguments.
+English. Every locale has the same required resource keys and format arguments.
 Views use semantic status values so switching language updates existing results
 without restarting or discarding the queue. Help and the separate manual-editor
 window receive the chosen locale explicitly. Timeline order is unchanged.

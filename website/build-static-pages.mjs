@@ -1,7 +1,7 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { appLanguageCodes, htmlLanguage, languageNames, localeURLs, localizedVisualAssets, releaseURL, siteURL, translations } from "./script.js";
+import { appLanguageCodes, currentVersion, htmlLanguage, languageNames, localeURLs, localizedVisualAssets, releaseURL, siteURL, translations } from "./script.js";
 
 const root = resolve(fileURLToPath(new URL(".", import.meta.url)));
 const source = await readFile(resolve(root, "index.html"), "utf8");
@@ -56,7 +56,7 @@ function buildSchema(copy, language) {
   const product = localizedVisualAssets[language].product;
   return {
     "@context": "https://schema.org", "@type": "SoftwareApplication", "@id": siteURL + "#software",
-    name: "ShotMap", applicationCategory: "MultimediaApplication", operatingSystem: "macOS 13 or later",
+    name: "ShotMap", softwareVersion: currentVersion, applicationCategory: "MultimediaApplication", operatingSystem: "macOS 13 or later",
     url: localeURLs[language], description: copy.pageDescription, downloadUrl: releaseURL,
     screenshot: new URL(product[0], siteURL).href,
     featureList: copy.schemaFeatureList,
@@ -97,7 +97,7 @@ function languagePicker(language, prefix) {
 }
 
 function makeStaticPage(language) {
-  const copy = translations[language];
+  const copy = { ...translations[language], ctaDownload: translations[language].ctaDownload.replace("{version}", currentVersion) };
   const prefix = language === "en" ? "" : "../";
   let html = source;
   html = replaceLocalizedContent(html, copy, "data-i18n", false);

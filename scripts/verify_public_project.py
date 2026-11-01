@@ -11,6 +11,7 @@ from __future__ import annotations
 import re
 import sys
 import json
+import plistlib
 import xml.etree.ElementTree as ET
 from html.parser import HTMLParser
 from pathlib import Path
@@ -18,6 +19,7 @@ from urllib.parse import unquote, urlsplit
 
 
 ROOT = Path(__file__).resolve().parent.parent
+RELEASE_VERSION = plistlib.loads((ROOT / "Packaging/Info.plist").read_bytes())["CFBundleShortVersionString"]
 REPOSITORY = "https://github.com/ixiehao/ShotMap"
 WEBSITE = "https://ixiehao.github.io/ShotMap/"
 LANGUAGES = {"en": "en", "zh": "zh-CN", "fr": "fr", "ru": "ru", "es": "es", "ja": "ja", "ko": "ko"}
@@ -71,6 +73,8 @@ def verify_page(path: Path, locale: str) -> None:
     for schema in re.findall(r'<script[^>]+type="application/ld\+json"[^>]*>(.*?)</script>', text, re.S):
         value = json.loads(schema)
         if value.get("@type") == "SoftwareApplication":
+            if value.get("softwareVersion") != RELEASE_VERSION:
+                fail(f"stale software version in {path.relative_to(ROOT)}")
             if value.get("url") != expected_url or value.get("inLanguage") != ["en", "zh-Hans", "fr", "ru", "es", "ja", "ko"]:
                 fail(f"incorrect software metadata in {path.relative_to(ROOT)}")
 

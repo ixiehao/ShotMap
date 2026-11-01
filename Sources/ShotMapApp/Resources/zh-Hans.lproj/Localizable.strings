@@ -21,6 +21,7 @@
 "export.width" = "宽度";
 "export.width.value" = "%d px";
 "export.background" = "底色";
+"background.white" = "纯白色";
 "background.cinema" = "影院黑";
 "background.ivory" = "暖象牙白";
 "background.navy" = "深海军蓝";
@@ -52,6 +53,7 @@
 "button.openSaved" = "在 Finder 中显示";
 "button.openSaved.hint" = "在 Finder 中显示刚生成的图片";
 "button.adjustFrames" = "手动选择画面";
+"button.adjustFrames.short" = "手动选帧";
 "button.adjustFrames.hint" = "选择画面，再应用并保存分镜图";
 "button.previousResult" = "查看上一张分镜图";
 "button.nextResult" = "查看下一张分镜图";
@@ -154,6 +156,12 @@
 "editor.nextFrame" = "前进 1 帧";
 "editor.forwardTenFrames" = "前进 10 帧";
 "editor.backFiveFrames" = "-5帧";
+"editor.frameUnit.short" = "帧";
+"editor.selectedFrameMarker" = "已选画面 %d · %@";
+"editor.selectedFrameMarkers" = "已选画面 %d–%d";
+"editor.manuallyAdded.short" = "手动";
+"editor.manuallyAdded" = "手动添加的画面";
+"editor.smartFill" = "保留已选画面，智能补齐剩余。";
 "editor.backOneFrame" = "-1帧";
 "editor.forwardOneFrame" = "+1帧";
 "editor.forwardFiveFrames" = "+5帧";
@@ -173,3 +181,16 @@
 "transcoding.step.two" = "导出为 MP4 或 MOV，视频编码选择 H.264 或 H.265。";
 "transcoding.step.three" = "将转码后的新文件拖入 ShotMap，再开始生成。";
 "transcoding.tip" = "重试无法解决格式不受支持的问题。转码时请另存为新文件，保留原视频。已生成的分镜图会保留。";
+
+"error.insufficientUsableFrames" = "仅找到 %d 张合格画面，需要 %d 张。请减小网格或更换视频。";
+
+"workspace.toggleQueue" = "显示或隐藏视频队列";
+"workspace.toggleInspector" = "显示或隐藏分镜设置";
+"workspace.focusPreview" = "专注预览";
+"workspace.restorePanels" = "恢复面板";
+
+"editor.timeline" = "时间线";
+"editor.addCurrentFrame.short" = "添加当前帧";
+"editor.smartSelect.short" = "智能选帧";
+"editor.regenerate.short" = "换一批";
+"editor.apply.short" = "保存";

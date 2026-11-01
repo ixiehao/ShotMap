@@ -37,16 +37,16 @@ struct LivePreviewFrame: Identifiable {
 final class StoryboardViewModel: ObservableObject {
     @Published private(set) var videoJobs: [VideoJob] = []
     @Published var language: AppLanguage = .systemDefault
-    @Published var gridSide = 4
+    @Published var gridSide = 3
     @Published var layoutAspect: StoryboardAspect = .source
-    @Published var format: ExportFormat = .png
-    @Published var width = 2560
-    @Published var background: StoryboardBackground = .cinema
-    @Published var showTimestamps = false
+    @Published var format: ExportFormat = .jpeg
+    @Published var width = 1920
+    @Published var background: StoryboardBackground = .ivory
+    @Published var showTimestamps = true
     @Published var showTitleWatermark = false
     @Published var previewImage: NSImage?
     @Published private(set) var livePreviewSlots = ProgressivePreviewSlots<LivePreviewFrame>()
-    @Published private(set) var activeGridSide = 4
+    @Published private(set) var activeGridSide = 3
     @Published private(set) var activeCardAspectRatio = 16.0 / 9.0
     @Published private(set) var activeJobIndex = 0
     @Published private(set) var activeJobCount = 0
@@ -157,9 +157,7 @@ final class StoryboardViewModel: ObservableObject {
         return ManualFrameEditorRequest(
             previewID: preview.id,
             sourceURL: preview.sourceURL,
-            selectionLimit: max(1, preview.frameCount),
-            duration: preview.duration,
-            outputWidth: preview.settings.safeWidth
+            duration: preview.duration
         )
     }
     var canBrowseCompletedPreviews: Bool { completedPreviews.count > 1 }
@@ -176,6 +174,7 @@ final class StoryboardViewModel: ObservableObject {
         if isProcessing {
             let totalFrames = activeGridSide * activeGridSide
             let name = activeJobName.isEmpty ? t("default.video") : activeJobName
+            if livePreviewFrameCount == 0 { return "\(name) · \(processingLabel)" }
             return t("status.processing", activeJobIndex + 1, max(1, activeJobCount), name, livePreviewFrameCount, totalFrames)
         }
         if case .batchCompleted = outputStatus {
@@ -189,7 +188,7 @@ final class StoryboardViewModel: ObservableObject {
         if isPauseRequested { return t("processing.pausePending") }
         let batchPrefix = activeJobCount > 1 ? "\(activeJobIndex + 1)/\(activeJobCount) · " : ""
         return switch progress {
-        case ..<0.58: t("processing.fast", batchPrefix)
+        case ..<0.42: t("processing.fast", batchPrefix)
         case ..<0.72: t("processing.people", batchPrefix)
         default: t("processing.assembling", batchPrefix)
         }
@@ -444,7 +443,7 @@ final class StoryboardViewModel: ObservableObject {
         Task { await control?.resume() }
     }
 
-    fileprivate func generationSettings() -> ExportSettings {
+    var currentExportSettings: ExportSettings {
         ExportSettings(
             gridSide: gridSide,
             layoutAspect: layoutAspect,
@@ -648,25 +647,17 @@ final class StoryboardViewModel: ObservableObject {
         _ frames: [CapturedFrame],
         targetPreviewID: RenderedStoryboardPreview.ID,
         sourceURL: URL,
-        duration: Double
+        duration: Double,
+        settings saveSettings: ExportSettings? = nil
     ) {
+        let settings = saveSettings ?? currentExportSettings
         guard !frames.isEmpty, !isBusy,
-              let target = completedPreviews.first(where: { $0.id == targetPreviewID }),
-              frames.count == target.frameCount else { return }
+              completedPreviews.contains(where: { $0.id == targetPreviewID }),
+              frames.count == settings.frameCount else { return }
         let updatedResult = StoryboardResult(
             frames: frames,
             sourceURL: sourceURL,
             duration: duration
-        )
-        let settings = ExportSettings(
-            gridSide: target.settings.gridSide,
-            layoutAspect: target.settings.layoutAspect,
-            language: language,
-            format: target.settings.format,
-            width: target.settings.width,
-            background: target.settings.background,
-            showTimestamps: target.settings.showTimestamps,
-            showTitleWatermark: target.settings.showTitleWatermark
         )
         let settingsLanguage = settings.language
         isApplyingFrameAdjustments = true
@@ -885,7 +876,7 @@ private final class UIStateBridge: @unchecked Sendable {
     func currentGenerationSettings() async -> ExportSettings? {
         await MainActor.run { [weak self] in
             guard let self, let model = self.model, self.acceptsCurrentGeneration(model) else { return nil }
-            return model.generationSettings()
+            return model.currentExportSettings
         }
     }
 

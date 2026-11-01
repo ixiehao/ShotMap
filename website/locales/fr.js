@@ -38,7 +38,7 @@ export default {
   faqFourQuestion: "Où les planches sont-elles enregistrées ?", faqFourAnswer: "Par défaut, dans le dossier de la vidéo d’origine. Le bouton Enregistrer permet de choisir un autre emplacement.",
   ctaEyebrow: "PRÊT À RETROUVER VOS VIDÉOS ?", ctaTitle: "Retrouvez la vidéo que vous cherchez.",
   ctaDetail: "Téléchargez la dernière version internationale pour Mac. Les sept langues sont incluses.",
-  ctaDownload: "Télécharger la version internationale", ctaGithub: "Voir sur GitHub", github: "GitHub", releases: "Versions", feedback: "Vos retours",
+  ctaDownload: "Télécharger v{version}", ctaGithub: "Voir sur GitHub", github: "GitHub", releases: "Versions", feedback: "Vos retours",
   productAlt: "ShotMap en français : liste des vidéos, aperçu de la planche et réglages",
   manualAlt: "Choix manuel des images en français : lecteur, chronologie et galerie"
 };

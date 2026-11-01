@@ -21,6 +21,7 @@
 "export.width" = "Anchura";
 "export.width.value" = "%d px";
 "export.background" = "Fondo";
+"background.white" = "Blanco puro";
 "background.cinema" = "Negro cine";
 "background.ivory" = "Marfil cálido";
 "background.navy" = "Azul noche";
@@ -52,6 +53,7 @@
 "button.openSaved" = "Mostrar en Finder";
 "button.openSaved.hint" = "Mostrar en Finder la última imagen creada";
 "button.adjustFrames" = "Elegir fotogramas";
+"button.adjustFrames.short" = "Elegir fotogramas";
 "button.adjustFrames.hint" = "Elegir fotogramas y después aplicar y guardar el mosaico";
 "button.previousResult" = "Mostrar mosaico anterior";
 "button.nextResult" = "Mostrar mosaico siguiente";
@@ -154,6 +156,12 @@
 "editor.nextFrame" = "Fotograma siguiente";
 "editor.forwardTenFrames" = "Avanzar 10 fotogramas";
 "editor.backFiveFrames" = "-5 fot.";
+"editor.frameUnit.short" = "fot.";
+"editor.selectedFrameMarker" = "Fotograma seleccionado %d · %@";
+"editor.selectedFrameMarkers" = "Fotogramas seleccionados %d–%d";
+"editor.manuallyAdded.short" = "Manual";
+"editor.manuallyAdded" = "Fotograma añadido manualmente";
+"editor.smartFill" = "Conserva los fotogramas seleccionados y completa los espacios restantes.";
 "editor.backOneFrame" = "-1 fot.";
 "editor.forwardOneFrame" = "+1 fot.";
 "editor.forwardFiveFrames" = "+5 fot.";
@@ -173,3 +181,16 @@
 "transcoding.step.two" = "Exporta a MP4 o MOV con vídeo H.264 o H.265.";
 "transcoding.step.three" = "Arrastra los archivos convertidos a ShotMap y vuelve a crear los mosaicos.";
 "transcoding.tip" = "Reintentar no resuelve un formato incompatible. Guarda los vídeos convertidos como archivos nuevos para conservar los originales. Los mosaicos terminados se mantienen.";
+
+"error.insufficientUsableFrames" = "Solo se encontraron %d fotogramas válidos; se necesitan %d. Prueba con una cuadrícula más pequeña u otro vídeo.";
+
+"workspace.toggleQueue" = "Mostrar u ocultar la cola de vídeos";
+"workspace.toggleInspector" = "Mostrar u ocultar los ajustes del guion gráfico";
+"workspace.focusPreview" = "Solo vista previa";
+"workspace.restorePanels" = "Restaurar paneles";
+
+"editor.timeline" = "Línea de tiempo";
+"editor.addCurrentFrame.short" = "Añadir fotograma";
+"editor.smartSelect.short" = "Selección auto";
+"editor.regenerate.short" = "Actualizar";
+"editor.apply.short" = "Guardar";

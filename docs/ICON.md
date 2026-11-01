@@ -1,43 +1,47 @@
-# ShotMap Iris icon
+# ShotMap visual identity
 
-`ShotMap Iris` is the original visual identity for ShotMap. It combines an
-abstract eye-shaped viewfinder with a 3 x 3 field of rounded storyboard tiles.
-The dark central pupil means visual selection; its small gold highlight means
-the chosen representative frame. It intentionally avoids play buttons, camera
-bodies, film sprockets, letters, and third-party marks.
+The approved ShotMap logo combines an open navy frame, eight horizontal
+storyboard tiles and one blue video frame with a white playback triangle.
+The same clean geometry is used at large and small sizes. It contains no
+landscape illustrations, gradients or third-party brand artwork.
 
-## Palette
+## Canonical artwork
 
-- Indigo base: `#111B34` to `#263D73`
-- Viewfinder edge: `#EAF5FF`
-- Tile family: cyan, cool blue, periwinkle, and mint
-- Selection highlight: `#FFD174`
+- `Assets/Brand/mark.svg` — transparent light-background mark, viewBox `72 72 384 360`.
+- `Assets/Brand/mark-dark.svg` — the same geometry with a light frame for dark backgrounds.
+- `Assets/Brand/mark-mono.svg` — single-ink version with a transparent playback triangle.
+- `Assets/Brand/app-icon.svg` — the mark on the approved light rounded macOS surface.
 
-## Files
+Palette: navy `#14253D`, video blue `#1266E8`, playback white `#FFFFFF`.
+Dark-interface variants use `#E8F2FF` and `#559BFF`. The eight tiles measure
+56 × 32 vector units. The ninth blue frame retains the approved top-right
+position; do not add a tenth tile or decorate the individual frames.
 
-- `Assets/AppIcon-1024-source.png` — canonical original project artwork for the macOS app icon.
-- `Sources/ShotMapApp/Resources/AppIcon.png` — runtime mark shown inside the app UI, optically enlarged for small in-app placements.
+## Exports and rendering
 
-The packaging script creates a standard `.icns` only inside the app and DMG at
-package time. This preserves the source artwork's transparent canvas in the
-Dock; the system no longer adds a separate Icon Composer surface around it.
+Run `python3 scripts/generate_brand_assets.py` on macOS. It produces the
+1024px installer/Dock source, the 512px in-app Help resource, the 256px web
+icon, SVG and multi-resolution ICO favicons, and website mark variants.
+`Assets/Brand/manifest.json` records the derived files and SHA-256 hashes.
+The packaging script assembles the ICNS from the 1024px source before signing.
 
-The complete visible mark is optically scaled to about 60% on a transparent
-canvas. This intentionally reduces both the navy surface and the eye artwork,
-giving the Dock a comparable visual footprint to neighbouring macOS apps.
-The in-app resource deliberately uses the same artwork at a larger optical
-size, so sidebar, empty-state, Help, and About icons remain legible.
+The SwiftUI `ShotMapMarkGlyph` in `StudioControls.swift` draws the approved
+coordinates directly, including quadratic corners and an optically centred
+playback triangle. It adapts colours to the workspace appearance and avoids
+loading a bitmap during frequent view updates. Keep it in sync with the
+canonical SVG. Native About uses the bundle ICNS; Help uses the exported PNG.
 
-The icon was generated from an original art direction for this project and is
-distributed with the repository under its MIT license.
+All seven README files and website language pages use the same identity.
+When changing artwork, update asset cache keys and check light and dark
+backgrounds, favicon links on nested locale pages, native About, Dock and Finder.
 
 ## Interface pictograms
 
-The interface uses bundled [Tabler Icons Outline](https://github.com/tabler/tabler-icons)
-SVGs as native template images. Their strokes adapt to the current light or
-dark appearance. The unmodified third-party assets and their MIT attribution
-are documented in [NOTICE.md](../NOTICE.md).
+The logo is original project work under the [MIT License](../LICENSE).
+Interface pictograms remain unmodified
+[Tabler Icons Outline](https://github.com/tabler/tabler-icons) v3.49.0 SVGs,
+with the attribution in [NOTICE.md](../NOTICE.md). Do not replace those UI
+controls with brand artwork, emoji or a second icon family.
 
-The only non-project symbols visible during installation are macOS-owned
-system UI: Finder renders the Applications-folder alias and the Dock itself.
-Those system assets are not copied into or distributed by this repository.
+Finder renders the system Applications-folder alias during installation.
+Apple-owned system assets are not copied into the repository.

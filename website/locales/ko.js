@@ -34,7 +34,7 @@ export default {
   faqThreeQuestion: "프레임을 직접 바꿀 수 있나요?", faqThreeAnswer: "네. 스마트 선택으로 시작한 뒤 ‘프레임 직접 선택’에서 최종 장면을 고르면 됩니다.",
   faqFourQuestion: "스토리보드 이미지는 어디에 저장되나요?", faqFourAnswer: "기본적으로 원본 동영상과 같은 폴더에 저장됩니다. 저장 버튼으로 다른 위치를 선택할 수도 있습니다.",
   ctaEyebrow: "찾던 동영상이 있나요?", ctaTitle: "장면을 보고 원하는 동영상을 찾으세요.", ctaDetail: "Mac용 최신 국제판을 다운로드하세요. 7개 언어가 모두 포함되어 있습니다.",
-  ctaDownload: "최신 국제판 다운로드", ctaGithub: "GitHub에서 보기", github: "GitHub", releases: "릴리스", feedback: "의견 보내기",
+  ctaDownload: "v{version} 다운로드", ctaGithub: "GitHub에서 보기", github: "GitHub", releases: "릴리스", feedback: "의견 보내기",
   productAlt: "동영상 목록, 스토리보드 미리보기, 설정 패널이 있는 ShotMap 한국어 작업 화면",
   manualAlt: "플레이어, 타임라인, 후보 프레임이 있는 ShotMap 한국어 프레임 선택 화면"
 };

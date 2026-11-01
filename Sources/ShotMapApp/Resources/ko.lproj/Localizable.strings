@@ -21,6 +21,7 @@
 "export.width" = "너비";
 "export.width.value" = "%d px";
 "export.background" = "배경색";
+"background.white" = "순백색";
 "background.cinema" = "시네마 블랙";
 "background.ivory" = "따뜻한 아이보리";
 "background.navy" = "짙은 남색";
@@ -52,6 +53,7 @@
 "button.openSaved" = "Finder에서 보기";
 "button.openSaved.hint" = "최근에 만든 이미지를 Finder에서 표시";
 "button.adjustFrames" = "프레임 직접 선택";
+"button.adjustFrames.short" = "프레임 선택";
 "button.adjustFrames.hint" = "프레임을 선택한 다음 적용하여 스토리보드를 저장합니다";
 "button.previousResult" = "이전 스토리보드 보기";
 "button.nextResult" = "다음 스토리보드 보기";
@@ -154,6 +156,12 @@
 "editor.nextFrame" = "다음 프레임";
 "editor.forwardTenFrames" = "10프레임 앞으로";
 "editor.backFiveFrames" = "-5프레임";
+"editor.frameUnit.short" = "프레임";
+"editor.selectedFrameMarker" = "선택한 프레임 %d · %@";
+"editor.selectedFrameMarkers" = "선택한 프레임 %d–%d";
+"editor.manuallyAdded.short" = "직접 추가";
+"editor.manuallyAdded" = "직접 추가한 프레임";
+"editor.smartFill" = "선택한 프레임은 유지하고 나머지 칸을 자동으로 채웁니다.";
 "editor.backOneFrame" = "-1프레임";
 "editor.forwardOneFrame" = "+1프레임";
 "editor.forwardFiveFrames" = "+5프레임";
@@ -173,3 +181,16 @@
 "transcoding.step.two" = "H.264 또는 H.265 코덱을 사용해 MP4나 MOV로 내보내세요.";
 "transcoding.step.three" = "변환된 파일을 ShotMap으로 드래그해 스토리보드를 다시 만드세요.";
 "transcoding.tip" = "지원하지 않는 형식은 다시 시도해도 해결되지 않습니다. 원본을 보존하려면 변환한 동영상을 새 파일로 저장하세요. 완성된 스토리보드는 유지됩니다.";
+
+"error.insufficientUsableFrames" = "사용 가능한 프레임은 %d개이며 %d개가 필요합니다. 더 작은 격자나 다른 동영상을 선택하세요.";
+
+"workspace.toggleQueue" = "동영상 대기열 표시 전환";
+"workspace.toggleInspector" = "스토리보드 설정 표시 전환";
+"workspace.focusPreview" = "미리보기만 표시";
+"workspace.restorePanels" = "패널 복원";
+
+"editor.timeline" = "타임라인";
+"editor.addCurrentFrame.short" = "프레임 추가";
+"editor.smartSelect.short" = "자동 선택";
+"editor.regenerate.short" = "후보 새로고침";
+"editor.apply.short" = "저장";
