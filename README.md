@@ -1,3 +1,5 @@
+<p><img src="website/assets/app-icon.png?v=20261101-release017" width="72" height="72" alt="ShotMap" /></p>
+
 # ShotMap
 
 [![Latest release](https://img.shields.io/github/v/release/ixiehao/ShotMap?display_name=tag&label=release&color=2563eb)](https://github.com/ixiehao/ShotMap/releases/latest)
@@ -9,7 +11,7 @@
 
 **App interface in 7 languages:** English · 简体中文 · Français · Русский · Español · 日本語 · 한국어. All included in one download.
 
-![ShotMap's real English workspace creating a storyboard from Tears of Steel](website/assets/workspace-en.webp?v=20261017)
+![ShotMap's real English workspace creating a storyboard from Tears of Steel](website/assets/workspace-en.webp?v=20261101-release017)
 
 ## Your videos, easier to find.
 
@@ -44,9 +46,9 @@ Start with Smart Select, then replace any frame in the Manual Frame Editor. Shot
 
 ### See the real workflow
 
-This recording shows the real app moving from a completed storyboard to the Manual Frame Editor, where you can find a moment on the visual timeline and choose a better candidate before saving.
+This short demo shows the real app moving from a completed storyboard to the Manual Frame Editor, where you can find a moment on the visual timeline and choose a better candidate before saving.
 
-![ShotMap moves from its Tears of Steel storyboard workspace to the manual frame editor, showing the visual timeline and candidate gallery](docs/assets/video-to-storyboard-demo.gif?v=tears-20261016)
+![ShotMap moves from its Tears of Steel storyboard workspace to the manual frame editor, showing the visual timeline and candidate gallery](docs/assets/video-to-storyboard-demo.gif?v=20261101-release017)
 
 ## Download and install
 
@@ -56,7 +58,7 @@ The release page includes a SHA-256 checksum for people who want to verify their
 
 ### Choose your language
 
-Use the language menu in the top-right corner to switch instantly, without restarting or clearing your queue. On first launch, ShotMap matches a supported system language or falls back to English; it remembers your choice after that.
+Choose a language from the macOS menu bar to switch instantly, without restarting or clearing your queue. On first launch, ShotMap matches a supported system language or falls back to English; it remembers your choice after that.
 
 ## Private by design
 
@@ -72,7 +74,7 @@ Your videos stay on your Mac. ShotMap has no account, tracking, cloud upload, El
 
 ## Rights and license
 
-- ShotMap’s Swift source, documentation, and Iris icon are original project work released under the [MIT License](LICENSE).
+- ShotMap’s Swift source, documentation, and app icon are original project work released under the [MIT License](LICENSE).
 - The app uses Apple SDK frameworks only. It bundles no third-party application code, packages, analytics SDKs, or MoviePrint assets.
 - The bundled [Tabler Icons Outline](https://github.com/tabler/tabler-icons) SVGs are used unmodified under the [MIT License](ThirdPartyLicenses/TablerIcons-MIT.txt). The bundled Noto Sans CJK font is licensed under the [SIL Open Font License 1.1](ThirdPartyLicenses/NotoSansCJK-OFL-1.1.txt). See [NOTICE.md](NOTICE.md) for details.
 - Documentation demo footage is *Tears of Steel* (2012) © Blender Foundation / Blender Institute, used under [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/).

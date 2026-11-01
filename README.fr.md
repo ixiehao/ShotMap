@@ -1,3 +1,5 @@
+<p><img src="website/assets/app-icon.png?v=20261101-release017" width="72" height="72" alt="ShotMap" /></p>
+
 # ShotMap
 
 [![Dernière version](https://img.shields.io/github/v/release/ixiehao/ShotMap?display_name=tag&label=release&color=2563eb)](https://github.com/ixiehao/ShotMap/releases/latest)
@@ -9,7 +11,7 @@
 
 **L’application est disponible en 7 langues :** English · 简体中文 · Français · Русский · Español · 日本語 · 한국어. Toutes sont incluses dans un seul téléchargement.
 
-![Interface anglaise de ShotMap créant une planche d’images à partir de Tears of Steel](website/assets/workspace-en.webp?v=20261017)
+![ShotMap en français crée une planche à partir de Tears of Steel](website/assets/workspace-fr.webp?v=20261101-release017)
 
 *L’exemple ci-dessus montre l’interface en anglais. L’application est aussi disponible en français.*
 
@@ -46,9 +48,9 @@ Commencez par **Sélection auto**, puis remplacez les images de votre choix dans
 
 ### Voir l’application en action
 
-Cet enregistrement montre le passage d’une planche terminée au choix manuel des images. La chronologie permet de retrouver un moment, puis la galerie de choisir une autre image avant d’enregistrer.
+Cette démonstration montre le passage d’une planche terminée au choix manuel des images. La chronologie permet de retrouver un moment, puis la galerie de choisir une autre image avant d’enregistrer.
 
-![ShotMap passe de la planche Tears of Steel au choix manuel des images, avec chronologie et galerie](docs/assets/video-to-storyboard-demo.gif?v=tears-20261016)
+![ShotMap passe de la planche Tears of Steel au choix manuel des images, avec chronologie et galerie](docs/assets/video-to-storyboard-demo.gif?v=20261101-release017)
 
 ## Télécharger et installer
 
@@ -58,7 +60,7 @@ La page de version fournit une somme de contrôle SHA-256 pour vérifier le tél
 
 ### Choisir la langue
 
-Utilisez le menu de langue en haut à droite pour changer immédiatement, sans redémarrer ni vider la file de vidéos. Au premier lancement, ShotMap utilise la langue du système si elle est prise en charge, sinon l’anglais. Il mémorise ensuite votre choix.
+Changez de langue depuis la barre de menus macOS pour changer immédiatement, sans redémarrer ni vider la file de vidéos. Au premier lancement, ShotMap utilise la langue du système si elle est prise en charge, sinon l’anglais. Il mémorise ensuite votre choix.
 
 ## Vos vidéos restent privées
 
@@ -74,7 +76,7 @@ Vos vidéos restent sur votre Mac. ShotMap ne nécessite aucun compte et n’int
 
 ## Droits et licences
 
-- Le code Swift, la documentation et l’icône Iris sont des créations originales du projet, publiées sous [licence MIT](LICENSE).
+- Le code Swift, la documentation et l’icône de l’application sont des créations originales du projet, publiées sous [licence MIT](LICENSE).
 - L’application utilise uniquement les frameworks des SDK Apple. Elle n’intègre aucun code d’application tiers, paquet logiciel, SDK d’analyse ou élément de MoviePrint.
 - Les SVG [Tabler Icons Outline](https://github.com/tabler/tabler-icons) sont utilisés sans modification sous [licence MIT](ThirdPartyLicenses/TablerIcons-MIT.txt). La police Noto Sans CJK fournie est sous [SIL Open Font License 1.1](ThirdPartyLicenses/NotoSansCJK-OFL-1.1.txt). Voir [NOTICE.md](NOTICE.md).
 - La vidéo de démonstration est *Tears of Steel* (2012) © Blender Foundation / Blender Institute, sous licence [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/).

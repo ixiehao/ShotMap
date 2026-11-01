@@ -3,7 +3,7 @@ export default {
   pageDescription: "Encuentra tus vídeos con un mosaico de imágenes. ShotMap ofrece 7 idiomas, selección manual de fotogramas y exportación en tu Mac. Gratis y de código abierto.",
   ogTitle: "ShotMap — Tus vídeos, más fáciles de encontrar",
   ogDescription: "Reúne los momentos de un vídeo en una sola imagen. Una app gratuita para Mac, disponible en 7 idiomas.",
-  socialPreviewAlt: "ShotMap en inglés: selección manual de fotogramas con reproductor, línea de tiempo y galería",
+  socialPreviewAlt: "ShotMap para Mac con su nuevo icono y un mosaico de Tears of Steel",
   schemaFeatureList: "Interfaz en 7 idiomas; mosaicos de vídeo; selección manual de fotogramas; cola de varios vídeos; exportación PNG y JPG; procesamiento local",
   locale: "es_ES", languageLabel: "Idioma del sitio", navigationLabel: "Navegación principal", homeLabel: "Inicio de ShotMap", skipLink: "Ir al contenido",
   navWorkflow: "Cómo se usa", navFeatures: "Funciones", navPrivacy: "Privacidad", download: "Descargar",
@@ -11,7 +11,7 @@ export default {
   heroSummary: "Reúne los momentos de cada vídeo en un mosaico de imágenes.",
   heroDownload: "Descargar para macOS", viewSource: "Ver en GitHub",
   compatibility: "macOS 13 o posterior · Apple Silicon e Intel · Gratis y de código abierto",
-  productCaption: "Espacio de trabajo de ShotMap — interfaz en inglés",
+  productCaption: "Espacio de trabajo de ShotMap",
   appLanguagesTitle: "Una descarga, siete idiomas.",
   appLanguagesDetail: "Cambia de idioma en la app sin reiniciarla.",
   demoCredit: "Las imágenes de demostración usan <a href=\"https://mango.blender.org/\" rel=\"noreferrer\">Tears of Steel</a> (2012), de Blender Foundation / Blender Institute, con licencia <a href=\"https://creativecommons.org/licenses/by/3.0/\" rel=\"license noreferrer\">CC BY 3.0</a>.",
@@ -23,7 +23,7 @@ export default {
   precisionEyebrow: "TÚ ELIGES LAS IMÁGENES", precisionTitle: "¿Buscas otro momento? Elígelo tú.",
   precisionText: "Selección auto propone los primeros fotogramas. Abre Elegir fotogramas y usa la línea de tiempo, los botones de avance por fotogramas o la marca de tiempo para sustituir cualquiera de ellos.",
   precisionPointOne: "Consulta los fotogramas en la línea de tiempo", precisionPointTwo: "Avanza o retrocede 1 o 5 fotogramas", precisionPointThree: "Los fotogramas elegidos siguen el orden del vídeo",
-  manualCaption: "Selección manual de fotogramas — interfaz en inglés",
+  manualCaption: "Selección manual de fotogramas",
   capabilitiesEyebrow: "UN MOSAICO A TU MEDIDA", capabilitiesTitle: "Los ajustes que necesitas, sin complicaciones.",
   featureOneTitle: "Tamaño de la cuadrícula", featureOneText: "Elige de 3 × 3 a 8 × 8 según cuántas imágenes necesites.",
   featureTwoTitle: "El nombre del archivo en la imagen", featureTwoText: "Puedes mostrar el nombre del archivo y las marcas de tiempo para encontrar antes el vídeo que buscas.",
@@ -39,6 +39,6 @@ export default {
   ctaEyebrow: "¿BUSCAMOS ESE VÍDEO?", ctaTitle: "Encuentra el vídeo que buscabas.",
   ctaDetail: "Descarga la última versión internacional para Mac. Incluye los siete idiomas.",
   ctaDownload: "Descargar versión internacional", ctaGithub: "Ver en GitHub", github: "GitHub", releases: "Versiones", feedback: "Comentarios",
-  productAlt: "Interfaz en inglés de ShotMap con cola de vídeos, vista previa del mosaico y ajustes",
-  manualAlt: "Interfaz en inglés de ShotMap para elegir fotogramas, con reproductor, línea de tiempo y galería"
+  productAlt: "ShotMap en español con cola de vídeos, vista previa del mosaico y ajustes",
+  manualAlt: "Selección de fotogramas en español con reproductor, línea de tiempo y galería"
 };

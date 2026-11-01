@@ -1,3 +1,5 @@
+<p><img src="website/assets/app-icon.png?v=20261101-release017" width="72" height="72" alt="ShotMap" /></p>
+
 # ShotMap
 
 [![Última versión](https://img.shields.io/github/v/release/ixiehao/ShotMap?display_name=tag&label=release&color=2563eb)](https://github.com/ixiehao/ShotMap/releases/latest)
@@ -9,7 +11,7 @@
 
 **La app está disponible en 7 idiomas:** English · 简体中文 · Français · Русский · Español · 日本語 · 한국어. Todos incluidos en una sola descarga.
 
-![Interfaz en inglés de ShotMap creando un mosaico a partir de Tears of Steel](website/assets/workspace-en.webp?v=20261017)
+![ShotMap en español creando un mosaico de Tears of Steel](website/assets/workspace-es.webp?v=20261101-release017)
 
 *El ejemplo muestra la interfaz en inglés. La app también está disponible en español.*
 
@@ -46,9 +48,9 @@ Empieza con **Selección auto** y sustituye los fotogramas que quieras en **Eleg
 
 ### Mira cómo funciona
 
-Esta grabación muestra el paso de un mosaico terminado a la selección manual. Puedes localizar un momento en la línea de tiempo, elegir otra imagen en la galería y guardar el resultado.
+Esta demostración muestra el paso de un mosaico terminado a la selección manual. Puedes localizar un momento en la línea de tiempo, elegir otra imagen en la galería y guardar el resultado.
 
-![ShotMap pasa del mosaico de Tears of Steel a la selección manual de fotogramas, con línea de tiempo y galería](docs/assets/video-to-storyboard-demo.gif?v=tears-20261016)
+![ShotMap pasa del mosaico de Tears of Steel a la selección manual de fotogramas, con línea de tiempo y galería](docs/assets/video-to-storyboard-demo.gif?v=20261101-release017)
 
 ## Descargar e instalar
 
@@ -58,7 +60,7 @@ La página de la versión incluye una suma de comprobación SHA-256 para verific
 
 ### Elegir el idioma
 
-Usa el menú de idiomas de la esquina superior derecha para cambiar al instante, sin reiniciar ni vaciar la cola. Al abrirse por primera vez, ShotMap usa el idioma del sistema si está disponible; en caso contrario, usa inglés. Después recuerda tu elección.
+Usa el menú de idiomas de la barra de menús de macOS para cambiar al instante, sin reiniciar ni vaciar la cola. Al abrirse por primera vez, ShotMap usa el idioma del sistema si está disponible; en caso contrario, usa inglés. Después recuerda tu elección.
 
 ## Tus vídeos se quedan en tu Mac
 
@@ -74,7 +76,7 @@ ShotMap no requiere cuenta, no hace seguimiento ni sube vídeos a la nube. Tampo
 
 ## Derechos y licencias
 
-- El código Swift, la documentación y el icono Iris son creaciones originales del proyecto, publicadas bajo la [licencia MIT](LICENSE).
+- El código Swift, la documentación y el icono de la aplicación son creaciones originales del proyecto, publicadas bajo la [licencia MIT](LICENSE).
 - La app solo usa frameworks de los SDK de Apple. No incluye código de aplicaciones de terceros, paquetes, SDK de análisis ni recursos de MoviePrint.
 - Los SVG de [Tabler Icons Outline](https://github.com/tabler/tabler-icons) se usan sin modificar bajo la [licencia MIT](ThirdPartyLicenses/TablerIcons-MIT.txt). La fuente Noto Sans CJK incluida usa la [SIL Open Font License 1.1](ThirdPartyLicenses/NotoSansCJK-OFL-1.1.txt). Consulta [NOTICE.md](NOTICE.md).
 - El vídeo de demostración es *Tears of Steel* (2012) © Blender Foundation / Blender Institute, con licencia [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/).

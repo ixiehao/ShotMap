@@ -1,3 +1,5 @@
+<p><img src="website/assets/app-icon.png?v=20261101-release017" width="72" height="72" alt="ShotMap" /></p>
+
 # ShotMap
 
 [![최신 릴리스](https://img.shields.io/github/v/release/ixiehao/ShotMap?display_name=tag&label=release&color=2563eb)](https://github.com/ixiehao/ShotMap/releases/latest)
@@ -9,7 +11,7 @@
 
 **앱은 7개 언어를 지원합니다:** English · 简体中文 · Français · Русский · Español · 日本語 · 한국어. 하나의 설치 파일에 모두 포함되어 있습니다.
 
-![Tears of Steel의 장면을 스토리보드로 만드는 ShotMap 작업 화면 — 영어 인터페이스](website/assets/workspace-en.webp?v=20261017)
+![Tears of Steel의 장면을 스토리보드로 만드는 ShotMap 한국어 작업 화면](website/assets/workspace-ko.webp?v=20261101-release017)
 
 *스크린샷은 실제 앱의 영어 인터페이스입니다. 앱에서 한국어로 바꿀 수 있습니다.*
 
@@ -48,7 +50,7 @@
 
 완성된 스토리보드에서 프레임 선택 화면을 열고, 타임라인에서 원하는 순간을 찾아 후보를 고른 뒤 저장하는 과정입니다.
 
-![Tears of Steel 스토리보드에서 프레임 선택 화면으로 이동해 타임라인과 후보 갤러리를 사용하는 ShotMap 데모](docs/assets/video-to-storyboard-demo.gif?v=tears-20261016)
+![Tears of Steel 스토리보드에서 프레임 선택 화면으로 이동해 타임라인과 후보 갤러리를 사용하는 ShotMap 데모](docs/assets/video-to-storyboard-demo.gif?v=20261101-release017)
 
 ## 다운로드 및 설치
 
@@ -58,7 +60,7 @@
 
 ### 인터페이스 언어 선택
 
-오른쪽 위 언어 메뉴에서 바로 바꿀 수 있습니다. 앱을 재시작할 필요가 없으며 작업 목록도 유지됩니다. 처음 실행할 때는 지원하는 시스템 언어를 사용하고, 해당 언어가 없으면 영어로 표시합니다. 이후에는 선택한 언어를 기억합니다.
+macOS 메뉴 막대에서 언어를 바꿀 수 있습니다. 앱을 재시작할 필요가 없으며 작업 목록도 유지됩니다. 처음 실행할 때는 지원하는 시스템 언어를 사용하고, 해당 언어가 없으면 영어로 표시합니다. 이후에는 선택한 언어를 기억합니다.
 
 ## 동영상은 내 Mac에만
 
@@ -74,7 +76,7 @@ ShotMap은 계정, 추적, 클라우드 업로드를 사용하지 않습니다. 
 
 ## 권리 및 라이선스
 
-- ShotMap의 Swift 소스, 문서, Iris 아이콘은 이 프로젝트의 창작물이며 [MIT 라이선스](LICENSE)로 배포합니다.
+- ShotMap의 Swift 소스, 문서, 앱 아이콘은 이 프로젝트의 창작물이며 [MIT 라이선스](LICENSE)로 배포합니다.
 - 앱은 Apple SDK 프레임워크만 사용합니다. 타사 애플리케이션 코드, 패키지, 분석 SDK, MoviePrint 에셋을 포함하지 않습니다.
 - 포함된 [Tabler Icons Outline](https://github.com/tabler/tabler-icons) SVG는 수정 없이 [MIT 라이선스](ThirdPartyLicenses/TablerIcons-MIT.txt)에 따라 사용합니다. Noto Sans CJK 글꼴은 [SIL Open Font License 1.1](ThirdPartyLicenses/NotoSansCJK-OFL-1.1.txt)을 따릅니다. 자세한 내용은 [NOTICE.md](NOTICE.md)를 참조하세요.
 - 문서의 데모 영상은 *Tears of Steel*(2012) © Blender Foundation / Blender Institute이며, [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/)에 따라 사용합니다.

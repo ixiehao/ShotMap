@@ -1,3 +1,5 @@
+<p><img src="website/assets/app-icon.png?v=20261101-release017" width="72" height="72" alt="ShotMap" /></p>
+
 # 视频一键拼图（ShotMap）
 
 [![最新版本](https://img.shields.io/github/v/release/ixiehao/ShotMap?display_name=tag&label=release&color=2563eb)](https://github.com/ixiehao/ShotMap/releases/latest)
@@ -9,7 +11,7 @@
 
 **应用界面支持七种语言：**English · 简体中文 · Français · Русский · Español · 日本語 · 한국어。一个安装包，全部包含。
 
-![ShotMap 中文工作区正在处理《Tears of Steel》并生成分镜图](website/assets/workspace-zh.webp?v=20261017)
+![ShotMap 中文工作区正在处理《Tears of Steel》并生成分镜图](website/assets/workspace-zh.webp?v=20261101-release017)
 
 ## 你的视频，不再难找。
 
@@ -44,9 +46,9 @@
 
 ### 看看真实操作
 
-下方录屏来自真实软件：从已完成的分镜图进入手动选帧窗口，在可视化时间轴上定位画面，再从候选区选择更合适的一帧后保存。
+下方动画由真实操作画面整理而成：从已完成的分镜图进入手动选帧窗口，在可视化时间轴上定位画面，再从候选区选择更合适的一帧后保存。
 
-![ShotMap 从 Tears of Steel 分镜工作区进入手动选帧窗口，展示可视化时间轴与候选画廊](docs/assets/video-to-storyboard-demo.gif?v=tears-20261016)
+![ShotMap 从 Tears of Steel 分镜工作区进入手动选帧窗口，展示可视化时间轴与候选画廊](docs/assets/video-to-storyboard-demo.gif?v=20261101-release017)
 
 ## 下载与安装
 
@@ -56,7 +58,7 @@
 
 ### 选择界面语言
 
-点击右上角的语言菜单即可切换，无需重启，也不会清空队列。首次启动会匹配支持的系统语言，否则使用英语；手动选择后会记住你的设置。
+在 macOS 菜单栏的“显示”菜单中切换语言，无需重启，也不会清空队列。首次启动会匹配支持的系统语言，否则使用英语；手动选择后会记住你的设置。
 
 ## 隐私优先
 
@@ -72,7 +74,7 @@
 
 ## 权利与许可
 
-- ShotMap 的 Swift 源码、文档和 Iris 图标均为本项目原创内容，按 [MIT License](LICENSE) 发布。
+- ShotMap 的 Swift 源码、文档和 应用图标均为本项目原创内容，按 [MIT License](LICENSE) 发布。
 - 应用只使用 Apple SDK 框架；未包含第三方应用代码、依赖包、分析 SDK 或 MoviePrint 素材。
 - 内置的 [Tabler Icons Outline](https://github.com/tabler/tabler-icons) SVG 保持原样，按 [MIT License](ThirdPartyLicenses/TablerIcons-MIT.txt) 使用；内置 Noto Sans CJK 字体采用 [SIL Open Font License 1.1](ThirdPartyLicenses/NotoSansCJK-OFL-1.1.txt)。详情见 [NOTICE.md](NOTICE.md)。
 - 文档演示视频《Tears of Steel》（2012）© Blender Foundation / Blender Institute，采用 [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) 许可。

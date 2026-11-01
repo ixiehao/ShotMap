@@ -3,7 +3,7 @@ export default {
   pageDescription: "Retrouvez vos vidéos grâce à une planche d’images. ShotMap propose 7 langues, le choix manuel des images et l’export sur votre Mac. Gratuit et open source.",
   ogTitle: "ShotMap — Vos vidéos, faciles à retrouver",
   ogDescription: "Les moments d’une vidéo réunis en une image. Une application Mac gratuite, disponible en 7 langues.",
-  socialPreviewAlt: "ShotMap en anglais : choix manuel des images avec lecteur vidéo, chronologie et galerie",
+  socialPreviewAlt: "ShotMap sur Mac : nouveau logo et planche d’images de Tears of Steel",
   schemaFeatureList: "Interface en 7 langues ; planches d’images vidéo ; choix manuel des images ; traitement de plusieurs vidéos ; export PNG et JPG ; traitement local",
   locale: "fr_FR", languageLabel: "Langue du site", navigationLabel: "Navigation principale", homeLabel: "Accueil de ShotMap", skipLink: "Aller au contenu",
   navWorkflow: "Utilisation", navFeatures: "Fonctions", navPrivacy: "Confidentialité", download: "Télécharger",
@@ -11,7 +11,7 @@ export default {
   heroSummary: "Réunissez les moments d’une vidéo sur une seule planche d’images.",
   heroDownload: "Télécharger pour macOS", viewSource: "Voir sur GitHub",
   compatibility: "macOS 13 ou ultérieur · Apple Silicon et Intel · Gratuit et open source",
-  productCaption: "Espace de travail ShotMap — interface en anglais",
+  productCaption: "Espace de travail ShotMap",
   appLanguagesTitle: "Un téléchargement, sept langues.",
   appLanguagesDetail: "Changez de langue dans l’application, sans la redémarrer.",
   demoCredit: "Les images de démonstration proviennent de <a href=\"https://mango.blender.org/\" rel=\"noreferrer\">Tears of Steel</a> (2012), de Blender Foundation / Blender Institute, sous licence <a href=\"https://creativecommons.org/licenses/by/3.0/\" rel=\"license noreferrer\">CC BY 3.0</a>.",
@@ -23,7 +23,7 @@ export default {
   precisionEyebrow: "À VOUS DE CHOISIR", precisionTitle: "Un autre moment en tête ? Choisissez-le.",
   precisionText: "Sélection auto vous propose les premières images. Ouvrez Choisir les images, puis utilisez la chronologie, les boutons image par image ou le timecode pour remplacer une image.",
   precisionPointOne: "Repérez les images sur la chronologie", precisionPointTwo: "Avancez ou reculez de 1 ou 5 images", precisionPointThree: "Les images choisies suivent l’ordre de la vidéo",
-  manualCaption: "Choix manuel des images — interface en anglais",
+  manualCaption: "Choix manuel des images",
   capabilitiesEyebrow: "UNE PLANCHE À VOTRE GOÛT", capabilitiesTitle: "Les réglages utiles, tout simplement.",
   featureOneTitle: "Taille de la grille", featureOneText: "De 3 × 3 à 8 × 8, choisissez le nombre d’images dont vous avez besoin.",
   featureTwoTitle: "Le nom du fichier sur l’image", featureTwoText: "Affichez le nom du fichier et les timecodes pour retrouver plus vite la bonne vidéo.",
@@ -39,6 +39,6 @@ export default {
   ctaEyebrow: "PRÊT À RETROUVER VOS VIDÉOS ?", ctaTitle: "Retrouvez la vidéo que vous cherchez.",
   ctaDetail: "Téléchargez la dernière version internationale pour Mac. Les sept langues sont incluses.",
   ctaDownload: "Télécharger la version internationale", ctaGithub: "Voir sur GitHub", github: "GitHub", releases: "Versions", feedback: "Vos retours",
-  productAlt: "Interface anglaise de ShotMap avec liste des vidéos, aperçu de la planche et réglages",
-  manualAlt: "Interface anglaise de ShotMap pour choisir les images : lecteur, chronologie et galerie"
+  productAlt: "ShotMap en français : liste des vidéos, aperçu de la planche et réglages",
+  manualAlt: "Choix manuel des images en français : lecteur, chronologie et galerie"
 };

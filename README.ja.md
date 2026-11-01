@@ -1,3 +1,5 @@
+<p><img src="website/assets/app-icon.png?v=20261101-release017" width="72" height="72" alt="ShotMap" /></p>
+
 # ShotMap
 
 [![最新リリース](https://img.shields.io/github/v/release/ixiehao/ShotMap?display_name=tag&label=release&color=2563eb)](https://github.com/ixiehao/ShotMap/releases/latest)
@@ -9,7 +11,7 @@
 
 **アプリは7言語に対応：** English · 简体中文 · Français · Русский · Español · 日本語 · 한국어。ひとつのダウンロードにすべて含まれています。
 
-![Tears of Steelの場面を一枚にまとめるShotMapの日本語ワークスペース](website/assets/workspace-ja.webp?v=20261017)
+![Tears of Steelの場面を一枚にまとめるShotMapの日本語ワークスペース](website/assets/workspace-ja.webp?v=20261101-release017)
 
 ## 動画を、見つけやすく。
 
@@ -46,7 +48,7 @@
 
 完成した画像から手動コマ選択画面を開き、タイムラインで場面を探して候補を選び、保存する流れです。
 
-![Tears of Steelの場面をまとめたShotMapワークスペースから、タイムラインと候補一覧のある手動コマ選択画面へ移る操作](docs/assets/video-to-storyboard-demo.gif?v=tears-20261016)
+![Tears of Steelの場面をまとめたShotMapワークスペースから、タイムラインと候補一覧のある手動コマ選択画面へ移る操作](docs/assets/video-to-storyboard-demo.gif?v=20261101-release017)
 
 ## ダウンロードとインストール
 
@@ -56,7 +58,7 @@
 
 ### 表示言語を選ぶ
 
-右上の言語メニューですぐに切り替えられます。再起動は不要で、動画のキューも保持されます。初回起動時は対応するシステム言語を使い、該当しない場合は英語で表示します。その後は選んだ言語を記憶します。
+macOSのメニューバーで表示言語を切り替えられます。再起動は不要で、動画のキューも保持されます。初回起動時は対応するシステム言語を使い、該当しない場合は英語で表示します。その後は選んだ言語を記憶します。
 
 ## 動画は手元に
 
@@ -72,7 +74,7 @@
 
 ## 権利とライセンス
 
-- ShotMapのSwiftソース、文書、Irisアイコンは本プロジェクトのオリジナルであり、[MITライセンス](LICENSE)で公開しています。
+- ShotMapのSwiftソース、文書、アプリアイコンは本プロジェクトのオリジナルであり、[MITライセンス](LICENSE)で公開しています。
 - アプリはApple SDKのフレームワークのみを使用し、第三者のアプリケーションコード、パッケージ、分析SDK、MoviePrint素材を含みません。
 - 同梱の[Tabler Icons Outline](https://github.com/tabler/tabler-icons) SVGは未改変で、[MITライセンス](ThirdPartyLicenses/TablerIcons-MIT.txt)に基づいて使用しています。Noto Sans CJKフォントは[SIL Open Font License 1.1](ThirdPartyLicenses/NotoSansCJK-OFL-1.1.txt)に基づきます。詳細は[NOTICE.md](NOTICE.md)をご覧ください。
 - 文書内のデモ映像は*Tears of Steel*（2012）© Blender Foundation / Blender Institute、[CC BY 3.0](https://creativecommons.org/licenses/by/3.0/)ライセンスです。

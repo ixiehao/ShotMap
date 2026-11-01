@@ -14,11 +14,10 @@ export const languageNames = { en: "English", zh: "简体中文", fr: "Français
 export const localeURLs = Object.fromEntries(Object.keys(translations).map(language => [language, siteURL + (language === "en" ? "" : language + "/")]));
 export const htmlLanguage = language => language === "zh" ? "zh-CN" : language;
 
-// Reuse real captures; captions identify the English UI in the four new locales.
+// Every page uses a complete, real application capture in its own language.
 export const localizedVisualAssets = Object.fromEntries(Object.entries(translations).map(([language, copy]) => {
-  const imageLanguage = ["en", "zh", "ja"].includes(language) ? language : "en";
   return [language, {
-    product: [`assets/workspace-${imageLanguage}.webp?v=20261017`, copy.productAlt, 1400, 995],
-    manual: [`assets/manual-${imageLanguage}.webp?v=20261017`, copy.manualAlt, 1280, 828]
+    product: [`assets/workspace-${language}.webp?v=20261101-release017`, copy.productAlt, 1800, 1130],
+    manual: [`assets/manual-${language}.webp?v=20261101-release017`, copy.manualAlt, 1600, 1035]
   }];
 }));

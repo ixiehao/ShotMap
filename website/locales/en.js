@@ -3,7 +3,7 @@ export default {
   "pageDescription": "Turn videos into storyboards on your Mac. ShotMap supports seven interface languages, manual frame selection, and private local export. Free and open source.",
   "ogTitle": "ShotMap — Your videos, easier to find",
   "ogDescription": "Find the clip you need with a clear storyboard. Seven interface languages in one free Mac app.",
-  "socialPreviewAlt": "ShotMap Manual Frame Editor with the video player, timeline, and candidate frames",
+  "socialPreviewAlt": "ShotMap on macOS with its new logo and a real Tears of Steel storyboard",
   "schemaFeatureList": "Seven interface languages; visual video storyboards; manual frame selection; multi-video queue; PNG and JPG export; local processing",
   "locale": "en_US",
   "languageLabel": "Website language",
