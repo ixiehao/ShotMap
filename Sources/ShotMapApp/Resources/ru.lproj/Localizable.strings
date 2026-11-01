@@ -21,6 +21,7 @@
 "export.width" = "Ширина";
 "export.width.value" = "%d px";
 "export.background" = "Фон";
+"background.white" = "Чистый белый";
 "background.cinema" = "Глубокий чёрный";
 "background.ivory" = "Тёплая слоновая кость";
 "background.navy" = "Тёмно-синий";
@@ -52,6 +53,7 @@
 "button.openSaved" = "Показать в Finder";
 "button.openSaved.hint" = "Показать последнее созданное изображение в Finder";
 "button.adjustFrames" = "Выбрать кадры вручную";
+"button.adjustFrames.short" = "Выбрать кадры";
 "button.adjustFrames.hint" = "Выберите кадры, затем примените изменения и сохраните раскадровку";
 "button.previousResult" = "Предыдущая раскадровка";
 "button.nextResult" = "Следующая раскадровка";
@@ -154,6 +156,12 @@
 "editor.nextFrame" = "Следующий кадр";
 "editor.forwardTenFrames" = "На 10 кадров вперёд";
 "editor.backFiveFrames" = "−5 кадр.";
+"editor.frameUnit.short" = "кадр.";
+"editor.selectedFrameMarker" = "Выбранный кадр %d · %@";
+"editor.selectedFrameMarkers" = "Выбранные кадры %d–%d";
+"editor.manuallyAdded.short" = "Вручную";
+"editor.manuallyAdded" = "Кадр, добавленный вручную";
+"editor.smartFill" = "Сохраняет выбранные кадры и заполняет оставшиеся места.";
 "editor.backOneFrame" = "−1 кадр";
 "editor.forwardOneFrame" = "+1 кадр";
 "editor.forwardFiveFrames" = "+5 кадр.";
@@ -173,3 +181,16 @@
 "transcoding.step.two" = "Экспортируйте в MP4 или MOV с кодеком H.264 или H.265.";
 "transcoding.step.three" = "Перетащите преобразованные файлы в ShotMap и создайте раскадровки снова.";
 "transcoding.tip" = "Повторная попытка не исправит неподдерживаемый формат. Сохраняйте преобразованные видео как новые файлы, чтобы не потерять оригиналы. Готовые раскадровки останутся.";
+
+"error.insufficientUsableFrames" = "Найдено пригодных кадров: %d, требуется: %d. Выберите сетку поменьше или другое видео.";
+
+"workspace.toggleQueue" = "Показать или скрыть очередь видео";
+"workspace.toggleInspector" = "Показать или скрыть настройки раскадровки";
+"workspace.focusPreview" = "Только предпросмотр";
+"workspace.restorePanels" = "Восстановить панели";
+
+"editor.timeline" = "Шкала времени";
+"editor.addCurrentFrame.short" = "Добавить кадр";
+"editor.smartSelect.short" = "Автовыбор";
+"editor.regenerate.short" = "Обновить";
+"editor.apply.short" = "Сохранить";

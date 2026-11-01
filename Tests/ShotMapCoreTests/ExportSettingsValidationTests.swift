@@ -2,6 +2,27 @@ import XCTest
 @testable import ShotMapApp
 
 final class ExportSettingsValidationTests: XCTestCase {
+    @MainActor
+    func testFreshWorkspaceAndExportDefaultsMatchTheRequestedPreset() {
+        let model = StoryboardViewModel()
+        let settings = ExportSettings()
+        XCTAssertEqual(model.gridSide, 3)
+        XCTAssertEqual(model.activeGridSide, 3)
+        XCTAssertEqual(model.layoutAspect, .source)
+        XCTAssertEqual(model.width, 1920)
+        XCTAssertEqual(model.background, .ivory)
+        XCTAssertEqual(model.format, .jpeg)
+        XCTAssertTrue(model.showTimestamps)
+        XCTAssertFalse(model.showTitleWatermark)
+        XCTAssertEqual(settings.gridSide, model.gridSide)
+        XCTAssertEqual(settings.layoutAspect, model.layoutAspect)
+        XCTAssertEqual(settings.width, model.width)
+        XCTAssertEqual(settings.background, model.background)
+        XCTAssertEqual(settings.format, model.format)
+        XCTAssertEqual(settings.showTimestamps, model.showTimestamps)
+        XCTAssertEqual(settings.showTitleWatermark, model.showTitleWatermark)
+    }
+
     func testInvalidGridSettingsRenderWithinTheSupportedBudget() throws {
         let result = StoryboardResult(frames: [], sourceURL: URL(fileURLWithPath: "/tmp/empty.mp4"))
         for (requestedSide, expectedSide) in [(Int.min, 3), (0, 3), (Int.max, 8)] {

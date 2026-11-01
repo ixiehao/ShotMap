@@ -34,7 +34,7 @@ export default {
   faqThreeQuestion: "自分でコマを置き換えられますか？", faqThreeAnswer: "はい。自動選択した候補をもとに、「手動でコマを選択」で最後の調整ができます。",
   faqFourQuestion: "作成した画像はどこに保存されますか？", faqFourAnswer: "標準では元動画と同じフォルダに保存されます。「別名で保存」で別の場所も選べます。",
   ctaEyebrow: "あの動画を、もう一度", ctaTitle: "見たい動画を、場面から探す。", ctaDetail: "Mac向けの最新国際版をダウンロード。7言語すべてが含まれています。",
-  ctaDownload: "最新国際版をダウンロード", ctaGithub: "GitHubで見る", github: "GitHub", releases: "リリース", feedback: "フィードバック",
+  ctaDownload: "v{version} をダウンロード", ctaGithub: "GitHubで見る", github: "GitHub", releases: "リリース", feedback: "フィードバック",
   productAlt: "ShotMapの日本語ワークスペース。動画一覧、絵コンテのプレビュー、設定パネルを表示",
   manualAlt: "ShotMapの日本語手動コマ選択画面。プレーヤー、タイムライン、候補コマを表示"
 };

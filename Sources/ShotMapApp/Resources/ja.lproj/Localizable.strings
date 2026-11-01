@@ -21,6 +21,7 @@
 "export.width" = "幅";
 "export.width.value" = "%d px";
 "export.background" = "背景色";
+"background.white" = "ピュアホワイト";
 "background.cinema" = "シネマブラック";
 "background.ivory" = "ウォームアイボリー";
 "background.navy" = "ディープネイビー";
@@ -52,6 +53,7 @@
 "button.openSaved" = "Finder に表示";
 "button.openSaved.hint" = "最後に作成した画像を Finder に表示します";
 "button.adjustFrames" = "手動でコマを選択";
+"button.adjustFrames.short" = "コマを選ぶ";
 "button.adjustFrames.hint" = "コマを選び、適用して絵コンテを保存します";
 "button.previousResult" = "前の絵コンテを表示";
 "button.nextResult" = "次の絵コンテを表示";
@@ -154,6 +156,12 @@
 "editor.nextFrame" = "次のコマ";
 "editor.forwardTenFrames" = "10 コマ進む";
 "editor.backFiveFrames" = "-5コマ";
+"editor.frameUnit.short" = "コマ";
+"editor.selectedFrameMarker" = "選択したフレーム %d · %@";
+"editor.selectedFrameMarkers" = "選択したフレーム %d–%d";
+"editor.manuallyAdded.short" = "手動";
+"editor.manuallyAdded" = "手動で追加したフレーム";
+"editor.smartFill" = "選択済みのフレームを残し、残りの枠を自動で埋めます。";
 "editor.backOneFrame" = "-1コマ";
 "editor.forwardOneFrame" = "+1コマ";
 "editor.forwardFiveFrames" = "+5コマ";
@@ -173,3 +181,16 @@
 "transcoding.step.two" = "H.264 または H.265 の MP4 / MOV として書き出します。";
 "transcoding.step.three" = "変換後のファイルを ShotMap にドロップして、もう一度作成します。";
 "transcoding.tip" = "非対応の形式は再試行しても解決しません。変換時は新しいファイルとして保存し、元動画を残してください。作成済みの絵コンテは残ります。";
+
+"error.insufficientUsableFrames" = "使用できるコマは %d 枚で、%d 枚必要です。グリッドを小さくするか、別の動画をお試しください。";
+
+"workspace.toggleQueue" = "動画キューの表示を切り替える";
+"workspace.toggleInspector" = "ストーリーボード設定の表示を切り替える";
+"workspace.focusPreview" = "プレビューのみ表示";
+"workspace.restorePanels" = "パネルを元に戻す";
+
+"editor.timeline" = "タイムライン";
+"editor.addCurrentFrame.short" = "フレームを追加";
+"editor.smartSelect.short" = "自動選択";
+"editor.regenerate.short" = "候補を更新";
+"editor.apply.short" = "保存";

@@ -231,10 +231,10 @@ final class FrameSelectionTests: XCTestCase {
         XCTAssertNotEqual(StoryboardBackground.cinema.rgb.red, StoryboardBackground.ivory.rgb.red)
     }
 
-    func testStoryboardBackgroundPaletteUsesFiveLightToDarkCanvases() {
+    func testStoryboardBackgroundPaletteUsesSixLightToDarkCanvases() {
         XCTAssertEqual(
             StoryboardBackground.allCases,
-            [.ivory, .mist, .evergreen, .navy, .cinema]
+            [.white, .ivory, .mist, .evergreen, .navy, .cinema]
         )
 
         let luminances = StoryboardBackground.allCases.map { background in
@@ -473,13 +473,13 @@ final class FrameSelectionTests: XCTestCase {
         XCTAssertEqual(allActionRecovery.avoidedRequests, 0)
     }
 
-    func testLargeGridsUseEnoughSpareCandidatesWithoutTheFormerFiftyPercentOverscan() {
+    func testAutomaticInitialSamplingUsesTheBoundedAdaptiveDiscoveryBudget() {
         let analyzer = VideoStoryboardAnalyzer()
 
         XCTAssertEqual(analyzer.analysisSampleCount(for: 9), 48)
-        XCTAssertEqual(analyzer.analysisSampleCount(for: 36), 48)
-        XCTAssertEqual(analyzer.analysisSampleCount(for: 49), 62)
-        XCTAssertEqual(analyzer.analysisSampleCount(for: 64), 80)
+        XCTAssertEqual(analyzer.analysisSampleCount(for: 36), 54)
+        XCTAssertEqual(analyzer.analysisSampleCount(for: 49), 74)
+        XCTAssertEqual(analyzer.analysisSampleCount(for: 64), 96)
     }
 
     func testSharpnessComparisonCapsOnlyItsAnalysisDecodeResolution() {

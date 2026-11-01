@@ -21,4 +21,7 @@ jobs:
       - name: Build universal release executable
         run: swift build -c release --arch arm64 --arch x86_64 -Xswiftc -strict-concurrency=complete -Xswiftc -warnings-as-errors
       - name: Run tests
+        env:
+          SHOTMAP_FRAME_DIAGNOSTICS: '1'
+          SHOTMAP_FRAME_PERFORMANCE: '1'
         run: swift test

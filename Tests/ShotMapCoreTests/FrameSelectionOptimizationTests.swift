@@ -4,6 +4,123 @@ import XCTest
 @testable import ShotMapApp
 
 final class FrameSelectionOptimizationTests: XCTestCase {
+    func testStaticLayoutsFillWithSeparatedTimesInsteadOfTheSharpestAdjacentCopies() {
+        let frames = (0..<48).map { index in
+            FrameDescriptor(id: index, time: Double(index),
+                histogram: Array(repeating: 1 / 16, count: 16), luminance: 0.5,
+                blackRatio: 0, sharpness: 0.1 + Float(index) * 0.001,
+                fingerprint: 0, previewData: nil)
+        }
+        let selected = FrameSelection.chooseFrames(from: frames, count: 9).sorted { $0.time < $1.time }
+        XCTAssertEqual(selected.count, 9)
+        XCTAssertEqual(Set(selected.map(\.id)).count, 9)
+        XCTAssertLessThanOrEqual(selected.first?.time ?? 48, 1)
+        XCTAssertEqual(selected.last?.time, 47)
+        let gaps = zip(selected.dropFirst(), selected).map { $0.time - $1.time }
+        XCTAssertGreaterThanOrEqual(gaps.min() ?? 0, 3,
+                                   "Static content needs temporal coverage after visual alternatives are exhausted")
+    }
+
+    func testObservedCoverageReplacesWeakCrowdedSamplesBelowBestCloseupThreshold() {
+        let times: [Double] = [0, 70, 140, 210, 300, 301.5, 303, 490, 560, 630, 350, 410]
+        var frames = makeFrames(seed: 987, count: times.count)
+        frames = frames.enumerated().map { index, original in
+            var frame = FrameDescriptor(id: original.id, time: times[index], histogram: original.histogram,
+                luminance: index == 5 ? 0.18 : 0.5, blackRatio: 0, sharpness: 0.18,
+                fingerprint: original.fingerprint, previewData: nil)
+            let focus: Float = index == 4 ? 0.30 : (index == 5 ? 0.60 : (index == 10 ? 0.70 : 0.80))
+            frame.qualityEvidence = FrameQualityEvidence(rejection: nil,
+                activeContentRect: CGRect(x: 0, y: 0, width: 1, height: 1), focusScore: focus,
+                subjectFocusScore: nil, contrast: 0.2, edgeCoverage: 0.3, informationFraction: 1, isSparseGraphic: false)
+            if index == 6 { frame.faceScore = 1; frame.bodyScore = 1 }
+            return frame
+        }
+        let selected = Array(frames.prefix(10))
+        let highestQuality = frames.map(\.qualityScore).max()!
+        XCTAssertLessThan(frames[10].qualityScore, highestQuality * 0.70)
+        XCTAssertLessThan(frames[11].qualityScore, highestQuality * 0.70)
+        let repaired = FrameSelection.improveTimelineCoverage(selected, candidates: frames, count: 10)
+        XCTAssertEqual(repaired.count, selected.count)
+        XCTAssertFalse(repaired.contains { $0.id == 4 }, "The weak pan must not retain a slot beside two better local moments")
+        XCTAssertFalse(repaired.contains { $0.id == 5 })
+        XCTAssertTrue(repaired.contains { $0.id == 6 }, "Keep the readable principal subject")
+        XCTAssertTrue(repaired.contains { $0.id == 10 })
+        XCTAssertTrue(repaired.contains { $0.id == 11 })
+
+        for state: FrameEvidenceState? in [nil, .notEvaluated, .failed] {
+            let legacy = frames.map { original -> FrameDescriptor in
+                var frame = original
+                if let state { frame.qualityEvidence?.state = state }
+                else { frame.qualityEvidence = nil }
+                return frame
+            }
+            let unchanged = FrameSelection.improveTimelineCoverage(Array(legacy.prefix(10)), candidates: legacy, count: 10)
+            XCTAssertEqual(unchanged.map(\.id), Array(legacy.prefix(10)).map(\.id),
+                "Relative detail improvements require actually observed evidence")
+        }
+    }
+
+    func testObservedRelativeCoverageDoesNotTradeDetailForExposure() {
+        var frames = makeFrames(seed: 654, count: 4)
+        let times: [Double] = [0, 1, 100, 50]
+        frames = frames.enumerated().map { index, original in
+            var frame = FrameDescriptor(id: original.id, time: times[index], histogram: original.histogram,
+                luminance: index == 0 ? 0.08 : 0.5, blackRatio: 0, sharpness: 0.18,
+                fingerprint: original.fingerprint, previewData: nil)
+            let focus: Float = index == 3 ? 0.4 : 0.8
+            frame.qualityEvidence = FrameQualityEvidence(rejection: nil,
+                activeContentRect: CGRect(x: 0, y: 0, width: 1, height: 1), focusScore: focus,
+                subjectFocusScore: nil, contrast: 0.2, edgeCoverage: 0.3, informationFraction: 1, isSparseGraphic: false)
+            if index == 1 { frame.faceScore = 1; frame.bodyScore = 1 }
+            return frame
+        }
+        XCTAssertGreaterThan(frames[3].qualityScore, frames[0].qualityScore)
+        let selected = Array(frames.prefix(3))
+        XCTAssertEqual(FrameSelection.improveTimelineCoverage(selected, candidates: frames, count: 3).map(\.id), selected.map(\.id))
+    }
+
+    func testAuditedNearIdenticalMomentsUseADistinctAvailableAlternative() {
+        var frames = makeFrames(seed: 120, count: 10)
+        let histogramA: [Float] = [0.4, 0.3, 0.3]
+        let histogramB: [Float] = [0.15, 0.3, 0.55]
+        frames[0] = FrameDescriptor(id: 0, time: 11.45, histogram: histogramA, luminance: 0.5,
+            blackRatio: 0, sharpness: 0.2, fingerprint: 0x3E3E_3E3E_3E3E_3E3E, previewData: nil)
+        frames[1] = FrameDescriptor(id: 1, time: 12.37, histogram: histogramB, luminance: 0.5,
+            blackRatio: 0, sharpness: 0.2, fingerprint: 0x3E3E_3E3E_3E3E_3E3E ^ 0x1FF, previewData: nil)
+        for index in 2..<frames.count {
+            let original = frames[index]
+            frames[index] = FrameDescriptor(id: original.id, time: 30 + Double(index) * 10,
+                histogram: original.histogram, luminance: original.luminance, blackRatio: original.blackRatio,
+                sharpness: original.sharpness, fingerprint: original.fingerprint, previewData: nil)
+        }
+        for index in frames.indices {
+            frames[index].qualityEvidence = FrameQualityEvidence(rejection: nil,
+                activeContentRect: CGRect(x: 0, y: 0, width: 1, height: 1), focusScore: index == 1 ? 0.55 : 0.65,
+                subjectFocusScore: nil, contrast: 0.2, edgeCoverage: 0.3, informationFraction: 1, isSparseGraphic: false)
+        }
+        let selected = Array(frames.prefix(9))
+        let repaired = FrameSelection.improveVisualDiversity(selected, pool: frames, count: 9)
+        XCTAssertEqual(repaired.count, 9)
+        XCTAssertEqual(Set(repaired.map(\.id)).count, 9)
+        XCTAssertTrue(repaired.contains { $0.id == 0 })
+        XCTAssertFalse(repaired.contains { $0.id == 1 })
+        XCTAssertTrue(repaired.contains { $0.id == 9 })
+    }
+
+    func testStaticAuditedVideoKeepsUniqueTimestampsWhenNoDistinctAlternativeExists() {
+        let frames = (0..<12).map { index -> FrameDescriptor in
+            var frame = FrameDescriptor(id: index, time: Double(index), histogram: [0.4, 0.6], luminance: 0.5,
+                blackRatio: 0, sharpness: 0.2, fingerprint: 0x00FF_00FF_00FF_00FF, previewData: nil)
+            frame.qualityEvidence = FrameQualityEvidence(rejection: nil,
+                activeContentRect: CGRect(x: 0, y: 0, width: 1, height: 1), focusScore: 0.6,
+                subjectFocusScore: nil, contrast: 0.2, edgeCoverage: 0.2, informationFraction: 1, isSparseGraphic: false)
+            return frame
+        }
+        let selected = FrameSelection.chooseFrames(from: frames, count: 9)
+        XCTAssertEqual(selected.count, 9)
+        XCTAssertEqual(Set(selected.map(\.time)).count, 9)
+    }
+
     func testExactRequestsDoNotMergeDistinctVFRMomentsInOneNominalFrameBucket() {
         // These can be distinct source frames in a VFR clip even though a
         // nominal 30fps index would round both timestamps to frame 30.

@@ -18,11 +18,58 @@ private final class FrameExtractionSignposter: @unchecked Sendable {
     }
 }
 
-/// A compact candidate sampler used only after a person opens the manual
-/// adjuster. The normal storyboard path remains a single, fast analysis pass.
+/// Shared native batch decoding plus the manual editor's exact capture tools.
+/// Automatic selection owns its separate bounded audit/recovery policy.
 enum ManualFrameExtractor {
     private static let candidateBatchSignposter = FrameExtractionSignposter(category: "CandidateSampling")
     private static let sharpnessBatchSignposter = FrameExtractionSignposter(category: "FrameRefinement")
+
+    /// Automatic selection uses original rational PTS throughout. It audits the
+    /// image in `consume` before encoding or publishing it; a failed decode has
+    /// no fallback to an unchecked neighbour. One generator handles each batch.
+    static func decodeAutomaticFrames(
+        from asset: AVURLAsset,
+        requests: [AutomaticFrameTimeRequest],
+        maximumEdge: CGFloat,
+        tolerance: CMTime,
+        requireExactPTS: Bool,
+        consume: (Int, CMTime, CGImage) throws -> Void
+    ) async throws {
+        try Task.checkCancellation()
+        guard !requests.isEmpty else { return }
+        let generator = AVAssetImageGenerator(asset: asset)
+        generator.appliesPreferredTrackTransform = true
+        generator.maximumSize = CGSize(width: maximumEdge, height: maximumEdge)
+        generator.requestedTimeToleranceBefore = tolerance
+        generator.requestedTimeToleranceAfter = tolerance
+        let cancellation = AutomaticGeneratorCancellation(generator)
+        defer { cancellation.cancel() }
+        var idsByTime: [AutomaticFrameTimeKey: [Int]] = [:]
+        var times: [AutomaticFrameTimeKey: CMTime] = [:]
+        for request in requests {
+            guard let key = AutomaticFrameTimeKey(request.time) else { continue }
+            idsByTime[key, default: []].append(request.id)
+            times[key] = request.time
+        }
+        let ordered = times.values.sorted { CMTimeCompare($0, $1) < 0 }
+        try await withTaskCancellationHandler {
+            for await result in generator.images(for: ordered) {
+                try Task.checkCancellation()
+                guard case let .success(requested, image, actual) = result,
+                      let key = AutomaticFrameTimeKey(requested),
+                      actual.isNumeric else { continue }
+                // A zero-tolerance final decode must reproduce the exact PTS
+                // already judged, not silently change content during upscaling.
+                if requireExactPTS && CMTimeCompare(actual, requested) != 0 { continue }
+                try autoreleasepool {
+                    for id in idsByTime[key] ?? [] { try consume(id, actual, image) }
+                }
+            }
+            try Task.checkCancellation()
+        } onCancel: {
+            cancellation.cancel()
+        }
+    }
 
     /// Around a proposed moment, compare the surrounding decoded frames and
     /// retain the one with the strongest fine detail. Three frames on each side

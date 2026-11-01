@@ -74,8 +74,14 @@ private struct HelpStep: View {
 }
 
 private struct HelpPanel: View {
-    let language: AppLanguage
+    @AppStorage("appLanguage") private var languageCode = AppLanguage.systemDefault.rawValue
+    @AppStorage("appAppearance") private var appearanceCode = AppAppearance.system.rawValue
     @ObservedObject var updateChecker: UpdateChecker
+    let updateWindowTitle: (String) -> Void
+
+    private var language: AppLanguage {
+        AppLanguage(rawValue: languageCode) ?? .english
+    }
 
     private func t(_ key: String) -> String {
         language.text(key)
@@ -146,6 +152,8 @@ private struct HelpPanel: View {
         .frame(width: 500)
         .environment(\.locale, language.locale)
         .environment(\.layoutDirection, .leftToRight)
+        .preferredColorScheme((AppAppearance(rawValue: appearanceCode) ?? .system).preferredColorScheme)
+        .onChange(of: languageCode) { _ in updateWindowTitle(t("help.title")) }
     }
 }
 
@@ -162,6 +170,20 @@ enum MainWindowReopenAction: Equatable {
     }
 }
 
+enum MainWindowStartupLayout {
+    // Both sidebars remain usable, with a 432pt empty canvas between them.
+    // Completed images have their own landscape/portrait window fitting.
+    static let contentSize = CGSize(width: 840, height: 680)
+
+    static func frame(currentFrame: CGRect, desiredFrameSize: CGSize, visibleFrame: CGRect) -> CGRect {
+        let width = min(desiredFrameSize.width, visibleFrame.width)
+        let height = min(desiredFrameSize.height, visibleFrame.height)
+        let x = min(max(currentFrame.midX - width / 2, visibleFrame.minX), visibleFrame.maxX - width)
+        let y = min(max(currentFrame.maxY - height, visibleFrame.minY), visibleFrame.maxY - height)
+        return CGRect(x: x, y: y, width: width, height: height)
+    }
+}
+
 @MainActor
 final class ShotMapAppDelegate: NSObject, NSApplicationDelegate {
     private var helpWindow: NSWindow?
@@ -169,6 +191,14 @@ final class ShotMapAppDelegate: NSObject, NSApplicationDelegate {
     private var mainWindowCloseObserver: NSObjectProtocol?
     private var openMainWindow: (() -> Void)?
     private var shouldFocusNextMainWindow = false
+    private var hasFinishedLaunching = false
+    private var hasAppliedStartupLayout = false
+    private var startupLayoutTask: Task<Void, Never>?
+
+    func applicationDidFinishLaunching(_ notification: Notification) {
+        hasFinishedLaunching = true
+        scheduleStartupLayout()
+    }
 
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
         // SwiftUI does not recreate a WindowGroup merely because this delegate
@@ -216,9 +246,34 @@ final class ShotMapAppDelegate: NSObject, NSApplicationDelegate {
                 self?.mainWindow = nil
             }
         }
+        // A fresh launch has no restored workspace content. Do not reuse the
+        // previous result's wide window frame for the new empty canvas.
+        window.isRestorable = false
+        scheduleStartupLayout()
         if shouldFocusNextMainWindow {
             shouldFocusNextMainWindow = false
             restore(window, in: NSApplication.shared)
+        }
+    }
+
+    private func scheduleStartupLayout() {
+        guard hasFinishedLaunching, !hasAppliedStartupLayout, let window = mainWindow else { return }
+        startupLayoutTask?.cancel()
+        startupLayoutTask = Task { @MainActor [weak self, weak window] in
+            // Apply after SwiftUI/AppKit have restored and laid out the window.
+            await Task.yield()
+            guard !Task.isCancelled, let self, let window, self.mainWindow === window,
+                  let screen = window.screen ?? NSScreen.main else { return }
+            self.hasAppliedStartupLayout = true
+            self.startupLayoutTask = nil
+            guard !window.inLiveResize, !window.styleMask.contains(.fullScreen) else { return }
+            let desiredFrameSize = window.frameRect(forContentRect: CGRect(
+                origin: .zero, size: MainWindowStartupLayout.contentSize
+            )).size
+            let frame = MainWindowStartupLayout.frame(
+                currentFrame: window.frame, desiredFrameSize: desiredFrameSize, visibleFrame: screen.visibleFrame
+            )
+            window.setFrame(frame, display: true, animate: false)
         }
     }
 
@@ -257,7 +312,9 @@ final class ShotMapAppDelegate: NSObject, NSApplicationDelegate {
         }
 
         window.title = language.text("help.title")
-        window.contentView = NSHostingView(rootView: HelpPanel(language: language, updateChecker: updateChecker))
+        window.contentView = NSHostingView(rootView: HelpPanel(updateChecker: updateChecker) { [weak window] title in
+            window?.title = title
+        })
         NSApplication.shared.activate(ignoringOtherApps: true)
         window.makeKeyAndOrderFront(nil)
     }
@@ -319,7 +376,6 @@ struct ShotMapApp: App {
         Window("ShotMap", id: "main") {
             ContentView(model: storyboardModel)
                 .environmentObject(updateChecker)
-                .frame(minWidth: 940, minHeight: 640)
                 // The hidden title bar is part of the composition: the toolbar
                 // can use it because its leading content already clears the
                 // traffic lights. Do not retain an empty safe-area strip.
@@ -328,7 +384,10 @@ struct ShotMapApp: App {
         }
         .windowStyle(.hiddenTitleBar)
         .windowResizability(.contentMinSize)
+        .defaultSize(width: MainWindowStartupLayout.contentSize.width, height: MainWindowStartupLayout.contentSize.height)
         .commands {
+            AppPreferencesCommands()
+
             CommandGroup(replacing: .appInfo) {
                 Button(language.text("about.menu")) {
                     appDelegate.showAboutPanel(language: language, updateChecker: updateChecker)

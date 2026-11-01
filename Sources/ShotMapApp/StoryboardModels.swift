@@ -9,10 +9,11 @@ enum ExportFormat: String, CaseIterable, Identifiable, Sendable {
     var fileExtension: String { self == .png ? "png" : "jpg" }
 }
 
-/// Purposeful, low-saturation canvases for a storyboard. These five colours
+/// Purposeful, low-saturation canvases for a storyboard. These six colours
 /// are arranged from light to dark for a predictable, compact palette. They
 /// keep a visual boundary around film frames without competing with footage.
 enum StoryboardBackground: String, CaseIterable, Identifiable, Sendable {
+    case white
     case ivory
     case mist
     case evergreen
@@ -23,6 +24,7 @@ enum StoryboardBackground: String, CaseIterable, Identifiable, Sendable {
 
     var rgb: (red: Double, green: Double, blue: Double) {
         switch self {
+        case .white: (1, 1, 1)
         case .ivory: (0.945, 0.922, 0.879)
         case .mist: (0.824, 0.890, 0.945)
         case .evergreen: (0.094, 0.275, 0.224)
@@ -98,27 +100,27 @@ enum StoryboardAspect: CaseIterable, Identifiable, Sendable {
 }
 
 struct ExportSettings: Sendable {
-    private var storedGridSide: Int = 4
+    private var storedGridSide: Int = 3
     var gridSide: Int {
         get { storedGridSide }
         set { storedGridSide = StoryboardGrid.boundedSide(newValue) }
     }
     var layoutAspect: StoryboardAspect = .source
     var language: AppLanguage = .english
-    var format: ExportFormat = .png
-    var width: Int = 2560
-    var background: StoryboardBackground = .cinema
-    var showTimestamps = false
+    var format: ExportFormat = .jpeg
+    var width: Int = 1920
+    var background: StoryboardBackground = .ivory
+    var showTimestamps = true
     var showTitleWatermark = false
 
     init(
-        gridSide: Int = 4,
+        gridSide: Int = 3,
         layoutAspect: StoryboardAspect = .source,
         language: AppLanguage = .english,
-        format: ExportFormat = .png,
-        width: Int = 2560,
-        background: StoryboardBackground = .cinema,
-        showTimestamps: Bool = false,
+        format: ExportFormat = .jpeg,
+        width: Int = 1920,
+        background: StoryboardBackground = .ivory,
+        showTimestamps: Bool = true,
         showTitleWatermark: Bool = false
     ) {
         storedGridSide = StoryboardGrid.boundedSide(gridSide)
@@ -332,7 +334,7 @@ struct VideoFailure: Equatable {
             let message = error.message(in: language)
             switch error {
             case .unsupportedCodec: return .needsTranscoding(message)
-            case .unreadableVideo, .noUsableFrames: return .permanent(message)
+            case .unreadableVideo, .noUsableFrames, .insufficientUsableFrames: return .permanent(message)
             case .noExportData: return .retryable(message)
             }
         }
@@ -407,6 +409,11 @@ struct FrameDescriptor: Identifiable, Sendable {
     /// Derived locally with Vision from the lightweight analysis image. A high
     /// value usually indicates title cards, warning screens, or cover artwork.
     var textOverlayScore: Float = 0
+    /// A missing observation is not evidence that content is absent. Older
+    /// manual descriptors retain their supplied scores and default states.
+    var personObservationState: FrameEvidenceState = .notEvaluated
+    var textObservationState: FrameEvidenceState = .notEvaluated
+    var qualityEvidence: FrameQualityEvidence? = nil
 
     var isVisuallySparseCard: Bool {
         let mostlyWhite = brightRatio >= 0.58 && luminance >= 0.68
@@ -427,12 +434,29 @@ struct FrameDescriptor: Identifiable, Sendable {
     }
 
     var isUsable: Bool {
-        blackRatio < 0.82 && luminance > 0.045 && sharpness > 0.012
+        guard qualityRejection == nil else { return false }
+        // The new active-area audit has already checked the actual pixels.
+        // Do not reapply the old full-frame darkness rule to a valid night shot.
+        if qualityEvidence?.state == .observed { return true }
+        return blackRatio < 0.82 && luminance > 0.045 && sharpness > 0.012
+    }
+
+    var qualityRejection: FrameQualityRejection? {
+        if let rejection = qualityEvidence?.rejection { return rejection }
+        if textOverlayScore >= 0.65 { return .titleCard }
+        return nil
     }
 
     var qualityScore: Float {
         let exposure = min(1, max(0, (luminance - 0.08) / 0.40))
-        let detail = min(1, sharpness / 0.18)
+        let measured = qualityEvidence.flatMap { $0.state == .observed ? $0 : nil }
+        let subjectDetail = measured.flatMap { $0.subjectDetailScore }
+        let detail = measured.map { min(1, max(0, subjectDetail ?? $0.focusScore)) }
+            ?? min(1, sharpness / 0.18)
+        // A large face is a semantic preference, not a substitute for readable
+        // detail. Only measured subjects receive this soft modulation; legacy
+        // manual/cached descriptors preserve their established scoring.
+        let subjectReadability = subjectDetail.map { 0.30 + min(1, max(0, $0)) * 0.70 } ?? 1
         let darknessPenalty = blackRatio * 1.4
         let facePreference: Float = faceScore > 0.05 ? 0.42 + faceScore * 0.56 : 0
         let bodyPreference: Float = bodyScore > 0.05 ? 0.26 + bodyScore * 0.40 : 0
@@ -459,7 +483,9 @@ struct FrameDescriptor: Identifiable, Sendable {
         } else {
             textPenalty = 0
         }
-        return max(0, exposure * 0.35 + detail * 0.55 + facePreference + bodyPreference + personFallback + interactionPreference + actionPreference - darknessPenalty - transitionPenalty - textPenalty)
+        return max(0, exposure * 0.35 + detail * 0.55
+            + (facePreference + bodyPreference + personFallback + interactionPreference + actionPreference) * subjectReadability
+            - darknessPenalty - transitionPenalty - textPenalty)
     }
 }
 
@@ -497,6 +523,7 @@ enum StoryboardError: LocalizedError {
     case unreadableVideo
     case unsupportedCodec
     case noUsableFrames
+    case insufficientUsableFrames(Int, Int)
     case noExportData
 
     func message(in language: AppLanguage) -> String {
@@ -504,6 +531,7 @@ enum StoryboardError: LocalizedError {
         case .unreadableVideo: language.text("error.unreadableVideo")
         case .unsupportedCodec: language.text("error.unsupportedCodec")
         case .noUsableFrames: language.text("error.noUsableFrames")
+        case let .insufficientUsableFrames(found, required): language.text("error.insufficientUsableFrames", found, required)
         case .noExportData: language.text("error.noExportData")
         }
     }

@@ -32,7 +32,7 @@ final class ManualEditorWindowTests: XCTestCase {
         XCTAssertEqual(fixture.request?.id, request.id)
         XCTAssertEqual(fixture.presentedWindows.count, 1)
         XCTAssertTrue(originalWindow.contentView === originalContent)
-        XCTAssertEqual(originalWindow.title, AppLanguage.english.text("editor.title"))
+        XCTAssertEqual(originalWindow.title, request.sourceURL.lastPathComponent)
         XCTAssertEqual(originalWindow.appearance?.name, .darkAqua)
     }
 
@@ -115,9 +115,7 @@ private final class EditorWindowFixture {
         ManualFrameEditorRequest(
             previewID: UUID(),
             sourceURL: URL(fileURLWithPath: "/tmp/shotmap-window-lifecycle-test.mp4"),
-            selectionLimit: 9,
-            duration: 60,
-            outputWidth: 1920
+            duration: 60
         )
     }
 
@@ -127,7 +125,7 @@ private final class EditorWindowFixture {
             model: model,
             language: language,
             colorScheme: colorScheme,
-            onApply: { _, _ in }
+            onApply: { _, _, _ in }
         )
     }
 

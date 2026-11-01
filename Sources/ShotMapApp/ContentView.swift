@@ -3,12 +3,15 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject private var model: StoryboardViewModel
+    @StateObject private var previewAutoFitter = PreviewWindowAutoFitter()
     @EnvironmentObject private var updateChecker: UpdateChecker
     @Environment(\.colorScheme) private var systemColorScheme
+    @Environment(\.displayScale) private var displayScale
     @AppStorage("appLanguage") private var languageCode = AppLanguage.systemDefault.rawValue
     @AppStorage("appAppearance") private var appearanceCode = AppAppearance.system.rawValue
-    @State private var isLanguagePickerPresented = false
-    @State private var isAppearancePickerPresented = false
+    @State private var showsQueue = true
+    @State private var showsInspector = true
+    @State private var panelsBeforeFocus: (queue: Bool, inspector: Bool)?
     @State private var isAspectPickerPresented = false
     @State private var isWidthPickerPresented = false
     @State private var manualFrameEditorRequest: ManualFrameEditorRequest?
@@ -38,45 +41,13 @@ struct ContentView: View {
 
     private var isLightAppearance: Bool { resolvedAppearance == .light }
 
-    // Frame Desk is intentionally quiet: neutral surfaces make video frames,
-    // selection state, and one primary action easier to scan at a glance.
-    // Values are paired for light and dark appearances instead of relying on
-    // the system control palette, which also keeps the three panes cohesive.
-    private var appBackground: Color {
-        isLightAppearance
-            ? Color(red: 0.969, green: 0.973, blue: 0.980) // #F7F8FA
-            : Color(red: 0.063, green: 0.075, blue: 0.090) // #101317
-    }
-
-    private var sidebarFill: Color {
-        isLightAppearance
-            ? Color(red: 0.945, green: 0.961, blue: 0.976) // #F1F5F9
-            : Color(red: 0.082, green: 0.102, blue: 0.129) // #151A21
-    }
-
-    private var stageFill: Color {
-        isLightAppearance
-            ? Color.white
-            : Color(red: 0.090, green: 0.106, blue: 0.133) // #171B22
-    }
-
-    private var workspaceDivider: Color {
-        isLightAppearance
-            ? Color(red: 0.843, green: 0.871, blue: 0.910) // #D7DEE8
-            : Color(red: 0.224, green: 0.271, blue: 0.329) // #394554
-    }
-
-    private var studioAccent: Color {
-        isLightAppearance
-            ? Color(red: 0.039, green: 0.400, blue: 0.851) // #0A66D9
-            : Color(red: 0.353, green: 0.655, blue: 1.0) // #5AA7FF
-    }
-
-    private var inlineControlFill: Color {
-        isLightAppearance
-            ? Color.white
-            : Color(red: 0.114, green: 0.137, blue: 0.173) // #1D232C
-    }
+    private var workspacePalette: StudioPalette { StudioPalette(isLight: isLightAppearance) }
+    private var appBackground: Color { workspacePalette.window }
+    private var sidebarFill: Color { workspacePalette.panel }
+    private var stageFill: Color { workspacePalette.canvas }
+    private var workspaceDivider: Color { workspacePalette.divider }
+    private var studioAccent: Color { workspacePalette.accent }
+    private var inlineControlFill: Color { workspacePalette.control }
 
     private func t(_ key: String, _ arguments: CVarArg...) -> String {
         language.text(key, arguments: arguments)
@@ -86,59 +57,68 @@ struct ContentView: View {
         GeometryReader { geometry in
             let isCompactHeight = geometry.size.height < 700
             let isNarrow = geometry.size.width < 1_090
-            let queueWidth: CGFloat = isNarrow ? 250 : 266
-            let inspectorWidth: CGFloat = isNarrow ? 250 : 270
+            let queueWidth = StudioLayout.queueWidth(availableWidth: geometry.size.width)
+            let inspectorWidth = StudioLayout.inspectorWidth
 
             VStack(spacing: 0) {
-                studioToolbar(queueWidth: queueWidth)
-                    // The brand block is already offset for the traffic lights;
-                    // keep the toolbar in the native title-bar rhythm instead
-                    // of reserving a second, empty title-bar-height strip.
-                    .padding(.top, 8)
-                    .padding(.horizontal, StudioLayout.toolbarHorizontalInset)
-                    .padding(.bottom, 10)
+                studioToolbar(compact: geometry.size.width < 650)
+                    .frame(height: StudioLayout.toolbarHeight)
+                    .background(appBackground)
 
                 if updateChecker.hasUpdate {
                     UpdateAvailableBanner(checker: updateChecker, language: language)
-                        .padding(.horizontal, 20)
-                        .padding(.bottom, 10)
+                        .padding(.horizontal, 12)
+                        .padding(.bottom, 8)
                 }
 
-                Rectangle()
-                    .fill(workspaceDivider)
-                    .frame(height: 1)
+                workspaceRule
 
                 HStack(spacing: 0) {
-                    queuePanel(compact: isCompactHeight, isNarrow: isNarrow)
-                        .frame(width: queueWidth)
-                        .frame(maxHeight: .infinity)
-
-                    Rectangle()
-                        .fill(workspaceDivider)
-                        .frame(width: 1)
+                    if showsQueue {
+                        queuePanel(compact: isCompactHeight, isNarrow: isNarrow)
+                            .frame(width: queueWidth)
+                            .frame(maxHeight: .infinity)
+                        Rectangle().fill(workspaceDivider).frame(width: hairline)
+                    }
 
                     previewPanel
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .layoutPriority(1)
 
-                    Rectangle()
-                        .fill(workspaceDivider)
-                        .frame(width: 1)
-
-                    controlPanel(compact: isCompactHeight, isNarrow: isNarrow)
-                        .frame(width: inspectorWidth)
-                        .frame(maxHeight: .infinity)
+                    if showsInspector {
+                        Rectangle().fill(workspaceDivider).frame(width: hairline)
+                        controlPanel(compact: isCompactHeight, isNarrow: isNarrow)
+                            .frame(width: inspectorWidth)
+                            .frame(maxHeight: .infinity)
+                    }
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
 
+                if !model.isProcessing {
+                    workspaceRule
+                    Group {
+                        if model.previewImage != nil {
+                            previewActions
+                        } else {
+                            HStack {
+                                localPrivacyCaption
+                                Spacer(minLength: 0)
+                            }
+                        }
+                    }
+                    .padding(.horizontal, 12)
+                    .frame(height: StudioLayout.previewActionHeight)
+                    .background(appBackground)
+                }
+
                 if model.isProcessing || model.hasFailedJobs {
-                    Rectangle()
-                        .fill(workspaceDivider)
-                        .frame(height: 1)
+                    workspaceRule
                     batchStatusBar
                 }
             }
             .background(appBackground)
         }
+        .frame(minWidth: showsQueue && showsInspector ? 720 : (showsQueue || showsInspector ? 600 : 480), minHeight: 480)
         .environment(\.locale, language.locale)
         .environment(\.layoutDirection, .leftToRight)
         // `preferredColorScheme` updates the hosting window, but its semantic
@@ -218,12 +198,13 @@ struct ContentView: View {
                 model: model,
                 language: language,
                 colorScheme: resolvedAppearance == .dark ? .dark : .light,
-                onApply: { request, frames in
+                onApply: { request, frames, settings in
                     model.applyManuallySelectedFrames(
                         frames,
                         targetPreviewID: request.previewID,
                         sourceURL: request.sourceURL,
-                        duration: request.duration
+                        duration: request.duration,
+                        settings: settings
                     )
                 }
             )
@@ -236,162 +217,116 @@ struct ContentView: View {
         isTranscodingGuidePresented = true
     }
 
-    private func studioToolbar(queueWidth: CGFloat) -> some View {
-        // This surface uses the exact same x-coordinate as the first column
-        // divider below. It must not depend on the natural width of the brand.
-        let queueBoundary = queueWidth - StudioLayout.toolbarHorizontalInset
+    private var hairline: CGFloat { 1 / max(1, displayScale) }
+    private var isPreviewFocused: Bool { !showsQueue && !showsInspector }
 
-        return ZStack(alignment: .leading) {
-            HStack(spacing: 0) {
-                HStack(spacing: 10) {
-                    ShotMapMark(language: language, size: 28)
-                    Text("ShotMap")
-                        .font(.system(size: 18, weight: .semibold))
-                }
-                // The left inset leaves macOS traffic lights unobstructed in the
-                // hidden-title-bar window. The frame ends at the column boundary.
-                .padding(.leading, 88)
-                .frame(width: queueBoundary, alignment: .leading)
+    private var workspaceRule: some View {
+        Rectangle().fill(workspaceDivider).frame(height: hairline)
+    }
 
-                VStack(alignment: .leading, spacing: 1) {
-                    Text(t("app.productName"))
-                        .font(.system(size: 13, weight: .semibold))
-                        .foregroundStyle(.primary)
-                    Text(t("app.tagline"))
-                        .font(.system(size: 11, weight: .regular))
-                        .foregroundStyle(.secondary)
-                }
-                .lineLimit(1)
-                .padding(.leading, 10)
-            }
-
+    private func studioToolbar(compact: Bool) -> some View {
+        HStack(spacing: 0) {
             HStack(spacing: 8) {
-                appearanceMenu
-                languageMenu
-            }
-            .frame(maxWidth: .infinity, alignment: .trailing)
+                HStack(spacing: 7) {
+                    ShotMapMark(language: language, size: 22)
+                    if !compact {
+                        Text("ShotMap")
+                            .font(.system(size: 15, weight: .semibold))
+                            .foregroundStyle(.primary)
+                    }
+                }
+                .padding(.leading, 76)
+                .fixedSize()
 
-            Rectangle()
-                .fill(workspaceDivider)
-                .frame(width: 1, height: 26)
-                .offset(x: queueBoundary)
+                Spacer(minLength: 8)
+
+                HStack(spacing: 3) {
+                    panelToggle(symbol: .sidebarLeft, label: t("workspace.toggleQueue"), selected: showsQueue) {
+                        panelsBeforeFocus = nil
+                        showsQueue.toggle()
+                    }
+                    panelToggle(symbol: .sidebarRight, label: t("workspace.toggleInspector"), selected: showsInspector) {
+                        panelsBeforeFocus = nil
+                        showsInspector.toggle()
+                    }
+                    panelToggle(
+                        symbol: isPreviewFocused ? .minimize : .maximize,
+                        label: t(isPreviewFocused ? "workspace.restorePanels" : "workspace.focusPreview"),
+                        selected: isPreviewFocused,
+                        action: togglePreviewFocus
+                    )
+                }
+            }
+            .padding(.horizontal, StudioLayout.toolbarHorizontalInset)
+            .frame(maxWidth: .infinity)
+
+            if showsInspector {
+                // This is the same width and separator as the settings pane
+                // below, independent of the translated generation label.
+                Rectangle().fill(workspaceDivider).frame(width: hairline, height: 18)
+                generateButton
+                    .padding(.horizontal, StudioLayout.panelInset)
+                    .frame(width: StudioLayout.inspectorWidth)
+            } else {
+                generateButton
+                    .padding(.leading, 10)
+                    .padding(.trailing, StudioLayout.toolbarHorizontalInset)
+            }
         }
     }
 
-    private func headerControlLabel(symbol: ProjectIcon.Symbol, title: String) -> some View {
-        HStack(spacing: 6) {
-            ProjectIcon(symbol: symbol, size: 15)
-                .foregroundStyle(studioAccent)
-            Text(title)
-                .foregroundStyle(.primary)
+    private var generateButton: some View {
+        Button(action: model.generate) {
+            GlyphLabel(title: model.primaryButtonTitle, glyph: .filmStack, glyphSize: 14)
+                .font(.system(size: 12, weight: .semibold))
                 .lineLimit(1)
-                .minimumScaleFactor(0.78)
-            ProjectIcon(symbol: .disclosure, size: 8)
-                .foregroundStyle(.secondary)
+                .minimumScaleFactor(0.85)
+                .padding(.horizontal, 12)
+                .frame(maxWidth: showsInspector ? .infinity : nil)
+                .frame(height: StudioLayout.primaryControlHeight)
         }
-        .font(.system(size: 12, weight: .medium))
-        .frame(width: 98, height: StudioLayout.toolbarControlHeight)
-        .contentShape(RoundedRectangle(cornerRadius: StudioLayout.controlCornerRadius, style: .continuous))
-        .background(inlineControlFill.opacity(isLightAppearance ? 0.68 : 0.84), in: RoundedRectangle(cornerRadius: StudioLayout.controlCornerRadius, style: .continuous))
-        .overlay { RoundedRectangle(cornerRadius: StudioLayout.controlCornerRadius, style: .continuous).strokeBorder(workspaceDivider.opacity(0.82)) }
+        .buttonStyle(PrimaryButtonStyle())
+        .disabled(!model.hasVideos || model.isBusy || model.isImportingVideos || model.isProcessing)
+        .accessibilityLabel(t("accessibility.generate"))
     }
 
-    private var appearanceMenu: some View {
-        Button {
-            isAppearancePickerPresented.toggle()
-        } label: {
-            headerControlLabel(symbol: appearanceSymbol, title: appearance.displayName(in: language))
+    private func panelToggle(symbol: ProjectIcon.Symbol, label: String, selected: Bool, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            ProjectIcon(symbol: symbol, size: 16)
+                .foregroundStyle(selected ? studioAccent : Color.secondary)
+                .frame(width: 30, height: 28)
+                .background(selected ? studioAccent.opacity(0.09) : .clear, in: RoundedRectangle(cornerRadius: 6, style: .continuous))
+                .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
-        .frame(width: 98, height: StudioLayout.toolbarControlHeight)
-        .accessibilityLabel(t("app.appearance"))
-        // Open beneath the top toolbar. An upward popover is clipped whenever
-        // the window sits against the top edge of the display.
-        .popover(isPresented: $isAppearancePickerPresented, arrowEdge: .bottom) {
-            VStack(alignment: .leading, spacing: 4) {
-                Text(t("app.appearance"))
-                    .font(.system(size: 11, weight: .semibold))
-                    .foregroundStyle(.secondary)
-                    .padding(.horizontal, 8)
-                    .padding(.bottom, 2)
+        .help(label)
+        .accessibilityLabel(label)
+        .accessibilityValue(selected ? t("accessibility.selected") : "")
+    }
 
-                ForEach(AppAppearance.allCases) { choice in
-                    Button {
-                        appearanceCode = choice.rawValue
-                        isAppearancePickerPresented = false
-                    } label: {
-                        HStack {
-                            Text(choice.displayName(in: language))
-                            Spacer()
-                            if choice == appearance {
-                                ProjectIcon(symbol: .check, size: 14)
-                                    .foregroundStyle(Color.accentColor)
-                            }
-                        }
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.horizontal, 8)
-                        .padding(.vertical, 7)
-                        .background(choice == appearance ? Color.accentColor.opacity(0.12) : .clear, in: RoundedRectangle(cornerRadius: 7, style: .continuous))
-                        .contentShape(Rectangle())
-                    }
-                    .buttonStyle(.plain)
-                    .frame(maxWidth: .infinity, minHeight: 34)
-                    .contentShape(Rectangle())
-                }
-            }
-            .padding(8)
-            .frame(width: 156)
+    private func togglePreviewFocus() {
+        if isPreviewFocused {
+            let restored = panelsBeforeFocus ?? (queue: true, inspector: true)
+            showsQueue = restored.queue
+            showsInspector = restored.inspector
+            panelsBeforeFocus = nil
+        } else {
+            panelsBeforeFocus = (showsQueue, showsInspector)
+            showsQueue = false
+            showsInspector = false
         }
     }
 
-    private var appearanceSymbol: ProjectIcon.Symbol {
-        resolvedAppearance == .dark ? .moon : .appearance
-    }
-
-    private var languageMenu: some View {
-        Button {
-            isLanguagePickerPresented.toggle()
-        } label: {
-            headerControlLabel(symbol: .language, title: language.displayName)
-        }
-        .buttonStyle(.plain)
-        .frame(width: 98, height: StudioLayout.toolbarControlHeight)
-        .accessibilityLabel(t("app.language"))
-        .popover(isPresented: $isLanguagePickerPresented, arrowEdge: .bottom) {
-            VStack(alignment: .leading, spacing: 4) {
-                Text(t("app.language"))
-                    .font(.system(size: 11, weight: .semibold))
-                    .foregroundStyle(.secondary)
-                    .padding(.horizontal, 8)
-                    .padding(.bottom, 2)
-
-                ForEach(AppLanguage.allCases) { choice in
-                    Button {
-                        languageCode = choice.rawValue
-                        isLanguagePickerPresented = false
-                    } label: {
-                        HStack {
-                            Text(choice.displayName)
-                            Spacer()
-                            if choice == language {
-                                ProjectIcon(symbol: .check, size: 14)
-                                    .foregroundStyle(Color.accentColor)
-                            }
-                        }
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.horizontal, 8)
-                        .padding(.vertical, 7)
-                        .background(choice == language ? Color.accentColor.opacity(0.12) : .clear, in: RoundedRectangle(cornerRadius: 7, style: .continuous))
-                        .contentShape(Rectangle())
-                    }
-                    .buttonStyle(.plain)
-                    .frame(maxWidth: .infinity, minHeight: 34)
-                    .contentShape(Rectangle())
-                }
-            }
-            .padding(8)
-            .frame(width: 156)
-        }
+    /// All three frame controls share one trailing column. Measure the
+    /// longest localized label so translated captions cannot push one row out
+    /// of alignment with the other two in the compact inspector.
+    private var inspectorValueColumnWidth: CGFloat {
+        let font = NSFont.systemFont(ofSize: 11, weight: .medium)
+        let labelWidth = ["section.aspect", "export.width", "export.background"]
+            .map { ceil((t($0) as NSString).size(withAttributes: [.font: font]).width) }
+            .max() ?? 0
+        let available = StudioLayout.inspectorWidth - StudioLayout.panelInset * 2
+        return min(128, max(0, available - labelWidth - 16))
     }
 
     private var aspectSelector: some View {
@@ -399,8 +334,7 @@ struct ContentView: View {
             isAspectPickerPresented.toggle()
         } label: {
             HStack(spacing: 8) {
-                Text(t("section.aspect"))
-                    .font(.system(size: 11, weight: .medium))
+                inspectorFieldLabel(t("section.aspect"))
                     .lineLimit(1)
                     .fixedSize(horizontal: true, vertical: false)
                 Spacer(minLength: 0)
@@ -415,7 +349,7 @@ struct ContentView: View {
                         .foregroundStyle(.secondary)
                 }
                 .padding(.horizontal, 9)
-                .frame(minWidth: 108, maxWidth: 154, minHeight: StudioLayout.controlHeight, maxHeight: StudioLayout.controlHeight)
+                .frame(width: inspectorValueColumnWidth, height: StudioLayout.controlHeight)
                 .background(inlineControlFill, in: RoundedRectangle(cornerRadius: StudioLayout.controlCornerRadius, style: .continuous))
                 .overlay { RoundedRectangle(cornerRadius: StudioLayout.controlCornerRadius, style: .continuous).strokeBorder(workspaceDivider) }
             }
@@ -471,8 +405,7 @@ struct ContentView: View {
             isWidthPickerPresented.toggle()
         } label: {
             HStack(spacing: 8) {
-                Text(t("export.width"))
-                    .font(.system(size: 11, weight: .medium))
+                inspectorFieldLabel(t("export.width"))
                     .lineLimit(1)
                     .fixedSize(horizontal: true, vertical: false)
                 Spacer(minLength: 0)
@@ -488,7 +421,7 @@ struct ContentView: View {
                         .foregroundStyle(.secondary)
                 }
                 .padding(.horizontal, 9)
-                .frame(minWidth: 108, maxWidth: 154, minHeight: StudioLayout.controlHeight, maxHeight: StudioLayout.controlHeight)
+                .frame(width: inspectorValueColumnWidth, height: StudioLayout.controlHeight)
                 .background(inlineControlFill, in: RoundedRectangle(cornerRadius: StudioLayout.controlCornerRadius, style: .continuous))
                 .overlay { RoundedRectangle(cornerRadius: StudioLayout.controlCornerRadius, style: .continuous).strokeBorder(workspaceDivider) }
             }
@@ -542,17 +475,12 @@ struct ContentView: View {
     private var outputWidthChoices: [Int] { [1920, 2560, 3840, 5120, 7680, 12_000] }
 
     private var backgroundPalette: some View {
-        // Keep this row intrinsically smaller than the narrowest inspector.
-        // The English label used to sit beside six 28 pt targets, giving the
-        // row a wider minimum than its 250 pt inspector and letting the final
-        // swatch render past the window edge.
         HStack(spacing: 8) {
-            Text(t("export.background"))
-                .font(.system(size: 11, weight: .medium))
+            inspectorFieldLabel(t("export.background"))
                 .lineLimit(1)
                 .fixedSize(horizontal: true, vertical: false)
-            Spacer(minLength: 8)
-            HStack(spacing: 5) {
+            Spacer(minLength: 0)
+            HStack(spacing: 0) {
                 ForEach(StoryboardBackground.allCases) { background in
                     let isSelected = model.background == background
                     Button {
@@ -561,9 +489,16 @@ struct ContentView: View {
                         StoryboardBackgroundSwatch(
                             color: storyboardBackgroundColor(background),
                             isSelected: isSelected,
-                            accent: studioAccent
+                            accent: studioAccent,
+                            checkColor: [.white, .ivory, .mist].contains(background) ? studioAccent : .white
                         )
+                        .overlay(alignment: .trailing) {
+                            if background != .cinema {
+                                Rectangle().fill(Color.primary.opacity(0.12)).frame(width: hairline)
+                            }
+                        }
                     }
+                    .frame(maxWidth: .infinity)
                     .buttonStyle(.plain)
                     .disabled(model.isSettingsLocked)
                     .help(background.label(in: language))
@@ -571,9 +506,14 @@ struct ContentView: View {
                     .accessibilityValue(isSelected ? t("accessibility.selected") : "")
                 }
             }
-            .fixedSize(horizontal: true, vertical: false)
+            .frame(width: inspectorValueColumnWidth, height: StudioLayout.controlHeight)
+            .clipShape(RoundedRectangle(cornerRadius: 5, style: .continuous))
+            .overlay {
+                RoundedRectangle(cornerRadius: 5, style: .continuous)
+                    .strokeBorder(Color.primary.opacity(0.15), lineWidth: hairline)
+            }
         }
-        .frame(maxWidth: .infinity)
+        .frame(maxWidth: .infinity, alignment: .leading)
         .accessibilityElement(children: .contain)
         .accessibilityLabel(t("export.background"))
     }
@@ -583,69 +523,62 @@ struct ContentView: View {
         return Color(red: rgb.red, green: rgb.green, blue: rgb.blue)
     }
 
-    /// Keep the visible colour chip separate from its selected ring. The old
-    /// heavy outline sat on top of the chip, which made compact palette edges
-    /// look uneven. This gives the ring a small, intentional breathing space.
+    /// Equal-width connected chips keep all six canvases readable in the
+    /// narrow inspector. The check and inset outline do not change geometry.
     private struct StoryboardBackgroundSwatch: View {
         let color: Color
         let isSelected: Bool
         let accent: Color
+        let checkColor: Color
 
         var body: some View {
-            ZStack {
-                if isSelected {
-                    Circle()
-                        .fill(accent.opacity(0.10))
-                        .frame(width: 26, height: 26)
-                    Circle()
-                        .strokeBorder(accent, lineWidth: 1.5)
-                        .frame(width: 26, height: 26)
-                }
-
-                Circle()
-                    .fill(color)
-                    .frame(width: 18, height: 18)
-                    .overlay {
-                        Circle().strokeBorder(Color.primary.opacity(0.18), lineWidth: 0.75)
+            Rectangle()
+                .fill(color)
+                .frame(maxWidth: .infinity)
+                .frame(height: StudioLayout.controlHeight)
+                .overlay {
+                    if isSelected {
+                        RoundedRectangle(cornerRadius: 3, style: .continuous)
+                            .strokeBorder(accent, lineWidth: 2)
+                            .padding(2)
+                        ProjectIcon(symbol: .check, size: 12)
+                            .foregroundStyle(checkColor)
                     }
-            }
-            .frame(width: 28, height: 28)
-            .contentShape(Circle())
-            .shadow(color: .black.opacity(isSelected ? 0.15 : 0.10), radius: isSelected ? 2 : 1, y: 1)
+                }
+                .contentShape(Rectangle())
         }
     }
 
     private func queuePanel(compact: Bool, isNarrow: Bool) -> some View {
-        VStack(alignment: .leading, spacing: compact ? 10 : 12) {
-            HStack(alignment: .center, spacing: 10) {
-                HStack(spacing: 9) {
-                    ProjectIcon(symbol: .videoImport, size: 16)
-                        .foregroundStyle(studioAccent)
-                        .frame(width: 30, height: 30)
-                        .background(studioAccent.opacity(isLightAppearance ? 0.12 : 0.18), in: RoundedRectangle(cornerRadius: 9, style: .continuous))
-                    VStack(alignment: .leading, spacing: StudioLayout.titleSubtitleGap) {
-                        Text(t("queue.title"))
-                            .font(.system(size: 17, weight: .semibold))
-                        Text(t("queue.count", model.videoJobs.count))
-                            .font(.system(size: 11, weight: .medium, design: .monospaced))
-                            .foregroundStyle(.secondary)
-                    }
-                }
-                Spacer(minLength: 4)
+        VStack(alignment: .leading, spacing: 10) {
+            HStack(spacing: 5) {
+                ProjectIcon(symbol: .videoImport, size: 13)
+                    .foregroundStyle(studioAccent)
+                Text(t("queue.title"))
+                    .font(.system(size: 12, weight: .semibold))
+                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
+                Spacer(minLength: 2)
+                Text("\(model.videoJobs.count)")
+                    .font(.system(size: 11, weight: .medium, design: .monospaced))
+                    .foregroundStyle(.secondary)
                 Button(action: model.chooseVideo) {
-                    ProjectIcon(symbol: .plus, size: 15)
-                        .foregroundStyle(.white)
-                        .frame(width: StudioLayout.primaryControlHeight, height: StudioLayout.primaryControlHeight)
-                        .background(studioAccent, in: RoundedRectangle(cornerRadius: StudioLayout.controlCornerRadius, style: .continuous))
+                    ProjectIcon(symbol: .plus, size: 14)
+                        .foregroundStyle(studioAccent)
+                        .frame(width: 26, height: 26)
+                        .contentShape(Rectangle())
                 }
                 .buttonStyle(.plain)
                 .disabled(model.isQueueLocked)
                 .accessibilityLabel(t("queue.addAction"))
                 .help(t("queue.addAction"))
             }
+            .frame(height: 32)
+            .accessibilityElement(children: .contain)
+            .accessibilityLabel(t("queue.count", model.videoJobs.count))
 
             if model.isImportingVideos {
-                HStack(spacing: 7) {
+                HStack(spacing: 6) {
                     ProgressView().controlSize(.small)
                     Text(t("queue.importing"))
                         .foregroundStyle(.secondary)
@@ -669,33 +602,21 @@ struct ContentView: View {
             )
             .frame(maxHeight: .infinity, alignment: .top)
 
-            VStack(alignment: .leading, spacing: 5) {
-                GlyphLabel(title: t("queue.localTitle"), glyph: .privacy, glyphSize: 17)
-                    .font(.system(size: 12, weight: .semibold))
-                    .foregroundStyle(.secondary)
-            }
-            .padding(.top, 8)
         }
         .padding(.horizontal, StudioLayout.panelInset)
-        .padding(.vertical, compact ? 12 : StudioLayout.panelTitleTop)
+        .padding(.top, 4)
+        .padding(.bottom, 10)
         .background(sidebarFill)
     }
 
     private func controlPanel(compact: Bool, isNarrow _: Bool) -> some View {
         return VStack(alignment: .leading, spacing: 0) {
-            HStack(spacing: 9) {
-                ProjectIcon(symbol: .sliders, size: 16)
-                    .foregroundStyle(studioAccent)
-                    .frame(width: 30, height: 30)
-                .background(studioAccent.opacity(isLightAppearance ? 0.12 : 0.18), in: RoundedRectangle(cornerRadius: StudioLayout.controlCornerRadius, style: .continuous))
-                Text(t("inspector.title"))
-                    .font(.system(size: 17, weight: .semibold))
-            }
+            Text(t("inspector.title"))
+                .font(.system(size: 12, weight: .semibold))
                 .padding(.horizontal, StudioLayout.panelInset)
-                .padding(.top, compact ? 12 : StudioLayout.panelTitleTop)
-                .padding(.bottom, compact ? 8 : 12)
+                .frame(height: 40, alignment: .leading)
 
-            ScrollView(showsIndicators: false) {
+            ScrollView(showsIndicators: true) {
                 VStack(alignment: .leading, spacing: 0) {
                     storyboardGridPicker(compact: compact)
 
@@ -712,9 +633,10 @@ struct ContentView: View {
                     inspectorSection(title: t("section.export"), glyph: .export, compact: compact, showsDivider: false) {
                         VStack(alignment: .leading, spacing: 8) {
                             Text(t("export.autosave"))
-                                .font(.system(size: 10))
+                                .font(.system(size: 11))
                                 .foregroundStyle(.secondary)
-                                .lineLimit(1)
+                                .lineLimit(2)
+                                .fixedSize(horizontal: false, vertical: true)
                             HStack(spacing: 8) {
                                 ForEach(ExportFormat.allCases) { format in
                                     Button {
@@ -736,27 +658,10 @@ struct ContentView: View {
                 .padding(.bottom, 12)
             }
 
-            Rectangle()
-                .fill(workspaceDivider)
-                .frame(height: 1)
-
+            if model.hasFailedJobs && !model.isProcessing {
+                workspaceRule
+            }
             VStack(spacing: 8) {
-                if !model.isProcessing {
-                    Button(action: model.generate) {
-                        GlyphLabel(title: model.primaryButtonTitle, glyph: .filmStack, glyphSize: 18)
-                            .font(.system(size: 15, weight: .bold))
-                            .frame(maxWidth: .infinity, minHeight: 44)
-                    }
-                    .buttonStyle(PrimaryButtonStyle())
-                    .disabled(!model.hasVideos || model.isBusy || model.isImportingVideos)
-                    .accessibilityLabel(t("accessibility.generate"))
-                } else {
-                    GlyphLabel(title: model.processingLabel, glyph: .refreshCandidates, glyphSize: 15)
-                        .font(.system(size: 12, weight: .semibold))
-                        .foregroundStyle(.secondary)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                }
-
                 if model.hasFailedJobs && !model.isProcessing {
                     HStack(spacing: 8) {
                         if model.hasRetryableFailedJobs {
@@ -782,7 +687,7 @@ struct ContentView: View {
                 }
             }
             .padding(.horizontal, StudioLayout.panelInset)
-            .padding(.vertical, compact ? 12 : 16)
+            .padding(.vertical, model.hasFailedJobs && !model.isProcessing ? 10 : 0)
         }
         .background(sidebarFill)
     }
@@ -814,7 +719,7 @@ struct ContentView: View {
         .overlay(alignment: .bottom) {
             Rectangle()
                 .fill(workspaceDivider.opacity(0.72))
-                .frame(height: 1)
+                .frame(height: hairline)
         }
     }
 
@@ -826,32 +731,35 @@ struct ContentView: View {
         @ViewBuilder content: () -> SectionContent
     ) -> some View {
         VStack(alignment: .leading, spacing: 8) {
-            HStack(spacing: 7) {
-                ProjectIcon(symbol: glyph, size: 14)
-                    .foregroundStyle(studioAccent)
-                    .frame(width: 24, height: 24)
-                    .background(studioAccent.opacity(isLightAppearance ? 0.11 : 0.17), in: RoundedRectangle(cornerRadius: 7, style: .continuous))
+            HStack(spacing: 6) {
+                ProjectIcon(symbol: glyph, size: 13)
+                    .foregroundStyle(.secondary)
                 Text(title)
-                    .font(.system(size: 13, weight: .semibold))
-                    .foregroundStyle(.primary)
+                    .font(.system(size: 11, weight: .semibold))
+                    .foregroundStyle(.secondary)
             }
             content()
         }
-        .padding(.vertical, 12)
+        .padding(.vertical, 14)
         .overlay(alignment: .bottom) {
             if showsDivider {
                 Rectangle()
                     .fill(workspaceDivider.opacity(0.72))
-                    .frame(height: 1)
+                    .frame(height: hairline)
             }
         }
     }
 
+    private func inspectorFieldLabel(_ title: String) -> some View {
+        Text(title)
+            .font(.system(size: 11, weight: .medium))
+            .foregroundStyle(.primary)
+    }
+
     private func inlineToggle(_ title: String, isOn: Binding<Bool>) -> some View {
         HStack(spacing: 8) {
-            Text(title)
-                .font(.system(size: 11, weight: .medium))
-                    .lineLimit(2)
+            inspectorFieldLabel(title)
+                .lineLimit(2)
             Spacer(minLength: 0)
             Toggle("", isOn: isOn)
                 .labelsHidden()
@@ -861,48 +769,6 @@ struct ContentView: View {
         }
         .frame(maxWidth: .infinity, minHeight: 30)
         .disabled(model.isSettingsLocked)
-    }
-
-    private func previewNavigationButton(
-        symbol: ProjectIcon.Symbol,
-        label: String,
-        enabled: Bool,
-        action: @escaping () -> Void
-    ) -> some View {
-        Button(action: action) {
-            ProjectIcon(symbol: symbol, size: 20)
-                .frame(width: 36, height: 44)
-                .contentShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-        }
-        .buttonStyle(.plain)
-        .foregroundStyle(navigationForeground(enabled: enabled))
-        .background(
-            isLightAppearance
-                ? Color.white.opacity(enabled ? 0.98 : 0.76)
-                : Color(red: 0.094, green: 0.157, blue: 0.224).opacity(enabled ? 0.98 : 0.72),
-            in: RoundedRectangle(cornerRadius: 10, style: .continuous)
-        )
-        .overlay {
-            RoundedRectangle(cornerRadius: 10, style: .continuous).strokeBorder(
-                isLightAppearance
-                    ? Color(red: 0.71, green: 0.81, blue: 0.85).opacity(enabled ? 1 : 0.62)
-                    : Color(red: 0.29, green: 0.38, blue: 0.46).opacity(enabled ? 1 : 0.6)
-            )
-        }
-        .shadow(color: isLightAppearance && enabled ? Color.black.opacity(0.10) : .clear, radius: 4, y: 2)
-        .disabled(!enabled)
-        .accessibilityLabel(label)
-    }
-
-    private func navigationForeground(enabled: Bool) -> Color {
-        guard enabled else {
-            return isLightAppearance
-                ? Color(red: 0.47, green: 0.55, blue: 0.59)
-                : Color(red: 0.43, green: 0.51, blue: 0.58)
-        }
-        return isLightAppearance
-            ? Color(red: 0.14, green: 0.35, blue: 0.42)
-            : Color(red: 0.95, green: 0.98, blue: 1.0)
     }
 
     private var batchStatusBar: some View {
@@ -960,40 +826,36 @@ struct ContentView: View {
             }
         }
         .padding(.horizontal, 20)
-        .frame(height: 54)
+        .frame(height: 44)
         .background(sidebarFill)
     }
 
     private var previewPanel: some View {
         VStack(spacing: 0) {
-            HStack(alignment: .top, spacing: 16) {
-                HStack(alignment: .top, spacing: 9) {
-                    ProjectIcon(symbol: .filmStack, size: 16)
-                        .foregroundStyle(studioAccent)
-                        .frame(width: 30, height: 30)
-                        .background(studioAccent.opacity(isLightAppearance ? 0.12 : 0.18), in: RoundedRectangle(cornerRadius: 9, style: .continuous))
-                    VStack(alignment: .leading, spacing: StudioLayout.titleSubtitleGap) {
-                        Text(t("preview.title"))
-                            .font(.system(size: 17, weight: .semibold))
-                            .foregroundStyle(PreviewText.primary)
-                        Text(model.previewStatus)
-                            .font(.system(size: 11, weight: .medium))
-                            .foregroundStyle(PreviewText.secondary)
-                            .lineLimit(2)
-                            .truncationMode(.tail)
-                            .help(model.previewStatus)
-                    }
+            HStack(spacing: 10) {
+                Text(t("preview.title"))
+                    .font(.system(size: 12, weight: .semibold))
+                    .foregroundStyle(PreviewText.primary)
+                    .fixedSize()
+                Spacer(minLength: 0)
+                Text(model.previewStatus)
+                    .font(.system(size: 11))
+                    .foregroundStyle(PreviewText.secondary)
+                    .lineLimit(1)
+                    .truncationMode(.middle)
+                    .help(model.previewStatus)
+                    .frame(maxWidth: .infinity, alignment: .trailing)
+                    .layoutPriority(-1)
+                if !model.isProcessing && model.previewImage != nil {
+                    fileActions
+                        .fixedSize()
                 }
-                Spacer()
             }
-            .padding(.horizontal, StudioLayout.panelInset)
-            .padding(.top, StudioLayout.panelTitleTop)
-            .padding(.bottom, 10)
-            .frame(height: StudioLayout.panelHeaderHeight, alignment: .topLeading)
+            .padding(.horizontal, 14)
+            .frame(height: StudioLayout.previewHeaderHeight)
+            .background(appBackground)
 
-            Rectangle()
-                .fill(workspaceDivider)
-                .frame(height: 1)
+            workspaceRule
 
             Group {
                 if model.isProcessing {
@@ -1002,88 +864,101 @@ struct ContentView: View {
                         cardAspectRatio: model.activeCardAspectRatio,
                         language: language,
                         frames: model.livePreviewFrames,
+                        processingLabel: model.processingLabel,
                         isLightAppearance: isLightAppearance
                     )
                 } else if let image = model.previewImage {
-                    VStack(spacing: 14) {
-                        ZStack {
-                            Image(nsImage: image)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(maxWidth: .infinity, maxHeight: 560)
-                                .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
-                                .shadow(color: .black.opacity(0.28), radius: 24, y: 12)
-
-                            if model.canBrowseCompletedPreviews {
-                                HStack {
-                                    previewNavigationButton(
-                                        symbol: .previous,
-                                        label: t("button.previousResult"),
-                                        enabled: model.canShowPreviousPreview && !model.isApplyingFrameAdjustments,
-                                        action: model.showPreviousPreview
-                                    )
-                                    Spacer(minLength: 0)
-                                    previewNavigationButton(
-                                        symbol: .next,
-                                        label: t("button.nextResult"),
-                                        enabled: model.canShowNextPreview && !model.isApplyingFrameAdjustments,
-                                        action: model.showNextPreview
-                                    )
-                                }
-                                .padding(.horizontal, 12)
+                    StoryboardCanvas(image: image, isLightAppearance: isLightAppearance, language: language,
+                                     savedURL: model.isLoadingPreview ? nil : model.lastSavedURL)
+                        .background {
+                            if model.completedPreviews.indices.contains(model.selectedPreviewIndex) {
+                                PreviewWindowAutoFitProbe(
+                                    fitter: previewAutoFitter,
+                                    request: PreviewWindowAutoFitRequest(
+                                        sourceID: model.completedPreviews[model.selectedPreviewIndex].id.uuidString,
+                                        aspectRatio: Double(image.size.width / max(1, image.size.height)),
+                                        layoutAspect: model.completedPreviews[model.selectedPreviewIndex].settings.layoutAspect,
+                                        panels: PreviewWindowPanelConfiguration(queueVisible: showsQueue, inspectorVisible: showsInspector)
+                                    ),
+                                    isEnabled: !model.isLoadingPreview && !model.isBusy
+                                )
                             }
                         }
-                        .frame(maxWidth: .infinity)
-
-                        if model.canBrowseCompletedPreviews {
-                            Text(t("preview.position", model.selectedPreviewNumber, model.completedPreviews.count))
-                                .font(.system(size: 11, weight: .semibold, design: .monospaced))
-                                .foregroundStyle(PreviewText.secondary)
-                        }
-
-                        HStack(spacing: 10) {
-                            if model.lastSavedURL != nil {
-                                Button(action: model.revealLastSavedResult) {
-                                    GlyphLabel(title: t("button.openSaved"), glyph: .folderCheck)
-                                        .font(.system(size: 12, weight: .semibold))
-                                        .padding(.horizontal, 12)
-                                        .frame(height: 38)
-                                }
-                                .buttonStyle(SavedResultButtonStyle())
-                                .help(t("button.openSaved.hint"))
-                            } else {
-                                Button(action: model.exportCurrentResult) {
-                                    GlyphLabel(title: t("button.saveas", (model.renderedFormat ?? model.format).rawValue), glyph: .save)
-                                        .font(.system(size: 12, weight: .semibold))
-                                        .padding(.horizontal, 12)
-                                        .frame(height: 38)
-                                }
-                                .buttonStyle(ExportButtonStyle())
-                                .disabled(model.isLoadingPreview)
-                            }
-
-                            if let request = model.manualEditorRequest {
-                                Button {
-                                    manualFrameEditorRequest = request
-                                } label: {
-                                    GlyphLabel(title: t("button.adjustFrames"), glyph: .frameSelect)
-                                        .font(.system(size: 12, weight: .bold))
-                                        .padding(.horizontal, 16)
-                                        .frame(minWidth: 202, minHeight: 38, maxHeight: 38)
-                                }
-                                .buttonStyle(ManualAdjustmentButtonStyle())
-                                .help(t("button.adjustFrames.hint"))
-                                .accessibilityIdentifier("manual-frame-selection")
-                            }
-                        }
-                    }
                 } else {
                     EmptyPreview(language: language, isLightAppearance: isLightAppearance)
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .padding(18)
+            .clipped()
+
         }
         .background(stageFill)
+    }
+
+    private var localPrivacyCaption: some View {
+        GlyphLabel(title: t("queue.localTitle"), glyph: .privacy, glyphSize: 11)
+            .font(.system(size: 10))
+            .foregroundStyle(.secondary)
+            .lineLimit(1)
+            .help(t("queue.localTitle"))
+    }
+
+    private var previewActions: some View {
+        // Equal side columns keep the page controls at the window's actual
+        // centre even when translated file actions have different lengths.
+        GeometryReader { geometry in
+            let sideWidth = max(0, (geometry.size.width - StudioLayout.resultPagerWidth) / 2)
+            HStack(spacing: 0) {
+                localPrivacyCaption
+                    .frame(width: sideWidth, alignment: .leading)
+
+                StoryboardResultPager(
+                    position: model.selectedPreviewNumber, count: model.completedPreviews.count,
+                    canGoBack: model.canShowPreviousPreview && !model.isApplyingFrameAdjustments,
+                    canGoForward: model.canShowNextPreview && !model.isApplyingFrameAdjustments,
+                    language: language,
+                    previous: model.showPreviousPreview, next: model.showNextPreview
+                )
+
+                Button {
+                    manualFrameEditorRequest = model.manualEditorRequest
+                } label: {
+                    GlyphLabel(title: t("button.adjustFrames.short"), glyph: .frameSelect, glyphSize: 15)
+                        .font(.system(size: 12, weight: .semibold))
+                        .lineLimit(1)
+                        .padding(.horizontal, geometry.size.width < 600 ? 8 : 14)
+                        .frame(height: 34)
+                }
+                .buttonStyle(PrimaryButtonStyle())
+                .disabled(model.manualEditorRequest == nil)
+                .help(t("button.adjustFrames.hint"))
+                .accessibilityLabel(t("button.adjustFrames"))
+                .accessibilityIdentifier("manual-frame-selection")
+                .frame(width: sideWidth, alignment: .trailing)
+            }
+            .frame(height: geometry.size.height)
+        }
+    }
+
+    private var fileActions: some View {
+        HStack(spacing: 0) {
+            if model.lastSavedURL != nil {
+                Button(action: model.revealLastSavedResult) {
+                    GlyphLabel(title: t("button.openSaved"), glyph: .folderCheck, glyphSize: 13)
+                        .font(.system(size: 11, weight: .medium))
+                        .foregroundStyle(studioAccent)
+                }
+                .buttonStyle(.borderless)
+                .help(t("button.openSaved.hint"))
+            } else {
+                Button(action: model.exportCurrentResult) {
+                    GlyphLabel(title: t("button.saveas", (model.renderedFormat ?? model.format).rawValue), glyph: .save, glyphSize: 13)
+                        .font(.system(size: 11, weight: .medium))
+                }
+                .buttonStyle(.borderless)
+                .disabled(model.isLoadingPreview)
+            }
+
+        }
     }
 }

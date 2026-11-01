@@ -14,6 +14,7 @@ struct ProjectIcon: View {
         case grid, frame, layers, export, privacy, videoImport
         case wand, smartSelect, refreshCandidates, previous, next, skipPrevious, skipNext, folder, folderCheck, save, sliders, frameSelect
         case film, selected, eye, filmStack, plus, trash, refresh, pause, play, ellipsis
+        case sidebarLeft, sidebarRight, zoomIn, zoomOut, maximize, minimize
 
         fileprivate var tablerAsset: String {
             switch self {
@@ -50,6 +51,12 @@ struct ProjectIcon: View {
             case .pause: "player-pause"
             case .play: "player-play"
             case .ellipsis: "dots"
+            case .sidebarLeft: "layout-sidebar"
+            case .sidebarRight: "layout-sidebar-right"
+            case .zoomIn: "zoom-in"
+            case .zoomOut: "zoom-out"
+            case .maximize: "maximize"
+            case .minimize: "minimize"
             }
         }
     }

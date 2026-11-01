@@ -5,50 +5,55 @@ struct ProgressiveStoryboardPreview: View {
     let cardAspectRatio: Double
     let language: AppLanguage
     let frames: [LivePreviewFrame?]
+    let processingLabel: String
     let isLightAppearance: Bool
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
-        let columns = Array(repeating: GridItem(.flexible(), spacing: 6), count: gridSide)
-        let safeAspectRatio = min(3, max(1.0 / 3.0, cardAspectRatio))
-        let total = gridSide * gridSide
+        let side = min(8, max(1, gridSide))
+        let total = side * side
         let filledCount = frames.reduce(into: 0) { if $1 != nil { $0 += 1 } }
         let activePlaceholderIndex = frames.firstIndex { $0 == nil }
-        VStack(spacing: 12) {
-            Text(language.text("preview.live", filledCount, total))
-                .font(.system(size: 12, weight: .semibold, design: .rounded))
-                .foregroundStyle(.secondary)
-            LazyVGrid(columns: columns, spacing: 6) {
-                ForEach(0..<total, id: \.self) { index in
-                    ZStack {
-                        if let frame = frames.indices.contains(index) ? frames[index] : nil {
-                            Image(nsImage: frame.image)
-                                .resizable()
-                                .scaledToFill()
-                                .id(frame.id)
-                                .transition(.opacity.combined(with: .scale(scale: 0.94)))
-                        } else {
-                            RoundedRectangle(cornerRadius: 6, style: .continuous)
-                                .fill(Color.white.opacity(index == activePlaceholderIndex ? 0.12 : 0.045))
-                            if index == activePlaceholderIndex {
-                                ProgressView().controlSize(.mini)
+        GeometryReader { geometry in
+            let metrics = PreviewCanvasLayout.gridMetrics(
+                side: side, cardAspect: cardAspectRatio,
+                availableSize: CGSize(width: max(1, geometry.size.width - 24),
+                                      height: max(1, geometry.size.height - 50))
+            )
+            let columns = Array(repeating: GridItem(.fixed(metrics.tileSize.width), spacing: 5), count: side)
+            VStack(spacing: 8) {
+                Text(filledCount == 0 ? processingLabel : language.text("preview.live", filledCount, total))
+                    .font(.system(size: 11, weight: .medium))
+                    .foregroundStyle(.secondary)
+                    .frame(height: 18)
+                LazyVGrid(columns: columns, spacing: 5) {
+                    ForEach(0..<total, id: \.self) { index in
+                        ZStack {
+                            if let frame = frames.indices.contains(index) ? frames[index] : nil {
+                                Image(nsImage: frame.image)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .id(frame.id)
+                                    .transition(.opacity)
+                            } else {
+                                RoundedRectangle(cornerRadius: 4, style: .continuous)
+                                    .fill(isLightAppearance
+                                        ? Color(red: 0.86, green: 0.90, blue: 0.95).opacity(index == activePlaceholderIndex ? 1 : 0.6)
+                                        : Color.white.opacity(index == activePlaceholderIndex ? 0.14 : 0.06))
+                                if index == activePlaceholderIndex {
+                                    ProgressView().controlSize(.mini)
+                                }
                             }
                         }
+                        .frame(width: metrics.tileSize.width, height: metrics.tileSize.height)
                     }
-                    .aspectRatio(safeAspectRatio, contentMode: .fit)
-                    .clipShape(RoundedRectangle(cornerRadius: 6, style: .continuous))
                 }
+                .frame(width: metrics.gridSize.width, height: metrics.gridSize.height)
             }
-            .aspectRatio(safeAspectRatio, contentMode: .fit)
+            .frame(width: geometry.size.width, height: geometry.size.height)
         }
-        .padding(16)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background {
-            if !isLightAppearance {
-                RoundedRectangle(cornerRadius: 22, style: .continuous)
-                    .fill(Color.black.opacity(0.14))
-            }
-        }
-        .animation(.easeOut(duration: 0.18), value: filledCount)
+        .animation(reduceMotion ? nil : .easeOut(duration: 0.18), value: filledCount)
     }
 }
 
@@ -57,23 +62,13 @@ struct EmptyPreview: View {
     let isLightAppearance: Bool
 
     var body: some View {
-        VStack(spacing: 18) {
-            ShotMapMark(language: language, size: 72)
+        VStack(spacing: 12) {
+            ShotMapMark(language: language, size: 44)
             Text(language.text("preview.empty.title"))
-                .font(.system(size: 22, weight: .semibold))
+                .font(.system(size: 16, weight: .semibold))
                 .foregroundStyle(PreviewText.primary)
-            Text(language.text("preview.empty.description"))
-                .font(.system(size: 13))
-                .foregroundStyle(PreviewText.secondary)
-                .multilineTextAlignment(.center)
-                .frame(maxWidth: 310)
         }
+        .padding(24)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background {
-            if !isLightAppearance {
-                RoundedRectangle(cornerRadius: 22, style: .continuous)
-                    .fill(Color.black.opacity(0.14))
-            }
-        }
     }
 }

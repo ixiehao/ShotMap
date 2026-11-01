@@ -38,7 +38,7 @@ export default {
   faqFourQuestion: "¿Dónde se guardan los mosaicos?", faqFourAnswer: "Por defecto, en la carpeta del vídeo original. Usa Guardar como para elegir otra ubicación.",
   ctaEyebrow: "¿BUSCAMOS ESE VÍDEO?", ctaTitle: "Encuentra el vídeo que buscabas.",
   ctaDetail: "Descarga la última versión internacional para Mac. Incluye los siete idiomas.",
-  ctaDownload: "Descargar versión internacional", ctaGithub: "Ver en GitHub", github: "GitHub", releases: "Versiones", feedback: "Comentarios",
+  ctaDownload: "Descargar v{version}", ctaGithub: "Ver en GitHub", github: "GitHub", releases: "Versiones", feedback: "Comentarios",
   productAlt: "ShotMap en español con cola de vídeos, vista previa del mosaico y ajustes",
   manualAlt: "Selección de fotogramas en español con reproductor, línea de tiempo y galería"
 };

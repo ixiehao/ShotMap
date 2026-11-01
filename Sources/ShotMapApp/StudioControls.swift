@@ -6,55 +6,77 @@ struct ShotMapMark: View {
     var size: CGFloat = 44
 
     var body: some View {
-        // The application bundle keeps the full-resolution PNG / ICNS for the
-        // Dock and Finder. In workspace chrome native shapes retain softer,
-        // cleaner corners than a very small raster rendition.
+        // Native vector rendering preserves the approved brand geometry at
+        // small sizes and adapts the navy outer frame to a dark workspace.
         ShotMapMarkGlyph(size: size)
             .accessibilityLabel(language.text("app.icon.accessibility"))
         .frame(width: size, height: size)
     }
 }
 
-/// Compact vector form of the ShotMap mark used inside the app chrome. Whole
-/// point measurements keep the tile edges clean at standard and Retina scales.
+/// Native counterpart of Assets/Brand/mark.svg (viewBox 72 72 384 360).
+/// Keep these coordinates in sync with the canonical vector, including the
+/// optically centred playback triangle and the eight 56 × 32 frame tiles.
 private struct ShotMapMarkGlyph: View {
     let size: CGFloat
     @Environment(\.colorScheme) private var colorScheme
 
-    private var outerCornerRadius: CGFloat { max(7, size * 0.27) }
-    private var tileCornerRadius: CGFloat { max(2, size * 0.105) }
-    private var tileInset: CGFloat { size * 0.19 }
-    private var tileGap: CGFloat { size * 0.075 }
-
     var body: some View {
-        let tileSize = (size - tileInset * 2 - tileGap) / 2
-        let outer = RoundedRectangle(cornerRadius: outerCornerRadius, style: .continuous)
-        let tile = RoundedRectangle(cornerRadius: tileCornerRadius, style: .continuous)
+        Canvas { context, extent in
+            let scale = min(extent.width / 384, extent.height / 360)
+            context.translateBy(x: (extent.width - 384 * scale) / 2,
+                                y: (extent.height - 360 * scale) / 2)
+            context.scaleBy(x: scale, y: scale)
+            context.translateBy(x: -72, y: -72)
 
-        ZStack {
-            outer.fill(Color(red: 0.067, green: 0.137, blue: 0.239))
-            outer.strokeBorder(
-                colorScheme == .light ? Color.white.opacity(0.38) : Color.white.opacity(0.16),
-                lineWidth: 1
-            )
-            VStack(spacing: tileGap) {
-                HStack(spacing: tileGap) {
-                    tile.fill(Color(red: 0.965, green: 0.970, blue: 0.978))
-                    tile.fill(SelectionPalette.active)
-                }
-                HStack(spacing: tileGap) {
-                    tile.fill(SelectionPalette.active)
-                    tile.fill(Color(red: 0.965, green: 0.970, blue: 0.978))
+            let frameColor = colorScheme == .light
+                ? Color(red: 20 / 255, green: 37 / 255, blue: 61 / 255)
+                : Color(red: 232 / 255, green: 242 / 255, blue: 1)
+            let blue = colorScheme == .light
+                ? Color(red: 18 / 255, green: 102 / 255, blue: 232 / 255)
+                : Color(red: 85 / 255, green: 155 / 255, blue: 1)
+
+            var outer = Path()
+            outer.move(to: CGPoint(x: 272, y: 128))
+            outer.addLine(to: CGPoint(x: 128, y: 128))
+            outer.addQuadCurve(to: CGPoint(x: 96, y: 160), control: CGPoint(x: 96, y: 128))
+            outer.addLine(to: CGPoint(x: 96, y: 384))
+            outer.addQuadCurve(to: CGPoint(x: 128, y: 416), control: CGPoint(x: 96, y: 416))
+            outer.addLine(to: CGPoint(x: 384, y: 416))
+            outer.addQuadCurve(to: CGPoint(x: 416, y: 384), control: CGPoint(x: 416, y: 416))
+            outer.addLine(to: CGPoint(x: 416, y: 248))
+            context.stroke(outer, with: .color(frameColor),
+                           style: StrokeStyle(lineWidth: 32, lineCap: .round, lineJoin: .round))
+            for row in 0..<3 {
+                for column in 0..<3 where !(row == 0 && column == 2) {
+                    let rect = CGRect(x: 140 + column * 80, y: 184 + row * 72, width: 56, height: 32)
+                    context.fill(Path(roundedRect: rect, cornerRadius: 5), with: .color(frameColor))
                 }
             }
-            .frame(width: tileSize * 2 + tileGap, height: tileSize * 2 + tileGap)
+
+            // Quadratic corners match the SVG rather than substituting a
+            // differently rounded system rectangle at large sizes.
+            var video = Path()
+            video.move(to: CGPoint(x: 320, y: 88))
+            video.addLine(to: CGPoint(x: 420, y: 88))
+            video.addQuadCurve(to: CGPoint(x: 440, y: 108), control: CGPoint(x: 440, y: 88))
+            video.addLine(to: CGPoint(x: 440, y: 172))
+            video.addQuadCurve(to: CGPoint(x: 420, y: 192), control: CGPoint(x: 440, y: 192))
+            video.addLine(to: CGPoint(x: 320, y: 192))
+            video.addQuadCurve(to: CGPoint(x: 300, y: 172), control: CGPoint(x: 300, y: 192))
+            video.addLine(to: CGPoint(x: 300, y: 108))
+            video.addQuadCurve(to: CGPoint(x: 320, y: 88), control: CGPoint(x: 300, y: 88))
+            video.closeSubpath()
+            context.fill(video, with: .color(blue))
+
+            var play = Path()
+            play.move(to: CGPoint(x: 354, y: 112))
+            play.addLine(to: CGPoint(x: 402, y: 140))
+            play.addLine(to: CGPoint(x: 354, y: 168))
+            play.closeSubpath()
+            context.fill(play, with: .color(.white))
         }
-        .compositingGroup()
-        .shadow(
-            color: Color.black.opacity(colorScheme == .light ? 0.12 : 0.30),
-            radius: size > 40 ? 5 : 2,
-            y: size > 40 ? 3 : 1
-        )
+        .frame(width: size, height: size)
     }
 }
 
@@ -99,41 +121,124 @@ enum SelectionPalette {
     static let active = Color(red: 0.039, green: 0.400, blue: 0.851) // #0A66D9
 }
 
+struct StoryboardResultPager: View {
+    let position: Int
+    let count: Int
+    let canGoBack: Bool
+    let canGoForward: Bool
+    let language: AppLanguage
+    let previous: () -> Void
+    let next: () -> Void
+    @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.displayScale) private var displayScale
+
+    private var palette: StudioPalette { StudioPalette(isLight: colorScheme == .light) }
+
+    var body: some View {
+        HStack(spacing: 4) {
+            navigationButton(.previous, enabled: canGoBack, label: language.text("button.previousResult"),
+                             identifier: "preview-previous", action: previous)
+            HStack(alignment: .firstTextBaseline, spacing: 4) {
+                Text("\(position)")
+                    .font(.system(size: 15, weight: .bold, design: .monospaced))
+                    .foregroundStyle(palette.accent)
+                Text("/ \(count)")
+                    .font(.system(size: 12, weight: .medium, design: .monospaced))
+                    .foregroundStyle(.secondary)
+            }
+            .monospacedDigit()
+            .lineLimit(1)
+            .minimumScaleFactor(0.7)
+            .frame(width: 60)
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel(language.text("preview.position", position, count))
+            .accessibilityIdentifier("preview-page-position")
+            navigationButton(.next, enabled: canGoForward, label: language.text("button.nextResult"),
+                             identifier: "preview-next", action: next)
+        }
+        .padding(.horizontal, 8)
+        .frame(width: StudioLayout.resultPagerWidth, height: 36)
+        .background(palette.control, in: RoundedRectangle(cornerRadius: 9, style: .continuous))
+        .overlay {
+            RoundedRectangle(cornerRadius: 9, style: .continuous)
+                .strokeBorder(palette.divider, lineWidth: 1 / max(1, displayScale))
+        }
+        .shadow(color: .black.opacity(colorScheme == .light ? 0.035 : 0.12), radius: 2, y: 1)
+        .accessibilityElement(children: .contain)
+    }
+
+    private func navigationButton(_ symbol: ProjectIcon.Symbol, enabled: Bool, label: String,
+                                  identifier: String, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            ProjectIcon(symbol: symbol, size: 17)
+                .foregroundStyle(enabled ? palette.accent : Color.secondary.opacity(0.35))
+                .frame(width: 30, height: 28)
+                .background(enabled ? palette.accent.opacity(0.09) : Color.clear,
+                            in: RoundedRectangle(cornerRadius: 6, style: .continuous))
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .disabled(!enabled)
+        .help(label)
+        .accessibilityLabel(label)
+        .accessibilityIdentifier(identifier)
+    }
+}
+
 /// A compact visual preview makes the effect of each grid choice clear before
 /// export. The real size remains in the label; very dense choices are capped
 /// visually so their tiny cells stay legible in the narrow inspector.
 struct StoryboardGridChoiceLabel: View {
     let side: Int
     let isSelected: Bool
-
-    private var visualSide: Int { min(5, max(2, side)) }
-    private var dotSize: CGFloat { visualSide >= 5 ? 4 : 5 }
-    private var dotSpacing: CGFloat { visualSide >= 5 ? 2 : 3 }
+    @Environment(\.displayScale) private var displayScale
 
     var body: some View {
         VStack(spacing: 3) {
-            VStack(spacing: dotSpacing) {
-                ForEach(0..<visualSide, id: \.self) { _ in
-                    HStack(spacing: dotSpacing) {
-                        ForEach(0..<visualSide, id: \.self) { _ in
-                            RoundedRectangle(cornerRadius: 1, style: .continuous)
-                                .fill(isSelected ? SelectionPalette.active : Color.secondary.opacity(0.72))
-                                .frame(width: dotSize, height: dotSize)
-                        }
-                    }
+            Canvas { context, size in
+                let color = isSelected ? SelectionPalette.active : Color.secondary.opacity(0.72)
+                for rect in StoryboardGridGlyphLayout.cells(side: side, extent: size.width, displayScale: displayScale) {
+                    let radius = min(1, rect.width / 4)
+                    context.fill(Path(roundedRect: rect, cornerRadius: radius), with: .color(color))
                 }
             }
-            .frame(height: 29, alignment: .center)
+            .frame(width: 30, height: 30)
 
             Text("\(side) × \(side)")
                 .font(.system(size: 11, weight: .semibold))
                 .monospacedDigit()
                 .frame(height: 14)
         }
-        // Every option uses the same icon and label lanes. This prevents the
-        // 5 × 5 glyph from shifting its label by a visible pixel.
+        // Both lanes stay fixed while the actual 3–8 row/column count changes.
         .frame(maxWidth: .infinity, minHeight: 60, alignment: .center)
         .contentShape(Rectangle())
+    }
+}
+
+/// Draw the real grid, using equal cells on physical pixel boundaries.
+/// A compact pictogram must not silently turn every dense grid into 5 × 5.
+enum StoryboardGridGlyphLayout {
+    static func cells(side: Int, extent: CGFloat, displayScale: CGFloat) -> [CGRect] {
+        let count = min(8, max(3, side))
+        let scale = displayScale.isFinite && displayScale > 0 ? displayScale : 1
+        let pixels = max(count, Int((max(0, extent) * scale).rounded(.down)))
+        let desiredGap: CGFloat = count == 3 ? 3 : (count == 6 ? 1 : (count == 7 ? 1.5 : 2))
+        let gap = min(max(0, Int((desiredGap * scale).rounded())), max(0, (pixels - count) / (count - 1)))
+        let cell = max(1, (pixels - gap * (count - 1)) / count)
+        let used = cell * count + gap * (count - 1)
+        let origin = (pixels - used) / 2
+        let stride = cell + gap
+        let edge = CGFloat(cell) / scale
+        var rects: [CGRect] = []
+        rects.reserveCapacity(count * count)
+        for row in 0..<count {
+            let y = CGFloat(origin + row * stride) / scale
+            for column in 0..<count {
+                let x = CGFloat(origin + column * stride) / scale
+                rects.append(CGRect(x: x, y: y, width: edge, height: edge))
+            }
+        }
+        return rects
     }
 }
 
