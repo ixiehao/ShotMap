@@ -1,4 +1,5 @@
 import Foundation
+import CoreML
 import Vision
 
 /// Vision's synchronous `perform` does not inherit Swift task cancellation.
@@ -19,7 +20,53 @@ final class AutomaticVisionCancellation: @unchecked Sendable {
     }
 
     func perform(_ requests: [VNRequest], using handler: VNImageRequestHandler) throws {
-        try withActiveRequests(requests) { try handler.perform(requests) }
+        try performRecoveringComputeFailure(requests, configureCPU: Self.configureCPU) {
+            try handler.perform(requests)
+        }
+    }
+
+    /// Keep Vision's hardware choice on the normal path. A VM or unavailable
+    /// accelerator may fail to create its inference context; retry once using
+    /// supported CPU stages, without treating a failed analysis as evidence.
+    func performRecoveringComputeFailure(
+        _ requests: [VNRequest], configureCPU: ([VNRequest]) -> Bool,
+        operation: () throws -> Void
+    ) throws {
+        try withActiveRequests(requests) {
+            do {
+                try operation()
+            } catch {
+                try checkCancellation()
+                let failure = error as NSError
+                var retryCodes = [VNErrorCode.internalError.rawValue, VNErrorCode.operationFailed.rawValue]
+                if #available(macOS 14, *) { retryCodes.append(VNErrorCode.unsupportedComputeDevice.rawValue) }
+                guard failure.domain == VNErrorDomain,
+                      retryCodes.contains(failure.code),
+                      configureCPU(requests) else { throw error }
+                try checkCancellation()
+                try operation()
+            }
+        }
+    }
+
+    private static func configureCPU(_ requests: [VNRequest]) -> Bool {
+        guard !requests.isEmpty else { return false }
+        if #available(macOS 14, *) {
+            // Validate the whole group before changing any assignment. Some
+            // newer Neural Engine requests intentionally have no CPU variant.
+            var assignments: [(VNRequest, VNComputeStage, MLComputeDevice)] = []
+            for request in requests {
+                guard let stages = try? request.supportedComputeStageDevices, !stages.isEmpty else { return false }
+                for (stage, devices) in stages {
+                    guard let cpu = devices.first(where: { if case .cpu = $0 { return true }; return false }) else { return false }
+                    assignments.append((request, stage, cpu))
+                }
+            }
+            for (request, stage, cpu) in assignments { request.setComputeDevice(cpu, for: stage) }
+        } else {
+            requests.forEach { $0.usesCPUOnly = true }
+        }
+        return true
     }
 
     /// Registration also handles cancellation immediately before `perform`.
