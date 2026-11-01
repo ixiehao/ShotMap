@@ -15,9 +15,9 @@ social preview. Keep the public metadata below aligned with the stable release.
 
 ## Social-preview copy
 
-**ShotMap · Turn video into a clear storyboard on your Mac**
+**ShotMap · Your videos, easier to find.**
 
-Browse a video’s key moments before opening it. Smart selection, manual control, and private local export for macOS.
+Turn a video into one storyboard. Choose frames. Save locally. Free and open source, with seven interface languages.
 
 Use [`docs/assets/social-preview-v2.jpg`](assets/social-preview-v2.jpg) for the
 repository social preview. It is a 1280 × 640 px JPEG and remains below

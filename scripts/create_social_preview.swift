@@ -72,65 +72,55 @@ private func drawImage(_ image: NSImage, in rect: NSRect) {
     )
 }
 
-private func render(caseStudy: NSImage, compact: Bool) throws -> Data {
+private func render(caseStudy: NSImage) throws -> Data {
     guard let bitmap = NSBitmapImageRep(
-        bitmapDataPlanes: nil,
-        pixelsWide: Int(canvas.width),
-        pixelsHigh: Int(canvas.height),
-        bitsPerSample: 8,
-        samplesPerPixel: 4,
-        hasAlpha: true,
-        isPlanar: false,
-        colorSpaceName: .deviceRGB,
-        bytesPerRow: 0,
-        bitsPerPixel: 0
-    ) else { throw SocialPreviewError.unableToCreateBitmap }
-    bitmap.size = canvas
-    guard let graphics = NSGraphicsContext(bitmapImageRep: bitmap) else {
+        bitmapDataPlanes: nil, pixelsWide: Int(canvas.width), pixelsHigh: Int(canvas.height),
+        bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true, isPlanar: false,
+        colorSpaceName: .deviceRGB, bytesPerRow: 0, bitsPerPixel: 0
+    ), let graphics = NSGraphicsContext(bitmapImageRep: bitmap) else {
         throw SocialPreviewError.unableToCreateBitmap
     }
+    bitmap.size = canvas
     NSGraphicsContext.saveGraphicsState()
     NSGraphicsContext.current = graphics
     graphics.imageInterpolation = .high
+    defer { NSGraphicsContext.restoreGraphicsState() }
 
-    NSGradient(colors: [color(0.018, 0.030, 0.075), color(0.070, 0.045, 0.145)])!
-        .draw(in: NSRect(origin: .zero, size: canvas), angle: -24)
-    let glow = NSGradient(colors: [color(0.24, 0.78, 0.90, 0.17), color(0.47, 0.38, 0.95, 0.10), .clear])!
-    glow.draw(
-        fromCenter: NSPoint(x: 875, y: 310), radius: 0,
-        toCenter: NSPoint(x: 875, y: 310), radius: 620,
-        options: [.drawsAfterEndingLocation]
-    )
+    color(0.95, 0.97, 0.99).setFill()
+    NSBezierPath(rect: NSRect(origin: .zero, size: canvas)).fill()
+    let navy = color(20 / 255, 37 / 255, 61 / 255)
+    let blue = color(18 / 255, 102 / 255, 232 / 255)
+    let muted = color(0.36, 0.43, 0.53)
+    let project = URL(fileURLWithPath: #filePath).deletingLastPathComponent().deletingLastPathComponent()
+    guard let brand = NSImage(contentsOf: project.appendingPathComponent("website/assets/app-icon.png")) else {
+        throw SocialPreviewError.unreadableImage("app-icon.png")
+    }
+    drawImage(brand, in: NSRect(x: 43, y: 527, width: 72, height: 72))
+    drawText("ShotMap", in: NSRect(x: 127, y: 543, width: 260, height: 45), size: 37,
+             weight: .bold, color: navy)
+    drawText("Your videos,\neasier to find.", in: NSRect(x: 48, y: 368, width: 365, height: 115),
+             size: 42, weight: .bold, color: navy)
+    drawText("Turn a video into one storyboard.\nChoose frames. Save locally.",
+             in: NSRect(x: 48, y: 282, width: 365, height: 65),
+             size: 19, weight: .regular, color: muted)
+    drawText("macOS 13+ · Apple Silicon & Intel", in: NSRect(x: 48, y: 184, width: 365, height: 24),
+             size: 14, weight: .medium, color: muted)
+    drawText("Free & open source · 7 languages", in: NSRect(x: 48, y: 151, width: 365, height: 24),
+             size: 14, weight: .medium, color: muted)
+    drawText("ixiehao.github.io/ShotMap", in: NSRect(x: 48, y: 64, width: 365, height: 25),
+             size: 16, weight: .semibold, color: blue)
 
-    fill(NSRect(x: 54, y: 88, width: 1172, height: 464), color: color(0.02, 0.04, 0.095, 0.75), radius: 28)
-    stroke(NSRect(x: 54, y: 88, width: 1172, height: 464), color: color(0.48, 0.76, 1, 0.24), width: 1, radius: 28)
-
-    fill(NSRect(x: 90, y: 474, width: 82, height: 27), color: color(0.13, 0.48, 0.66), radius: 13.5)
-    drawText("macOS", in: NSRect(x: 90, y: 480, width: 82, height: 14), size: 12, weight: .bold, color: .white, alignment: .center)
-    drawText("ShotMap", in: NSRect(x: 90, y: 410, width: 360, height: 48), size: 42, weight: .bold, color: color(0.93, 0.97, 1))
-    drawText("Make every video easy to browse", in: NSRect(x: 90, y: 367, width: 390, height: 31), size: 22, weight: .semibold, color: color(0.72, 0.86, 1))
-    drawText("Smart selection, precise control, local export.", in: NSRect(x: 90, y: 322, width: 390, height: 22), size: 16, weight: .medium, color: color(0.60, 0.76, 0.93))
-    drawText("Native macOS · Your footage stays on your Mac", in: NSRect(x: 90, y: 293, width: 410, height: 18), size: 14, weight: .medium, color: color(0.40, 0.88, 0.91))
-
-    let caseRect = NSRect(x: 490, y: compact ? 135 : 122, width: 690, height: compact ? 388 : 405)
-    fill(caseRect, color: color(0, 0, 0, 0.30), radius: 20)
+    let caseRect = NSRect(x: 438, y: 115, width: 798, height: 500)
+    fill(caseRect, color: .white, radius: 17)
     NSGraphicsContext.saveGraphicsState()
-    NSBezierPath(roundedRect: caseRect, xRadius: 20, yRadius: 20).addClip()
-    drawImage(caseStudy, in: caseRect.insetBy(dx: 8, dy: 8))
+    NSBezierPath(roundedRect: caseRect, xRadius: 17, yRadius: 17).addClip()
+    drawImage(caseStudy, in: caseRect)
     NSGraphicsContext.restoreGraphicsState()
-    stroke(caseRect, color: color(0.58, 0.87, 1, 0.35), width: 1.5, radius: 20)
+    stroke(caseRect, color: color(0.84, 0.88, 0.93), radius: 17)
+    drawText("Demo: Tears of Steel (2012) · © Blender Foundation / Blender Institute · CC BY 3.0",
+             in: NSRect(x: 438, y: 70, width: 798, height: 22),
+             size: 11, weight: .regular, color: muted)
 
-    drawText(
-        compact ? "Real workspace · manual control" : "A real ShotMap workspace",
-        in: NSRect(x: 90, y: 154, width: 360, height: 44),
-        size: compact ? 18 : 20,
-        weight: .semibold,
-        color: color(0.80, 0.90, 1)
-    )
-    fill(NSRect(x: 90, y: 119, width: 340, height: 5), color: color(0.34, 0.86, 0.91), radius: 2.5)
-    drawText("Video stays on your Mac — no cloud upload.", in: NSRect(x: 90, y: 100, width: 360, height: 16), size: 13, weight: .medium, color: color(0.52, 0.65, 0.82))
-
-    NSGraphicsContext.restoreGraphicsState()
     guard let jpeg = bitmap.representation(using: .jpeg, properties: [.compressionFactor: 0.9]) else {
         throw SocialPreviewError.unableToWrite("preview")
     }
@@ -146,5 +136,6 @@ let caseURL = URL(fileURLWithPath: CommandLine.arguments[1])
 guard let caseStudy = NSImage(contentsOf: caseURL) else {
     throw SocialPreviewError.unreadableImage(caseURL.path)
 }
-try render(caseStudy: caseStudy, compact: false).write(to: URL(fileURLWithPath: CommandLine.arguments[2]), options: .atomic)
-try render(caseStudy: caseStudy, compact: true).write(to: URL(fileURLWithPath: CommandLine.arguments[3]), options: .atomic)
+let preview = try render(caseStudy: caseStudy)
+try preview.write(to: URL(fileURLWithPath: CommandLine.arguments[2]), options: .atomic)
+try preview.write(to: URL(fileURLWithPath: CommandLine.arguments[3]), options: .atomic)

@@ -134,6 +134,7 @@ function makeStaticPage(language) {
     .replace(/href="styles\.css([^"]*)"/g, 'href="../styles.css$1"')
     .replace(/src="navigation\.js([^"]*)"/g, 'src="../navigation.js$1"')
     .replaceAll('href="favicon.svg', 'href="../favicon.svg')
+    .replaceAll('href="favicon.ico', 'href="../favicon.ico')
     .replaceAll('href="assets/', 'href="../assets/')
     .replaceAll('src="assets/', 'src="../assets/');
   return html;

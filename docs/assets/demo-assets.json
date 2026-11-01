@@ -1,0 +1,530 @@
+{
+  "appVersion": "0.2.17 (27)",
+  "captureDate": "2026-11-01",
+  "languages": [
+    "en",
+    "zh",
+    "fr",
+    "ru",
+    "es",
+    "ja",
+    "ko"
+  ],
+  "footage": {
+    "title": "Tears of Steel (2012)",
+    "credit": "Blender Foundation / Blender Institute",
+    "license": "CC BY 3.0",
+    "licenseURL": "https://creativecommons.org/licenses/by/3.0/",
+    "projectURL": "https://mango.blender.org/",
+    "sourceSHA256": "efa9062d9cdb7a338e40ad530dfdf234806743f29ae6a1a136b97ece4e588e8f"
+  },
+  "assets": [
+    {
+      "path": "website/assets/workspace-en.webp",
+      "pixels": [
+        1800,
+        1130
+      ],
+      "bytes": 144746,
+      "sha256": "b971b732167dcd13558e44fc9adc23a963fb04e0a8d39fe9d517cd584a840ac5",
+      "source": "workspace-en.jpg",
+      "sourcePixels": [
+        3024,
+        1898
+      ],
+      "sourceSHA256": "0ecfc097064fa3b655cc2c0697b2f8ff8018f8629b81eab31886382ceb54f68e",
+      "processing": "Proportional reduction and encoding; complete captured window retained"
+    },
+    {
+      "path": "website/assets/manual-en.webp",
+      "pixels": [
+        1600,
+        1035
+      ],
+      "bytes": 242246,
+      "sha256": "855797aaabf7b48dec9bc6668434d215af51d1f8f20946a20f237fef4db92b30",
+      "source": "manual-en.jpg",
+      "sourcePixels": [
+        2560,
+        1656
+      ],
+      "sourceSHA256": "9d21186d23ebf7ae1d80834760ceb85480860a8334a0594026e74092d0479036",
+      "processing": "Proportional reduction and encoding; complete captured window retained"
+    },
+    {
+      "path": "docs/assets/readme-workspace-en.png",
+      "pixels": [
+        1280,
+        803
+      ],
+      "bytes": 681252,
+      "sha256": "90a39031092a2267ec9598ab45db95196f7476c751fd56fb26d82c937cb4b71d",
+      "source": "workspace-en.jpg",
+      "sourcePixels": [
+        3024,
+        1898
+      ],
+      "sourceSHA256": "0ecfc097064fa3b655cc2c0697b2f8ff8018f8629b81eab31886382ceb54f68e",
+      "processing": "Proportional reduction and encoding; complete captured window retained"
+    },
+    {
+      "path": "website/assets/workspace-zh.webp",
+      "pixels": [
+        1800,
+        1130
+      ],
+      "bytes": 141810,
+      "sha256": "dbb22778bd05cd3849cd2ae32b02cd228df53c77448bc8951f9a1e3287d9e9aa",
+      "source": "workspace-zh.jpg",
+      "sourcePixels": [
+        3024,
+        1898
+      ],
+      "sourceSHA256": "3b4894beafdde15a96a7556873ff58fb7fc26b97acb394b33aa43d137fcf38e2",
+      "processing": "Proportional reduction and encoding; complete captured window retained"
+    },
+    {
+      "path": "website/assets/manual-zh.webp",
+      "pixels": [
+        1600,
+        1035
+      ],
+      "bytes": 241988,
+      "sha256": "6f62cb0f477fedee42994566f2445f453123065c91f87c0914559a58f56b95c5",
+      "source": "manual-zh.jpg",
+      "sourcePixels": [
+        2560,
+        1656
+      ],
+      "sourceSHA256": "b87f0c213bec666469c7d5aee6a768298059a738d1556af3babd4673a168b3cb",
+      "processing": "Proportional reduction and encoding; complete captured window retained"
+    },
+    {
+      "path": "docs/assets/readme-workspace-zh.png",
+      "pixels": [
+        1280,
+        803
+      ],
+      "bytes": 672978,
+      "sha256": "5c80f5d1d3ecf5fb74a8ff304a058350d9151ffbdf607ec3eab248d793bd0afd",
+      "source": "workspace-zh.jpg",
+      "sourcePixels": [
+        3024,
+        1898
+      ],
+      "sourceSHA256": "3b4894beafdde15a96a7556873ff58fb7fc26b97acb394b33aa43d137fcf38e2",
+      "processing": "Proportional reduction and encoding; complete captured window retained"
+    },
+    {
+      "path": "website/assets/workspace-fr.webp",
+      "pixels": [
+        1800,
+        1130
+      ],
+      "bytes": 147218,
+      "sha256": "48746f4732fe6356780ed0770b0bdd007534560ff6c64a416005165357210dfc",
+      "source": "workspace-fr.jpg",
+      "sourcePixels": [
+        3024,
+        1898
+      ],
+      "sourceSHA256": "590db8cd8f82a9d56a1b53cb94d239ad7761dc985a3b9753359aaae49c7b803a",
+      "processing": "Proportional reduction and encoding; complete captured window retained"
+    },
+    {
+      "path": "website/assets/manual-fr.webp",
+      "pixels": [
+        1600,
+        1035
+      ],
+      "bytes": 242960,
+      "sha256": "a10493373eb658feea62aa80ec566ea4b063537016a109d40d7591824b177eb5",
+      "source": "manual-fr.jpg",
+      "sourcePixels": [
+        2560,
+        1656
+      ],
+      "sourceSHA256": "d36633a0e162c5daab2232e639f2fc8542e7cb66a2d3293c1ab3065dfe27e406",
+      "processing": "Proportional reduction and encoding; complete captured window retained"
+    },
+    {
+      "path": "docs/assets/readme-workspace-fr.png",
+      "pixels": [
+        1280,
+        803
+      ],
+      "bytes": 686479,
+      "sha256": "8506743f26ac5d23ea23407ae6eef29dcba330e910ca5dfa1ca8b87ab523e167",
+      "source": "workspace-fr.jpg",
+      "sourcePixels": [
+        3024,
+        1898
+      ],
+      "sourceSHA256": "590db8cd8f82a9d56a1b53cb94d239ad7761dc985a3b9753359aaae49c7b803a",
+      "processing": "Proportional reduction and encoding; complete captured window retained"
+    },
+    {
+      "path": "website/assets/workspace-ru.webp",
+      "pixels": [
+        1800,
+        1130
+      ],
+      "bytes": 146658,
+      "sha256": "7aa75c27abcdcae370526ae757fcb634f22fb07cb785dd8c5c0d2dc93d3a211a",
+      "source": "workspace-ru.jpg",
+      "sourcePixels": [
+        3024,
+        1898
+      ],
+      "sourceSHA256": "1e40efce44b44e8eab681ce0479c7524b2e5812e4fd68be94d23b7f5736635f5",
+      "processing": "Proportional reduction and encoding; complete captured window retained"
+    },
+    {
+      "path": "website/assets/manual-ru.webp",
+      "pixels": [
+        1600,
+        1035
+      ],
+      "bytes": 243386,
+      "sha256": "e57419b63b359a3fc3de217433e6a55177fed338aac85c722ce8c77518d0cf73",
+      "source": "manual-ru.jpg",
+      "sourcePixels": [
+        2560,
+        1656
+      ],
+      "sourceSHA256": "d3fa5da59013af72dfe92f2e70d8a36da98333b9abc16dbd5abd500aee832510",
+      "processing": "Proportional reduction and encoding; complete captured window retained"
+    },
+    {
+      "path": "docs/assets/readme-workspace-ru.png",
+      "pixels": [
+        1280,
+        803
+      ],
+      "bytes": 686847,
+      "sha256": "d071b632a30f7d3e2c8ab03054ad004d198efdb2c6c846681efc443001ca672d",
+      "source": "workspace-ru.jpg",
+      "sourcePixels": [
+        3024,
+        1898
+      ],
+      "sourceSHA256": "1e40efce44b44e8eab681ce0479c7524b2e5812e4fd68be94d23b7f5736635f5",
+      "processing": "Proportional reduction and encoding; complete captured window retained"
+    },
+    {
+      "path": "website/assets/workspace-es.webp",
+      "pixels": [
+        1800,
+        1130
+      ],
+      "bytes": 146720,
+      "sha256": "5bb9926ef42aefc0cf9495ab5192717de0b9b9912ea6bf0296a3c63e280e55f8",
+      "source": "workspace-es.jpg",
+      "sourcePixels": [
+        3024,
+        1898
+      ],
+      "sourceSHA256": "ec013701ab5fa03b4332cf74ba4183dbd3933d2c6debe17582e1492ef2962880",
+      "processing": "Proportional reduction and encoding; complete captured window retained"
+    },
+    {
+      "path": "website/assets/manual-es.webp",
+      "pixels": [
+        1600,
+        1035
+      ],
+      "bytes": 243184,
+      "sha256": "46c0417eba9ca0261e94a987439fa9becdd4036d38bbf672c13f31ea420f6bc0",
+      "source": "manual-es.jpg",
+      "sourcePixels": [
+        2560,
+        1656
+      ],
+      "sourceSHA256": "aa9e6ca60061485e0bda24fd152d98eb8566f4227f6daf6192d6c63752c1fda9",
+      "processing": "Proportional reduction and encoding; complete captured window retained"
+    },
+    {
+      "path": "docs/assets/readme-workspace-es.png",
+      "pixels": [
+        1280,
+        803
+      ],
+      "bytes": 686646,
+      "sha256": "4cf47a38b7495adffff1e44750ebe9ba9c1c85a624b5501a4432b7a74191dd25",
+      "source": "workspace-es.jpg",
+      "sourcePixels": [
+        3024,
+        1898
+      ],
+      "sourceSHA256": "ec013701ab5fa03b4332cf74ba4183dbd3933d2c6debe17582e1492ef2962880",
+      "processing": "Proportional reduction and encoding; complete captured window retained"
+    },
+    {
+      "path": "website/assets/workspace-ja.webp",
+      "pixels": [
+        1800,
+        1130
+      ],
+      "bytes": 143660,
+      "sha256": "c7c101ffdc07dc2572ad63c71734199585dfcd966ecabb673342294face3d461",
+      "source": "workspace-ja.jpg",
+      "sourcePixels": [
+        3024,
+        1898
+      ],
+      "sourceSHA256": "a805dae678bf73d6be40819e09b67440d9f38106b154f7a7b83ffc4fc9457791",
+      "processing": "Proportional reduction and encoding; complete captured window retained"
+    },
+    {
+      "path": "website/assets/manual-ja.webp",
+      "pixels": [
+        1600,
+        1035
+      ],
+      "bytes": 242772,
+      "sha256": "ca0af1d5224059e906bfb64e7567039ca1d97360bd240e881b293e4bc04c17d1",
+      "source": "manual-ja.jpg",
+      "sourcePixels": [
+        2560,
+        1656
+      ],
+      "sourceSHA256": "dd20cd28cdfe2e965d0df46b5fabc2db4d977f331c5ea9302d5b0b618538b878",
+      "processing": "Proportional reduction and encoding; complete captured window retained"
+    },
+    {
+      "path": "docs/assets/readme-workspace-ja.png",
+      "pixels": [
+        1280,
+        803
+      ],
+      "bytes": 680056,
+      "sha256": "145e3b53a8627ff73c8b22ea60b9416ad4e4cf75e53a50b0db2a5453c7eda523",
+      "source": "workspace-ja.jpg",
+      "sourcePixels": [
+        3024,
+        1898
+      ],
+      "sourceSHA256": "a805dae678bf73d6be40819e09b67440d9f38106b154f7a7b83ffc4fc9457791",
+      "processing": "Proportional reduction and encoding; complete captured window retained"
+    },
+    {
+      "path": "website/assets/workspace-ko.webp",
+      "pixels": [
+        1800,
+        1130
+      ],
+      "bytes": 142724,
+      "sha256": "4de78d62db4ca58615412716ece3fd0085143cb8a19cdb8195c60687d545941e",
+      "source": "workspace-ko.jpg",
+      "sourcePixels": [
+        3024,
+        1898
+      ],
+      "sourceSHA256": "5ad14d2476bd32f4d473d2ab7be76f0371bea411d7ec81779736dcb79ad4e465",
+      "processing": "Proportional reduction and encoding; complete captured window retained"
+    },
+    {
+      "path": "website/assets/manual-ko.webp",
+      "pixels": [
+        1600,
+        1035
+      ],
+      "bytes": 242410,
+      "sha256": "1abb0b64c404f49be0968819ee76bb0c34a415e2f14e60e9d79352e4b7455790",
+      "source": "manual-ko.jpg",
+      "sourcePixels": [
+        2560,
+        1656
+      ],
+      "sourceSHA256": "b1e9469a077be78ae7f8922551c9950a393661f44c20b7cc13264f6d4cf90db8",
+      "processing": "Proportional reduction and encoding; complete captured window retained"
+    },
+    {
+      "path": "docs/assets/readme-workspace-ko.png",
+      "pixels": [
+        1280,
+        803
+      ],
+      "bytes": 675623,
+      "sha256": "6131fa1a88a14eb38a8934bd92ca699e97dd4254e7cf0e7be6037bc4d30d46b2",
+      "source": "workspace-ko.jpg",
+      "sourcePixels": [
+        3024,
+        1898
+      ],
+      "sourceSHA256": "5ad14d2476bd32f4d473d2ab7be76f0371bea411d7ec81779736dcb79ad4e465",
+      "processing": "Proportional reduction and encoding; complete captured window retained"
+    },
+    {
+      "path": "website/assets/app-launch-screen.webp",
+      "pixels": [
+        1600,
+        685
+      ],
+      "bytes": 26990,
+      "sha256": "7beb520964a68a8fb8ed4ffe3fdf18489d8d2ea68409aca663b5dfdee4c71e72",
+      "source": "app-launch-en.jpg",
+      "sourcePixels": [
+        3022,
+        1294
+      ],
+      "sourceSHA256": "6cf5d9a7ef4453afb83d21ecabf56d4255fe0f215d31727c2c5d428e28ea2bea",
+      "processing": "Proportional reduction and encoding; complete captured window retained"
+    },
+    {
+      "path": "website/assets/workspace-dark-en.webp",
+      "pixels": [
+        1800,
+        1130
+      ],
+      "bytes": 146260,
+      "sha256": "3a7cd8f63556718d3649c7657f3486e816d040fc11a50c45e9885cf7d4619e07",
+      "source": "workspace-dark-en.jpg",
+      "sourcePixels": [
+        3024,
+        1898
+      ],
+      "sourceSHA256": "fe3204b44aa35be651ca246ec2c20dbe2a4b96899361bd7766f86bade110d8d2",
+      "processing": "Proportional reduction and encoding; complete captured window retained"
+    },
+    {
+      "path": "website/assets/video-to-storyboard-overview.webp",
+      "pixels": [
+        1600,
+        879
+      ],
+      "bytes": 161378,
+      "sha256": "86acce6465bad664f608f8b6c81724e60a842514deec15a1dc5e453cf801d3be",
+      "source": "preview-focus-en.jpg",
+      "sourcePixels": [
+        3022,
+        1660
+      ],
+      "sourceSHA256": "b73771e4f26d3803ee99c07025aa030609034c2f283c567b367a05a04fcc4f11",
+      "processing": "Proportional reduction and encoding; complete captured window retained"
+    },
+    {
+      "path": "website/assets/workflow-ja.webp",
+      "pixels": [
+        1600,
+        1035
+      ],
+      "bytes": 242772,
+      "sha256": "ca0af1d5224059e906bfb64e7567039ca1d97360bd240e881b293e4bc04c17d1",
+      "source": "manual-ja.jpg",
+      "sourcePixels": [
+        2560,
+        1656
+      ],
+      "sourceSHA256": "dd20cd28cdfe2e965d0df46b5fabc2db4d977f331c5ea9302d5b0b618538b878",
+      "processing": "Proportional reduction and encoding; complete captured window retained"
+    },
+    {
+      "path": "website/assets/about-en.webp",
+      "pixels": [
+        568,
+        578
+      ],
+      "bytes": 16864,
+      "sha256": "47daf1ff80419d828be887dab4463f70344d05170289ea42766e76a5cb953235",
+      "source": "about-en.jpg",
+      "sourcePixels": [
+        568,
+        578
+      ],
+      "sourceSHA256": "9a658bbfbf7ea7b8798b04f8d2c12c6c79c681e11e5a1bc3ce9508907e83c12a",
+      "processing": "Proportional reduction and encoding; complete captured window retained"
+    },
+    {
+      "path": "website/assets/tears-of-steel-storyboard.webp",
+      "pixels": [
+        1400,
+        629
+      ],
+      "bytes": 142242,
+      "sha256": "838177906d90452e2191851d82a5a4f6da9d8d7572e57861a2df11ca5304a897",
+      "source": "Tears of Steel-shot-003.jpg",
+      "sourcePixels": [
+        1920,
+        863
+      ],
+      "sourceSHA256": "999fd238b7c3f4a1c8ec78025a5f07b996401861cc3fc5116c0500bb7a9d00fe",
+      "processing": "Proportional reduction and encoding; complete captured window retained"
+    },
+    {
+      "path": "docs/assets/video-to-storyboard-demo.png",
+      "pixels": [
+        1280,
+        828
+      ],
+      "bytes": 1312556,
+      "sha256": "d81d341cb3fa8d1d99ef36495927e2d1e357f714182235f6ebff101a74d7fb63",
+      "source": "manual-en.jpg",
+      "sourcePixels": [
+        2560,
+        1656
+      ],
+      "sourceSHA256": "9d21186d23ebf7ae1d80834760ceb85480860a8334a0594026e74092d0479036",
+      "processing": "Proportional reduction and encoding; complete captured window retained"
+    },
+    {
+      "path": "docs/assets/video-to-storyboard-overview.png",
+      "pixels": [
+        1280,
+        703
+      ],
+      "bytes": 1018515,
+      "sha256": "c7d0c7b9136897ade531b8cd557e047bd66fb7c6246ab902dc7c3340fa75ffe8",
+      "source": "preview-focus-en.jpg",
+      "sourcePixels": [
+        3022,
+        1660
+      ],
+      "sourceSHA256": "b73771e4f26d3803ee99c07025aa030609034c2f283c567b367a05a04fcc4f11",
+      "processing": "Proportional reduction and encoding; complete captured window retained"
+    },
+    {
+      "path": "docs/assets/video-to-storyboard-demo.gif",
+      "pixels": [
+        960,
+        622
+      ],
+      "bytes": 970311,
+      "sha256": "90653e408f0e8f770deef127f327bd81c85ae0f13f05b25b22efb44232d20f89",
+      "processing": "Condensed sequence of real captured UI states; each full window fits the canvas"
+    },
+    {
+      "path": "docs/assets/social-preview.jpg",
+      "pixels": [
+        1280,
+        640
+      ],
+      "bytes": 189947,
+      "sha256": "def1e079413f849daba73d39a0eec461efbc2dcd86d03cae00a7195fe39c60bd",
+      "source": "preview-focus-en.jpg",
+      "processing": "Original brand card around an unchanged, proportionally fitted full application capture"
+    },
+    {
+      "path": "docs/assets/social-preview-v2.jpg",
+      "pixels": [
+        1280,
+        640
+      ],
+      "bytes": 189947,
+      "sha256": "def1e079413f849daba73d39a0eec461efbc2dcd86d03cae00a7195fe39c60bd",
+      "source": "preview-focus-en.jpg",
+      "processing": "Original brand card around an unchanged, proportionally fitted full application capture"
+    },
+    {
+      "path": "website/assets/social-preview.jpg",
+      "pixels": [
+        1280,
+        640
+      ],
+      "bytes": 189947,
+      "sha256": "def1e079413f849daba73d39a0eec461efbc2dcd86d03cae00a7195fe39c60bd",
+      "source": "preview-focus-en.jpg",
+      "processing": "Original brand card around an unchanged, proportionally fitted full application capture"
+    }
+  ]
+}

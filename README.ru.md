@@ -1,3 +1,5 @@
+<p><img src="website/assets/app-icon.png?v=20261101-release017" width="72" height="72" alt="ShotMap" /></p>
+
 # ShotMap
 
 [![Последняя версия](https://img.shields.io/github/v/release/ixiehao/ShotMap?display_name=tag&label=release&color=2563eb)](https://github.com/ixiehao/ShotMap/releases/latest)
@@ -9,7 +11,7 @@
 
 **Интерфейс на семи языках:** English · 简体中文 · Français · Русский · Español · 日本語 · 한국어. Все языки включены в одно приложение.
 
-![Рабочее окно ShotMap с английским интерфейсом и раскадровкой фильма Tears of Steel](website/assets/workspace-en.webp?v=20261017)
+![ShotMap на русском с раскадровкой фильма Tears of Steel](website/assets/workspace-ru.webp?v=20261101-release017)
 
 *На скриншоте показан английский интерфейс. В приложении можно выбрать русский.*
 
@@ -48,7 +50,7 @@
 
 Запись показывает работу приложения: из готовой раскадровки можно перейти к ручному выбору, найти момент на временной шкале и выбрать подходящий кадр перед сохранением.
 
-![Переход от раскадровки Tears of Steel к ручному выбору кадров в ShotMap: временная шкала и галерея вариантов](docs/assets/video-to-storyboard-demo.gif?v=tears-20261016)
+![Переход от раскадровки Tears of Steel к ручному выбору кадров в ShotMap: временная шкала и галерея вариантов](docs/assets/video-to-storyboard-demo.gif?v=20261101-release017)
 
 ## Скачать и установить
 
@@ -58,7 +60,7 @@
 
 ### Выберите язык
 
-Откройте меню языка в правом верхнем углу. Язык меняется сразу, без перезапуска и очистки очереди. При первом запуске ShotMap использует поддерживаемый язык системы или английский, если такого языка нет. Затем приложение запоминает ваш выбор.
+Выберите язык в строке меню macOS. Язык меняется сразу, без перезапуска и очистки очереди. При первом запуске ShotMap использует поддерживаемый язык системы или английский, если такого языка нет. Затем приложение запоминает ваш выбор.
 
 ## Конфиденциальность
 
@@ -74,7 +76,7 @@
 
 ## Права и лицензии
 
-- Исходный код ShotMap на Swift, документация и значок Iris созданы в рамках проекта и распространяются по [лицензии MIT](LICENSE).
+- Исходный код ShotMap на Swift, документация и значок приложения созданы в рамках проекта и распространяются по [лицензии MIT](LICENSE).
 - Приложение использует только фреймворки Apple SDK. Оно не содержит стороннего кода приложений, пакетов, аналитических SDK или материалов MoviePrint.
 - SVG-значки [Tabler Icons Outline](https://github.com/tabler/tabler-icons) включены без изменений по [лицензии MIT](ThirdPartyLicenses/TablerIcons-MIT.txt). Шрифт Noto Sans CJK распространяется по [SIL Open Font License 1.1](ThirdPartyLicenses/NotoSansCJK-OFL-1.1.txt). Подробнее — в [NOTICE.md](NOTICE.md).
 - Демонстрационный фильм *Tears of Steel* (2012) © Blender Foundation / Blender Institute используется по лицензии [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/).
