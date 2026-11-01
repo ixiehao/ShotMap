@@ -227,13 +227,18 @@ enum StoryboardGridGlyphLayout {
         let cell = max(1, (pixels - gap * (count - 1)) / count)
         let used = cell * count + gap * (count - 1)
         let origin = (pixels - used) / 2
-        return (0..<count).flatMap { row in
-            (0..<count).map { column in
-                CGRect(x: CGFloat(origin + column * (cell + gap)) / scale,
-                       y: CGFloat(origin + row * (cell + gap)) / scale,
-                       width: CGFloat(cell) / scale, height: CGFloat(cell) / scale)
+        let stride = cell + gap
+        let edge = CGFloat(cell) / scale
+        var rects: [CGRect] = []
+        rects.reserveCapacity(count * count)
+        for row in 0..<count {
+            let y = CGFloat(origin + row * stride) / scale
+            for column in 0..<count {
+                let x = CGFloat(origin + column * stride) / scale
+                rects.append(CGRect(x: x, y: y, width: edge, height: edge))
             }
         }
+        return rects
     }
 }
 

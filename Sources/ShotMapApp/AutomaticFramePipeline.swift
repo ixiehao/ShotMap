@@ -7,8 +7,6 @@ import Vision
 /// A video-local, bounded pipeline. Evidence belongs to a particular decoded
 /// PTS; changing the image means running the same quality gate again.
 enum AutomaticFramePipeline {
-    private static let logger = Logger(subsystem: "com.ixiehao.shotmap", category: "AutomaticFrameV2")
-
     static func run(
         videoURL: URL,
         gridSide: Int,
@@ -251,6 +249,9 @@ enum AutomaticFramePipeline {
             progress(0.75 + 0.24 * Double(index + 1) / Double(count))
             await Task.yield()
         }
+        // Older SDKs do not mark Logger as Sendable. A local value avoids
+        // shared static storage and needs no unchecked concurrency exemption.
+        let logger = Logger(subsystem: "com.ixiehao.shotmap", category: "AutomaticFrameV2")
         logger.debug("V2 requests initial=\(initial.count) recovery=\(additionalRequests) final=\(requests.count + replacementRequests.count); semantic=\(state.semanticChecks); retained=\(state.cachedImageBytes) bytes")
         progress(1)
         return StoryboardResult(frames: captured, sourceURL: videoURL, duration: duration)
