@@ -113,7 +113,12 @@ final class StoryboardCanvasScrollView: NSScrollView {
             if let acceptedDetail {
                 // Preserve the original document coordinates. The
                 // extra pixels change rendering detail, not image geometry.
-                imageView.image = NSImage(cgImage: acceptedDetail, size: validImageSize(image.size))
+                let logicalSize = validImageSize(image.size)
+                let representation = NSBitmapImageRep(cgImage: acceptedDetail)
+                representation.size = logicalSize
+                let presentation = NSImage(size: logicalSize)
+                presentation.addRepresentation(representation)
+                imageView.image = presentation
             } else {
                 imageView.image = image
             }

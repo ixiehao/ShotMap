@@ -649,6 +649,7 @@ struct AutomaticFrameAnalysisState {
         } catch is CancellationError {
             throw CancellationError()
         } catch {
+            AutomaticFrameDiagnostics.write("semantic-failure pts=\(record.pts.seconds) error=\(error)")
             record.descriptor.personObservationState = .failed
             record.descriptor.textObservationState = .failed
         }
@@ -871,6 +872,9 @@ struct AutomaticFrameAnalysisState {
     func logSelection(_ selected: [FrameDescriptor]) {
         let values = Array(records.values)
         AutomaticFrameDiagnostics.write("pool total=\(values.count) qualityUsable=\(values.filter { $0.descriptor.isUsable }.count) semanticsObserved=\(values.filter { $0.isSemanticallyVerified }.count) needsHDUnchecked=\(values.filter { $0.isSemanticallyVerified && $0.needsDetailedTextCheck && !$0.detailedTextChecked }.count) exportVerified=\(values.filter { $0.isExportVerified }.count)")
+        for reason in [FrameQualityRejection.blank, .titleCard, .severelyBlurred] {
+            AutomaticFrameDiagnostics.write("quality-rejections reason=\(reason.rawValue) count=\(values.filter { $0.descriptor.qualityEvidence?.rejection == reason }.count)")
+        }
         for record in values.filter({ $0.independentTextScore >= 0.65 }).sorted(by: { $0.pts.seconds < $1.pts.seconds }) {
             AutomaticFrameDiagnostics.write("direct-anchor pts=\(record.pts.seconds) direct=\(record.independentTextScore) face=\(record.descriptor.faceScore) dense=\(record.descriptor.qualityEvidence?.denseTextLayout ?? false)")
         }
