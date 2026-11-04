@@ -4,3 +4,6 @@ DerivedData/
 .swiftpm/
 *.xcodeproj/xcuserdata/
 dist/
+node_modules/
+playwright-report/
+test-results/
