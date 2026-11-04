@@ -169,6 +169,7 @@ footer span:nth-child(2) { margin-right: auto; color: var(--muted); font-weight:
   .brand-mark { width: 32px; height: 32px; border-radius: 9px; }
   .header-actions { gap: 8px; }
   .language-picker summary { min-height: 34px; padding-inline: 8px; }
+  .language-options { left: 0; right: auto; max-width: calc(100vw - 40px); }
   .button-small { min-height: 34px; padding-inline: 12px; }
   h1 { font-size: clamp(40px, 12vw, 52px); }
   .hero { gap: 36px; padding-block: 56px 58px; }
