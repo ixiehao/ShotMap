@@ -54,7 +54,7 @@ def verify_page(path: Path, locale: str) -> None:
     expected_url = WEBSITE + (locale + "/" if locale != "en" else "")
     if canonical != expected_url:
         fail(f"wrong canonical URL in {path.relative_to(ROOT)}")
-    alternates = {attrs.get("hreflang"): attrs.get("href") for attrs in links if attrs.get("rel") == "alternate"}
+    alternates = {attrs["hreflang"]: attrs.get("href") for attrs in links if attrs.get("rel") == "alternate" and attrs.get("hreflang")}
     expected_alternates = {language: WEBSITE + (key + "/" if key != "en" else "") for key, language in LANGUAGES.items()}
     expected_alternates["x-default"] = WEBSITE
     if alternates != expected_alternates:
