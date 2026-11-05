@@ -99,7 +99,7 @@ function languagePicker(language, prefix) {
 function makeStaticPage(language) {
   const copy = { ...translations[language], ctaDownload: translations[language].ctaDownload.replace("{version}", currentVersion) };
   const prefix = language === "en" ? "" : "../";
-  let html = source;
+  let html = source.replace(/    <!-- search-discovery:start -->[\s\S]*?    <!-- search-discovery:end -->\n/g, "");
   html = replaceLocalizedContent(html, copy, "data-i18n", false);
   html = replaceLocalizedContent(html, copy, "data-i18n-html", true);
   html = replaceTagAttribute(html, "data-i18n-alt", "alt", copy);
@@ -137,7 +137,12 @@ function makeStaticPage(language) {
     .replaceAll('href="favicon.ico', 'href="../favicon.ico')
     .replaceAll('href="assets/', 'href="../assets/')
     .replaceAll('src="assets/', 'src="../assets/');
-  return html;
+  const discovery = `    <!-- search-discovery:start -->
+    <link rel="alternate" type="text/markdown" href="${localeURLs[language]}index.md" />
+    <link rel="describedby" type="text/plain" href="${siteURL}llms.txt" />
+    <!-- search-discovery:end -->
+`;
+  return html.replace('  </head>', discovery + '  </head>');
 }
 
 for (const language of languages) {

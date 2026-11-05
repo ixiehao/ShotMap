@@ -1,0 +1,17 @@
+# ShotMap
+
+> Turn videos into storyboards on your Mac. ShotMap supports seven interface languages, manual frame selection, and private local export. Free and open source.
+
+## Pages
+
+- [English](https://ixiehao.github.io/ShotMap/index.md)
+- [Español](https://ixiehao.github.io/ShotMap/es/index.md)
+- [Français](https://ixiehao.github.io/ShotMap/fr/index.md)
+- [日本語](https://ixiehao.github.io/ShotMap/ja/index.md)
+- [한국어](https://ixiehao.github.io/ShotMap/ko/index.md)
+- [Русский](https://ixiehao.github.io/ShotMap/ru/index.md)
+- [简体中文](https://ixiehao.github.io/ShotMap/zh/index.md)
+
+## Optional
+
+- [Source and project documentation](https://github.com/ixiehao/ShotMap)

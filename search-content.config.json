@@ -1,0 +1,8 @@
+{
+  "name": "ShotMap",
+  "site_url": "https://ixiehao.github.io/ShotMap/",
+  "directory": "website",
+  "source_url": "https://github.com/ixiehao/ShotMap",
+  "key_file": "website/indexnow-key.txt",
+  "language_source": "website/locales/*.js"
+}
