@@ -39,8 +39,11 @@ Releases.
 4. Create a release with concise English, 中文, 日本語, and 한국어 notes, in that
    order. Use the same notes in the new changelog entry. Existing three-language
    documentation keeps English first, followed by Chinese and Japanese.
-   Attach both native DMGs and both SHA-256 checksums. Label the downloads
-   Apple Silicon and Intel clearly. Update the website's download resolution and
+   Attach both native DMGs and both SHA-256 checksums. Follow the
+   [download naming rules](NAMING.md#releases-and-downloads): keep the full
+   product/version/architecture filename visible, with Apple Silicon or Intel
+   in parentheses on each DMG. Checksum labels retain the full `.dmg.sha256`
+   filename. Update the website's download resolution and
    localized READMEs in the same release; do not remove the previous universal
    asset while public links still target it. Do not advertise macOS 28 testing
    until acceptance has actually run on that OS. Packaging locally does not
