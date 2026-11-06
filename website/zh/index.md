@@ -14,7 +14,7 @@ Mac 视频一键拼图
 
 macOS 13 及以上 · Apple Silicon 与 Intel · 免费开源
 
-一个安装包，七种语言。
+七种语言，内置于应用。
 
 - English
 
@@ -104,7 +104,7 @@ ShotMap 中文工作区
 
 #### 支持哪些 Mac？
 
-ShotMap 支持运行 macOS 13 或更高版本的 Apple Silicon 与 Intel Mac。
+支持 macOS 13 或更高版本。请在版本发布页选择 Apple Silicon（M 系列）或 Intel 安装包。
 
 #### 我可以自己替换某一帧吗？
 
@@ -120,6 +120,6 @@ ShotMap 支持运行 macOS 13 或更高版本的 Apple Silicon 与 Intel Mac。
 
 下载适用于 Mac 的最新国际版，七种界面语言已全部包含。
 
-[下载 v0.2.17](https://github.com/ixiehao/ShotMap/releases/latest) [在 GitHub 查看](https://github.com/ixiehao/ShotMap)
+[下载 v0.2.18](https://github.com/ixiehao/ShotMap/releases/latest) [在 GitHub 查看](https://github.com/ixiehao/ShotMap)
 
 © 2026 ixiehaoShotMap · MIT [GitHub](https://github.com/ixiehao/ShotMap) [版本发布](https://github.com/ixiehao/ShotMap/releases/latest) [反馈](https://github.com/ixiehao/ShotMap/issues/new/choose)

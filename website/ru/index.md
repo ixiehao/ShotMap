@@ -14,7 +14,7 @@
 
 macOS 13+ · Apple Silicon и Intel · Бесплатно, с открытым кодом
 
-Семь языков в одном приложении.
+Семь встроенных языков.
 
 - English
 
@@ -104,7 +104,7 @@ macOS 13+ · Apple Silicon и Intel · Бесплатно, с открытым �
 
 #### Какие Mac поддерживаются?
 
-ShotMap работает на Mac с Apple Silicon или Intel и macOS 13 или новее.
+ShotMap работает на macOS 13 или новее. На странице релиза выберите установщик для Apple Silicon (серия M) или Intel.
 
 #### Можно заменить кадр вручную?
 
@@ -120,6 +120,6 @@ ShotMap работает на Mac с Apple Silicon или Intel и macOS 13 ил
 
 Скачайте последнюю международную версию для Mac. Все семь языков уже включены.
 
-[Скачать v0.2.17](https://github.com/ixiehao/ShotMap/releases/latest) [Открыть на GitHub](https://github.com/ixiehao/ShotMap)
+[Скачать v0.2.18](https://github.com/ixiehao/ShotMap/releases/latest) [Открыть на GitHub](https://github.com/ixiehao/ShotMap)
 
 © 2026 ixiehaoShotMap · MIT [GitHub](https://github.com/ixiehao/ShotMap) [Релизы](https://github.com/ixiehao/ShotMap/releases/latest) [Обратная связь](https://github.com/ixiehao/ShotMap/issues/new/choose)

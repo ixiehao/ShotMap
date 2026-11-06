@@ -7,7 +7,7 @@ import ja from "./locales/ja.js";
 import ko from "./locales/ko.js";
 
 export const siteURL = "https://ixiehao.github.io/ShotMap/";
-export const currentVersion = "0.2.17";
+export const currentVersion = "0.2.18";
 export const releaseURL = "https://github.com/ixiehao/ShotMap/releases/latest";
 export const appLanguageCodes = ["en", "zh-Hans", "fr", "ru", "es", "ja", "ko"];
 export const translations = { en, zh, fr, ru, es, ja, ko };

@@ -36,6 +36,7 @@ struct LivePreviewFrame: Identifiable {
 @MainActor
 final class StoryboardViewModel: ObservableObject {
     @Published private(set) var videoJobs: [VideoJob] = []
+    @Published private(set) var queueResetID = UUID()
     @Published var language: AppLanguage = .systemDefault
     @Published var gridSide = 3
     @Published var layoutAspect: StoryboardAspect = .source
@@ -141,6 +142,9 @@ final class StoryboardViewModel: ObservableObject {
     var hasVideos: Bool { !videoJobs.isEmpty }
     var livePreviewFrames: [LivePreviewFrame?] { livePreviewSlots.slots }
     var livePreviewFrameCount: Int { livePreviewSlots.filledCount }
+    /// A between-video pause releases live cards; show the last completed
+    /// storyboard rather than replacing it with an empty placeholder grid.
+    var showsProgressivePreview: Bool { isProcessing && (!isPaused || previewImage == nil) }
     var isBusy: Bool { isProcessing || isApplyingFrameAdjustments }
     var isSettingsLocked: Bool { (isProcessing && !isPaused) || isApplyingFrameAdjustments }
     var isQueueLocked: Bool { isProcessing || isApplyingFrameAdjustments }
@@ -239,6 +243,7 @@ final class StoryboardViewModel: ObservableObject {
         previewLoadID = UUID()
         isLoadingPreview = false
         selectedPreviewIndex = 0
+        queueResetID = UUID()
     }
 
     func acceptDrop(providers: [NSItemProvider]) -> Bool {
@@ -339,13 +344,16 @@ final class StoryboardViewModel: ObservableObject {
         activeUsesSourceAspect = layoutAspect == .source
         activeCardAspectRatio = layoutAspect.resolvedCardAspectRatio(sourceAspectRatio: nil)
         livePreviewSlots.reset(total: activeGridSide * activeGridSide)
-        lastSavedURL = nil
-        pendingData = nil
-        pendingSource = nil
-        pendingFormat = nil
         showError = false
         errorMessage = ""
         if resetPreviews {
+            // A retry retains its visible result and history. Keep the same
+            // result's file/Save As metadata too, in case all retries fail or
+            // are cancelled before a new completed result replaces it.
+            lastSavedURL = nil
+            pendingData = nil
+            pendingSource = nil
+            pendingFormat = nil
             previewLoadingTask?.cancel()
             previewLoadingTask = nil
             completedPreviews = []
@@ -497,11 +505,16 @@ final class StoryboardViewModel: ObservableObject {
 
     @discardableResult
     func completeJob(data: Data, result: StoryboardResult, settings: ExportSettings, index: Int, total: Int, runID: UUID? = nil) async -> Bool {
+        // `index` identifies the original queue entry. A sparse retry's `total`
+        // counts only retried videos, so using it for stored history can produce
+        // impossible positions such as 5/1. Live progress uses batchIndex/total
+        // separately; completed history keeps its original queue coordinates.
+        let queueTotal = max(total, videoJobs.count)
         let output: PreparedStoryboardOutput
         do {
             output = try await StoryboardOutputWriter.shared.prepare(
                 data: data, result: result, settings: settings,
-                jobIndex: index, jobCount: total, previewStore: previewImageStore
+                jobIndex: index, jobCount: queueTotal, previewStore: previewImageStore
             )
         } catch is CancellationError {
             return false
@@ -522,7 +535,7 @@ final class StoryboardViewModel: ObservableObject {
         completedPreviews.append(preview)
         selectPreview(at: completedPreviews.count - 1, presentation: output.presentation)
         if preview.savedURL == nil {
-            outputStatus = .generatedNotSaved(index: index + 1, total: total)
+            outputStatus = .generatedNotSaved(index: index + 1, total: queueTotal)
         }
         // If neither destination nor session cache can be written, keep this
         // one result in memory and stop before accumulating an unbounded batch.

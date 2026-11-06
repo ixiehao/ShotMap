@@ -858,7 +858,7 @@ struct ContentView: View {
             workspaceRule
 
             Group {
-                if model.isProcessing {
+                if model.showsProgressivePreview {
                     ProgressiveStoryboardPreview(
                         gridSide: model.activeGridSide,
                         cardAspectRatio: model.activeCardAspectRatio,
@@ -870,29 +870,37 @@ struct ContentView: View {
                 } else if let image = model.previewImage {
                     StoryboardCanvas(image: image, isLightAppearance: isLightAppearance, language: language,
                                      savedURL: model.isLoadingPreview ? nil : model.lastSavedURL)
-                        .background {
-                            if model.completedPreviews.indices.contains(model.selectedPreviewIndex) {
-                                PreviewWindowAutoFitProbe(
-                                    fitter: previewAutoFitter,
-                                    request: PreviewWindowAutoFitRequest(
-                                        sourceID: model.completedPreviews[model.selectedPreviewIndex].id.uuidString,
-                                        aspectRatio: Double(image.size.width / max(1, image.size.height)),
-                                        layoutAspect: model.completedPreviews[model.selectedPreviewIndex].settings.layoutAspect,
-                                        panels: PreviewWindowPanelConfiguration(queueVisible: showsQueue, inspectorVisible: showsInspector)
-                                    ),
-                                    isEnabled: !model.isLoadingPreview && !model.isBusy
-                                )
-                            }
-                        }
                 } else {
                     EmptyPreview(language: language, isLightAppearance: isLightAppearance)
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .clipped()
+            .background {
+                // Keep the window bridge alive when the image disappears, so
+                // clearing a result or an unprocessed queue can restore it.
+                PreviewWindowAutoFitProbe(
+                    fitter: previewAutoFitter,
+                    request: previewWindowAutoFitRequest,
+                    isEnabled: !model.isLoadingPreview && !model.isBusy,
+                    queueResetID: model.queueResetID
+                )
+            }
 
         }
         .background(stageFill)
+    }
+
+    private var previewWindowAutoFitRequest: PreviewWindowAutoFitRequest? {
+        guard !model.isProcessing, let image = model.previewImage,
+              model.completedPreviews.indices.contains(model.selectedPreviewIndex) else { return nil }
+        let preview = model.completedPreviews[model.selectedPreviewIndex]
+        return PreviewWindowAutoFitRequest(
+            sourceID: preview.id.uuidString,
+            aspectRatio: Double(image.size.width / max(1, image.size.height)),
+            layoutAspect: preview.settings.layoutAspect,
+            panels: PreviewWindowPanelConfiguration(queueVisible: showsQueue, inspectorVisible: showsInspector)
+        )
     }
 
     private var localPrivacyCaption: some View {

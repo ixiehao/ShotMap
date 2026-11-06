@@ -21,7 +21,7 @@ Una carpeta puede guardar años de vídeos familiares, viajes y momentos cotidia
 
 Empieza con **Selección auto** y sustituye los fotogramas que quieras en **Elegir fotogramas**. ShotMap es una app nativa para macOS y de código abierto. El procesamiento y la exportación se realizan en tu Mac, sin cuenta ni subida de vídeos a internet.
 
-> **Empieza aquí:** [Descargar la última versión internacional](https://github.com/ixiehao/ShotMap/releases/latest) · DMG universal · macOS 13 o posterior · Apple Silicon e Intel
+> **Empieza aquí:** [Descargar la última versión internacional](https://github.com/ixiehao/ShotMap/releases/latest) · DMG para Apple Silicon / Intel · macOS 13 o posterior · Apple Silicon e Intel
 
 > **Vídeo de demostración:** *Tears of Steel* (2012) © Blender Foundation / Blender Institute, con licencia [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/). Las capturas y la animación usan este vídeo.
 
@@ -54,7 +54,7 @@ Esta demostración muestra el paso de un mosaico terminado a la selección manua
 
 ## Descargar e instalar
 
-Abre la [última versión internacional](https://github.com/ixiehao/ShotMap/releases/latest), descarga el `.dmg` universal y arrastra **ShotMap.app** a **Aplicaciones**. El mismo instalador incluye los siete idiomas y funciona en Mac con Apple Silicon e Intel.
+Abre la [última versión](https://github.com/ixiehao/ShotMap/releases/latest) y elige **arm64** para un Mac con Apple Silicon (serie M) o **x86_64** para un Mac Intel. Abre el `.dmg` y arrastra **ShotMap.app** a **Aplicaciones**. Ambos instaladores incluyen los siete idiomas.
 
 La página de la versión incluye una suma de comprobación SHA-256 para verificar la descarga. ShotMap aún no está notarizado por Apple. Si macOS pide confirmar el desarrollador, haz clic con la tecla Control pulsada en la app dentro de Aplicaciones, elige **Abrir** y vuelve a confirmar con **Abrir**. No necesitas reducir la seguridad del sistema.
 

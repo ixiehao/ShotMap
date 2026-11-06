@@ -8,8 +8,17 @@ enum InstallerBackgroundError: Error {
 }
 
 let arguments = CommandLine.arguments
-guard arguments.count == 2 else {
+guard (2...3).contains(arguments.count) else {
     throw InstallerBackgroundError.invalidArguments
+}
+
+let architecture = arguments.count == 3 ? arguments[2] : "universal"
+let compatibility: String
+switch architecture {
+case "arm64": compatibility = "Apple Silicon Mac · macOS 13+"
+case "x86_64": compatibility = "Intel Mac · macOS 13+"
+case "universal": compatibility = "Apple Silicon / Intel Mac · macOS 13+"
+default: throw InstallerBackgroundError.invalidArguments
 }
 
 let outputURL = URL(fileURLWithPath: arguments[1])
@@ -142,7 +151,7 @@ drawText(
     color: color(0.28, 0.33, 0.42, 0.86)
 )
 drawText(
-    "适用于 Apple Silicon 与 Intel Mac · 需要 macOS 13 或更高版本",
+    compatibility,
     in: NSRect(x: 120, y: 85, width: 720, height: 20),
     font: .systemFont(ofSize: 12, weight: .regular),
     color: color(0.43, 0.47, 0.55, 0.68)

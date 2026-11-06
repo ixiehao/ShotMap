@@ -101,14 +101,48 @@ final class PreviewWindowAutoFitter: NSObject, ObservableObject {
     private var isTransitioningFullScreen = false
     private var preferredLandscapeWidth: CGFloat?
     private var preferredPortraitHeight: CGFloat = 880
+    private var lastQueueResetID: UUID?
+    private var needsDefaultSize = false
 
     fileprivate func receive(_ view: PreviewWindowMeasurementView,
-                             request: PreviewWindowAutoFitRequest, isEnabled: Bool) {
+                             request: PreviewWindowAutoFitRequest?, isEnabled: Bool, queueResetID: UUID) {
+        // A detached predecessor can still report a native move/layout event.
+        // It must not replace the currently attached view or its request.
+        guard let window = view.window else { return }
+        if probe !== view {
+            // Delayed work captures its measuring view. SwiftUI can replace
+            // that view while switching processing/result/empty branches;
+            // otherwise an old default-size task can strand pendingFit when
+            // its identity guard fails, blocking the replacement's resize.
+            pendingFit?.cancel()
+            pendingFit = nil
+        }
         probe = view
         self.request = request
         self.isEnabled = isEnabled
-        guard let window = view.window else { return }
         observe(window)
+        if let lastQueueResetID, lastQueueResetID != queueResetID {
+            pendingFit?.cancel()
+            pendingFit = nil
+            lastHandledTrigger = nil
+            preferredLandscapeWidth = nil
+            preferredPortraitHeight = 880
+            needsDefaultSize = true
+        }
+        lastQueueResetID = queueResetID
+        if needsDefaultSize {
+            if request == nil {
+                scheduleDefaultSize(view)
+                return
+            }
+            // A new result supersedes a reset deferred during full screen.
+            needsDefaultSize = false
+        }
+        guard let request else {
+            pendingFit?.cancel()
+            pendingFit = nil
+            return
+        }
         if preferredLandscapeWidth == nil {
             preferredLandscapeWidth = PreviewWindowAutoFitGeometry.initialLandscapeWidth(
                 currentWidth: window.frame.width,
@@ -179,6 +213,30 @@ final class PreviewWindowAutoFitter: NSObject, ObservableObject {
         }
     }
 
+    private func scheduleDefaultSize(_ view: PreviewWindowMeasurementView) {
+        guard pendingFit == nil else { return }
+        pendingFit = Task { @MainActor [weak self, weak view] in
+            do { try await Task.sleep(nanoseconds: 60_000_000) }
+            catch { return }
+            guard let self, let view, self.probe === view else { return }
+            self.pendingFit = nil
+            guard self.needsDefaultSize, self.request == nil,
+                  let window = view.window,
+                  !window.inLiveResize, !window.styleMask.contains(.fullScreen),
+                  !self.isTransitioningFullScreen,
+                  let screen = window.screen ?? NSScreen.main else { return }
+            self.needsDefaultSize = false
+            let desiredFrameSize = window.frameRect(forContentRect: CGRect(
+                origin: .zero, size: MainWindowStartupLayout.contentSize
+            )).size
+            let frame = MainWindowStartupLayout.frame(
+                currentFrame: window.frame, desiredFrameSize: desiredFrameSize,
+                visibleFrame: screen.visibleFrame
+            )
+            window.setFrame(frame, display: true, animate: false)
+        }
+    }
+
     private func consumeWithoutResizing(_ trigger: PreviewWindowAutoFitTrigger) {
         pendingFit?.cancel()
         pendingFit = nil
@@ -196,6 +254,8 @@ final class PreviewWindowAutoFitter: NSObject, ObservableObject {
         for name in [NSWindow.didEnterFullScreenNotification, NSWindow.didExitFullScreenNotification] {
             NotificationCenter.default.addObserver(self, selector: #selector(didTransitionFullScreen), name: name, object: window)
         }
+        NotificationCenter.default.addObserver(self, selector: #selector(didEndLiveResize),
+                                               name: NSWindow.didEndLiveResizeNotification, object: window)
     }
 
     @objc private func willTransitionFullScreen() {
@@ -204,13 +264,24 @@ final class PreviewWindowAutoFitter: NSObject, ObservableObject {
         pendingFit = nil
     }
 
-    @objc private func didTransitionFullScreen() { isTransitioningFullScreen = false }
+    @objc private func didTransitionFullScreen() {
+        isTransitioningFullScreen = false
+        resumeDefaultSizeIfNeeded()
+    }
+
+    @objc private func didEndLiveResize() { resumeDefaultSizeIfNeeded() }
+
+    private func resumeDefaultSizeIfNeeded() {
+        guard needsDefaultSize, let probe else { return }
+        scheduleDefaultSize(probe)
+    }
 }
 
 struct PreviewWindowAutoFitProbe: NSViewRepresentable {
     let fitter: PreviewWindowAutoFitter
-    let request: PreviewWindowAutoFitRequest
+    let request: PreviewWindowAutoFitRequest?
     let isEnabled: Bool
+    let queueResetID: UUID
 
     func makeNSView(context: Context) -> PreviewWindowMeasurementView {
         PreviewWindowMeasurementView(frame: .zero)
@@ -220,6 +291,7 @@ struct PreviewWindowAutoFitProbe: NSViewRepresentable {
         view.fitter = fitter
         view.request = request
         view.isEnabled = isEnabled
+        view.queueResetID = queueResetID
         view.reportMeasurement()
     }
 
@@ -234,6 +306,7 @@ final class PreviewWindowMeasurementView: NSView {
     weak var fitter: PreviewWindowAutoFitter?
     var request: PreviewWindowAutoFitRequest?
     var isEnabled = false
+    var queueResetID = UUID()
 
     override func viewDidMoveToWindow() {
         super.viewDidMoveToWindow()
@@ -254,7 +327,6 @@ final class PreviewWindowMeasurementView: NSView {
     override func hitTest(_ point: NSPoint) -> NSView? { nil }
 
     func reportMeasurement() {
-        guard let request else { return }
-        fitter?.receive(self, request: request, isEnabled: isEnabled)
+        fitter?.receive(self, request: request, isEnabled: isEnabled, queueResetID: queueResetID)
     }
 }

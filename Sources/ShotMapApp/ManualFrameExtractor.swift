@@ -37,11 +37,7 @@ enum ManualFrameExtractor {
     ) async throws {
         try Task.checkCancellation()
         guard !requests.isEmpty else { return }
-        let generator = AVAssetImageGenerator(asset: asset)
-        generator.appliesPreferredTrackTransform = true
-        generator.maximumSize = CGSize(width: maximumEdge, height: maximumEdge)
-        generator.requestedTimeToleranceBefore = tolerance
-        generator.requestedTimeToleranceAfter = tolerance
+        let generator = MediaImageGenerator.make(asset: asset, maximumEdge: maximumEdge, tolerance: tolerance)
         let cancellation = AutomaticGeneratorCancellation(generator)
         defer { cancellation.cancel() }
         var idsByTime: [AutomaticFrameTimeKey: [Int]] = [:]
@@ -91,17 +87,10 @@ enum ManualFrameExtractor {
         // check substantially more expensive than the actual final decode. Fine
         // detail scoring operates on a compact luminance grid, so cap this first
         // pass and decode only the winning timestamp at the requested resolution.
-        let analysisGenerator = AVAssetImageGenerator(asset: asset)
-        analysisGenerator.appliesPreferredTrackTransform = true
-        analysisGenerator.maximumSize = CGSize(
-            width: sharpnessAnalysisMaximumEdge(for: maximumEdge),
-            height: sharpnessAnalysisMaximumEdge(for: maximumEdge)
+        // Only the small +/- 3-frame neighbourhood needs exact seeking.
+        let analysisGenerator = MediaImageGenerator.make(
+            asset: asset, maximumEdge: sharpnessAnalysisMaximumEdge(for: maximumEdge)
         )
-        // This pass intentionally uses exact seeking. The earlier, tolerant
-        // sampling pass stays fast; only the small +/- 3-frame neighbourhood
-        // needs frame-level precision.
-        analysisGenerator.requestedTimeToleranceBefore = .zero
-        analysisGenerator.requestedTimeToleranceAfter = .zero
 
         defer { analysisGenerator.cancelAllCGImageGeneration() }
 
@@ -136,11 +125,7 @@ enum ManualFrameExtractor {
         // One full-resolution, exact decode preserves final export quality while
         // keeping the seven-frame comparison cheap. Retain the scored thumbnail
         // as a graceful fallback for damaged/VFR media whose second seek fails.
-        let finalGenerator = AVAssetImageGenerator(asset: asset)
-        finalGenerator.appliesPreferredTrackTransform = true
-        finalGenerator.maximumSize = CGSize(width: maximumEdge, height: maximumEdge)
-        finalGenerator.requestedTimeToleranceBefore = .zero
-        finalGenerator.requestedTimeToleranceAfter = .zero
+        let finalGenerator = MediaImageGenerator.make(asset: asset, maximumEdge: maximumEdge)
         defer { finalGenerator.cancelAllCGImageGeneration() }
         let finalRequests = sharpnessRequestBatch(plans: plans, planIndices: [0]) { _, _ in [best.time] }
         let finalImages = try await decodeFinalSharpnessBatch(
@@ -201,12 +186,9 @@ enum ManualFrameExtractor {
             )
         }
 
-        let analysisGenerator = AVAssetImageGenerator(asset: asset)
-        analysisGenerator.appliesPreferredTrackTransform = true
-        let analysisEdge = sharpnessAnalysisMaximumEdge(for: maximumEdge)
-        analysisGenerator.maximumSize = CGSize(width: analysisEdge, height: analysisEdge)
-        analysisGenerator.requestedTimeToleranceBefore = .zero
-        analysisGenerator.requestedTimeToleranceAfter = .zero
+        let analysisGenerator = MediaImageGenerator.make(
+            asset: asset, maximumEdge: sharpnessAnalysisMaximumEdge(for: maximumEdge)
+        )
         defer { analysisGenerator.cancelAllCGImageGeneration() }
 
         let primaryRequests = sharpnessRequestBatch(
@@ -252,11 +234,7 @@ enum ManualFrameExtractor {
             )
         }
 
-        let finalGenerator = AVAssetImageGenerator(asset: asset)
-        finalGenerator.appliesPreferredTrackTransform = true
-        finalGenerator.maximumSize = CGSize(width: maximumEdge, height: maximumEdge)
-        finalGenerator.requestedTimeToleranceBefore = .zero
-        finalGenerator.requestedTimeToleranceAfter = .zero
+        let finalGenerator = MediaImageGenerator.make(asset: asset, maximumEdge: maximumEdge)
         defer { finalGenerator.cancelAllCGImageGeneration() }
 
         let finalRequests = sharpnessRequestBatch(
@@ -488,14 +466,9 @@ enum ManualFrameExtractor {
         guard duration.isFinite, duration > 0 else { throw StoryboardError.unreadableVideo }
 
         let time = min(max(0, requestedTime), max(0, duration - 0.01))
-        let generator = AVAssetImageGenerator(asset: asset)
-        generator.appliesPreferredTrackTransform = true
-        generator.maximumSize = CGSize(width: maximumEdge, height: maximumEdge)
-        // A manual addition should represent the time the person chose, rather
-        // than a nearby key frame as used by the fast gallery sampler.
-        let tolerance = CMTime(seconds: 0.04, preferredTimescale: 600)
-        generator.requestedTimeToleranceBefore = tolerance
-        generator.requestedTimeToleranceAfter = tolerance
+        // Manual capture stays close to the chosen moment.
+        let generator = MediaImageGenerator.make(asset: asset, maximumEdge: maximumEdge,
+            tolerance: CMTime(seconds: 0.04, preferredTimescale: 600))
 
         defer { generator.cancelAllCGImageGeneration() }
         try Task.checkCancellation()
@@ -538,12 +511,8 @@ enum ManualFrameExtractor {
             sharpnessBatchSignposter.value.endInterval("presentationFrameDecode", interval)
         }
 
-        let generator = AVAssetImageGenerator(asset: asset)
-        generator.appliesPreferredTrackTransform = true
-        generator.maximumSize = CGSize(width: maximumEdge, height: maximumEdge)
-        let tolerance = CMTime(seconds: 0.75, preferredTimescale: 600)
-        generator.requestedTimeToleranceBefore = tolerance
-        generator.requestedTimeToleranceAfter = tolerance
+        let generator = MediaImageGenerator.make(asset: asset, maximumEdge: maximumEdge,
+            tolerance: CMTime(seconds: 0.75, preferredTimescale: 600))
         defer { generator.cancelAllCGImageGeneration() }
 
         let requests = FrameImageRequestBatch(
@@ -594,17 +563,13 @@ enum ManualFrameExtractor {
         guard duration.isFinite, duration > 0 else { throw StoryboardError.unreadableVideo }
 
         let frameRate = await nominalFrameRate(for: asset)
-        let generator = AVAssetImageGenerator(asset: asset)
-        generator.appliesPreferredTrackTransform = true
         let estimatedCellWidth = Double(max(1_920, outputWidth)) / Double(max(1, gridSide))
         let maximumEdge = min(1_280, max(480, estimatedCellWidth * 1.15))
         // Gallery cards only need enough pixels for clear review. Limiting these
         // probes to 640px gives us room to inspect a tiny neighbourhood without
         // regressing the editor's perceived load time.
         let analysisEdge = min(640, maximumEdge)
-        generator.maximumSize = CGSize(width: CGFloat(analysisEdge), height: CGFloat(analysisEdge))
-        generator.requestedTimeToleranceBefore = .zero
-        generator.requestedTimeToleranceAfter = .zero
+        let generator = MediaImageGenerator.make(asset: asset, maximumEdge: CGFloat(analysisEdge))
         defer { generator.cancelAllCGImageGeneration() }
 
         let sampleCount = max(1, count)

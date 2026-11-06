@@ -19,7 +19,7 @@
 
 先用智能选帧给出的候选，再在“手动选择画面”窗口里替换不合适的画面。ShotMap 是一款原生 macOS 开源软件，视频处理和图片导出都在 Mac 本机完成，无需账号，也不会上传视频。
 
-> **从这里开始：**[下载最新国际版](https://github.com/ixiehao/ShotMap/releases/latest) · 通用 DMG · macOS 13 或更高版本 · 支持 Apple Silicon 与 Intel Mac
+> **从这里开始：**[下载最新国际版](https://github.com/ixiehao/ShotMap/releases/latest) · Apple Silicon / Intel 独立安装包 · macOS 13 或更高版本 · 支持 Apple Silicon 与 Intel Mac
 
 > **演示视频署名：**《Tears of Steel》（2012）© Blender Foundation / Blender Institute，采用 [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) 许可。下方的软件截图和动图均使用该视频制作。
 
@@ -52,7 +52,7 @@
 
 ## 下载与安装
 
-打开[最新国际版页面](https://github.com/ixiehao/ShotMap/releases/latest)，下载通用 `.dmg`，再将 **ShotMap.app** 拖进“应用程序”文件夹。同一个安装包包含全部七种语言，适用于 Apple Silicon 与 Intel Mac。
+打开[最新版本页面](https://github.com/ixiehao/ShotMap/releases/latest)，M 系列 Mac 选择 **arm64**，Intel Mac 选择 **x86_64**。打开 `.dmg`，将 **ShotMap.app** 拖进“应用程序”文件夹。两种安装包均包含全部七种语言。
 
 版本页面附有 SHA-256 校验文件，供需要验证下载的用户使用。ShotMap 暂未经过 Apple 公证。若 macOS 提示无法验证开发者，请在“应用程序”中按住 Control 点按应用，选择“打开”，再确认一次“打开”。无需降低 macOS 的系统级安全设置。
 

@@ -14,7 +14,7 @@ MAC용 동영상 스토리보드
 
 macOS 13 이상 · Apple Silicon 및 Intel · 무료 오픈 소스
 
-한 번의 다운로드로, 7개 언어.
+7개 언어 기본 지원.
 
 - English
 
@@ -104,7 +104,7 @@ ShotMap 한국어 작업 화면
 
 #### 어떤 Mac을 지원하나요?
 
-macOS 13 이상을 사용하는 Apple Silicon 및 Intel Mac을 지원합니다.
+macOS 13 이상을 지원합니다. 릴리스 페이지에서 Apple Silicon(M 시리즈)용 또는 Intel용 설치 파일을 선택하세요.
 
 #### 프레임을 직접 바꿀 수 있나요?
 
@@ -120,6 +120,6 @@ macOS 13 이상을 사용하는 Apple Silicon 및 Intel Mac을 지원합니다.
 
 Mac용 최신 국제판을 다운로드하세요. 7개 언어가 모두 포함되어 있습니다.
 
-[v0.2.17 다운로드](https://github.com/ixiehao/ShotMap/releases/latest) [GitHub에서 보기](https://github.com/ixiehao/ShotMap)
+[v0.2.18 다운로드](https://github.com/ixiehao/ShotMap/releases/latest) [GitHub에서 보기](https://github.com/ixiehao/ShotMap)
 
 © 2026 ixiehaoShotMap · MIT [GitHub](https://github.com/ixiehao/ShotMap) [릴리스](https://github.com/ixiehao/ShotMap/releases/latest) [의견 보내기](https://github.com/ixiehao/ShotMap/issues/new/choose)

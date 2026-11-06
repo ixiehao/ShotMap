@@ -14,7 +14,7 @@ Macで動画の場面を一覧に
 
 macOS 13以降 · Apple Silicon / Intel対応 · 無料・オープンソース
 
-ひとつのアプリで、7言語。
+7言語を標準搭載。
 
 - English
 
@@ -104,7 +104,7 @@ ShotMap の日本語ワークスペース
 
 #### どのMacに対応していますか？
 
-macOS 13以降を搭載したApple SiliconとIntelのMacに対応しています。
+macOS 13以降に対応しています。リリースページで、Apple Silicon（Mシリーズ）用またはIntel用を選んでください。
 
 #### 自分でコマを置き換えられますか？
 
@@ -120,6 +120,6 @@ macOS 13以降を搭載したApple SiliconとIntelのMacに対応しています
 
 Mac向けの最新国際版をダウンロード。7言語すべてが含まれています。
 
-[v0.2.17 をダウンロード](https://github.com/ixiehao/ShotMap/releases/latest) [GitHubで見る](https://github.com/ixiehao/ShotMap)
+[v0.2.18 をダウンロード](https://github.com/ixiehao/ShotMap/releases/latest) [GitHubで見る](https://github.com/ixiehao/ShotMap)
 
 © 2026 ixiehaoShotMap · MIT [GitHub](https://github.com/ixiehao/ShotMap) [リリース](https://github.com/ixiehao/ShotMap/releases/latest) [フィードバック](https://github.com/ixiehao/ShotMap/issues/new/choose)

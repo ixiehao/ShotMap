@@ -372,6 +372,9 @@ struct AutomaticFrameRecord {
     var independentTextScore: Float = 0
     var detailedTextObservedScore: Float?
     var detailedTextCoveredFullFrame = false
+    /// A failed precise review gets at most one positive-evidence fallback at
+    /// this PTS. Failed or negative results cannot restart it during recovery.
+    var detailedTextFailureFallbackUsed = false
     var propagatedCreditRisk = false
     var openingLayoutCandidate = false
     let analysisMaximumEdge: CGFloat = 480
@@ -392,7 +395,8 @@ struct AutomaticFrameRecord {
     }
 
     var isTrustedContentBoundary: Bool {
-        guard descriptor.personObservationState == .observed, independentTextScore < 0.65,
+        guard descriptor.personObservationState == .observed, descriptor.textObservationState == .observed,
+              independentTextScore < 0.65,
               descriptor.qualityEvidence?.state == .observed, descriptor.qualityEvidence?.rejection == nil,
               descriptor.qualityEvidence?.denseTextLayout != true else { return false }
         if descriptor.faceScore >= 0.05 { return true }
@@ -656,8 +660,10 @@ struct AutomaticFrameAnalysisState {
         records[id] = record
     }
 
-    mutating func auditDetailedText(id: Int, image: CGImage, forOpening: Bool = false) throws {
-        guard var record = records[id] else { return }
+    mutating func auditDetailedText(id: Int, image: CGImage, forOpening: Bool = false,
+        textReader: ((VNRequestTextRecognitionLevel, CGRect) throws -> [AutomaticRecognizedTextLine])? = nil
+    ) throws {
+        guard var record = records[id], !record.detailedTextFailureFallbackUsed else { return }
         record.detailedTextChecked = false
         record.detailedTextCoveredFullFrame = false
         let cancellation = self.cancellation, performance = self.performance
@@ -667,6 +673,9 @@ struct AutomaticFrameAnalysisState {
         let hasSubject = record.descriptor.faceScore >= 0.05
         let sparse = record.descriptor.qualityEvidence?.isSparseGraphic ?? false
         func read(_ level: VNRequestTextRecognitionLevel, roi: CGRect) throws -> [AutomaticRecognizedTextLine] {
+            // Internal dependency boundary also permits deterministic failures
+            // without swizzling Vision or changing global compute preferences.
+            if let textReader { return try textReader(level, roi) }
             let request = VNRecognizeTextRequest()
             request.recognitionLevel = level
             request.usesLanguageCorrection = false
@@ -693,6 +702,7 @@ struct AutomaticFrameAnalysisState {
                 lines.filter { $0.confidence >= 0.85 }.map(\.text)) { value = max(value, 0.9) }
             return value
         }
+        var fullFastLines: [AutomaticRecognizedTextLine]?
         do {
             let started = performance.begin()
             let unit = CGRect(x: 0, y: 0, width: 1, height: 1)
@@ -725,6 +735,7 @@ struct AutomaticFrameAnalysisState {
                     guard let result = observation.topCandidates(1).first else { return nil }
                     return AutomaticRecognizedTextLine(text: result.string, confidence: result.confidence, region: observation.boundingBox)
                 }
+                fullFastLines = fullLines
                 let fullRegions = (regions.results ?? []).map(\.boundingBox)
                 score = max(score, textScore(fullLines), AutomaticTextCardEvidence.score(regions: fullRegions, sparse: sparse, hasSubject: hasSubject))
                 coveredFullFrame = true
@@ -755,7 +766,34 @@ struct AutomaticFrameAnalysisState {
             performance.finish(.detailedAudit, since: started)
             AutomaticFrameDiagnostics.write("detailed pts=\(record.pts.seconds) roi=\(roi) fallbackROI=\(String(describing: fallbackROI)) fullCoverage=\(coveredFullFrame) mainThread=\(Thread.isMainThread) boxes=\(lines.count) score=\(score)")
         } catch is CancellationError { throw CancellationError() }
-        catch { record.descriptor.textObservationState = .failed }
+        catch {
+            record.descriptor.textObservationState = .failed
+            record.detailedTextFailureFallbackUsed = true
+            performance.increment(.detailedTextFailureFallbacks)
+            // An unavailable precise OCR model must not erase positive credit
+            // evidence obtainable by the cheaper model. Inspect the whole same
+            // image once. A negative/failed fast read NEVER clears HD risk or
+            // creates a trusted content boundary; only positive rejection is
+            // accepted. Reuse an already observed full-frame fast read if the
+            // later precise ROI request was the operation that failed.
+            do {
+                let lines = try cancellation.withActiveRequests([]) {
+                    try fullFastLines ?? read(.fast, roi: CGRect(x: 0, y: 0, width: 1, height: 1))
+                }
+                let score = textScore(lines)
+                if score >= 0.65 {
+                    record.detailedTextChecked = true
+                    record.detailedTextCoveredFullFrame = true
+                    record.detailedTextObservedScore = score
+                    record.descriptor.textOverlayScore = max(record.descriptor.textOverlayScore, score)
+                    record.independentTextScore = max(record.independentTextScore, score)
+                    record.descriptor.textObservationState = .observed
+                    performance.increment(.detailedTextFallbackRejections)
+                }
+                AutomaticFrameDiagnostics.write("detailed-failure-fallback pts=\(record.pts.seconds) score=\(score) rejected=\(score >= 0.65)")
+            } catch is CancellationError { throw CancellationError() }
+            catch { AutomaticFrameDiagnostics.write("detailed-failure-fallback pts=\(record.pts.seconds) error=\(error)") }
+        }
         records[id] = record
     }
 
@@ -1155,6 +1193,7 @@ final class AutomaticFramePerformance: @unchecked Sendable {
         case discoveryDecoded, finalDecoded, uniqueCandidates, semanticAudits, rawCacheEvictions, finalRawCacheHits
         case semanticQualitySkips, semanticReuses, fullQualityReuses, coverageAudits
         case detailedMainThreadAudits, detailedBackgroundAudits
+        case detailedTextFailureFallbacks, detailedTextFallbackRejections
     }
     private struct Measurement { var seconds: Double = 0; var count = 0 }
     private let enabled: Bool

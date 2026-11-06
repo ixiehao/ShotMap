@@ -1,5 +1,4 @@
 import Foundation
-import CoreML
 import Vision
 
 /// Vision's synchronous `perform` does not inherit Swift task cancellation.
@@ -20,7 +19,7 @@ final class AutomaticVisionCancellation: @unchecked Sendable {
     }
 
     func perform(_ requests: [VNRequest], using handler: VNImageRequestHandler) throws {
-        try performRecoveringComputeFailure(requests, configureCPU: Self.configureCPU) {
+        try performRecoveringComputeFailure(requests, configureCPU: VisionComputeSupport.configureCPU) {
             try handler.perform(requests)
         }
     }
@@ -47,26 +46,6 @@ final class AutomaticVisionCancellation: @unchecked Sendable {
                 try operation()
             }
         }
-    }
-
-    private static func configureCPU(_ requests: [VNRequest]) -> Bool {
-        guard !requests.isEmpty else { return false }
-        if #available(macOS 14, *) {
-            // Validate the whole group before changing any assignment. Some
-            // newer Neural Engine requests intentionally have no CPU variant.
-            var assignments: [(VNRequest, VNComputeStage, MLComputeDevice)] = []
-            for request in requests {
-                guard let stages = try? request.supportedComputeStageDevices, !stages.isEmpty else { return false }
-                for (stage, devices) in stages {
-                    guard let cpu = devices.first(where: { if case .cpu = $0 { return true }; return false }) else { return false }
-                    assignments.append((request, stage, cpu))
-                }
-            }
-            for (request, stage, cpu) in assignments { request.setComputeDevice(cpu, for: stage) }
-        } else {
-            requests.forEach { $0.usesCPUOnly = true }
-        }
-        return true
     }
 
     /// Registration also handles cancellation immediately before `perform`.

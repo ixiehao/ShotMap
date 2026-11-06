@@ -21,7 +21,7 @@
 
 스마트 선택으로 시작한 뒤 ‘프레임 직접 선택’에서 원하는 장면으로 바꾸세요. ShotMap은 macOS 네이티브 오픈 소스 앱입니다. 동영상 처리와 이미지 저장은 Mac에서 이루어지며, 계정이나 동영상 업로드가 필요하지 않습니다.
 
-> **시작하기:** [최신 국제판 다운로드](https://github.com/ixiehao/ShotMap/releases/latest) · 범용 DMG · macOS 13 이상 · Apple Silicon 및 Intel Mac
+> **시작하기:** [최신 국제판 다운로드](https://github.com/ixiehao/ShotMap/releases/latest) · Apple Silicon / Intel용 DMG · macOS 13 이상 · Apple Silicon 및 Intel Mac
 
 > **데모 영상 출처:** *Tears of Steel*(2012) © Blender Foundation / Blender Institute, [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/). 이 문서의 스크린샷과 동작 예시에 사용한 영상입니다.
 
@@ -54,7 +54,7 @@
 
 ## 다운로드 및 설치
 
-[최신 국제판 릴리스](https://github.com/ixiehao/ShotMap/releases/latest)에서 범용 `.dmg` 파일을 다운로드한 뒤 **ShotMap.app**을 **응용 프로그램** 폴더로 드래그하세요. 같은 설치 파일이 Apple Silicon과 Intel Mac에서 동작하며, 7개 언어를 모두 포함합니다.
+[최신 릴리스](https://github.com/ixiehao/ShotMap/releases/latest)에서 Apple Silicon(M 시리즈) Mac은 **arm64**, Intel Mac은 **x86_64**를 선택하세요. `.dmg`를 열고 **ShotMap.app**을 **응용 프로그램** 폴더로 드래그하세요. 두 설치 파일 모두 7개 언어를 포함합니다.
 
 릴리스 페이지에는 다운로드 파일을 확인할 수 있는 SHA-256 체크섬이 있습니다. ShotMap은 아직 Apple의 공증을 받지 않았습니다. macOS가 개발자 확인을 요청하면 응용 프로그램 폴더에서 Control 키를 누른 채 앱을 클릭하고 **열기**를 선택한 뒤 다시 **열기**를 눌러 확인하세요. 시스템 전체의 보안 설정을 낮출 필요는 없습니다.
 
