@@ -379,6 +379,65 @@ final class AutomaticFramePipelineTests: XCTestCase {
         XCTAssertEqual(state.records[7]?.descriptor.textOverlayScore, 0.2)
     }
 
+    func testFailedSemanticInputsExhaustABoundedPassWithoutReauditingOrExporting() throws {
+        let policy = AutomaticFrameSamplingPolicy(duration: 1_000, targetCount: 9)
+        var state = AutomaticFrameAnalysisState(policy: policy)
+        // These passed pixel inspection but lost their image backing before
+        // inference. Exercise the production failure transition, not fabricated
+        // observed "zero people/text" records, and leave more candidates than
+        // the semantic pass is allowed to inspect.
+        for id in 0..<(policy.semanticRequestLimit + 9) {
+            var record = auditedRecord(id: id, time: Double(id) * 3 + 1, face: 0, text: 0)
+            record.descriptor.personObservationState = .notEvaluated
+            record.descriptor.textObservationState = .notEvaluated
+            state.records[id] = record
+        }
+        try state.auditProvisionalSelection()
+        XCTAssertEqual(state.semanticChecks, policy.semanticRequestLimit)
+        XCTAssertEqual(state.records.values.filter { $0.descriptor.personObservationState == .failed }.count,
+            policy.semanticRequestLimit)
+        XCTAssertTrue(state.verifiedSelection().isEmpty)
+        XCTAssertTrue(state.semanticSelection().isEmpty)
+
+        // Re-entry after a budget-limited recovery must finish without either
+        // restarting failed records or manufacturing an output to fill a grid.
+        try state.auditProvisionalSelection()
+        try state.auditRecoveredCandidates(Array(state.records.keys), limit: .max)
+        XCTAssertEqual(state.semanticChecks, policy.semanticRequestLimit)
+        XCTAssertTrue(state.verifiedSelection().isEmpty)
+    }
+
+    func testPersonWithFailedOrUnobservedTextCannotBecomeATrustedContentBoundary() {
+        var record = auditedRecord(id: 1, time: 50, face: 0.4, text: 0)
+        XCTAssertTrue(record.isTrustedContentBoundary, "Observed ordinary person shots still stop unrelated credits propagation")
+        for state in [FrameEvidenceState.failed, .notEvaluated] {
+            record.descriptor.textObservationState = state
+            XCTAssertFalse(record.isTrustedContentBoundary,
+                "A face cannot turn an OCR failure or missing observation into proof of ordinary content")
+            XCTAssertFalse(record.isExportVerified)
+        }
+    }
+
+    func testCancelledSemanticAuditPropagatesWithoutFabricatingFailedOrVerifiedEvidence() throws {
+        let context = try XCTUnwrap(CGContext(data: nil, width: 64, height: 64,
+            bitsPerComponent: 8, bytesPerRow: 0, space: CGColorSpaceCreateDeviceRGB(),
+            bitmapInfo: CGImageAlphaInfo.noneSkipLast.rawValue))
+        context.setFillColor(CGColor(gray: 0.5, alpha: 1))
+        context.fill(CGRect(x: 0, y: 0, width: 64, height: 64))
+        var state = AutomaticFrameAnalysisState(policy: AutomaticFrameSamplingPolicy(duration: 60, targetCount: 9))
+        var record = auditedRecord(id: 1, time: 10, face: 0, text: 0)
+        record.descriptor.personObservationState = .notEvaluated
+        record.descriptor.textObservationState = .notEvaluated
+        record.image = try XCTUnwrap(context.makeImage())
+        state.records[1] = record
+        state.cancellation.cancel()
+
+        XCTAssertThrowsError(try state.audit(id: 1)) { XCTAssertTrue($0 is CancellationError) }
+        XCTAssertEqual(state.records[1]?.descriptor.personObservationState, .notEvaluated)
+        XCTAssertEqual(state.records[1]?.descriptor.textObservationState, .notEvaluated)
+        XCTAssertTrue(state.verifiedSelection().isEmpty)
+    }
+
     func testCoverageAuditsAnExistingContentCandidateEvenWhenSelectedCountIsFull() {
         var state = AutomaticFrameAnalysisState(policy: AutomaticFrameSamplingPolicy(duration: 100, targetCount: 9))
         var selected: [FrameDescriptor] = []
@@ -538,6 +597,91 @@ final class AutomaticFramePipelineTests: XCTestCase {
         XCTAssertFalse(result.2)
     }
 
+    func testAccurateTextFailureUsesOneFullFramePositiveFallbackAndReusesItsEvidence() throws {
+        var (state, image) = try detailedTextFailureFixture()
+        var accurateReads = 0, fastReads = 0
+        let lines = productionCreditLines()
+        let reader: (VNRequestTextRecognitionLevel, CGRect) throws -> [AutomaticRecognizedTextLine] = { level, roi in
+            if level == .accurate {
+                accurateReads += 1
+                throw NSError(domain: VNErrorDomain, code: VNErrorCode.operationFailed.rawValue)
+            }
+            fastReads += 1
+            XCTAssertEqual(roi, CGRect(x: 0, y: 0, width: 1, height: 1))
+            return lines
+        }
+        try state.auditDetailedText(id: 1, image: image, textReader: reader)
+        try state.auditDetailedText(id: 1, image: image, textReader: reader)
+        let record = try XCTUnwrap(state.records[1])
+        XCTAssertEqual(accurateReads, 1)
+        XCTAssertEqual(fastReads, 1)
+        XCTAssertTrue(record.detailedTextFailureFallbackUsed)
+        XCTAssertTrue(record.detailedTextChecked)
+        XCTAssertTrue(record.detailedTextCoveredFullFrame)
+        XCTAssertGreaterThanOrEqual(record.descriptor.textOverlayScore, 0.65)
+        XCTAssertFalse(record.isExportVerified)
+        XCTAssertFalse(record.isTrustedContentBoundary)
+    }
+
+    func testNegativeOrFailedFastFallbackNeverClearsThePreciseReviewRisk() throws {
+        for fallbackFails in [false, true] {
+            var (state, image) = try detailedTextFailureFixture()
+            var reads = 0
+            try state.auditDetailedText(id: 1, image: image) { level, _ in
+                reads += 1
+                if level == .accurate || fallbackFails { throw NSError(domain: VNErrorDomain, code: VNErrorCode.operationFailed.rawValue) }
+                return []
+            }
+            let record = try XCTUnwrap(state.records[1])
+            XCTAssertEqual(reads, 2)
+            XCTAssertTrue(record.needsDetailedTextCheck)
+            XCTAssertTrue(record.detailedTextFailureFallbackUsed)
+            XCTAssertFalse(record.detailedTextChecked)
+            XCTAssertFalse(record.detailedTextCoveredFullFrame)
+            XCTAssertEqual(record.descriptor.textObservationState, .failed)
+            XCTAssertFalse(record.isTrustedContentBoundary)
+            XCTAssertFalse(record.isExportVerified)
+        }
+    }
+
+    func testCancellationDuringPreciseOrFastFailureReviewPropagatesWithoutConfirmingEvidence() throws {
+        for cancelMode in 0...2 {
+            var (state, image) = try detailedTextFailureFixture()
+            let bridge = state.cancellation
+            let lines = productionCreditLines()
+            var reads = 0
+            XCTAssertThrowsError(try state.auditDetailedText(id: 1, image: image) { level, _ in
+                reads += 1
+                if level == .accurate && cancelMode > 0 {
+                    throw NSError(domain: VNErrorDomain, code: VNErrorCode.operationFailed.rawValue)
+                }
+                if cancelMode == 2 {
+                    bridge.cancel()
+                    return lines
+                }
+                throw CancellationError()
+            }) { XCTAssertTrue($0 is CancellationError) }
+            XCTAssertEqual(reads, cancelMode > 0 ? 2 : 1)
+            XCTAssertFalse(state.records[1]?.detailedTextFailureFallbackUsed ?? true)
+            XCTAssertFalse(state.records[1]?.detailedTextChecked ?? true)
+            XCTAssertFalse(state.records[1]?.isExportVerified ?? true)
+        }
+    }
+
+    func testSuccessfulPrecisePositiveReviewDoesNotRunTheFailureFallback() throws {
+        var (state, image) = try detailedTextFailureFixture()
+        let lines = productionCreditLines()
+        var reads = 0
+        try state.auditDetailedText(id: 1, image: image) { level, _ in
+            reads += 1
+            XCTAssertEqual(level, .accurate)
+            return lines
+        }
+        XCTAssertEqual(reads, 1)
+        XCTAssertFalse(state.records[1]?.detailedTextFailureFallbackUsed ?? true)
+        XCTAssertTrue(state.records[1]?.detailedTextChecked ?? false)
+    }
+
     func testWorkflowHeaderRequiresIndependentCardContextAndNarrowAlignedRows() {
         let lines = [AutomaticRecognizedTextLine(text: "Development, scripting and studio pipeline", confidence: 1,
                         region: CGRect(x: 0.15, y: 0.60, width: 0.40, height: 0.04)),
@@ -593,6 +737,26 @@ final class AutomaticFramePipelineTests: XCTestCase {
         catch { XCTFail("Expected CancellationError, got \(error)") }
         XCTAssertLessThan(ProcessInfo.processInfo.systemUptime - cancelledAt, 3,
             "Cancellation should not wait through a complete OCR page")
+    }
+
+    private func detailedTextFailureFixture() throws -> (AutomaticFrameAnalysisState, CGImage) {
+        let context = try XCTUnwrap(CGContext(data: nil, width: 64, height: 64, bitsPerComponent: 8,
+            bytesPerRow: 0, space: CGColorSpaceCreateDeviceRGB(), bitmapInfo: CGImageAlphaInfo.noneSkipLast.rawValue))
+        context.setFillColor(CGColor(gray: 0.5, alpha: 1))
+        context.fill(CGRect(x: 0, y: 0, width: 64, height: 64))
+        var state = AutomaticFrameAnalysisState(policy: AutomaticFrameSamplingPolicy(duration: 100, targetCount: 9))
+        var record = auditedRecord(id: 1, time: 50, face: 0, text: 0)
+        record.needsDetailedTextCheck = true
+        record.descriptor.qualityEvidence?.denseTextLayout = true
+        state.records[1] = record
+        return (state, try XCTUnwrap(context.makeImage()))
+    }
+
+    private func productionCreditLines() -> [AutomaticRecognizedTextLine] {
+        ["Lighting", "Sound editing", "Camera crew", "Music production"].enumerated().map { index, text in
+            AutomaticRecognizedTextLine(text: text, confidence: 1,
+                region: CGRect(x: 0.1, y: 0.3 + Double(index) * 0.1, width: 0.45, height: 0.08))
+        }
     }
 
     private func auditedRecord(id: Int, time: Double, face: Float, text: Float) -> AutomaticFrameRecord {

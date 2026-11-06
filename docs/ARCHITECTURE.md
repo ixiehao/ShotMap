@@ -38,6 +38,7 @@ The UI and processing code have separate ownership:
 | `BatchSupportViews.swift` | Failure reports and conversion guidance |
 | `VideoStoryboardAnalyzer.swift`, `ManualFrameExtractor.swift` | Automatic analysis and exact manual capture |
 | `AutomaticFramePipeline.swift`, `AutomaticFrameSamplingPolicy.swift` | Audited automatic candidates, shared recovery budgets and exact output |
+| `MediaImageGenerator.swift`, `VisionComputeSupport.swift` | Shared native decoder configuration and capability-checked Vision fallback |
 | `AutomaticVisionCancellation.swift` | Thread-safe registration and cancellation of active Vision requests |
 | `FrameQualityAnalyzer.swift` | Active-area quality, subject clarity and dense-text risk |
 | `FrameSelection.swift` | Deterministic scene, quality, and diversity selection |

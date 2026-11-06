@@ -79,7 +79,7 @@ struct ManualFrameEditor: View {
     }
 
     private var safeDuration: Double { max(0.01, duration) }
-    private var isApplyingSelection: Bool { isRefiningSelectedFrames || model.isApplyingFrameAdjustments }
+    private var isApplyingSelection: Bool { isRefiningSelectedFrames || model.isBusy }
 
     private var palette: StudioPalette { StudioPalette(isLight: configuration.colorScheme == .light) }
     private var editorCanvas: Color { palette.canvas }
@@ -122,6 +122,11 @@ struct ManualFrameEditor: View {
         .onDisappear(perform: cancelBackgroundWork)
         .onChange(of: model.gridSide) { _ in
             updateCandidateCapacityForCurrentGrid()
+        }
+        .onChange(of: model.isProcessing) { processing in
+            // A retry can keep this target alive. Settings edited while that
+            // batch was paused may require a larger pool once it finishes.
+            if !processing { updateCandidateCapacityForCurrentGrid() }
         }
         .onChange(of: playback.currentTime) { time in
             guard playback.isPlaying, !isScrubbingPreview else { return }

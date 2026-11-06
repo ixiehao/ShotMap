@@ -12,15 +12,45 @@ permissions:
 jobs:
   test:
     name: Swift tests
-    runs-on: macos-14
+    runs-on: macos-15
     steps:
       - name: Check out source
         uses: actions/checkout@v7
       - name: Validate public project materials
         run: python3 scripts/verify_public_project.py
-      - name: Build universal release executable
-        run: swift build -c release --arch arm64 --arch x86_64 -Xswiftc -strict-concurrency=complete -Xswiftc -warnings-as-errors
+      - name: Test native packaging safeguards
+        run: python3 scripts/test_native_packaging.py
       - name: Run tests
+        env:
+          SHOTMAP_FRAME_DIAGNOSTICS: '1'
+          SHOTMAP_FRAME_PERFORMANCE: '1'
+        run: swift test
+
+  native-release:
+    name: Release / ${{ matrix.arch }}
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: arm64
+            runner: macos-15
+          - arch: x86_64
+            runner: macos-26-intel
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v7
+      - name: Build native release executable
+        env:
+          TARGET_ARCH: ${{ matrix.arch }}
+          MACOSX_DEPLOYMENT_TARGET: '13.0'
+        run: |
+          swift build -c release --arch "$TARGET_ARCH" --scratch-path ".build/package-$TARGET_ARCH" \
+            -Xswiftc -strict-concurrency=complete -Xswiftc -warnings-as-errors
+          binary_dir="$(swift build -c release --arch "$TARGET_ARCH" --scratch-path ".build/package-$TARGET_ARCH" --show-bin-path)"
+          python3 scripts/verify_native_binary.py --arch "$TARGET_ARCH" "$binary_dir/ShotMap"
+      - name: Run native Intel tests
+        if: matrix.arch == 'x86_64'
         env:
           SHOTMAP_FRAME_DIAGNOSTICS: '1'
           SHOTMAP_FRAME_PERFORMANCE: '1'

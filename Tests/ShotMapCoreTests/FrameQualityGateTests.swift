@@ -1,5 +1,5 @@
 import CoreGraphics
-import CoreImage
+import Accelerate
 import CoreText
 import XCTest
 @testable import ShotMapApp
@@ -296,9 +296,35 @@ final class FrameQualityGateTests: XCTestCase {
     }
 
     private func blurredImage(_ image: CGImage, radius: Double) throws -> CGImage {
-        let source = CIImage(cgImage: image)
-        let filtered = source.clampedToExtent().applyingFilter("CIGaussianBlur", parameters: [kCIInputRadiusKey: radius])
-        let context = CIContext(options: [.useSoftwareRenderer: true])
-        return try XCTUnwrap(context.createCGImage(filtered, from: source.extent))
+        // The fixture must not depend on a Core Image/OpenCL device. Under
+        // Rosetta that renderer can return an all-black image without throwing,
+        // turning a blur assertion into a test of an unavailable graphics path.
+        // Three CPU box passes produce a broad, approximately Gaussian ramp.
+        let width = image.width, height = image.height, rowBytes = width * 4
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        let bitmapInfo = CGImageAlphaInfo.premultipliedLast.rawValue
+        let context = try XCTUnwrap(CGContext(data: nil, width: width, height: height,
+            bitsPerComponent: 8, bytesPerRow: rowBytes, space: colorSpace, bitmapInfo: bitmapInfo))
+        context.draw(image, in: CGRect(x: 0, y: 0, width: width, height: height))
+        let sourceData = try XCTUnwrap(context.data)
+        let scratch = UnsafeMutableRawPointer.allocate(byteCount: rowBytes * height, alignment: 64)
+        defer { scratch.deallocate() }
+        var source = vImage_Buffer(data: sourceData, height: vImagePixelCount(height),
+            width: vImagePixelCount(width), rowBytes: rowBytes)
+        var destination = vImage_Buffer(data: scratch, height: source.height, width: source.width, rowBytes: rowBytes)
+        let kernel = UInt32(max(3, Int((radius * 2).rounded()) | 1))
+        for _ in 0..<3 {
+            let status = vImageBoxConvolve_ARGB8888(&source, &destination, nil, 0, 0,
+                kernel, kernel, nil, vImage_Flags(kvImageEdgeExtend))
+            XCTAssertEqual(status, kvImageNoError)
+            guard status == kvImageNoError else { throw NSError(domain: "BlurFixture", code: Int(status)) }
+            swap(&source, &destination)
+        }
+        let data = Data(bytes: source.data, count: rowBytes * height)
+        let provider = try XCTUnwrap(CGDataProvider(data: data as CFData))
+        return try XCTUnwrap(CGImage(width: width, height: height, bitsPerComponent: 8,
+            bitsPerPixel: 32, bytesPerRow: rowBytes, space: colorSpace,
+            bitmapInfo: CGBitmapInfo(rawValue: bitmapInfo), provider: provider,
+            decode: nil, shouldInterpolate: false, intent: .defaultIntent))
     }
 }

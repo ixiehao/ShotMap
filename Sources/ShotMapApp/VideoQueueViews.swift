@@ -103,6 +103,7 @@ private struct QueueVideoList: View {
                 ForEach(IndexedVideoJobs(jobs: jobs)) { entry in
                     QueueVideoRow(
                         index: entry.index + 1,
+                        numberWidth: max(26, CGFloat(String(jobs.count).count) * 7.5 + 10),
                         job: entry.job,
                         language: language,
                         isLightAppearance: isLightAppearance
@@ -136,19 +137,22 @@ struct IndexedVideoJobs: RandomAccessCollection {
 
 private struct QueueVideoRow: View {
     let index: Int
+    let numberWidth: CGFloat
     let job: VideoJob
     let language: AppLanguage
     let isLightAppearance: Bool
 
     var body: some View {
         HStack(alignment: .center, spacing: 8) {
-            Text("\(index)")
+            // Ordinals are identifiers, not locale-formatted quantities. Keep
+            // four-digit queues readable and align all filenames to one edge.
+            Text(verbatim: String(index))
                 .font(.system(size: index < 100 ? 15 : 12, weight: .semibold, design: .monospaced))
                 .monospacedDigit()
                 .lineLimit(1)
                 .minimumScaleFactor(0.7)
                 .foregroundStyle(StudioPalette(isLight: isLightAppearance).accent)
-                .frame(width: 26, height: 30)
+                .frame(width: numberWidth, height: 30)
                 .background(SelectionPalette.active.opacity(isLightAppearance ? 0.07 : 0.14),
                             in: RoundedRectangle(cornerRadius: 6, style: .continuous))
 

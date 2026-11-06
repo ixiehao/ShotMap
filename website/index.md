@@ -14,7 +14,7 @@ Turn each video into one clear storyboard.
 
 macOS 13+ · Apple Silicon & Intel · Free and open source
 
-Seven languages. One download.
+Seven languages built in.
 
 - English
 
@@ -104,7 +104,7 @@ No. Download the app and start making storyboards on your Mac.
 
 #### Which Macs are supported?
 
-ShotMap supports macOS 13 or later on Apple Silicon and Intel Macs.
+ShotMap supports macOS 13 or later. Choose the Apple Silicon (M-series) or Intel installer on the release page.
 
 #### Can I replace a frame myself?
 
@@ -120,6 +120,6 @@ READY TO FIND THAT CLIP?
 
 Get the latest international edition for your Mac. All seven languages are included.
 
-[Download v0.2.17](https://github.com/ixiehao/ShotMap/releases/latest) [View on GitHub](https://github.com/ixiehao/ShotMap)
+[Download v0.2.18](https://github.com/ixiehao/ShotMap/releases/latest) [View on GitHub](https://github.com/ixiehao/ShotMap)
 
 © 2026 ixiehaoShotMap · MIT [GitHub](https://github.com/ixiehao/ShotMap) [Releases](https://github.com/ixiehao/ShotMap/releases/latest) [Feedback](https://github.com/ixiehao/ShotMap/issues/new/choose)

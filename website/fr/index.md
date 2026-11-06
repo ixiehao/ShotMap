@@ -14,7 +14,7 @@ Réunissez les moments d’une vidéo sur une seule planche d’images.
 
 macOS 13 ou ultérieur · Apple Silicon et Intel · Gratuit et open source
 
-Un téléchargement, sept langues.
+Sept langues intégrées.
 
 - English
 
@@ -104,7 +104,7 @@ Non. Téléchargez l’application et créez vos premières planches sur votre M
 
 #### Quels Mac sont compatibles ?
 
-ShotMap fonctionne sous macOS 13 ou ultérieur, sur les Mac Apple Silicon et Intel.
+ShotMap nécessite macOS 13 ou ultérieur. Choisissez le fichier Apple Silicon (série M) ou Intel sur la page de téléchargement.
 
 #### Puis-je remplacer une image moi-même ?
 
@@ -120,6 +120,6 @@ PRÊT À RETROUVER VOS VIDÉOS ?
 
 Téléchargez la dernière version internationale pour Mac. Les sept langues sont incluses.
 
-[Télécharger v0.2.17](https://github.com/ixiehao/ShotMap/releases/latest) [Voir sur GitHub](https://github.com/ixiehao/ShotMap)
+[Télécharger v0.2.18](https://github.com/ixiehao/ShotMap/releases/latest) [Voir sur GitHub](https://github.com/ixiehao/ShotMap)
 
 © 2026 ixiehaoShotMap · MIT [GitHub](https://github.com/ixiehao/ShotMap) [Versions](https://github.com/ixiehao/ShotMap/releases/latest) [Vos retours](https://github.com/ixiehao/ShotMap/issues/new/choose)

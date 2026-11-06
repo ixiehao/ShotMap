@@ -3,6 +3,34 @@
 All notable user-facing changes are recorded here. Stable releases remain
 available on the [GitHub Releases page](https://github.com/ixiehao/ShotMap/releases).
 
+## v0.2.18 — 2026-11-06
+
+### English
+
+- Separate installers for Apple Silicon and Intel.
+- Improved batch processing, frame selection, and saving.
+- Fixed queue numbering and window size after clearing the queue.
+
+### 中文
+
+- 分别提供 Apple Silicon 和 Intel 安装包。
+- 提升批量处理、选帧与保存的稳定性。
+- 修复列表序号显示及清空后窗口尺寸恢复问题。
+
+### 日本語
+
+- Apple Silicon／Intel 別のインストーラを提供。
+- 一括処理、コマ選択、保存の安定性を改善。
+- キューの連番表示と、クリア後のウインドウサイズを修正。
+
+### 한국어
+
+- Apple Silicon과 Intel용 설치 파일을 각각 제공합니다.
+- 일괄 처리, 프레임 선택과 저장의 안정성을 개선했습니다.
+- 목록 번호 표시와 목록을 비운 뒤 창 크기 복원 문제를 수정했습니다.
+
+macOS 13+ · Apple Silicon / Intel · 7 languages
+
 ## v0.2.17 — 2026-11-01
 
 ### English

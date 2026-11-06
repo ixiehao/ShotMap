@@ -66,6 +66,16 @@ struct ManualFrameEditorWindowPresenter: NSViewRepresentable {
                 releaseEditorWindow()
                 return
             }
+            guard model.completedPreviews.contains(where: { $0.id == requestValue.previewID }) else {
+                // Queue clearing or a new generation invalidates the target in
+                // this independent window. Release its decoders immediately;
+                // defer the binding write until after representable updates.
+                releaseEditorWindow()
+                Task { @MainActor [weak self] in
+                    self?.dismissRequest(ifMatching: requestValue.id)
+                }
+                return
+            }
             guard currentRequestID != requestValue.id || editorWindow == nil else {
                 editorWindow?.appearance = Self.appKitAppearance(for: colorScheme)
                 editorWindow?.title = requestValue.sourceURL.lastPathComponent
@@ -125,8 +135,17 @@ struct ManualFrameEditorWindowPresenter: NSViewRepresentable {
                     configuration: configuration,
                     onClose: { [weak self] in self?.closeEditor() }
                 ) { [weak self] frames, settings in
+                    // Refinement can finish after a native close/replacement
+                    // or a main-window operation. Never apply a stale target or
+                    // dismiss the replacement window on an old completion.
+                    guard let self, self.currentRequestID == requestValue.id else { return }
+                    guard model.completedPreviews.contains(where: { $0.id == requestValue.previewID }) else {
+                        self.closeEditor()
+                        return
+                    }
+                    guard !model.isBusy else { return }
                     onApply(requestValue, frames, settings)
-                    self?.closeEditor()
+                    self.closeEditor()
                 }
             )
             editorWindow = window

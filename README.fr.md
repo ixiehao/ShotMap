@@ -21,7 +21,7 @@ Un dossier peut contenir des années de souvenirs : famille, voyages, petits mom
 
 Commencez par **Sélection auto**, puis remplacez les images de votre choix dans **Choisir les images**. ShotMap est une application macOS native et open source. Le traitement et l’export se font sur votre Mac, sans compte ni envoi de vidéos en ligne.
 
-> **Pour commencer :** [Télécharger la dernière version internationale](https://github.com/ixiehao/ShotMap/releases/latest) · DMG universel · macOS 13 ou ultérieur · Apple Silicon et Intel
+> **Pour commencer :** [Télécharger la dernière version internationale](https://github.com/ixiehao/ShotMap/releases/latest) · DMG Apple Silicon / Intel · macOS 13 ou ultérieur · Apple Silicon et Intel
 
 > **Vidéo de démonstration :** *Tears of Steel* (2012) © Blender Foundation / Blender Institute, sous licence [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/). Les captures et l’animation utilisent cette vidéo.
 
@@ -54,7 +54,7 @@ Cette démonstration montre le passage d’une planche terminée au choix manuel
 
 ## Télécharger et installer
 
-Ouvrez la page de la [dernière version internationale](https://github.com/ixiehao/ShotMap/releases/latest), téléchargez le `.dmg` universel et glissez **ShotMap.app** dans **Applications**. Le même fichier d’installation comprend les sept langues et fonctionne sur les Mac Apple Silicon et Intel.
+Ouvrez la [dernière version](https://github.com/ixiehao/ShotMap/releases/latest) et choisissez **arm64** pour un Mac Apple Silicon (série M) ou **x86_64** pour un Mac Intel. Ouvrez le `.dmg` et glissez **ShotMap.app** dans **Applications**. Les deux versions comprennent les sept langues.
 
 La page de version fournit une somme de contrôle SHA-256 pour vérifier le téléchargement. ShotMap n’est pas encore notarié par Apple. Si macOS demande de confirmer le développeur, faites un clic avec la touche Control enfoncée sur l’application dans Applications, choisissez **Ouvrir**, puis confirmez avec **Ouvrir**. Il n’est pas nécessaire de réduire les protections de sécurité du système.
 

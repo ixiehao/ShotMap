@@ -14,7 +14,7 @@ Reúne los momentos de cada vídeo en un mosaico de imágenes.
 
 macOS 13 o posterior · Apple Silicon e Intel · Gratis y de código abierto
 
-Una descarga, siete idiomas.
+Siete idiomas incluidos.
 
 - English
 
@@ -104,7 +104,7 @@ No. Descarga la app y empieza a crear mosaicos en tu Mac.
 
 #### ¿Qué Mac son compatibles?
 
-ShotMap funciona en Mac con Apple Silicon o Intel y macOS 13 o posterior.
+ShotMap requiere macOS 13 o posterior. Elige el instalador para Apple Silicon (serie M) o Intel en la página de la versión.
 
 #### ¿Puedo sustituir un fotograma a mano?
 
@@ -120,6 +120,6 @@ Por defecto, en la carpeta del vídeo original. Usa Guardar como para elegir otr
 
 Descarga la última versión internacional para Mac. Incluye los siete idiomas.
 
-[Descargar v0.2.17](https://github.com/ixiehao/ShotMap/releases/latest) [Ver en GitHub](https://github.com/ixiehao/ShotMap)
+[Descargar v0.2.18](https://github.com/ixiehao/ShotMap/releases/latest) [Ver en GitHub](https://github.com/ixiehao/ShotMap)
 
 © 2026 ixiehaoShotMap · MIT [GitHub](https://github.com/ixiehao/ShotMap) [Versiones](https://github.com/ixiehao/ShotMap/releases/latest) [Comentarios](https://github.com/ixiehao/ShotMap/issues/new/choose)

@@ -9,7 +9,7 @@
 
 [English](README.md) · [简体中文](README.zh-CN.md) · [Français](README.fr.md) · [Русский](README.ru.md) · [Español](README.es.md) · [日本語](README.ja.md) · [한국어](README.ko.md)
 
-**App interface in 7 languages:** English · 简体中文 · Français · Русский · Español · 日本語 · 한국어. All included in one download.
+**App interface in 7 languages:** English · 简体中文 · Français · Русский · Español · 日本語 · 한국어. Included in both installers.
 
 ![ShotMap's real English workspace creating a storyboard from Tears of Steel](website/assets/workspace-en.webp?v=20261101-release017)
 
@@ -19,7 +19,7 @@ One folder can hold years of family clips, trips, and everyday moments—but a f
 
 Start with Smart Select, then replace any frame in the Manual Frame Editor. ShotMap is a native, open-source macOS app: video processing and image export stay on your Mac; no account or video upload is needed.
 
-> **Start here:** [Download the latest international edition](https://github.com/ixiehao/ShotMap/releases/latest) · Universal DMG · macOS 13 or later · Apple Silicon and Intel
+> **Start here:** [Download the latest international edition](https://github.com/ixiehao/ShotMap/releases/latest) · Apple Silicon / Intel DMGs · macOS 13 or later · Apple Silicon and Intel
 
 > **Demo footage:** *Tears of Steel* (2012) © Blender Foundation / Blender Institute, licensed under [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/). The screenshots and animation below use this footage.
 
@@ -52,7 +52,7 @@ This short demo shows the real app moving from a completed storyboard to the Man
 
 ## Download and install
 
-Open the [latest international release](https://github.com/ixiehao/ShotMap/releases/latest), download the universal `.dmg`, then drag **ShotMap.app** to **Applications**. The same installer includes all seven languages and runs on Apple Silicon and Intel Macs.
+Open the [latest release](https://github.com/ixiehao/ShotMap/releases/latest) and choose **arm64** for Apple Silicon (M-series) or **x86_64** for Intel. Open the `.dmg` and drag **ShotMap.app** to **Applications**. Both installers include all seven languages.
 
 The release page includes a SHA-256 checksum for people who want to verify their download. ShotMap is not Apple-notarized yet. If macOS asks you to confirm the developer, Control-click the app in Applications, choose **Open**, then choose **Open** again. You do not need to lower system-wide security settings.
 
