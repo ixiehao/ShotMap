@@ -13,11 +13,11 @@
 
 ![ShotMap's real English workspace creating a storyboard from Tears of Steel](website/assets/workspace-en.webp?v=20261101-release017)
 
-## Your videos, easier to find.
+## Turn each video into one storyboard.
 
-One folder can hold years of family clips, trips, and everyday moments—but a filename or single thumbnail rarely tells you which video to open. **ShotMap** puts moments from a video into one storyboard image, so you can scan the scenes and find the clip you remember without playing files one by one.
+**ShotMap** is a free, open-source Mac app that brings scenes from a video together in one storyboard image. Browse family recordings, travel clips, or editing footage without opening every file and scrubbing through it.
 
-Start with Smart Select, then replace any frame in the Manual Frame Editor. ShotMap is a native, open-source macOS app: video processing and image export stay on your Mac; no account or video upload is needed.
+Start with automatic frame selection, then replace or fine-tune any frame on the timeline. Add several videos to process in a batch and export PNG or JPG images beside the originals. Processing stays on your Mac, with no account or video upload.
 
 > **Start here:** [Download the latest international edition](https://github.com/ixiehao/ShotMap/releases/latest) · Apple Silicon / Intel DMGs · macOS 13 or later · Apple Silicon and Intel
 
@@ -37,12 +37,14 @@ Start with Smart Select, then replace any frame in the Manual Frame Editor. Shot
 
 ## Choose the frames and layout that work for you
 
-- Aims to select clear, varied frames and reduce black, blurry, and near-duplicate shots.
-- Lets you refine a result in the Manual Frame Editor: player, visual timeline, frame steps, and candidate gallery are all in one place.
-- Imports videos in batches, lets you pause after the current video and resume later, and fills the preview as frames are ready.
-- Offers 3 × 3 through 8 × 8 grids, aspect ratio, background colour, image width, optional timecodes, and file titles.
-- Supports MP4, MOV, MPEG, and other formats supported by macOS.
-- Switch between seven interface languages without restarting. Choose Light, Dark, or System appearance.
+- **Automatic selection to get you started:** prioritises clear, varied frames while aiming to reduce black, blurry, and near-duplicate shots.
+- **The final choice is yours:** use the player, timeline, and frame steps to find a moment. Smart Select keeps your selected frames and fills the remaining slots.
+- **Organise several videos at once:** batch processing, progress previews, and a pause after the current video help you work through a collection.
+- **Images you can open and share:** export PNG or JPG, with optional filenames and timecodes to help you return to the source.
+- **A layout that fits your footage:** choose 3 × 3 to 8 × 8 grids, aspect ratio, image width, and background colour.
+- **Made for Mac:** a native app with seven interface languages and Light, Dark, or System appearance.
+
+Supports MP4, MOV, MPEG, and other video formats supported by macOS.
 
 ### See the real workflow
 

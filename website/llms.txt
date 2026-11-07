@@ -1,6 +1,6 @@
 # ShotMap
 
-> Turn videos into storyboards on your Mac. ShotMap supports seven interface languages, manual frame selection, and private local export. Free and open source.
+> Turn videos into storyboard images on your Mac. Automatic frame selection, precise manual control, batch processing, and local PNG/JPG export. Free and open source.
 
 ## Pages
 

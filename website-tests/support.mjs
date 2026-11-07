@@ -101,7 +101,27 @@ export function measureLayout(options) {
     const actual = getComputedStyle(element).gridTemplateColumns.split(' ').length;
     if (actual !== expected) violations.push({ element: grid.selector, reason: 'wrong responsive column count', expected, actual });
   }
-  if (document.documentElement.scrollWidth > innerWidth + 1) violations.push({ reason: 'page overflows horizontally' });
+  if (document.documentElement.scrollWidth > innerWidth + 1) {
+    const overflowingElements = [...document.body.querySelectorAll('*')].filter(visible).map(element => {
+      const rect = element.getBoundingClientRect();
+      return { element: label(element), left: rect.left, right: rect.right, width: element.clientWidth, content: element.scrollWidth };
+    }).filter(item => item.right > innerWidth + 1 || item.left < -1 || item.content > item.width + 1).slice(0, 12);
+    const overflowingText = [];
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    while (walker.nextNode() && overflowingText.length < 8) {
+      const node = walker.currentNode;
+      if (!node.textContent.trim() || !visible(node.parentElement)) continue;
+      const range = document.createRange();
+      range.selectNodeContents(node);
+      for (const rect of range.getClientRects()) {
+        if (rect.right > innerWidth + 1) {
+          overflowingText.push({ element: label(node.parentElement), text: node.textContent.trim().slice(0, 80), right: rect.right });
+          break;
+        }
+      }
+    }
+    violations.push({ reason: 'page overflows horizontally', viewport: innerWidth, documentWidth: document.documentElement.scrollWidth, overflowingElements, overflowingText });
+  }
   return { language: document.documentElement.lang, viewport: [innerWidth, innerHeight], violations };
 }
 

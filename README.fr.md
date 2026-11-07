@@ -15,11 +15,11 @@
 
 *L’exemple ci-dessus montre l’interface en anglais. L’application est aussi disponible en français.*
 
-## Vos vidéos, faciles à retrouver.
+## Les scènes de vos vidéos, réunies en une image.
 
-Un dossier peut contenir des années de souvenirs : famille, voyages, petits moments du quotidien. Mais un nom de fichier ou une miniature suffit rarement à retrouver la bonne vidéo. **ShotMap** réunit des moments de chaque vidéo sur une planche d’images, pour repérer les scènes sans ouvrir tous les fichiers un à un.
+**ShotMap** est une application Mac gratuite et open source qui rassemble les scènes d’une vidéo sur une planche d’images. Parcourez vos souvenirs de famille, vos voyages ou vos rushes sans ouvrir chaque fichier ni parcourir sa barre de lecture.
 
-Commencez par **Sélection auto**, puis remplacez les images de votre choix dans **Choisir les images**. ShotMap est une application macOS native et open source. Le traitement et l’export se font sur votre Mac, sans compte ni envoi de vidéos en ligne.
+Commencez par la sélection automatique, puis remplacez ou ajustez chaque image dans la chronologie. Ajoutez plusieurs vidéos pour les traiter par lot et exportez des PNG ou JPG dans le dossier des originaux. Tout se fait sur votre Mac, sans compte ni envoi de vidéos en ligne.
 
 > **Pour commencer :** [Télécharger la dernière version internationale](https://github.com/ixiehao/ShotMap/releases/latest) · DMG Apple Silicon / Intel · macOS 13 ou ultérieur · Apple Silicon et Intel
 
@@ -39,12 +39,14 @@ Commencez par **Sélection auto**, puis remplacez les images de votre choix dans
 
 ## Choisissez vos images et leur présentation
 
-- Privilégie autant que possible des images nettes et variées, en limitant les écrans noirs, le flou et les images presque identiques.
-- Réunit lecteur, chronologie, déplacement image par image et galerie dans **Choisir les images**.
-- Traite plusieurs vidéos à la suite, permet une pause après la vidéo en cours puis une reprise, et remplit l’aperçu au fur et à mesure.
-- Propose des grilles de 3 × 3 à 8 × 8, les proportions, la couleur du fond, la largeur de l’image, les timecodes et le nom du fichier.
-- Prend en charge MP4, MOV, MPEG et les autres formats vidéo compatibles avec macOS.
-- Permet de changer de langue sans redémarrer, parmi sept langues. L’apparence peut être claire, sombre ou suivre le système.
+- **Une première sélection automatique :** privilégie les images nettes et variées, en cherchant à limiter les écrans noirs, le flou et les images presque identiques.
+- **Vous gardez le dernier mot :** utilisez le lecteur, la chronologie et le déplacement image par image. La sélection automatique conserve vos choix et complète les emplacements restants.
+- **Plusieurs vidéos à la suite :** traitez un lot, voyez l’aperçu se remplir et faites une pause après la vidéo en cours.
+- **Des images faciles à consulter et à partager :** exportez en PNG ou JPG, avec le nom du fichier et les timecodes si vous souhaitez retrouver le passage dans la vidéo.
+- **Une présentation adaptée :** choisissez une grille de 3 × 3 à 8 × 8, les proportions, la largeur de l’image et la couleur du fond.
+- **Conçu pour Mac :** une application native en sept langues, avec une apparence claire, sombre ou suivant le système.
+
+Prend en charge MP4, MOV, MPEG et les autres formats vidéo compatibles avec macOS.
 
 ### Voir l’application en action
 

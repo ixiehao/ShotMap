@@ -1,14 +1,14 @@
-# ShotMap — Video Storyboard Maker for Mac
+# ShotMap — Video Storyboards for Mac
 
-> Turn videos into storyboards on your Mac. ShotMap supports seven interface languages, manual frame selection, and private local export. Free and open source.
+> Turn videos into storyboard images on your Mac. Automatic frame selection, precise manual control, batch processing, and local PNG/JPG export. Free and open source.
 
 <https://ixiehao.github.io/ShotMap/>
 
 VIDEO STORYBOARDS FOR MAC
 
-## Your videos, easier to find.
+## Turn videos into storyboards.
 
-Turn each video into one clear storyboard.
+Automatic frame selection, precise manual control, and batch processing. An easier way to browse family recordings, travel clips, and editing footage.
 
 [Download for macOS](https://github.com/ixiehao/ShotMap/releases/latest) [View on GitHub](https://github.com/ixiehao/ShotMap)
 
@@ -38,15 +38,15 @@ Demo images use [Tears of Steel](https://mango.blender.org/) (2012) by Blender F
 
 ShotMap workspace
 
-FIND THE CLIP YOU REMEMBER
+MAKE YOUR VIDEO COLLECTION EASIER TO BROWSE
 
-### Find the right video without playing them all.
+### Browse the scenes. Find the video you want.
 
 1. #### Add your videos Drag in one clip or several at once.
 
-2. #### Review the storyboard ShotMap picks the frames. Replace any you want.
+2. #### Review the storyboard Start with automatic selection, then replace or fine-tune any frame.
 
-3. #### Export your image Save as PNG or JPG, with timecodes if you want them.
+3. #### Export your image Export a PNG or JPG beside the source video.
 
 ![A ShotMap storyboard generated from Tears of Steel](https://ixiehao.github.io/ShotMap/assets/tears-of-steel-storyboard.webp?v=20261101-release017)
 
@@ -54,9 +54,9 @@ See the scenes at a glance
 
 YOU ARE IN CONTROL
 
-### Looking for a different moment? Choose it yourself.
+### Start with automatic picks. Keep the final say.
 
-Smart Select gives you a starting point. Use the timeline, frame-by-frame buttons, and timecode in the Manual Frame Editor to find and replace any frame.
+Use the timeline and frame steps to find the moment you want. Smart Select keeps the frames you have selected and fills the remaining slots.
 
 - See candidates on a video timeline
 
@@ -84,9 +84,9 @@ Choose to show the filename and timecodes so you can quickly find the right vide
 
 Use the video's aspect ratio and choose a background color.
 
-#### Batch processing
+#### Organise videos in batches
 
-Add several videos, keep track of progress, and review finished storyboards together.
+Add several videos at once. Watch previews fill as frames are ready, or pause after the current video.
 
 YOUR VIDEOS STAY YOURS
 
@@ -116,9 +116,9 @@ By default, beside the source video. Use Save As to choose another location.
 
 READY TO FIND THAT CLIP?
 
-### Find the video you’re looking for.
+### Your videos, easier to browse.
 
-Get the latest international edition for your Mac. All seven languages are included.
+Make your first storyboard on your Mac. Free, open source, and available in seven languages.
 
 [Download v0.2.18](https://github.com/ixiehao/ShotMap/releases/latest) [View on GitHub](https://github.com/ixiehao/ShotMap)
 

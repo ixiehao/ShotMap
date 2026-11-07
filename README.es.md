@@ -15,11 +15,11 @@
 
 *El ejemplo muestra la interfaz en inglés. La app también está disponible en español.*
 
-## Tus vídeos, más fáciles de encontrar.
+## Las escenas de tu vídeo, en una sola imagen.
 
-Una carpeta puede guardar años de vídeos familiares, viajes y momentos cotidianos. Pero un nombre de archivo o una miniatura rara vez basta para encontrar el vídeo que buscas. **ShotMap** reúne momentos de cada vídeo en un mosaico de imágenes para que puedas reconocer las escenas sin reproducir los archivos uno por uno.
+**ShotMap** es una app gratuita y de código abierto para Mac que reúne las escenas de un vídeo en un mosaico de imágenes. Revisa grabaciones familiares, viajes o material de edición sin abrir y recorrer cada archivo uno por uno.
 
-Empieza con **Selección auto** y sustituye los fotogramas que quieras en **Elegir fotogramas**. ShotMap es una app nativa para macOS y de código abierto. El procesamiento y la exportación se realizan en tu Mac, sin cuenta ni subida de vídeos a internet.
+Empieza con la selección automática y después sustituye o ajusta cualquier fotograma en la línea de tiempo. Añade varios vídeos para procesarlos por lotes y exporta imágenes PNG o JPG junto a los originales. Todo se procesa en tu Mac, sin cuenta ni subida de vídeos.
 
 > **Empieza aquí:** [Descargar la última versión internacional](https://github.com/ixiehao/ShotMap/releases/latest) · DMG para Apple Silicon / Intel · macOS 13 o posterior · Apple Silicon e Intel
 
@@ -39,12 +39,14 @@ Empieza con **Selección auto** y sustituye los fotogramas que quieras en **Eleg
 
 ## Elige las imágenes y su presentación
 
-- Intenta priorizar imágenes nítidas y variadas, reduciendo los fotogramas negros, borrosos o casi idénticos.
-- Reúne reproductor, línea de tiempo, avance por fotogramas y galería en **Elegir fotogramas**.
-- Procesa varios vídeos seguidos, permite pausar tras el vídeo actual y reanudar después, y completa la vista previa a medida que obtiene las imágenes.
-- Ofrece cuadrículas de 3 × 3 a 8 × 8, proporción, color de fondo, anchura de imagen, marcas de tiempo y nombre del archivo.
-- Admite MP4, MOV, MPEG y otros formatos compatibles con macOS.
-- Permite cambiar entre siete idiomas sin reiniciar. Puedes usar la apariencia clara, oscura o del sistema.
+- **Una primera selección automática:** da prioridad a imágenes nítidas y variadas, intentando reducir los fotogramas negros, borrosos o casi repetidos.
+- **Tú decides qué conservar:** usa el reproductor, la línea de tiempo y el avance fotograma a fotograma. La selección automática conserva tus elecciones y completa los espacios restantes.
+- **Varios vídeos de una vez:** procesa un lote, ve cómo se completa la vista previa y pausa al terminar el vídeo actual.
+- **Imágenes fáciles de ver y compartir:** exporta PNG o JPG, con nombres de archivo y códigos de tiempo opcionales para volver al vídeo original.
+- **Un diseño a tu medida:** elige cuadrículas de 3 × 3 a 8 × 8, proporciones, anchura de imagen y color de fondo.
+- **Hecho para Mac:** una app nativa con siete idiomas y apariencia clara, oscura o del sistema.
+
+Compatible con MP4, MOV, MPEG y otros formatos de vídeo admitidos por macOS.
 
 ### Mira cómo funciona
 

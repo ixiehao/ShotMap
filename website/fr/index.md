@@ -1,14 +1,14 @@
 # ShotMap — Vos vidéos en planches d’images sur Mac
 
-> Retrouvez vos vidéos grâce à une planche d’images. ShotMap propose 7 langues, le choix manuel des images et l’export sur votre Mac. Gratuit et open source.
+> Rassemblez les scènes de vos vidéos en une image sur Mac. Sélection automatique, réglage image par image, traitement par lot et export PNG/JPG local. Gratuit et open source.
 
 <https://ixiehao.github.io/ShotMap/fr/>
 
 VOS VIDÉOS EN IMAGES SUR MAC
 
-## Vos vidéos, faciles à retrouver.
+## Les scènes de vos vidéos, réunies en une image.
 
-Réunissez les moments d’une vidéo sur une seule planche d’images.
+Sélection automatique, réglage image par image et traitement par lot. Parcourez plus facilement vos souvenirs de famille, vos voyages et vos rushes.
 
 [Télécharger pour macOS](https://github.com/ixiehao/ShotMap/releases/latest) [Voir sur GitHub](https://github.com/ixiehao/ShotMap)
 
@@ -38,15 +38,15 @@ Les images de démonstration proviennent de [Tears of Steel](https://mango.blend
 
 Espace de travail ShotMap
 
-RETROUVEZ CE MOMENT
+VOTRE COLLECTION PLUS FACILE À PARCOURIR
 
-### Trouvez la bonne vidéo sans toutes les regarder.
+### Parcourez les scènes. Retrouvez la bonne vidéo.
 
 1. #### Ajoutez vos vidéos Glissez une vidéo ou plusieurs à la fois.
 
-2. #### Vérifiez les images ShotMap propose une sélection. Remplacez les images qui ne vous conviennent pas.
+2. #### Vérifiez les images Commencez par la sélection automatique, puis remplacez ou ajustez chaque image.
 
-3. #### Exportez la planche Enregistrez en PNG ou JPG, avec les timecodes si vous le souhaitez.
+3. #### Exportez la planche Exportez un PNG ou un JPG dans le dossier de la vidéo.
 
 ![Planche d’images créée par ShotMap à partir de Tears of Steel](https://ixiehao.github.io/ShotMap/assets/tears-of-steel-storyboard.webp?v=20261101-release017)
 
@@ -54,9 +54,9 @@ Les scènes en un coup d’œil
 
 À VOUS DE CHOISIR
 
-### Un autre moment en tête ? Choisissez-le.
+### La sélection est automatique. Le choix reste le vôtre.
 
-Sélection auto vous propose les premières images. Ouvrez Choisir les images, puis utilisez la chronologie, les boutons image par image ou le timecode pour remplacer une image.
+Trouvez le bon moment avec la chronologie et le déplacement image par image. La sélection automatique conserve vos choix et complète les emplacements restants.
 
 - Repérez les images sur la chronologie
 
@@ -84,9 +84,9 @@ Affichez le nom du fichier et les timecodes pour retrouver plus vite la bonne vi
 
 Conservez les proportions de la vidéo et choisissez la couleur du fond.
 
-#### Traitement par lot
+#### Plusieurs vidéos à la suite
 
-Ajoutez plusieurs vidéos, suivez leur progression et consultez les planches terminées au même endroit.
+Ajoutez plusieurs vidéos, voyez l’aperçu se remplir et faites une pause après la vidéo en cours.
 
 VOS VIDÉOS RESTENT PRIVÉES
 
@@ -116,9 +116,9 @@ Par défaut, dans le dossier de la vidéo d’origine. Le bouton Enregistrer per
 
 PRÊT À RETROUVER VOS VIDÉOS ?
 
-### Retrouvez la vidéo que vous cherchez.
+### Vos vidéos, plus faciles à parcourir.
 
-Téléchargez la dernière version internationale pour Mac. Les sept langues sont incluses.
+Créez votre première planche sur Mac. Gratuit, open source et disponible en sept langues.
 
 [Télécharger v0.2.18](https://github.com/ixiehao/ShotMap/releases/latest) [Voir sur GitHub](https://github.com/ixiehao/ShotMap)
 
