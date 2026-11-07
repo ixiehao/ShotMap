@@ -114,6 +114,7 @@ h1 { max-width: 550px; margin-bottom: 23px; font-size: clamp(46px, 5vw, 64px); l
 .overview-shot { box-shadow: 0 17px 38px rgba(34, 57, 86, .1); }
 
 .precision { display: grid; grid-template-columns: .82fr 1.18fr; align-items: center; gap: 72px; border-top: 1px solid var(--line); }
+.precision-copy { min-width: 0; }
 .precision-copy > p:not(.eyebrow) { max-width: 470px; margin: 23px 0; color: var(--muted); font-size: 16px; }
 .check-list { display: grid; gap: 10px; margin: 0; padding: 0; color: var(--ink); font-size: 14px; font-weight: 590; list-style: none; }
 .check-list li { display: flex; align-items: flex-start; gap: 10px; }
