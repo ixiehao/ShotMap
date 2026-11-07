@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="把视频编成一张分镜图，找回想看的片段。ShotMap 支持英、中、法、俄、西、日、韩七种界面语言，可手动选帧，在 Mac 本机导出，免费开源。" />
+    <meta name="description" content="把视频编成一张分镜图，方便浏览、查找和整理。ShotMap 支持自动选帧、手动精调、批量生成分镜图，在 Mac 本机导出 PNG/JPG，免费开源，内置七种语言。" />
     <meta name="author" content="ixiehao" />
     <meta name="robots" content="index,follow,max-image-preview:large" />
     <meta name="theme-color" content="#f7f9fc" />
@@ -26,8 +26,8 @@
     <meta property="og:locale:alternate" content="es_ES" />
     <meta property="og:locale:alternate" content="ja_JP" />
     <meta property="og:locale:alternate" content="ko_KR" />
-    <meta property="og:title" content="ShotMap — 你的视频，不再难找。" />
-    <meta property="og:description" content="把视频，编成一张分镜图。一个免费 Mac 应用，支持七种界面语言。" />
+    <meta property="og:title" content="ShotMap — 把视频，编成一张分镜图。" />
+    <meta property="og:description" content="自动选帧，手动精调，批量整理视频。导出方便查看和分享的 PNG 或 JPG，视频始终留在你的 Mac 上。" />
     <meta property="og:image" content="https://ixiehao.github.io/ShotMap/assets/social-preview.jpg?v=20261101-release017" />
     <meta property="og:image:secure_url" content="https://ixiehao.github.io/ShotMap/assets/social-preview.jpg?v=20261101-release017" />
     <meta property="og:image:type" content="image/jpeg" />
@@ -35,8 +35,8 @@
     <meta property="og:image:height" content="640" />
     <meta id="og-image-alt" property="og:image:alt" content="ShotMap 新标志与《Tears of Steel》真实分镜预览" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="ShotMap — 你的视频，不再难找。" />
-    <meta name="twitter:description" content="把视频，编成一张分镜图。一个免费 Mac 应用，支持七种界面语言。" />
+    <meta name="twitter:title" content="ShotMap — 把视频，编成一张分镜图。" />
+    <meta name="twitter:description" content="自动选帧，手动精调，批量整理视频。导出方便查看和分享的 PNG 或 JPG，视频始终留在你的 Mac 上。" />
     <meta name="twitter:image" content="https://ixiehao.github.io/ShotMap/assets/social-preview.jpg?v=20261101-release017" />
     <meta id="twitter-image-alt" name="twitter:image:alt" content="ShotMap 新标志与《Tears of Steel》真实分镜预览" />
     <link rel="icon" type="image/svg+xml" href="../favicon.svg?v=20261101-release017" />
@@ -45,12 +45,12 @@
     <link rel="apple-touch-icon" href="../assets/app-icon.png?v=20261101-release017" />
     <link rel="stylesheet" href="../styles.css?v=dab22b3ab314" />
     <script id="software-schema" type="application/ld+json">
-      {"@context":"https://schema.org","@type":"SoftwareApplication","@id":"https://ixiehao.github.io/ShotMap/#software","name":"ShotMap","softwareVersion":"0.2.18","applicationCategory":"MultimediaApplication","operatingSystem":"macOS 13 or later","url":"https://ixiehao.github.io/ShotMap/zh/","description":"把视频编成一张分镜图，找回想看的片段。ShotMap 支持英、中、法、俄、西、日、韩七种界面语言，可手动选帧，在 Mac 本机导出，免费开源。","downloadUrl":"https://github.com/ixiehao/ShotMap/releases/latest","screenshot":"https://ixiehao.github.io/ShotMap/assets/workspace-zh.webp?v=20261101-release017","featureList":"七种界面语言；视频分镜图；手动选择画面；多视频队列；PNG 和 JPG 导出；本机处理","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Person","name":"ixiehao","url":"https://github.com/ixiehao"},"codeRepository":"https://github.com/ixiehao/ShotMap","license":"https://opensource.org/license/mit","inLanguage":["en","zh-Hans","fr","ru","es","ja","ko"]}
+      {"@context":"https://schema.org","@type":"SoftwareApplication","@id":"https://ixiehao.github.io/ShotMap/#software","name":"ShotMap","softwareVersion":"0.2.18","applicationCategory":"MultimediaApplication","operatingSystem":"macOS 13 or later","url":"https://ixiehao.github.io/ShotMap/zh/","description":"把视频编成一张分镜图，方便浏览、查找和整理。ShotMap 支持自动选帧、手动精调、批量生成分镜图，在 Mac 本机导出 PNG/JPG，免费开源，内置七种语言。","downloadUrl":"https://github.com/ixiehao/ShotMap/releases/latest","screenshot":"https://ixiehao.github.io/ShotMap/assets/workspace-zh.webp?v=20261101-release017","featureList":"批量生成视频分镜图；自动选帧；手动逐帧调整；PNG 和 JPG 导出；可选文件名与时间码；本机处理；七种界面语言","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Person","name":"ixiehao","url":"https://github.com/ixiehao"},"codeRepository":"https://github.com/ixiehao/ShotMap","license":"https://opensource.org/license/mit","inLanguage":["en","zh-Hans","fr","ru","es","ja","ko"]}
     </script>
     <script id="faq-schema" type="application/ld+json">
       {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"使用 ShotMap 需要注册账号吗？","acceptedAnswer":{"@type":"Answer","text":"不需要。下载应用后，就能在 Mac 上开始制作分镜图。"}},{"@type":"Question","name":"支持哪些 Mac？","acceptedAnswer":{"@type":"Answer","text":"支持 macOS 13 或更高版本。请在版本发布页选择 Apple Silicon（M 系列）或 Intel 安装包。"}},{"@type":"Question","name":"我可以自己替换某一帧吗？","acceptedAnswer":{"@type":"Answer","text":"可以。智能选帧只是起点；手动选择画面让你决定最终画面。"}},{"@type":"Question","name":"分镜图保存在哪里？","acceptedAnswer":{"@type":"Answer","text":"默认保存在原视频旁边。你也可以用“另存为”选择其他位置。"}}]}
     </script>
-    <title>ShotMap｜Mac 视频分镜图工具</title>
+    <title>ShotMap｜Mac 视频一键拼图工具</title>
     <!-- search-discovery:start -->
     <link rel="alternate" type="text/markdown" href="https://ixiehao.github.io/ShotMap/zh/index.md" />
     <link rel="describedby" type="text/plain" href="https://ixiehao.github.io/ShotMap/llms.txt" />
@@ -90,8 +90,8 @@
       <section class="hero shell" aria-labelledby="hero-title">
         <div class="hero-copy">
           <p class="eyebrow" data-i18n="heroEyebrow">Mac 视频一键拼图</p>
-          <h1 id="hero-title" data-i18n-html="heroTitle">你的视频，<br />不再难找。</h1>
-          <p class="hero-summary" data-i18n="heroSummary">把视频，编成一张分镜图。</p>
+          <h1 id="hero-title" data-i18n-html="heroTitle">把视频，<br />编成一张分镜图。</h1>
+          <p class="hero-summary" data-i18n="heroSummary">自动选帧，手动精调，批量生成。浏览家庭录像、旅行片段和剪辑素材，都更方便。</p>
           <div class="hero-actions">
             <a class="button" href="https://github.com/ixiehao/ShotMap/releases/latest"><span data-i18n="heroDownload">下载 macOS 版</span><svg class="link-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><use href="../assets/tabler-icons.svg?v=20261026-seven-locales#download"></use></svg></a>
             <a class="text-link" href="https://github.com/ixiehao/ShotMap"><span data-i18n="viewSource">在 GitHub 查看</span><svg class="link-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><use href="../assets/tabler-icons.svg?v=20261026-seven-locales#brand-github"></use></svg></a>
@@ -114,14 +114,14 @@
 
       <section id="how-it-works" class="section shell workflow" aria-labelledby="workflow-title">
         <div class="section-heading">
-          <p class="eyebrow" data-i18n="workflowEyebrow">找回记得的那个片段</p>
-          <h2 id="workflow-title" data-i18n="workflowTitle">不用挨个播放，先看画面总览。</h2>
+          <p class="eyebrow" data-i18n="workflowEyebrow">视频再多，也方便整理</p>
+          <h2 id="workflow-title" data-i18n="workflowTitle">先看分镜图，再找想看的视频。</h2>
         </div>
         <div class="workflow-layout">
           <ol class="steps">
             <li><h3 data-i18n="stepOneTitle">添加视频</h3><p data-i18n="stepOneText">拖入一部视频，也可以一次加入多部。</p></li>
-            <li><h3 data-i18n="stepTwoTitle">查看并微调</h3><p data-i18n="stepTwoText">ShotMap 会先挑选画面，不合适的帧可以手动替换。</p></li>
-            <li><h3 data-i18n="stepThreeTitle">导出分镜图</h3><p data-i18n="stepThreeText">保存为 PNG 或 JPG，需要时也可显示时间码。</p></li>
+            <li><h3 data-i18n="stepTwoTitle">查看并微调</h3><p data-i18n="stepTwoText">先自动选出一组画面，再按需替换、逐帧微调。</p></li>
+            <li><h3 data-i18n="stepThreeTitle">导出分镜图</h3><p data-i18n="stepThreeText">导出 PNG 或 JPG，默认保存在原视频旁。</p></li>
           </ol>
           <figure class="product-shot overview-shot">
             <img src="../assets/tears-of-steel-storyboard.webp?v=20261101-release017" width="1400" height="629" loading="lazy" decoding="async" alt="由 ShotMap 为《Tears of Steel》生成的视频分镜图" data-i18n-alt="overviewAlt" />
@@ -133,8 +133,8 @@
       <section class="section shell precision" aria-labelledby="precision-title">
         <div class="precision-copy">
           <p class="eyebrow" data-i18n="precisionEyebrow">画面由你决定</p>
-          <h2 id="precision-title" data-i18n="precisionTitle">想找别的瞬间？自己选一帧。</h2>
-          <p data-i18n="precisionText">智能选帧先给你一组候选。打开手动选择画面，用时间轴、逐帧按钮和时间码找到想要的画面，再替换即可。</p>
+          <h2 id="precision-title" data-i18n="precisionTitle">自动挑选，也能自己选。</h2>
+          <p data-i18n="precisionText">用时间轴和逐帧按钮找到想要的瞬间。智能补选会保留你已选中的画面，再补齐其余帧。</p>
           <ul class="check-list">
             <li><svg class="check-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/><path d="M9 12l2 2l4 -4"/></svg><span data-i18n="precisionPointOne">在视频时间轴上查看候选画面</span></li>
             <li><svg class="check-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/><path d="M9 12l2 2l4 -4"/></svg><span data-i18n="precisionPointTwo">每次前后移动 1 帧或 5 帧</span></li>
@@ -156,7 +156,7 @@
           <article><h3 data-i18n="featureOneTitle">分镜网格</h3><p data-i18n="featureOneText">从 3 × 3 到 8 × 8，按需要选择画面密度。</p></article>
           <article><h3 data-i18n="featureTwoTitle">水印标注文件名</h3><p data-i18n="featureTwoText">可以选择显示文件标题、时间码，方便之后快速查找。</p></article>
           <article><h3 data-i18n="featureThreeTitle">匹配你的素材</h3><p data-i18n="featureThreeText">按视频比例排版，还能选择分镜图的底色。</p></article>
-          <article><h3 data-i18n="featureFourTitle">批量处理队列</h3><p data-i18n="featureFourText">一次加入多部视频，查看处理进度，并集中浏览已完成的分镜图。</p></article>
+          <article><h3 data-i18n="featureFourTitle">多段视频，一次整理</h3><p data-i18n="featureFourText">一次加入多个视频，取到的画面逐张显示；也可在当前视频处理完后暂停。</p></article>
         </div>
       </section>
 
@@ -179,8 +179,8 @@
 
       <section class="final-cta shell" aria-labelledby="cta-title">
         <p class="eyebrow" data-i18n="ctaEyebrow">现在就找找看？</p>
-        <h2 id="cta-title" data-i18n="ctaTitle">下次找视频，先看分镜图。</h2>
-        <p class="cta-detail" data-i18n="ctaDetail">下载适用于 Mac 的最新国际版，七种界面语言已全部包含。</p>
+        <h2 id="cta-title" data-i18n="ctaTitle">你的视频，不再难找。</h2>
+        <p class="cta-detail" data-i18n="ctaDetail">从第一张分镜图开始整理视频。免费开源，内置七种语言。</p>
         <div class="cta-actions">
           <a class="button" href="https://github.com/ixiehao/ShotMap/releases/latest"><span data-i18n="ctaDownload">下载 v0.2.18</span><svg class="link-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><use href="../assets/tabler-icons.svg?v=20261026-seven-locales#download"></use></svg></a>
           <a class="button button-secondary" href="https://github.com/ixiehao/ShotMap"><span data-i18n="ctaGithub">在 GitHub 查看</span><svg class="link-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><use href="../assets/tabler-icons.svg?v=20261026-seven-locales#brand-github"></use></svg></a>

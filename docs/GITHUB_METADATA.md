@@ -5,7 +5,7 @@ social preview. Keep the public metadata below aligned with the stable release.
 
 ## Repository description
 
-`ShotMap makes local video storyboards on macOS — smart frame selection, manual control, and private PNG/JPG export.`
+`ShotMap turns videos into storyboard images on Mac — automatic frame selection, precise manual control, batch processing, and local PNG/JPG export.`
 
 ## Suggested topics
 

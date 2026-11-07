@@ -18,7 +18,9 @@
 
 ## Copy and localization
 
-Lead with the visitor's problem and the plain-language outcome. For ShotMap, the agreed message is: “Your videos, easier to find” / “你的视频，不再难找。把视频，编成一张分镜图。” / “動画を、もっと見つけやすく。” Avoid obscure technical metaphors, keyword stuffing, unsupported speed claims, and literal translations that sound unnatural. Keep product facts and user control consistent across locales; localize examples and sentence structure naturally.
+Lead with the visitor's problem and the plain-language outcome. The main message is: “Turn videos into storyboards” / “把视频，编成一张分镜图。” / “動画の場面を、一枚にまとめる。” Support it with four concrete benefits: browse video content in one image, refine automatic picks by hand, process several videos in a batch, and export ordinary PNG/JPG images for viewing and sharing. “你的视频，不再难找。” remains a supporting benefit of visual browsing, not a claim that the app provides content search.
+
+Keep claims within the released Mac app's capabilities. Smart Select can preserve the user's selected frames while filling the remaining slots; it does not guarantee the best expression or identify a personally meaningful event. Do not advertise the proposed iPhone app, semantic search, blink/smile detection, full-resolution individual-photo export, or measured speed advantages as shipped features. Avoid obscure metaphors, keyword stuffing, and literal translations that sound unnatural. Keep product facts and user control consistent across locales; localize sentence structure naturally.
 
 Use real app screenshots and describe what they show. English, Chinese and Japanese have existing localized captures. French, Russian, Spanish and Korean currently reuse the English captures, clearly identified in localized captions and alt text; never imply those captures show a translated interface. Check image rights and keep the *Tears of Steel* attribution visible. Keep page titles, descriptions, social metadata, schema, and visible content aligned.
 

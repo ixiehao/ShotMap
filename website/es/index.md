@@ -1,14 +1,14 @@
 # ShotMap — Mosaicos de vídeo para Mac
 
-> Encuentra tus vídeos con un mosaico de imágenes. ShotMap ofrece 7 idiomas, selección manual de fotogramas y exportación en tu Mac. Gratis y de código abierto.
+> Reúne las escenas de un vídeo en una imagen en tu Mac. Selección automática, ajuste manual, procesamiento por lotes y exportación local PNG/JPG. Gratis y de código abierto.
 
 <https://ixiehao.github.io/ShotMap/es/>
 
 MOSAICOS DE VÍDEO PARA MAC
 
-## Tus vídeos, más fáciles de encontrar.
+## Las escenas de tu vídeo, en una sola imagen.
 
-Reúne los momentos de cada vídeo en un mosaico de imágenes.
+Selección automática, ajuste manual y procesamiento por lotes. Revisa con más facilidad grabaciones familiares, viajes y material de edición.
 
 [Descargar para macOS](https://github.com/ixiehao/ShotMap/releases/latest) [Ver en GitHub](https://github.com/ixiehao/ShotMap)
 
@@ -38,15 +38,15 @@ Las imágenes de demostración usan [Tears of Steel](https://mango.blender.org/)
 
 Espacio de trabajo de ShotMap
 
-ENCUENTRA ESE MOMENTO
+UNA COLECCIÓN DE VÍDEOS MÁS FÁCIL DE REVISAR
 
-### Encuentra el vídeo sin reproducirlos todos.
+### Mira las escenas. Encuentra el vídeo que buscas.
 
 1. #### Añade tus vídeos Arrastra un vídeo o varios a la vez.
 
-2. #### Revisa las imágenes ShotMap propone una selección. Sustituye los fotogramas que quieras.
+2. #### Revisa las imágenes Empieza con la selección automática y después sustituye o ajusta cualquier fotograma.
 
-3. #### Exporta el mosaico Guárdalo como PNG o JPG y añade marcas de tiempo si las necesitas.
+3. #### Exporta el mosaico Exporta un PNG o JPG junto al vídeo original.
 
 ![Mosaico creado con ShotMap a partir de Tears of Steel](https://ixiehao.github.io/ShotMap/assets/tears-of-steel-storyboard.webp?v=20261101-release017)
 
@@ -54,9 +54,9 @@ Las escenas, de un vistazo
 
 TÚ ELIGES LAS IMÁGENES
 
-### ¿Buscas otro momento? Elígelo tú.
+### Selección automática. La última palabra es tuya.
 
-Selección auto propone los primeros fotogramas. Abre Elegir fotogramas y usa la línea de tiempo, los botones de avance por fotogramas o la marca de tiempo para sustituir cualquiera de ellos.
+Encuentra el momento en la línea de tiempo y ajusta fotograma a fotograma. La selección automática conserva tus elecciones y completa los espacios restantes.
 
 - Consulta los fotogramas en la línea de tiempo
 
@@ -84,9 +84,9 @@ Puedes mostrar el nombre del archivo y las marcas de tiempo para encontrar antes
 
 Conserva la proporción del vídeo y elige un color de fondo.
 
-#### Procesamiento por lotes
+#### Varios vídeos de una vez
 
-Añade varios vídeos, sigue el progreso y revisa los mosaicos terminados en un mismo lugar.
+Añade varios vídeos, ve cómo se completa la vista previa y pausa al terminar el vídeo actual.
 
 TUS VÍDEOS SIGUEN SIENDO TUYOS
 
@@ -116,9 +116,9 @@ Por defecto, en la carpeta del vídeo original. Usa Guardar como para elegir otr
 
 ¿BUSCAMOS ESE VÍDEO?
 
-### Encuentra el vídeo que buscabas.
+### Tus vídeos, más fáciles de revisar.
 
-Descarga la última versión internacional para Mac. Incluye los siete idiomas.
+Crea tu primer mosaico en Mac. Gratis, de código abierto y disponible en siete idiomas.
 
 [Descargar v0.2.18](https://github.com/ixiehao/ShotMap/releases/latest) [Ver en GitHub](https://github.com/ixiehao/ShotMap)
 
