@@ -49,8 +49,8 @@ jobs:
     outputs:
       languages: ${{ steps.languages.outputs.languages }}
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: '24'
       - id: languages
@@ -68,8 +68,8 @@ jobs:
     env:
       SITE_TEST_LANGUAGE: ${{ matrix.language }}
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: '24'
           cache: npm
@@ -79,7 +79,7 @@ jobs:
       - run: npm run test:website -- --project=${{ matrix.browser }}
       - name: Save layout reports and failure screenshots
         if: ${{ !cancelled() }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: website-report-${{ matrix.browser }}-${{ matrix.language }}-${{ github.run_id }}-${{ github.run_attempt }}
           path: |
@@ -104,7 +104,7 @@ jobs:
       - name: Verify localized Pages
         run: node website/build-static-pages.mjs --check
       - name: Set up website build runtime
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: '24'
       - name: Build and check search reading files
@@ -127,7 +127,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 3
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Submit published canonical pages
         id: indexnow
         continue-on-error: true
