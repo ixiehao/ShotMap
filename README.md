@@ -17,7 +17,7 @@
 
 **ShotMap** is a free, open-source Mac app that brings scenes from a video together in one storyboard image. Browse family recordings, travel clips, or editing footage without opening every file and scrubbing through it.
 
-Start with automatic frame selection, then replace or fine-tune any frame on the timeline. Add several videos to process in a batch and export PNG or JPG images beside the originals. Processing stays on your Mac, with no account or video upload.
+Start with automatic frame selection, then replace or fine-tune any frame on the timeline. Add several videos to process in a batch and export PNG, JPG, or WebP images beside the originals. Processing stays on your Mac, with no account or video upload.
 
 > **Start here:** [Download the latest international edition](https://github.com/ixiehao/ShotMap/releases/latest) · Apple Silicon / Intel DMGs · macOS 13 or later · Apple Silicon and Intel
 
@@ -33,14 +33,14 @@ Start with automatic frame selection, then replace or fine-tune any frame on the
 
 | 1. Add videos | 2. Choose the moments | 3. Save the storyboard |
 | --- | --- | --- |
-| Drop in one video or queue several. | Start with Smart Select, then adjust any frame yourself. | Export a PNG or JPG beside the original video. |
+| Drop in one video or queue several. | Start with Smart Select, then adjust any frame yourself. | Export a PNG, JPG, or WebP beside the original video. |
 
 ## Choose the frames and layout that work for you
 
 - **Automatic selection to get you started:** prioritises clear, varied frames while aiming to reduce black, blurry, and near-duplicate shots.
 - **The final choice is yours:** use the player, timeline, and frame steps to find a moment. Smart Select keeps your selected frames and fills the remaining slots.
 - **Organise several videos at once:** batch processing, progress previews, and a pause after the current video help you work through a collection.
-- **Images you can open and share:** export PNG or JPG, with optional filenames and timecodes to help you return to the source.
+- **Images you can open and share:** export PNG, JPG, or WebP, with optional filenames and timecodes to help you return to the source.
 - **A layout that fits your footage:** choose 3 × 3 to 8 × 8 grids, aspect ratio, image width, and background colour.
 - **Made for Mac:** a native app with seven interface languages and Light, Dark, or System appearance.
 
@@ -77,7 +77,7 @@ Your videos stay on your Mac. ShotMap has no account, tracking, cloud upload, El
 ## Rights and license
 
 - ShotMap’s Swift source, documentation, and app icon are original project work released under the [MIT License](LICENSE).
-- The app uses Apple SDK frameworks only. It bundles no third-party application code, packages, analytics SDKs, or MoviePrint assets.
+- ShotMap uses libwebp for WebP encoding. It includes no analytics SDKs or MoviePrint assets. See [NOTICE.md](NOTICE.md) for third-party licenses.
 - The bundled [Tabler Icons Outline](https://github.com/tabler/tabler-icons) SVGs are used unmodified under the [MIT License](ThirdPartyLicenses/TablerIcons-MIT.txt). The bundled Noto Sans CJK font is licensed under the [SIL Open Font License 1.1](ThirdPartyLicenses/NotoSansCJK-OFL-1.1.txt). See [NOTICE.md](NOTICE.md) for details.
 - Documentation demo footage is *Tears of Steel* (2012) © Blender Foundation / Blender Institute, used under [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/).
 - Process only videos you own or are authorised to analyse. Creating a storyboard does not grant rights to publish or redistribute the source video.

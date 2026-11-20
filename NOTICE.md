@@ -2,6 +2,10 @@
 
 ## English
 
+### libwebp
+
+ShotMap includes libwebp 1.6.0 to encode WebP images. The [BSD-style license](Sources/CWebP/COPYING) and [patent grant](Sources/CWebP/PATENTS) are included with the app. Upstream: https://github.com/webmproject/libwebp.
+
 ### Noto Sans CJK SC Bold
 
 - File: `Sources/ShotMapApp/Resources/Fonts/NotoSansCJKsc-Bold.otf`
@@ -33,6 +37,10 @@ These tools generate and verify the DMG during a local release build only. They 
 
 ## 中文
 
+### libwebp
+
+ShotMap 内置 libwebp 1.6.0，用于 WebP 编码。[BSD 风格许可证](Sources/CWebP/COPYING)和[专利授权](Sources/CWebP/PATENTS)随应用一并提供。项目地址：https://github.com/webmproject/libwebp。
+
 ### Noto Sans CJK SC Bold
 
 - 文件：`Sources/ShotMapApp/Resources/Fonts/NotoSansCJKsc-Bold.otf`
@@ -63,6 +71,10 @@ ShotMap 原样内置 Tabler Icons Outline SVG，并以原生模板图像进行�
 这些工具仅在本地发布构建期间生成和验证 DMG；它们不会被打包、链接或在发行版应用中执行。
 
 ## 日本語
+
+### libwebp
+
+ShotMap は WebP のエンコードに libwebp 1.6.0 を使用します。[BSD 形式のライセンス](Sources/CWebP/COPYING)と[特許許諾](Sources/CWebP/PATENTS)はアプリに同梱されています。配布元：https://github.com/webmproject/libwebp。
 
 ### Noto Sans CJK SC Bold
 

@@ -120,6 +120,6 @@ macOS 13 이상을 지원합니다. 릴리스 페이지에서 Apple Silicon(M �
 
 첫 스토리보드를 Mac에서 만들어 보세요. 무료 오픈 소스 앱이며 7개 언어를 지원합니다.
 
-[v0.2.18 다운로드](https://github.com/ixiehao/ShotMap/releases/latest) [GitHub에서 보기](https://github.com/ixiehao/ShotMap)
+[v0.2.19 다운로드](https://github.com/ixiehao/ShotMap/releases/latest) [GitHub에서 보기](https://github.com/ixiehao/ShotMap)
 
 © 2026 ixiehaoShotMap · MIT [GitHub](https://github.com/ixiehao/ShotMap) [릴리스](https://github.com/ixiehao/ShotMap/releases/latest) [의견 보내기](https://github.com/ixiehao/ShotMap/issues/new/choose)

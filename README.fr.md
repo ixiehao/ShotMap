@@ -19,7 +19,7 @@
 
 **ShotMap** est une application Mac gratuite et open source qui rassemble les scènes d’une vidéo sur une planche d’images. Parcourez vos souvenirs de famille, vos voyages ou vos rushes sans ouvrir chaque fichier ni parcourir sa barre de lecture.
 
-Commencez par la sélection automatique, puis remplacez ou ajustez chaque image dans la chronologie. Ajoutez plusieurs vidéos pour les traiter par lot et exportez des PNG ou JPG dans le dossier des originaux. Tout se fait sur votre Mac, sans compte ni envoi de vidéos en ligne.
+Commencez par la sélection automatique, puis remplacez ou ajustez chaque image dans la chronologie. Ajoutez plusieurs vidéos pour les traiter par lot et exportez des PNG, JPG ou WebP dans le dossier des originaux. Tout se fait sur votre Mac, sans compte ni envoi de vidéos en ligne.
 
 > **Pour commencer :** [Télécharger la dernière version internationale](https://github.com/ixiehao/ShotMap/releases/latest) · DMG Apple Silicon / Intel · macOS 13 ou ultérieur · Apple Silicon et Intel
 
@@ -35,14 +35,14 @@ Commencez par la sélection automatique, puis remplacez ou ajustez chaque image 
 
 | 1. Ajoutez des vidéos | 2. Choisissez les images | 3. Enregistrez la planche |
 | --- | --- | --- |
-| Glissez une vidéo ou plusieurs à la fois. | Utilisez Sélection auto, puis ajustez les images à la main. | Exportez un PNG ou un JPG dans le dossier de la vidéo. |
+| Glissez une vidéo ou plusieurs à la fois. | Utilisez Sélection auto, puis ajustez les images à la main. | Exportez un PNG, JPG ou WebP dans le dossier de la vidéo. |
 
 ## Choisissez vos images et leur présentation
 
 - **Une première sélection automatique :** privilégie les images nettes et variées, en cherchant à limiter les écrans noirs, le flou et les images presque identiques.
 - **Vous gardez le dernier mot :** utilisez le lecteur, la chronologie et le déplacement image par image. La sélection automatique conserve vos choix et complète les emplacements restants.
 - **Plusieurs vidéos à la suite :** traitez un lot, voyez l’aperçu se remplir et faites une pause après la vidéo en cours.
-- **Des images faciles à consulter et à partager :** exportez en PNG ou JPG, avec le nom du fichier et les timecodes si vous souhaitez retrouver le passage dans la vidéo.
+- **Des images faciles à consulter et à partager :** exportez en PNG, JPG ou WebP, avec le nom du fichier et les timecodes si vous souhaitez retrouver le passage dans la vidéo.
 - **Une présentation adaptée :** choisissez une grille de 3 × 3 à 8 × 8, les proportions, la largeur de l’image et la couleur du fond.
 - **Conçu pour Mac :** une application native en sept langues, avec une apparence claire, sombre ou suivant le système.
 
@@ -79,7 +79,7 @@ Vos vidéos restent sur votre Mac. ShotMap ne nécessite aucun compte et n’int
 ## Droits et licences
 
 - Le code Swift, la documentation et l’icône de l’application sont des créations originales du projet, publiées sous [licence MIT](LICENSE).
-- L’application utilise uniquement les frameworks des SDK Apple. Elle n’intègre aucun code d’application tiers, paquet logiciel, SDK d’analyse ou élément de MoviePrint.
+- L’application utilise libwebp pour encoder WebP, sans SDK d’analyse ni éléments MoviePrint. Voir [NOTICE.md](NOTICE.md) pour les licences tierces.
 - Les SVG [Tabler Icons Outline](https://github.com/tabler/tabler-icons) sont utilisés sans modification sous [licence MIT](ThirdPartyLicenses/TablerIcons-MIT.txt). La police Noto Sans CJK fournie est sous [SIL Open Font License 1.1](ThirdPartyLicenses/NotoSansCJK-OFL-1.1.txt). Voir [NOTICE.md](NOTICE.md).
 - La vidéo de démonstration est *Tears of Steel* (2012) © Blender Foundation / Blender Institute, sous licence [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/).
 - Traitez uniquement les vidéos que vous possédez ou êtes autorisé à analyser. Créer une planche ne donne aucun droit de publier ou de redistribuer la vidéo d’origine.

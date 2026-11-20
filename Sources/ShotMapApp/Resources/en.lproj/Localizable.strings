@@ -29,6 +29,7 @@
 "background.evergreen" = "Deep evergreen";
 "accessibility.selected" = "Selected";
 "export.time" = "Show timestamps";
+"export.videoInfo" = "Show video info";
 "export.title" = "Show filename";
 "button.generate.single" = "Create storyboard";
 "button.generate.batch" = "Create %d storyboards";

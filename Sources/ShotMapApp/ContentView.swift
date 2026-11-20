@@ -627,6 +627,7 @@ struct ContentView: View {
                             backgroundPalette
                             inlineToggle(t("export.time"), isOn: $model.showTimestamps)
                             inlineToggle(t("export.title"), isOn: $model.showTitleWatermark)
+                            inlineToggle(t("export.videoInfo"), isOn: $model.showVideoInfo)
                         }
                     }
 

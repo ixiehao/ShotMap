@@ -3,7 +3,7 @@ import CoreText
 import Foundation
 
 enum StoryboardComposer {
-    static func render(result: StoryboardResult, settings: ExportSettings) throws -> Data {
+    static func render(result: StoryboardResult, settings: ExportSettings, videoInfo: VideoExportInfo? = nil) throws -> Data {
         try Task.checkCancellation()
         let layout = makeLayout(
             requestedWidth: settings.safeWidth,
@@ -63,6 +63,9 @@ enum StoryboardComposer {
 
         if let title = settings.titleWatermark(for: result.sourceURL) {
             drawTitleWatermark(title, canvasSize: CGSize(width: width, height: height), context: context)
+        }
+        if settings.showVideoInfo, let videoInfo {
+            drawVideoInfo(videoInfo, canvasSize: CGSize(width: width, height: height), context: context)
         }
 
         try Task.checkCancellation()
@@ -184,6 +187,58 @@ enum StoryboardComposer {
         context.textMatrix = .identity
         context.textPosition = CGPoint(x: labelRect.minX + horizontalPadding, y: labelRect.minY + verticalPadding)
         CTLineDraw(line, context)
+        context.restoreGState()
+    }
+
+    private static func drawVideoInfo(_ info: VideoExportInfo, canvasSize: CGSize, context: CGContext) {
+        let fontSize = max(16, min(30, canvasSize.width * 0.015))
+        let attributes: [CFString: Any] = [
+            kCTFontAttributeName: WatermarkTypography.titleFont(size: fontSize),
+            kCTForegroundColorAttributeName: CGColor(gray: 1, alpha: 1)
+        ]
+        let margin = max(12, canvasSize.width * 0.012)
+        let maximumWidth = canvasSize.width * 0.72
+        let lineHeight = fontSize * 1.4
+        var content = info.lines
+        let firstLineWidth = maximumWidth - margin * 2
+        func measuredWidth(_ text: String) -> CGFloat {
+            let line = CTLineCreateWithAttributedString(CFAttributedStringCreate(nil, text as CFString, attributes as CFDictionary))
+            return CGFloat(CTLineGetTypographicBounds(line, nil, nil, nil))
+        }
+        if !info.firstLineSuffix.isEmpty, measuredWidth(content[0]) > firstLineWidth {
+            let characters = Array(info.filename)
+            var low = 0, high = characters.count
+            func shortened(_ count: Int) -> String {
+                let leading = (count + 1) / 2
+                let trailing = count / 2
+                return String(characters.prefix(leading)) + "…" + String(characters.suffix(trailing))
+            }
+            while low < high {
+                let middle = (low + high + 1) / 2
+                let candidate = shortened(middle) + info.firstLineSuffix
+                if measuredWidth(candidate) <= firstLineWidth { low = middle } else { high = middle - 1 }
+            }
+            content[0] = shortened(low) + info.firstLineSuffix
+        }
+        let lines = content.map { text -> CTLine in
+            let line = CTLineCreateWithAttributedString(CFAttributedStringCreate(nil, text as CFString, attributes as CFDictionary))
+            let token = CTLineCreateWithAttributedString(CFAttributedStringCreate(nil, "…" as CFString, attributes as CFDictionary))
+            return CTLineCreateTruncatedLine(line, maximumWidth - margin * 2, .end, token) ?? line
+        }
+        guard !lines.isEmpty else { return }
+        let boxHeight = CGFloat(lines.count) * lineHeight + margin
+        let lineWidth = lines.map { CGFloat(CTLineGetTypographicBounds($0, nil, nil, nil)) }.max() ?? 0
+        let boxWidth = min(maximumWidth, lineWidth + margin * 2)
+        let box = CGRect(x: margin, y: canvasSize.height - margin - boxHeight, width: boxWidth, height: boxHeight)
+        context.saveGState()
+        context.setFillColor(CGColor(gray: 0, alpha: 0.72))
+        context.addPath(CGPath(roundedRect: box, cornerWidth: fontSize * 0.35, cornerHeight: fontSize * 0.35, transform: nil))
+        context.fillPath()
+        context.textMatrix = .identity
+        for (index, line) in lines.enumerated() {
+            context.textPosition = CGPoint(x: box.minX + margin, y: box.maxY - margin * 0.5 - fontSize - CGFloat(index) * lineHeight)
+            CTLineDraw(line, context)
+        }
         context.restoreGState()
     }
 

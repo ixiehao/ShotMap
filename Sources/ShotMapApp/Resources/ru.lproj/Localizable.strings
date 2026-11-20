@@ -29,6 +29,7 @@
 "background.evergreen" = "Тёмно-зелёный";
 "accessibility.selected" = "Выбрано";
 "export.time" = "Показывать таймкоды";
+"export.videoInfo" = "Показать данные видео";
 "export.title" = "Показывать имя файла";
 "button.generate.single" = "Создать раскадровку";
 "button.generate.batch" = "Создать раскадровки (%d)";

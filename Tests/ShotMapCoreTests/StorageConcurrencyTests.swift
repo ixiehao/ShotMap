@@ -88,6 +88,33 @@ final class StorageConcurrencyTests: XCTestCase {
         }
     }
 
+    func testWebPExportAndSaveAsFallbackKeepFormatAndReadablePreview() async throws {
+        let directory = try temporaryDirectory()
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let sourceImage = try XCTUnwrap(ImageCodec.cgImage(from: imageData()))
+        let data = try XCTUnwrap(ImageCodec.data(from: sourceImage, format: .webp))
+        let result = StoryboardResult(frames: [], sourceURL: directory.appendingPathComponent("video.mp4"))
+        let store = PreviewImageStore()
+        for canSave in [true, false] {
+            let writer = StoryboardOutputWriter { data, url in
+                if !canSave { throw CocoaError(.fileWriteNoPermission) }
+                try data.write(to: url, options: .atomic)
+            }
+            let output = try await writer.prepare(data: data, result: result,
+                                                  settings: ExportSettings(format: .webp), jobIndex: 0,
+                                                  jobCount: 1, previewStore: store)
+            let presentation = try output.preview.loadPresentation()
+            XCTAssertGreaterThan(presentation.image.width, 0)
+            XCTAssertEqual(presentation.pendingData, canSave ? nil : data)
+            if canSave {
+                let url = try XCTUnwrap(output.preview.savedURL)
+                XCTAssertEqual(url.lastPathComponent, "video-shot-001.webp")
+                XCTAssertEqual(try Data(contentsOf: url), data)
+                XCTAssertNotNil(ImageCodec.thumbnail(at: url))
+            }
+        }
+    }
+
     func testExtremePastedTimestampsAndFiniteMetadataDoNotOverflow() throws {
         let pasted = try XCTUnwrap(TimestampFormatter.editableSeconds(from: "\(Int.max):00:00"))
         XCTAssertEqual(TimestampFormatter.editableString(for: pasted), "2562047788015:12:55.807")

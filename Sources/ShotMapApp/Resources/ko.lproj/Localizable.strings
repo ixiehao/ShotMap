@@ -29,6 +29,7 @@
 "background.evergreen" = "짙은 초록";
 "accessibility.selected" = "선택됨";
 "export.time" = "타임코드 표시";
+"export.videoInfo" = "동영상 정보 표시";
 "export.title" = "파일 이름 표시";
 "button.generate.single" = "스토리보드 만들기";
 "button.generate.batch" = "스토리보드 %d개 만들기";

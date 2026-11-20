@@ -168,6 +168,8 @@ ditto "LICENSE" "$app_path/Contents/Resources/Licenses/MIT-LICENSE.txt"
 ditto "NOTICE.md" "$app_path/Contents/Resources/Licenses/NOTICE.md"
 ditto "ThirdPartyLicenses/NotoSansCJK-OFL-1.1.txt" "$app_path/Contents/Resources/Licenses/NotoSansCJK-OFL-1.1.txt"
 ditto "ThirdPartyLicenses/TablerIcons-MIT.txt" "$app_path/Contents/Resources/Licenses/TablerIcons-MIT.txt"
+ditto "Sources/CWebP/COPYING" "$app_path/Contents/Resources/Licenses/libwebp-COPYING.txt"
+ditto "Sources/CWebP/PATENTS" "$app_path/Contents/Resources/Licenses/libwebp-PATENTS.txt"
 
 codesign --force --sign - --timestamp=none "$app_path"
 codesign --verify --deep --strict --verbose=2 "$app_path"

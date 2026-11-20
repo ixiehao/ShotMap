@@ -3,6 +3,30 @@
 All notable user-facing changes are recorded here. Stable releases remain
 available on the [GitHub Releases page](https://github.com/ixiehao/ShotMap/releases).
 
+## v0.2.19 — 2026-11-20
+
+### English
+
+- Export storyboards as WebP.
+- Optionally show video details on the storyboard.
+
+### 中文
+
+- 支持导出 WebP 分镜图。
+- 可在分镜图中显示视频信息。
+
+### 日本語
+
+- WebP 形式で分鏡画像を書き出せるようになりました。
+- 動画の情報を分鏡画像に表示できます。
+
+### 한국어
+
+- 스토리보드를 WebP로 내보낼 수 있습니다.
+- 스토리보드에 동영상 정보를 표시할 수 있습니다.
+
+macOS 13+ · Apple Silicon / Intel · 7 languages
+
 ## v0.2.18 — 2026-11-06
 
 ### English

@@ -19,7 +19,7 @@
 
 **ShotMap** es una app gratuita y de código abierto para Mac que reúne las escenas de un vídeo en un mosaico de imágenes. Revisa grabaciones familiares, viajes o material de edición sin abrir y recorrer cada archivo uno por uno.
 
-Empieza con la selección automática y después sustituye o ajusta cualquier fotograma en la línea de tiempo. Añade varios vídeos para procesarlos por lotes y exporta imágenes PNG o JPG junto a los originales. Todo se procesa en tu Mac, sin cuenta ni subida de vídeos.
+Empieza con la selección automática y después sustituye o ajusta cualquier fotograma en la línea de tiempo. Añade varios vídeos para procesarlos por lotes y exporta imágenes PNG, JPG o WebP junto a los originales. Todo se procesa en tu Mac, sin cuenta ni subida de vídeos.
 
 > **Empieza aquí:** [Descargar la última versión internacional](https://github.com/ixiehao/ShotMap/releases/latest) · DMG para Apple Silicon / Intel · macOS 13 o posterior · Apple Silicon e Intel
 
@@ -35,14 +35,14 @@ Empieza con la selección automática y después sustituye o ajusta cualquier fo
 
 | 1. Añade vídeos | 2. Elige los momentos | 3. Guarda el mosaico |
 | --- | --- | --- |
-| Arrastra un vídeo o añade varios a la cola. | Usa Selección auto y ajusta los fotogramas a mano. | Exporta un PNG o JPG junto al vídeo original. |
+| Arrastra un vídeo o añade varios a la cola. | Usa Selección auto y ajusta los fotogramas a mano. | Exporta un PNG, JPG o WebP junto al vídeo original. |
 
 ## Elige las imágenes y su presentación
 
 - **Una primera selección automática:** da prioridad a imágenes nítidas y variadas, intentando reducir los fotogramas negros, borrosos o casi repetidos.
 - **Tú decides qué conservar:** usa el reproductor, la línea de tiempo y el avance fotograma a fotograma. La selección automática conserva tus elecciones y completa los espacios restantes.
 - **Varios vídeos de una vez:** procesa un lote, ve cómo se completa la vista previa y pausa al terminar el vídeo actual.
-- **Imágenes fáciles de ver y compartir:** exporta PNG o JPG, con nombres de archivo y códigos de tiempo opcionales para volver al vídeo original.
+- **Imágenes fáciles de ver y compartir:** exporta PNG, JPG o WebP, con nombres de archivo y códigos de tiempo opcionales para volver al vídeo original.
 - **Un diseño a tu medida:** elige cuadrículas de 3 × 3 a 8 × 8, proporciones, anchura de imagen y color de fondo.
 - **Hecho para Mac:** una app nativa con siete idiomas y apariencia clara, oscura o del sistema.
 
@@ -79,7 +79,7 @@ ShotMap no requiere cuenta, no hace seguimiento ni sube vídeos a la nube. Tampo
 ## Derechos y licencias
 
 - El código Swift, la documentación y el icono de la aplicación son creaciones originales del proyecto, publicadas bajo la [licencia MIT](LICENSE).
-- La app solo usa frameworks de los SDK de Apple. No incluye código de aplicaciones de terceros, paquetes, SDK de análisis ni recursos de MoviePrint.
+- La app usa libwebp para codificar WebP y no incluye SDK de análisis ni recursos de MoviePrint. Consulta las licencias de terceros en [NOTICE.md](NOTICE.md).
 - Los SVG de [Tabler Icons Outline](https://github.com/tabler/tabler-icons) se usan sin modificar bajo la [licencia MIT](ThirdPartyLicenses/TablerIcons-MIT.txt). La fuente Noto Sans CJK incluida usa la [SIL Open Font License 1.1](ThirdPartyLicenses/NotoSansCJK-OFL-1.1.txt). Consulta [NOTICE.md](NOTICE.md).
 - El vídeo de demostración es *Tears of Steel* (2012) © Blender Foundation / Blender Institute, con licencia [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/).
 - Procesa solo vídeos que te pertenezcan o que tengas autorización para analizar. Crear un mosaico no concede derechos para publicar ni redistribuir el vídeo original.
