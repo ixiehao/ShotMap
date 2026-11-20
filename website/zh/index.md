@@ -120,6 +120,6 @@ ShotMap 中文工作区
 
 从第一张分镜图开始整理视频。免费开源，内置七种语言。
 
-[下载 v0.2.18](https://github.com/ixiehao/ShotMap/releases/latest) [在 GitHub 查看](https://github.com/ixiehao/ShotMap)
+[下载 v0.2.19](https://github.com/ixiehao/ShotMap/releases/latest) [在 GitHub 查看](https://github.com/ixiehao/ShotMap)
 
 © 2026 ixiehaoShotMap · MIT [GitHub](https://github.com/ixiehao/ShotMap) [版本发布](https://github.com/ixiehao/ShotMap/releases/latest) [反馈](https://github.com/ixiehao/ShotMap/issues/new/choose)

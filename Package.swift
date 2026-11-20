@@ -9,8 +9,16 @@ let package = Package(
         .executable(name: "ShotMap", targets: ["ShotMapApp"])
     ],
     targets: [
+        .target(
+            name: "CWebP",
+            path: "Sources/CWebP",
+            exclude: ["COPYING", "PATENTS"],
+            publicHeadersPath: "include",
+            cSettings: [.headerSearchPath(".")]
+        ),
         .executableTarget(
             name: "ShotMapApp",
+            dependencies: ["CWebP"],
             path: "Sources/ShotMapApp",
             resources: [.process("Resources")]
         ),

@@ -4,9 +4,16 @@ import Foundation
 enum ExportFormat: String, CaseIterable, Identifiable, Sendable {
     case png = "PNG"
     case jpeg = "JPG"
+    case webp = "WebP"
 
     var id: String { rawValue }
-    var fileExtension: String { self == .png ? "png" : "jpg" }
+    var fileExtension: String {
+        switch self {
+        case .png: "png"
+        case .jpeg: "jpg"
+        case .webp: "webp"
+        }
+    }
 }
 
 /// Purposeful, low-saturation canvases for a storyboard. These six colours
@@ -112,6 +119,7 @@ struct ExportSettings: Sendable {
     var background: StoryboardBackground = .ivory
     var showTimestamps = true
     var showTitleWatermark = false
+    var showVideoInfo = false
 
     init(
         gridSide: Int = 3,
@@ -121,7 +129,8 @@ struct ExportSettings: Sendable {
         width: Int = 1920,
         background: StoryboardBackground = .ivory,
         showTimestamps: Bool = true,
-        showTitleWatermark: Bool = false
+        showTitleWatermark: Bool = false,
+        showVideoInfo: Bool = false
     ) {
         storedGridSide = StoryboardGrid.boundedSide(gridSide)
         self.layoutAspect = layoutAspect
@@ -131,6 +140,7 @@ struct ExportSettings: Sendable {
         self.background = background
         self.showTimestamps = showTimestamps
         self.showTitleWatermark = showTitleWatermark
+        self.showVideoInfo = showVideoInfo
     }
 
     var frameCount: Int { gridSide * gridSide }

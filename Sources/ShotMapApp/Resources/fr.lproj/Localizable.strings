@@ -29,6 +29,7 @@
 "background.evergreen" = "Vert sapin";
 "accessibility.selected" = "Sélectionné";
 "export.time" = "Afficher les timecodes";
+"export.videoInfo" = "Afficher les infos vidéo";
 "export.title" = "Afficher le nom du fichier";
 "button.generate.single" = "Créer la planche";
 "button.generate.batch" = "Créer %d planches";

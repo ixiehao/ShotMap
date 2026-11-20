@@ -29,6 +29,7 @@
 "background.evergreen" = "ディープエバーグリーン";
 "accessibility.selected" = "選択済み";
 "export.time" = "タイムコードを表示";
+"export.videoInfo" = "動画情報を表示";
 "export.title" = "ファイル名を表示";
 "button.generate.single" = "絵コンテを作成";
 "button.generate.batch" = "%d 枚の絵コンテを作成";

@@ -29,6 +29,7 @@
 "background.evergreen" = "Verde bosque";
 "accessibility.selected" = "Seleccionado";
 "export.time" = "Mostrar marcas de tiempo";
+"export.videoInfo" = "Mostrar datos del vídeo";
 "export.title" = "Mostrar nombre del archivo";
 "button.generate.single" = "Crear mosaico";
 "button.generate.batch" = "Crear %d mosaicos";

@@ -4,6 +4,36 @@ import XCTest
 
 /// Small generated fixtures exercise system codecs without bundling private media.
 final class MediaPipelineIntegrationTests: XCTestCase {
+    func testVideoInfoReadsAudioCodecFromRealFixtureWhenProvided() async throws {
+        guard let path = ProcessInfo.processInfo.environment["SHOTMAP_AUDIO_FIXTURE"] else {
+            throw XCTSkip("Set SHOTMAP_AUDIO_FIXTURE to an H.264/AAC fixture")
+        }
+        let url = URL(fileURLWithPath: path)
+        let duration = try await AVURLAsset(url: url).load(.duration).seconds
+        let info = await VideoExportInfo.load(url: url, duration: duration)
+        XCTAssertEqual(info.videoCodec, "H.264")
+        XCTAssertEqual(info.audioCodec, "AAC")
+        XCTAssertNotNil(info.videoBitrate)
+        XCTAssertEqual(info.lines.count, 2)
+    }
+
+    func testVideoInfoReadsActualVideoMetadata() async throws {
+        let directory = FileManager.default.temporaryDirectory.appendingPathComponent("ShotMap-info-\(UUID())")
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let url = directory.appendingPathComponent("sample.mov")
+        _ = try await writeFixture(at: url, codec: .h264, variableRate: false, portrait: false)
+        let duration = try await AVURLAsset(url: url).load(.duration).seconds
+        let info = await VideoExportInfo.load(url: url, duration: duration)
+        XCTAssertEqual(info.filename, "sample.mov")
+        XCTAssertNotNil(info.fileSize)
+        XCTAssertNotNil(info.resolution)
+        XCTAssertNotNil(info.frameRate)
+        XCTAssertEqual(info.videoCodec, "H.264")
+        XCTAssertNotNil(info.videoBitrate)
+        XCTAssertNotNil(info.duration)
+    }
+
     @MainActor
     func testInvalidMediaFailsWithoutConversionAdviceAndBatchContinues() async throws {
         let directory = FileManager.default.temporaryDirectory.appendingPathComponent("ShotMap-invalid-media-\(UUID())")

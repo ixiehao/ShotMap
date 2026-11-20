@@ -120,6 +120,6 @@ READY TO FIND THAT CLIP?
 
 Make your first storyboard on your Mac. Free, open source, and available in seven languages.
 
-[Download v0.2.18](https://github.com/ixiehao/ShotMap/releases/latest) [View on GitHub](https://github.com/ixiehao/ShotMap)
+[Download v0.2.19](https://github.com/ixiehao/ShotMap/releases/latest) [View on GitHub](https://github.com/ixiehao/ShotMap)
 
 © 2026 ixiehaoShotMap · MIT [GitHub](https://github.com/ixiehao/ShotMap) [Releases](https://github.com/ixiehao/ShotMap/releases/latest) [Feedback](https://github.com/ixiehao/ShotMap/issues/new/choose)

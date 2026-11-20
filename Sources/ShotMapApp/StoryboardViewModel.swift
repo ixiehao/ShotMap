@@ -45,6 +45,7 @@ final class StoryboardViewModel: ObservableObject {
     @Published var background: StoryboardBackground = .ivory
     @Published var showTimestamps = true
     @Published var showTitleWatermark = false
+    @Published var showVideoInfo = false
     @Published var previewImage: NSImage?
     @Published private(set) var livePreviewSlots = ProgressivePreviewSlots<LivePreviewFrame>()
     @Published private(set) var activeGridSide = 3
@@ -411,7 +412,9 @@ final class StoryboardViewModel: ObservableObject {
                             await bridge.appendPreview(frame, index: frameIndex, total: totalFrames)
                         }
                     )
-                    let data = try StoryboardComposer.render(result: result, settings: currentSettings)
+                    let videoInfo = currentSettings.showVideoInfo ? await VideoExportInfo.load(url: result.sourceURL, duration: result.duration) : nil
+                    try Task.checkCancellation()
+                    let data = try StoryboardComposer.render(result: result, settings: currentSettings, videoInfo: videoInfo)
                     let canContinue = await bridge.finishJob(data: data, result: result, settings: currentSettings, index: job.index, total: selectedJobs.count)
                     if !canContinue { break }
                 } catch is CancellationError {
@@ -460,7 +463,8 @@ final class StoryboardViewModel: ObservableObject {
             width: width,
             background: background,
             showTimestamps: showTimestamps,
-            showTitleWatermark: showTitleWatermark
+            showTitleWatermark: showTitleWatermark,
+            showVideoInfo: showVideoInfo
         )
     }
 
@@ -603,7 +607,11 @@ final class StoryboardViewModel: ObservableObject {
         let targetPreviewID = completedPreviews.indices.contains(selectedPreviewIndex)
             ? completedPreviews[selectedPreviewIndex].id : nil
         let panel = NSSavePanel()
-        panel.allowedContentTypes = [format == .png ? .png : .jpeg]
+        switch format {
+        case .png: panel.allowedContentTypes = [.png]
+        case .jpeg: panel.allowedContentTypes = [.jpeg]
+        case .webp: panel.allowedContentTypes = [UTType(filenameExtension: "webp") ?? UTType(importedAs: "org.webmproject.webp")]
+        }
         panel.directoryURL = source.deletingLastPathComponent()
         panel.nameFieldStringValue = ExportDestination.nextURL(for: source, format: format).lastPathComponent
         panel.begin { response in
@@ -678,7 +686,9 @@ final class StoryboardViewModel: ObservableObject {
 
         frameAdjustmentTask = Task.detached(priority: .userInitiated) {
             do {
-                let data = try StoryboardComposer.render(result: updatedResult, settings: settings)
+                let videoInfo = settings.showVideoInfo ? await VideoExportInfo.load(url: sourceURL, duration: duration) : nil
+                try Task.checkCancellation()
+                let data = try StoryboardComposer.render(result: updatedResult, settings: settings, videoInfo: videoInfo)
                 await bridge.finishEditedFrames(
                     data: data,
                     result: updatedResult,

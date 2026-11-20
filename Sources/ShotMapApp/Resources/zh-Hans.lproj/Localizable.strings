@@ -29,6 +29,7 @@
 "background.evergreen" = "深松绿";
 "accessibility.selected" = "已选";
 "export.time" = "显示时间码";
+"export.videoInfo" = "显示视频信息";
 "export.title" = "显示文件名";
 "button.generate.single" = "生成分镜图";
 "button.generate.batch" = "生成 %d 张分镜图";

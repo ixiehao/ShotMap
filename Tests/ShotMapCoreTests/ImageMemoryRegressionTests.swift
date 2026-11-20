@@ -34,6 +34,21 @@ final class ImageMemoryRegressionTests: XCTestCase {
         XCTAssertEqual(thumbnail.height, 160)
     }
 
+    func testWebPExportPreservesImageOrientationAndColors() throws {
+        let original = try XCTUnwrap(ImageCodec.cgImage(from: imageData(width: 120, height: 80)))
+        let encoded = try XCTUnwrap(ImageCodec.data(from: original, format: .webp))
+        let decoded = try XCTUnwrap(ImageCodec.cgImage(from: encoded))
+        let reference = try pixels(of: original)
+        let actual = try pixels(of: decoded)
+        for (x, y) in [(10, 10), (10, 70), (100, 10), (100, 70)] {
+            let offset = (y * 120 + x) * 4
+            for channel in 0..<3 {
+                XCTAssertLessThan(abs(Int(actual[offset + channel]) - Int(reference[offset + channel])), 24,
+                                  "WebP changed color or orientation at \(x),\(y)")
+            }
+        }
+    }
+
     func testThumbnailDoesNotUpscaleAndHandlesInvalidLimitsAndInput() throws {
         let data = try imageData(width: 80, height: 40)
         let thumbnail = try XCTUnwrap(ImageCodec.thumbnail(from: data, maximumPixelSize: 1_280))
@@ -52,11 +67,42 @@ final class ImageMemoryRegressionTests: XCTestCase {
         XCTAssertNil(ImageCodec.thumbnail(at: missing))
     }
 
-    func testEveryGridProducesDecodablePNGAndJPEGWithBothWatermarks() throws {
+    func testOptionalVideoInfoIsRenderedAndMissingMetadataDoesNotFail() async throws {
+        let info = VideoExportInfo(filename: "Family.mp4", fileSize: "2.4 MB", resolution: "1920 × 1080", frameRate: "~29.97 fps", duration: "00:00:42", videoCodec: "H.264", videoBitrate: "~8.4 Mbps", audioCodec: "AAC")
+        XCTAssertEqual(info.lines, ["Family.mp4  ·  00:00:42  ·  2.4 MB", "1920 × 1080  ·  ~29.97 fps  ·  H.264  ·  ~8.4 Mbps  ·  AAC"])
+        let missing = await VideoExportInfo.load(url: URL(fileURLWithPath: "/tmp/shotmap-missing-video.mp4"), duration: 0)
+        XCTAssertEqual(missing.lines, ["shotmap-missing-video.mp4"])
+        let longFilename = String(repeating: "a", count: 180) + ".mp4"
+        let longInfo = await VideoExportInfo.load(url: URL(fileURLWithPath: "/tmp/" + longFilename), duration: 42)
+        XCTAssertEqual(longInfo.filename, longFilename, "Display truncation must preserve the filename suffix")
+        let partial = VideoExportInfo(filename: "silent.mov", fileSize: nil, resolution: "1920 × 1080", frameRate: nil, duration: "00:00:42", videoCodec: "HEVC")
+        XCTAssertEqual(partial.lines, ["silent.mov  ·  00:00:42", "1920 × 1080  ·  HEVC"])
+        let image = try imageData(width: 320, height: 180)
+        let frames = (0..<9).map { CapturedFrame(id: $0, time: Double($0), jpegData: image) }
+        let result = StoryboardResult(frames: frames, sourceURL: URL(fileURLWithPath: "/tmp/Family.mp4"))
+        let withoutInfo = try StoryboardComposer.render(result: result, settings: ExportSettings(format: .png))
+        let withInfo = try StoryboardComposer.render(result: result, settings: ExportSettings(format: .png, showVideoInfo: true), videoInfo: info)
+        XCTAssertNotEqual(withInfo, withoutInfo)
+        XCTAssertNotNil(ImageCodec.cgImage(from: withInfo))
+    }
+
+    func testVideoInfoCodecNamesPreserveUnknownFourCCAndDistinguishAudio() {
+        func fourCC(_ value: String) -> FourCharCode {
+            value.utf8.reduce(0) { ($0 << 8) | FourCharCode($1) }
+        }
+        XCTAssertEqual(VideoExportInfo.codecName(fourCC("avc1"), video: true), "H.264")
+        XCTAssertEqual(VideoExportInfo.codecName(fourCC("hvc1"), video: true), "HEVC")
+        XCTAssertEqual(VideoExportInfo.codecName(fourCC("aac "), video: false), "AAC")
+        XCTAssertEqual(VideoExportInfo.codecName(fourCC("alac"), video: false), "ALAC")
+        XCTAssertEqual(VideoExportInfo.codecName(fourCC("zzzz"), video: true), "zzzz")
+        XCTAssertNil(VideoExportInfo.codecName(0, video: true))
+    }
+
+    func testEveryGridProducesDecodableExportsWithBothWatermarks() throws {
         let data = try imageData(width: 320, height: 180)
         let source = URL(fileURLWithPath: "/tmp/Family 旅行 東京.mp4")
         for side in StoryboardGrid.availableSides {
-            for format in [ExportFormat.png, .jpeg] {
+            for format in ExportFormat.allCases {
                 try autoreleasepool {
                     let frames = (0..<(side * side)).map {
                         CapturedFrame(id: $0, time: Double($0) * 1.25, jpegData: data)
@@ -74,8 +120,12 @@ final class ImageMemoryRegressionTests: XCTestCase {
                     XCTAssertEqual(image.width, 1_920)
                     if format == .png {
                         XCTAssertEqual(output.prefix(8), Data([137, 80, 78, 71, 13, 10, 26, 10]))
-                    } else {
+                    } else if format == .jpeg {
                         XCTAssertEqual(output.prefix(2), Data([0xFF, 0xD8]))
+                    } else {
+                        XCTAssertEqual(output.prefix(4), Data("RIFF".utf8))
+                        XCTAssertEqual(output[8..<12], Data("WEBP".utf8))
+                        XCTAssertNotNil(ImageCodec.thumbnail(from: output, maximumPixelSize: 256))
                     }
                 }
             }
