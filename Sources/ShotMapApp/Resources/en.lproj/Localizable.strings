@@ -132,6 +132,10 @@
 "update.available" = "Update available: %@";
 "update.about.available" = "Update available: %@";
 "update.menu.available" = "Download update %@";
+"update.check.failed.title" = "Update check failed";
+"update.check.failed.detail" = "Could not check GitHub for updates. Check your connection and try again.";
+"update.check.current.title" = "ShotMap is up to date";
+"update.check.current.detail" = "You have the latest available version.";
 "update.menu.check" = "Check for Updates…";
 "button.downloadUpdate" = "Download";
 "editor.title" = "Select frames manually";
@@ -195,3 +199,4 @@
 "editor.smartSelect.short" = "Smart select";
 "editor.regenerate.short" = "New frames";
 "editor.apply.short" = "Save";
+"language.followSystem" = "Follow System";

@@ -132,6 +132,10 @@
 "update.available" = "有可用更新：%@";
 "update.about.available" = "有可用更新：%@";
 "update.menu.available" = "下载更新 %@";
+"update.check.failed.title" = "检查更新失败";
+"update.check.failed.detail" = "无法从 GitHub 检查更新，请检查网络连接后重试。";
+"update.check.current.title" = "已是最新版本";
+"update.check.current.detail" = "你使用的已是目前可用的最新版本。";
 "update.menu.check" = "检查更新…";
 "button.downloadUpdate" = "下载";
 "editor.title" = "手动选择画面";
@@ -195,3 +199,4 @@
 "editor.smartSelect.short" = "智能选帧";
 "editor.regenerate.short" = "换一批";
 "editor.apply.short" = "保存";
+"language.followSystem" = "跟随系统";

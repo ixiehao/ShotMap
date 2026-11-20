@@ -3,6 +3,30 @@
 All notable user-facing changes are recorded here. Stable releases remain
 available on the [GitHub Releases page](https://github.com/ixiehao/ShotMap/releases).
 
+## v0.2.20 — 2026-11-20
+
+### English
+
+- Improved automatic update checks. Help keeps a separate command to check for updates.
+- Added a dedicated Language menu with Follow System and refreshed the About panel.
+
+### 中文
+
+- 修复自动更新检查。「帮助」菜单保留独立的「检查更新…」。
+- 新增独立的「语言」菜单和「跟随系统」选项，并更新「关于」面板。
+
+### 日本語
+
+- 自動更新確認を改善し、「ヘルプ」に手動で確認する項目を設けました。
+- 独立した「言語」メニューに「システムに従う」を追加し、「このアプリについて」を更新しました。
+
+### 한국어
+
+- 자동 업데이트 확인을 개선하고 도움말 메뉴에 수동 확인 항목을 마련했습니다.
+- 별도 언어 메뉴에 시스템 설정 사용 옵션을 추가하고 정보 창을 개선했습니다.
+
+macOS 13+ · Apple Silicon / Intel · 7 languages
+
 ## v0.2.19 — 2026-11-20
 
 ### English

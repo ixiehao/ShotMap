@@ -132,6 +132,10 @@
 "update.available" = "Actualización disponible: %@";
 "update.about.available" = "Actualización disponible: %@";
 "update.menu.available" = "Descargar actualización %@";
+"update.check.failed.title" = "No se pudieron buscar actualizaciones";
+"update.check.failed.detail" = "No se pudo consultar GitHub. Comprueba la conexión y vuelve a intentarlo.";
+"update.check.current.title" = "ShotMap está actualizado";
+"update.check.current.detail" = "Ya tienes la última versión disponible.";
 "update.menu.check" = "Buscar actualizaciones…";
 "button.downloadUpdate" = "Descargar";
 "editor.title" = "Elegir fotogramas";
@@ -195,3 +199,4 @@
 "editor.smartSelect.short" = "Selección auto";
 "editor.regenerate.short" = "Actualizar";
 "editor.apply.short" = "Guardar";
+"language.followSystem" = "Seguir el sistema";

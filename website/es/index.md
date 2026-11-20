@@ -120,6 +120,6 @@ Por defecto, en la carpeta del vídeo original. Usa Guardar como para elegir otr
 
 Crea tu primer mosaico en Mac. Gratis, de código abierto y disponible en siete idiomas.
 
-[Descargar v0.2.19](https://github.com/ixiehao/ShotMap/releases/latest) [Ver en GitHub](https://github.com/ixiehao/ShotMap)
+[Descargar v0.2.20](https://github.com/ixiehao/ShotMap/releases/latest) [Ver en GitHub](https://github.com/ixiehao/ShotMap)
 
 © 2026 ixiehaoShotMap · MIT [GitHub](https://github.com/ixiehao/ShotMap) [Versiones](https://github.com/ixiehao/ShotMap/releases/latest) [Comentarios](https://github.com/ixiehao/ShotMap/issues/new/choose)

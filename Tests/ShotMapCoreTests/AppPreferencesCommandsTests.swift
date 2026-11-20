@@ -24,6 +24,9 @@ final class AppPreferencesCommandsTests: XCTestCase {
         XCTAssertEqual(defaults.string(forKey: "appAppearance"), AppAppearance.light.rawValue)
         XCTAssertEqual(defaults.integer(forKey: "gridSide"), 3)
         XCTAssertEqual(AppPreferencesCommands(defaults: defaults).languageSelection.wrappedValue, AppLanguage.japanese.rawValue)
+        commands.languageSelection.wrappedValue = AppLanguage.followSystem
+        XCTAssertEqual(defaults.string(forKey: "appLanguage"), AppLanguage.followSystem)
+        XCTAssertEqual(AppPreferencesCommands(defaults: defaults).selectedLanguage, AppLanguage.systemDefault)
     }
 
     @MainActor

@@ -132,6 +132,10 @@
 "update.available" = "更新があります：%@";
 "update.about.available" = "更新があります：%@";
 "update.menu.available" = "更新 %@ をダウンロード";
+"update.check.failed.title" = "更新を確認できません";
+"update.check.failed.detail" = "GitHub に接続できませんでした。接続を確認して、もう一度お試しください。";
+"update.check.current.title" = "最新バージョンです";
+"update.check.current.detail" = "現在利用できる最新バージョンを使用しています。";
 "update.menu.check" = "アップデートを確認…";
 "button.downloadUpdate" = "ダウンロード";
 "editor.title" = "手動でコマを選択";
@@ -195,3 +199,4 @@
 "editor.smartSelect.short" = "自動選択";
 "editor.regenerate.short" = "候補を更新";
 "editor.apply.short" = "保存";
+"language.followSystem" = "システムに従う";

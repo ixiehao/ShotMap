@@ -55,54 +55,104 @@ struct GitHubRelease: Decodable {
 final class UpdateChecker: ObservableObject {
     @Published private(set) var availableUpdate: AvailableUpdate?
     @Published private(set) var lastCheckFailed = false
+    @Published private(set) var isChecking = false
 
-    private let session: URLSession
+    private let load: (URLRequest) async throws -> (Data, URLResponse)
+    private let now: () -> Date
     private let currentVersion: ReleaseVersion
-    private var isChecking = false
-    private var lastCheckedAt: Date?
+    private var lastSuccessfulCheckAt: Date?
+    private var lastFailedCheckAt: Date?
+    private var currentCheck: Task<Void, Never>?
 
     private static let releaseURL = URL(string: "https://api.github.com/repos/ixiehao/ShotMap/releases/latest")!
+    private static let latestPageURL = URL(string: "https://github.com/ixiehao/ShotMap/releases/latest")!
     private static let checkInterval: TimeInterval = 12 * 60 * 60
+    private static let retryInterval: TimeInterval = 60
 
-    init(currentVersion: ReleaseVersion? = nil, session: URLSession = .shared) {
+    init(currentVersion: ReleaseVersion? = nil, session: URLSession = .shared,
+         now: @escaping () -> Date = Date.init,
+         load: ((URLRequest) async throws -> (Data, URLResponse))? = nil) {
         self.currentVersion = currentVersion ?? Self.installedVersion
-        self.session = session
+        self.now = now
+        self.load = load ?? { try await session.data(for: $0) }
     }
 
     var hasUpdate: Bool { availableUpdate != nil }
 
     func checkForUpdate(force: Bool = false) async {
-        guard !isChecking else { return }
-        if !force, let lastCheckedAt, Date().timeIntervalSince(lastCheckedAt) < Self.checkInterval { return }
-        isChecking = true
-        defer {
-            lastCheckedAt = Date()
-            isChecking = false
+        if let currentCheck {
+            await currentCheck.value
+            return
         }
+        if !force {
+            if let lastSuccessfulCheckAt, now().timeIntervalSince(lastSuccessfulCheckAt) < Self.checkInterval { return }
+            if let lastFailedCheckAt, now().timeIntervalSince(lastFailedCheckAt) < Self.retryInterval { return }
+        }
+        isChecking = true
+        let task = Task { @MainActor in
+            await self.performCheck()
+        }
+        currentCheck = task
+        await task.value
+        currentCheck = nil
+        isChecking = false
+    }
 
-        var request = URLRequest(url: Self.releaseURL)
+    private func performCheck() async {
+        var request = URLRequest(url: Self.releaseURL, cachePolicy: .reloadIgnoringLocalCacheData)
         request.timeoutInterval = 10
         request.setValue("ShotMap update checker", forHTTPHeaderField: "User-Agent")
         request.setValue("application/vnd.github+json", forHTTPHeaderField: "Accept")
+        request.setValue("no-cache", forHTTPHeaderField: "Cache-Control")
 
         do {
-            let (data, response) = try await session.data(for: request)
+            let (data, response) = try await load(request)
             guard let response = response as? HTTPURLResponse, (200..<300).contains(response.statusCode) else {
-                lastCheckFailed = true
-                return
+                throw CheckError.invalidResponse
             }
             let release = try JSONDecoder().decode(GitHubRelease.self, from: data)
-            guard ReleaseVersion(tag: release.tagName) != nil else {
-                lastCheckFailed = true
-                return
+            guard ReleaseVersion(tag: release.tagName) != nil,
+                  release.htmlURL.scheme == "https", release.htmlURL.host == "github.com",
+                  release.htmlURL.query == nil, release.htmlURL.fragment == nil,
+                  release.htmlURL.path == "/ixiehao/ShotMap/releases/tag/\(release.tagName)" else {
+                throw CheckError.invalidResponse
             }
-            availableUpdate = release.update(newerThan: currentVersion)
-            lastCheckFailed = false
+            recordSuccess(release.update(newerThan: currentVersion))
         } catch {
-            // Offline and transient API failures must never interrupt the app.
-            lastCheckFailed = true
+            do {
+                // GitHub's unauthenticated API has a shared-IP rate limit.
+                // Its public latest-release URL redirects to the stable tag.
+                var fallback = URLRequest(url: Self.latestPageURL, cachePolicy: .reloadIgnoringLocalCacheData)
+                fallback.timeoutInterval = 10
+                fallback.setValue("ShotMap update checker", forHTTPHeaderField: "User-Agent")
+                fallback.setValue("no-cache", forHTTPHeaderField: "Cache-Control")
+                let (_, response) = try await load(fallback)
+                guard let response = response as? HTTPURLResponse,
+                      (200..<300).contains(response.statusCode), let url = response.url,
+                      url.scheme == "https", url.host == "github.com",
+                      url.query == nil, url.fragment == nil else { throw CheckError.invalidResponse }
+                let prefix = "/ixiehao/ShotMap/releases/tag/"
+                guard url.path.hasPrefix(prefix) else { throw CheckError.invalidResponse }
+                let tag = String(url.path.dropFirst(prefix.count))
+                guard let version = ReleaseVersion(tag: tag) else { throw CheckError.invalidResponse }
+                recordSuccess(currentVersion < version ? AvailableUpdate(version: tag, downloadURL: url) : nil)
+            } catch {
+                // Offline and transient failures must never interrupt the app.
+                lastCheckFailed = true
+                lastSuccessfulCheckAt = nil
+                lastFailedCheckAt = now()
+            }
         }
     }
+
+    private func recordSuccess(_ update: AvailableUpdate?) {
+        availableUpdate = update
+        lastCheckFailed = false
+        lastSuccessfulCheckAt = now()
+        lastFailedCheckAt = nil
+    }
+
+    private enum CheckError: Error { case invalidResponse }
 
     func openDownloadPage() {
         guard let url = availableUpdate?.downloadURL else { return }

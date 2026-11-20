@@ -132,6 +132,10 @@
 "update.available" = "Доступно обновление: %@";
 "update.about.available" = "Доступно обновление: %@";
 "update.menu.available" = "Скачать обновление %@";
+"update.check.failed.title" = "Не удалось проверить обновления";
+"update.check.failed.detail" = "Не удалось проверить обновления на GitHub. Проверьте подключение и повторите попытку.";
+"update.check.current.title" = "Установлена последняя версия";
+"update.check.current.detail" = "Вы используете последнюю доступную версию.";
 "update.menu.check" = "Проверить обновления…";
 "button.downloadUpdate" = "Скачать";
 "editor.title" = "Выбрать кадры вручную";
@@ -195,3 +199,4 @@
 "editor.smartSelect.short" = "Автовыбор";
 "editor.regenerate.short" = "Обновить";
 "editor.apply.short" = "Сохранить";
+"language.followSystem" = "Как в системе";

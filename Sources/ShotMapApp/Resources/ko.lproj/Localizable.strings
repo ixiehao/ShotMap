@@ -132,6 +132,10 @@
 "update.available" = "업데이트 가능: %@";
 "update.about.available" = "업데이트 가능: %@";
 "update.menu.available" = "업데이트 %@ 다운로드";
+"update.check.failed.title" = "업데이트 확인 실패";
+"update.check.failed.detail" = "GitHub에서 업데이트를 확인할 수 없습니다. 연결 상태를 확인하고 다시 시도하세요.";
+"update.check.current.title" = "최신 버전입니다";
+"update.check.current.detail" = "현재 사용 가능한 최신 버전을 사용하고 있습니다.";
 "update.menu.check" = "업데이트 확인…";
 "button.downloadUpdate" = "다운로드";
 "editor.title" = "프레임 직접 선택";
@@ -195,3 +199,4 @@
 "editor.smartSelect.short" = "자동 선택";
 "editor.regenerate.short" = "후보 새로고침";
 "editor.apply.short" = "저장";
+"language.followSystem" = "시스템 설정 따르기";
