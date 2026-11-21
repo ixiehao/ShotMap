@@ -24,6 +24,25 @@ Keep claims within the released Mac app's capabilities. Smart Select can preserv
 
 Use real app screenshots and describe what they show. English, Chinese and Japanese have existing localized captures. French, Russian, Spanish and Korean currently reuse the English captures, clearly identified in localized captions and alt text; never imply those captures show a translated interface. Check image rights and keep the *Tears of Steel* attribution visible. Keep page titles, descriptions, social metadata, schema, and visible content aligned.
 
+## Tutorials
+
+The English, Simplified Chinese and Japanese homepages link to the same three
+task-based articles. Keep their steps, screenshot captions and alt text in
+[`website/tutorial-copy.mjs`](../website/tutorial-copy.mjs). Run
+`npm run build:website` to regenerate the articles, sitemap and reading files.
+
+`website/assets/tutorials/` contains the original synthetic example
+`Color Trail.mp4` (960 × 540, 24 fps, 36 seconds), direct ShotMap exports and
+localized window-content captures. The captures were rendered offscreen from
+the v0.2.20 SwiftUI/AppKit views in an isolated temporary harness. The harness
+used the real storyboard generation, manual selection and export paths and
+never captured the desktop or a file picker. The manual JPG was identical across
+the three runs. Screenshot WebPs retain no EXIF, XMP or ICC payload. The
+published JPEGs retain their JFIF and color profile with the other metadata
+removed without re-encoding. Link each
+embedded screenshot to its original-size file and use the same input and settings
+in every translation.
+
 ## Icons
 
 Website pictograms follow the app's Tabler Icons Outline v3.49.0 set. Use the original local or inline SVG paths with the same outline treatment; do not substitute Unicode symbols or mix in another icon library. The ShotMap logo and favicon are project artwork, not UI pictograms. Keep decorative SVGs hidden from assistive technology and preserve the MIT attribution in [`NOTICE.md`](../NOTICE.md).

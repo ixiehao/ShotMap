@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>在 Mac 上将 MP4 生成 3 × 3 分镜图 · ShotMap</title>
+    <meta name="description" content="从一段视频自动选取九帧，拼成一张 JPG。" />
+    <link rel="canonical" href="https://ixiehao.github.io/ShotMap/zh/tutorials/video-to-storyboard/" />
+    <link rel="alternate" hreflang="en" href="https://ixiehao.github.io/ShotMap/tutorials/video-to-storyboard/" />
+    <link rel="alternate" hreflang="zh-CN" href="https://ixiehao.github.io/ShotMap/zh/tutorials/video-to-storyboard/" />
+    <link rel="alternate" hreflang="ja" href="https://ixiehao.github.io/ShotMap/ja/tutorials/video-to-storyboard/" />
+    <link rel="alternate" hreflang="x-default" href="https://ixiehao.github.io/ShotMap/tutorials/video-to-storyboard/" />
+    <link rel="alternate" type="text/markdown" href="https://ixiehao.github.io/ShotMap/zh/tutorials/video-to-storyboard/index.md" />
+    <link rel="describedby" type="text/plain" href="https://ixiehao.github.io/ShotMap/llms.txt" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="在 Mac 上将 MP4 生成 3 × 3 分镜图" />
+    <meta property="og:description" content="从一段视频自动选取九帧，拼成一张 JPG。" />
+    <meta property="og:url" content="https://ixiehao.github.io/ShotMap/zh/tutorials/video-to-storyboard/" />
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:image" content="https://ixiehao.github.io/ShotMap/assets/tutorials/generate-zh.webp" />
+    <meta property="og:image:alt" content="简体中文 ShotMap 主界面显示已保存的九宫格分镜图，右侧选中 JPG" />
+    <link rel="icon" href="../../../favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../../../styles.css?v=e7e784c0f3c6" />
+    <link rel="stylesheet" href="../../../tutorials.css" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"在 Mac 上将 MP4 生成 3 × 3 分镜图","description":"从一段视频自动选取九帧，拼成一张 JPG。","inLanguage":"zh-CN","url":"https://ixiehao.github.io/ShotMap/zh/tutorials/video-to-storyboard/","mainEntityOfPage":"https://ixiehao.github.io/ShotMap/zh/tutorials/video-to-storyboard/","image":"https://ixiehao.github.io/ShotMap/assets/tutorials/generate-zh.webp","author":{"@type":"Person","name":"ixiehao"}}</script>
+  </head>
+  <body>
+    <header class="site-header tutorial-header">
+      <a class="brand" href="../../../zh/" aria-label="ShotMap 首页">
+        <img class="brand-mark" src="../../../assets/app-icon.png" width="36" height="36" alt="" />
+        <span>ShotMap</span>
+      </a>
+      <nav aria-label="教程语言">
+          <a href="../../../tutorials/video-to-storyboard/" lang="en" hreflang="en">English</a>
+          <a href="../../../zh/tutorials/video-to-storyboard/" lang="zh-CN" hreflang="zh-CN" aria-current="page">简体中文</a>
+          <a href="../../../ja/tutorials/video-to-storyboard/" lang="ja" hreflang="ja">日本語</a>
+      </nav>
+    </header>
+    <main class="shell tutorial-page">
+      <article>
+        <header class="tutorial-heading">
+          <a class="tutorial-return" href="../../../zh/#tutorials">ShotMap 图文教程</a>
+          <h1>在 Mac 上将 MP4 生成 3 × 3 分镜图</h1>
+          <p class="tutorial-summary">从一段视频自动选取九帧，拼成一张 JPG。</p>
+        </header>
+        <p>示例使用 macOS 13 或更高版本上的 ShotMap 0.2.20，以及一段 36 秒、960 × 540 的 Color Trail.mp4。请把视频放在有写入权限的文件夹中。</p>
+        <p><a href="../../../assets/tutorials/Color%20Trail.mp4" download>下载示例视频 Color Trail.mp4</a></p>
+        <ol class="tutorial-steps">
+          <li>把 Color Trail.mp4 拖入视频队列，也可以点击队列标题旁的 + 按钮添加。</li>
+          <li>在<strong>分镜设置</strong>中选择 <strong>3 × 3</strong>、<strong>随视频</strong>、<strong>1920 px</strong> 和 <strong>JPG</strong>。保留米白色底色，开启<strong>显示时间码</strong>，关闭文件名和视频信息开关。</li>
+          <li>点击<strong>生成分镜图</strong>。等队列状态显示<strong>已保存</strong>，确认预览中出现九张画面。</li>
+        </ol>
+        <figure>
+          <a class="tutorial-figure-link" href="../../../assets/tutorials/generate-zh.webp" aria-label="查看原尺寸截图"><img src="../../../assets/tutorials/generate-zh.webp" alt="简体中文 ShotMap 主界面显示已保存的九宫格分镜图，右侧选中 JPG" width="2432" height="1460" /></a>
+          <figcaption>队列显示「已保存」。右侧选中 3 × 3 和 JPG。 <a href="../../../assets/tutorials/generate-zh.webp">查看原尺寸截图</a></figcaption>
+        </figure>
+        <h2>核对成品</h2>
+        <p>点击预览上方的<strong>在 Finder 中显示</strong>。打开 Color Trail.mp4 同目录下的 JPG，确认九张画面带有时间码。</p>
+        <p><a href="../../../assets/tutorials/automatic-storyboard.jpg" download>下载示例成品</a></p>
+      </article>
+      <section class="tutorial-related" aria-labelledby="related-title">
+        <h2 id="related-title">更多教程</h2>
+        <ul class="tutorial-links">
+          <li><a href="../choose-frames/"><strong>在 ShotMap 中手动选帧并替换分镜画面</strong><span>用时间轴定位想要的瞬间，手动保留一帧，再自动补齐剩余位置。</span></a></li>
+          <li><a href="../layout-and-export/"><strong>导出带视频信息的方形 WebP 分镜图</strong><span>将分镜图设为 1:1，保留时间码并加入源视频信息。</span></a></li>
+        </ul>
+      </section>
+    </main>
+  </body>
+</html>

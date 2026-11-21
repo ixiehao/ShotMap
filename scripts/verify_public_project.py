@@ -154,7 +154,7 @@ def main() -> None:
     sitemap = ET.parse(ROOT / "website/sitemap.xml")
     indexed_urls = {node.text for node in sitemap.findall("{*}url/{*}loc")}
     expected_urls = {WEBSITE + (locale + "/" if locale != "en" else "") for locale in LANGUAGES}
-    if indexed_urls != expected_urls:
+    if not expected_urls.issubset(indexed_urls):
         fail("sitemap must include all seven language URLs")
 
     social_preview = ROOT / "docs/assets/social-preview-v2.jpg"

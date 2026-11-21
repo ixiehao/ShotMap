@@ -12,6 +12,17 @@
 - [Русский](https://ixiehao.github.io/ShotMap/ru/index.md)
 - [简体中文](https://ixiehao.github.io/ShotMap/zh/index.md)
 
+## Tutorials
+- [English · Turn an MP4 into a 3 × 3 storyboard on Mac · ShotMap](https://ixiehao.github.io/ShotMap/tutorials/video-to-storyboard/index.md): Automatically pick nine frames from one video and save them as a single JPG.
+- [简体中文 · 在 Mac 上将 MP4 生成 3 × 3 分镜图 · ShotMap](https://ixiehao.github.io/ShotMap/zh/tutorials/video-to-storyboard/index.md): 从一段视频自动选取九帧，拼成一张 JPG。
+- [日本語 · Mac で MP4 から 3 × 3 の絵コンテを作る · ShotMap](https://ixiehao.github.io/ShotMap/ja/tutorials/video-to-storyboard/index.md): 動画から 9 コマを自動で選び、1 枚の JPG にまとめます。
+- [English · Choose and replace frames in a ShotMap storyboard · ShotMap](https://ixiehao.github.io/ShotMap/tutorials/choose-frames/index.md): Find a moment on the timeline, pick it yourself and fill the remaining slots automatically.
+- [简体中文 · 在 ShotMap 中手动选帧并替换分镜画面 · ShotMap](https://ixiehao.github.io/ShotMap/zh/tutorials/choose-frames/index.md): 用时间轴定位想要的瞬间，手动保留一帧，再自动补齐剩余位置。
+- [日本語 · ShotMap の絵コンテで使うコマを手動で選ぶ · ShotMap](https://ixiehao.github.io/ShotMap/ja/tutorials/choose-frames/index.md): タイムラインで使いたいコマを見つけ、残りのマスを自動選択で埋めます。
+- [English · Make a square WebP storyboard with video details · ShotMap](https://ixiehao.github.io/ShotMap/tutorials/layout-and-export/index.md): Set a 1:1 layout, keep the timecodes and add the source video’s details.
+- [简体中文 · 导出带视频信息的方形 WebP 分镜图 · ShotMap](https://ixiehao.github.io/ShotMap/zh/tutorials/layout-and-export/index.md): 将分镜图设为 1:1，保留时间码并加入源视频信息。
+- [日本語 · 動画情報付きの正方形の絵コンテを WebP で書き出す · ShotMap](https://ixiehao.github.io/ShotMap/ja/tutorials/layout-and-export/index.md): 1:1 のレイアウトで、タイムコードと元の動画情報を表示します。
+
 ## Optional
 
 - [Source and project documentation](https://github.com/ixiehao/ShotMap)

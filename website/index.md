@@ -88,6 +88,16 @@ Use the video's aspect ratio and choose a background color.
 
 Add several videos at once. Watch previews fill as frames are ready, or pause after the current video.
 
+### ShotMap tutorials
+
+Make your first storyboard, replace a frame, or change the layout for sharing.
+
+- [**Turn an MP4 into a 3 × 3 storyboard on Mac** Automatically pick nine frames from one video and save them as a single JPG.](https://ixiehao.github.io/ShotMap/tutorials/video-to-storyboard/)
+
+- [**Choose and replace frames in a ShotMap storyboard** Find a moment on the timeline, pick it yourself and fill the remaining slots automatically.](https://ixiehao.github.io/ShotMap/tutorials/choose-frames/)
+
+- [**Make a square WebP storyboard with video details** Set a 1:1 layout, keep the timecodes and add the source video’s details.](https://ixiehao.github.io/ShotMap/tutorials/layout-and-export/)
+
 YOUR VIDEOS STAY YOURS
 
 ### Your videos stay on your Mac.
