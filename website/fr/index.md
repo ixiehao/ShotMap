@@ -120,6 +120,6 @@ PRÊT À RETROUVER VOS VIDÉOS ?
 
 Créez votre première planche sur Mac. Gratuit, open source et disponible en sept langues.
 
-[Télécharger v0.2.19](https://github.com/ixiehao/ShotMap/releases/latest) [Voir sur GitHub](https://github.com/ixiehao/ShotMap)
+[Télécharger v0.2.20](https://github.com/ixiehao/ShotMap/releases/latest) [Voir sur GitHub](https://github.com/ixiehao/ShotMap)
 
 © 2026 ixiehaoShotMap · MIT [GitHub](https://github.com/ixiehao/ShotMap) [Versions](https://github.com/ixiehao/ShotMap/releases/latest) [Vos retours](https://github.com/ixiehao/ShotMap/issues/new/choose)

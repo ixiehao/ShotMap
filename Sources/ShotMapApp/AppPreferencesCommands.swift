@@ -9,12 +9,12 @@ struct AppPreferencesCommands: Commands {
     @AppStorage private var appearanceCode: String
 
     init(defaults: UserDefaults = .standard) {
-        _languageCode = AppStorage(wrappedValue: AppLanguage.systemDefault.rawValue, "appLanguage", store: defaults)
+        _languageCode = AppStorage(wrappedValue: AppLanguage.followSystem, "appLanguage", store: defaults)
         _appearanceCode = AppStorage(wrappedValue: AppAppearance.system.rawValue, "appAppearance", store: defaults)
     }
 
     var selectedLanguage: AppLanguage {
-        AppLanguage(rawValue: languageCode) ?? .english
+        AppLanguage.resolve(languageCode)
     }
 
     var selectedAppearance: AppAppearance {
@@ -24,9 +24,11 @@ struct AppPreferencesCommands: Commands {
     // Resolve an unknown stored value for the checkmark without rewriting it
     // merely because the menu was opened. Only a user selection writes storage.
     var languageSelection: Binding<String> {
-        Binding(get: { selectedLanguage.rawValue }, set: { value in
-            guard let language = AppLanguage(rawValue: value) else { return }
-            languageCode = language.rawValue
+        Binding(get: {
+            languageCode == AppLanguage.followSystem ? languageCode : selectedLanguage.rawValue
+        }, set: { value in
+            guard value == AppLanguage.followSystem || AppLanguage(rawValue: value) != nil else { return }
+            languageCode = value
         })
     }
 
@@ -48,15 +50,16 @@ struct AppPreferencesCommands: Commands {
                 .pickerStyle(.inline)
                 .labelsHidden()
             }
-            Menu(selectedLanguage.text("app.language")) {
-                Picker(selectedLanguage.text("app.language"), selection: languageSelection) {
-                    ForEach(AppLanguage.allCases) { language in
-                        Text(language.displayName).tag(language.rawValue)
-                    }
+        }
+        CommandMenu(selectedLanguage.text("app.language")) {
+            Picker(selectedLanguage.text("app.language"), selection: languageSelection) {
+                Text(selectedLanguage.text("language.followSystem")).tag(AppLanguage.followSystem)
+                ForEach(AppLanguage.allCases) { language in
+                    Text(language.displayName).tag(language.rawValue)
                 }
-                .pickerStyle(.inline)
-                .labelsHidden()
             }
+            .pickerStyle(.inline)
+            .labelsHidden()
         }
     }
 }

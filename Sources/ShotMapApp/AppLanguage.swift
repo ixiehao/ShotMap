@@ -16,7 +16,7 @@ enum AppLanguage: String, CaseIterable, Identifiable, Sendable {
 
     var displayName: String {
         switch self {
-        case .chinese: "中文"
+        case .chinese: "简体中文"
         case .english: "English"
         case .french: "Français"
         case .russian: "Русский"
@@ -32,6 +32,13 @@ enum AppLanguage: String, CaseIterable, Identifiable, Sendable {
     /// first supported system language, with English as the universal fallback.
     static var systemDefault: AppLanguage { preferred(from: Locale.preferredLanguages) }
 
+    static let followSystem = "system"
+
+    static func resolve(_ preference: String) -> AppLanguage {
+        if preference == followSystem { return systemDefault }
+        return AppLanguage(rawValue: preference) ?? .english
+    }
+
     static func preferred(from identifiers: [String]) -> AppLanguage {
         for identifier in identifiers {
             let base = identifier.replacingOccurrences(of: "_", with: "-")
@@ -43,7 +50,7 @@ enum AppLanguage: String, CaseIterable, Identifiable, Sendable {
     }
 
     static let requiredLocalizationKeys = [
-        "alert.generation.title", "button.ok", "app.tagline", "app.productName", "studio.title", "app.language", "app.appearance", "appearance.system", "appearance.light", "appearance.dark", "app.icon.accessibility",
+        "alert.generation.title", "button.ok", "app.tagline", "app.productName", "studio.title", "app.language", "language.followSystem", "app.appearance", "appearance.system", "appearance.light", "appearance.dark", "app.icon.accessibility",
         "section.grid", "section.frame", "section.aspect", "aspect.source", "aspect.landscape", "aspect.standard",
         "aspect.square", "aspect.vertical", "aspect.portrait", "aspect.ultraWide",
         "section.export", "export.autosave", "export.format", "export.width", "export.width.value", "export.background",
@@ -67,7 +74,7 @@ enum AppLanguage: String, CaseIterable, Identifiable, Sendable {
         "help.step.add.title", "help.step.add.detail", "help.step.settings.title", "help.step.settings.detail",
         "help.step.create.title", "help.step.create.detail", "help.troubleshoot.title", "help.troubleshoot.detail",
         "help.privacy", "help.project", "help.feedback", "update.available", "update.about.available", "update.menu.available",
-        "update.menu.check", "button.downloadUpdate", "editor.title", "editor.detail", "editor.preview", "editor.timelineHint", "editor.loading",
+        "update.menu.check", "update.check.failed.title", "update.check.failed.detail", "update.check.current.title", "update.check.current.detail", "button.downloadUpdate", "editor.title", "editor.detail", "editor.preview", "editor.timelineHint", "editor.loading",
         "editor.noPreview", "editor.apply", "editor.timeline", "editor.addCurrentFrame.short", "editor.smartSelect.short", "editor.regenerate.short", "editor.apply.short",
         "editor.cancel", "editor.selectionCount", "editor.smartSelect", "editor.regenerate", "editor.videoPreview",
         "editor.videoPreviewDetail", "editor.playPreview", "editor.pausePreview", "editor.addCurrentFrame", "editor.candidates",

@@ -60,7 +60,7 @@ The release page includes a SHA-256 checksum for people who want to verify their
 
 ### Choose your language
 
-Choose a language from the macOS menu bar to switch instantly, without restarting or clearing your queue. On first launch, ShotMap matches a supported system language or falls back to English; it remembers your choice after that.
+Use **Language** in the macOS menu bar to switch instantly. **Follow System** is the default and can be selected again later. A manually selected language is remembered, and changing it preserves the queue.
 
 ## Private by design
 

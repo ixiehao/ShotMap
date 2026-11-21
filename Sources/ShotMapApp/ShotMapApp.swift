@@ -2,9 +2,15 @@ import AppKit
 import SwiftUI
 
 private enum ProjectLinks {
-    static let website = URL(string: "https://ixiehao.github.io/ShotMap/")!
     static let repository = URL(string: "https://github.com/ixiehao/ShotMap")!
     static let issues = URL(string: "https://github.com/ixiehao/ShotMap/issues/new/choose")!
+
+    static func website(for language: AppLanguage) -> URL {
+        let root = "https://ixiehao.github.io/ShotMap/"
+        if language == .english { return URL(string: root)! }
+        let route = language == .chinese ? "zh" : language.rawValue
+        return URL(string: root + route + "/")!
+    }
 }
 
 private enum AboutCredits {
@@ -36,8 +42,10 @@ private enum AboutCredits {
             credits.append(NSAttributedString(string: text, attributes: attributes))
         }
 
+        appendBody("\(language.text("app.tagline"))\n\n")
         appendBody("\(language.text("about.developer")) · ixiehao\n")
-        appendLink("ixiehao.github.io/ShotMap\n", destination: ProjectLinks.website)
+        appendLink("ixiehao.github.io/ShotMap\n", destination: ProjectLinks.website(for: language))
+        appendLink("GitHub\n", destination: ProjectLinks.repository)
         appendLink(language.text("about.feedback"), destination: ProjectLinks.issues)
         if let availableUpdate {
             appendBody("\n\n\(language.text("update.about.available", availableUpdate.version))\n")
@@ -74,13 +82,13 @@ private struct HelpStep: View {
 }
 
 private struct HelpPanel: View {
-    @AppStorage("appLanguage") private var languageCode = AppLanguage.systemDefault.rawValue
+    @AppStorage("appLanguage") private var languageCode = AppLanguage.followSystem
     @AppStorage("appAppearance") private var appearanceCode = AppAppearance.system.rawValue
     @ObservedObject var updateChecker: UpdateChecker
     let updateWindowTitle: (String) -> Void
 
     private var language: AppLanguage {
-        AppLanguage(rawValue: languageCode) ?? .english
+        AppLanguage.resolve(languageCode)
     }
 
     private func t(_ key: String) -> String {
@@ -288,10 +296,32 @@ final class ShotMapAppDelegate: NSObject, NSApplicationDelegate {
 
     @MainActor
     func showAboutPanel(language: AppLanguage, updateChecker: UpdateChecker) {
-        NSApplication.shared.orderFrontStandardAboutPanel(options: [
+        var options: [NSApplication.AboutPanelOptionKey: Any] = [
             .credits: AboutCredits.make(language: language, availableUpdate: updateChecker.availableUpdate)
-        ])
+        ]
+        if let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String,
+           version == Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String {
+            options[.version] = ""
+        }
+        NSApplication.shared.orderFrontStandardAboutPanel(options: options)
         NSApplication.shared.activate(ignoringOtherApps: true)
+    }
+
+    @MainActor
+    func showUpdateCheckResult(language: AppLanguage, checker: UpdateChecker) {
+        let alert = NSAlert()
+        if !checker.lastCheckFailed, let update = checker.availableUpdate {
+            alert.messageText = language.text("update.menu.check")
+            alert.informativeText = language.text("update.available", update.version)
+            alert.addButton(withTitle: language.text("button.downloadUpdate"))
+            alert.addButton(withTitle: language.text("button.ok"))
+            if alert.runModal() == .alertFirstButtonReturn { checker.openDownloadPage() }
+            return
+        }
+        alert.messageText = language.text(checker.lastCheckFailed ? "update.check.failed.title" : "update.check.current.title")
+        alert.informativeText = language.text(checker.lastCheckFailed ? "update.check.failed.detail" : "update.check.current.detail")
+        alert.addButton(withTitle: language.text("button.ok"))
+        alert.runModal()
     }
 
     @MainActor
@@ -364,12 +394,12 @@ private struct MainWindowRegistrationView: NSViewRepresentable {
 @main
 struct ShotMapApp: App {
     @NSApplicationDelegateAdaptor(ShotMapAppDelegate.self) private var appDelegate
-    @AppStorage("appLanguage") private var languageCode = AppLanguage.systemDefault.rawValue
+    @AppStorage("appLanguage") private var languageCode = AppLanguage.followSystem
     @StateObject private var updateChecker = UpdateChecker()
     @StateObject private var storyboardModel = StoryboardViewModel()
 
     private var language: AppLanguage {
-        AppLanguage(rawValue: languageCode) ?? .english
+        AppLanguage.resolve(languageCode)
     }
 
     var body: some Scene {
@@ -399,11 +429,16 @@ struct ShotMapApp: App {
                     appDelegate.showHelpPanel(language: language, updateChecker: updateChecker)
                 }
                 Divider()
-                Button(updateChecker.hasUpdate ? language.text("update.menu.available", updateChecker.availableUpdate?.version ?? "") : language.text("update.menu.check")) {
-                    if updateChecker.hasUpdate {
+                Button(language.text("update.menu.check")) {
+                    Task {
+                        await updateChecker.checkForUpdate(force: true)
+                        appDelegate.showUpdateCheckResult(language: language, checker: updateChecker)
+                    }
+                }
+                .disabled(updateChecker.isChecking)
+                if let update = updateChecker.availableUpdate {
+                    Button(language.text("update.menu.available", update.version)) {
                         updateChecker.openDownloadPage()
-                    } else {
-                        Task { await updateChecker.checkForUpdate(force: true) }
                     }
                 }
                 Divider()

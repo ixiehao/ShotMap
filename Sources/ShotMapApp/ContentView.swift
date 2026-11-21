@@ -7,7 +7,8 @@ struct ContentView: View {
     @EnvironmentObject private var updateChecker: UpdateChecker
     @Environment(\.colorScheme) private var systemColorScheme
     @Environment(\.displayScale) private var displayScale
-    @AppStorage("appLanguage") private var languageCode = AppLanguage.systemDefault.rawValue
+    @Environment(\.scenePhase) private var scenePhase
+    @AppStorage("appLanguage") private var languageCode = AppLanguage.followSystem
     @AppStorage("appAppearance") private var appearanceCode = AppAppearance.system.rawValue
     @State private var showsQueue = true
     @State private var showsInspector = true
@@ -28,7 +29,7 @@ struct ContentView: View {
     }
 
     private var language: AppLanguage {
-        AppLanguage(rawValue: languageCode) ?? .english
+        AppLanguage.resolve(languageCode)
     }
 
     private var appearance: AppAppearance {
@@ -131,10 +132,19 @@ struct ContentView: View {
         .preferredColorScheme(appearance.preferredColorScheme)
         .onAppear {
             model.language = language
-            Task { await updateChecker.checkForUpdate() }
+        }
+        .task {
+            while !Task.isCancelled {
+                await updateChecker.checkForUpdate()
+                do { try await Task.sleep(nanoseconds: 60_000_000_000) }
+                catch { break }
+            }
+        }
+        .onChange(of: scenePhase) { phase in
+            if phase == .active { Task { await updateChecker.checkForUpdate() } }
         }
         .onChange(of: languageCode) { newValue in
-            model.language = AppLanguage(rawValue: newValue) ?? .english
+            model.language = AppLanguage.resolve(newValue)
         }
         .onChange(of: model.isProcessing) { isProcessing in
             guard !isProcessing else { return }
