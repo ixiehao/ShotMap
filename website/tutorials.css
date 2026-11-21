@@ -22,13 +22,15 @@
 .tutorial-links strong { line-height: 1.4; }
 .tutorial-links span { color: var(--muted); font-size: 14px; }
 
-.tutorial-header { justify-content: space-between; }
+.tutorial-header { justify-content: space-between; flex-wrap: nowrap; }
 .tutorial-header nav {
   display: flex;
   justify-content: end;
+  flex-wrap: wrap;
+  width: auto;
   gap: 6px;
   margin: 0;
-  flex-wrap: wrap;
+  overflow: visible;
 }
 
 .tutorial-header nav a {
@@ -56,6 +58,7 @@
   .tutorial-header { gap: 8px; padding-inline: 12px; }
   .tutorial-header .brand { gap: 6px; font-size: 17px; }
   .tutorial-header .brand-mark { width: 28px; height: 28px; }
+  .tutorial-header .brand span { display: inline; }
   .tutorial-header nav { font-size: 12px; gap: 2px; }
   .tutorial-header nav a { padding-inline: 4px; }
 }

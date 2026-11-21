@@ -34,6 +34,7 @@ for (const language of languages.filter(id => tutorialLanguages.includes(id))) {
         expect(await figure.getAttribute('href')).toBe(await screenshot.getAttribute('src'));
         const { violations } = await page.evaluate(measureLayout, { root: 'body', language });
         expect(violations).toEqual([]);
+        expect(await page.locator('.tutorial-header').evaluate(header => header.clientHeight)).toBeLessThanOrEqual(72);
 
         const img = await request.get(new URL(await figure.getAttribute('href'), page.url()).href);
         expect(img.status()).toBe(200);
