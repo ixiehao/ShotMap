@@ -77,4 +77,67 @@
     <xhtml:link rel="alternate" hreflang="ko" href="https://ixiehao.github.io/ShotMap/ko/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ixiehao.github.io/ShotMap/" />
   </url>
+  <url>
+    <loc>https://ixiehao.github.io/ShotMap/tutorials/video-to-storyboard/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ixiehao.github.io/ShotMap/tutorials/video-to-storyboard/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://ixiehao.github.io/ShotMap/zh/tutorials/video-to-storyboard/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://ixiehao.github.io/ShotMap/ja/tutorials/video-to-storyboard/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ixiehao.github.io/ShotMap/tutorials/video-to-storyboard/" />
+  </url>
+  <url>
+    <loc>https://ixiehao.github.io/ShotMap/zh/tutorials/video-to-storyboard/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ixiehao.github.io/ShotMap/tutorials/video-to-storyboard/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://ixiehao.github.io/ShotMap/zh/tutorials/video-to-storyboard/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://ixiehao.github.io/ShotMap/ja/tutorials/video-to-storyboard/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ixiehao.github.io/ShotMap/tutorials/video-to-storyboard/" />
+  </url>
+  <url>
+    <loc>https://ixiehao.github.io/ShotMap/ja/tutorials/video-to-storyboard/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ixiehao.github.io/ShotMap/tutorials/video-to-storyboard/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://ixiehao.github.io/ShotMap/zh/tutorials/video-to-storyboard/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://ixiehao.github.io/ShotMap/ja/tutorials/video-to-storyboard/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ixiehao.github.io/ShotMap/tutorials/video-to-storyboard/" />
+  </url>
+  <url>
+    <loc>https://ixiehao.github.io/ShotMap/tutorials/choose-frames/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ixiehao.github.io/ShotMap/tutorials/choose-frames/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://ixiehao.github.io/ShotMap/zh/tutorials/choose-frames/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://ixiehao.github.io/ShotMap/ja/tutorials/choose-frames/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ixiehao.github.io/ShotMap/tutorials/choose-frames/" />
+  </url>
+  <url>
+    <loc>https://ixiehao.github.io/ShotMap/zh/tutorials/choose-frames/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ixiehao.github.io/ShotMap/tutorials/choose-frames/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://ixiehao.github.io/ShotMap/zh/tutorials/choose-frames/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://ixiehao.github.io/ShotMap/ja/tutorials/choose-frames/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ixiehao.github.io/ShotMap/tutorials/choose-frames/" />
+  </url>
+  <url>
+    <loc>https://ixiehao.github.io/ShotMap/ja/tutorials/choose-frames/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ixiehao.github.io/ShotMap/tutorials/choose-frames/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://ixiehao.github.io/ShotMap/zh/tutorials/choose-frames/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://ixiehao.github.io/ShotMap/ja/tutorials/choose-frames/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ixiehao.github.io/ShotMap/tutorials/choose-frames/" />
+  </url>
+  <url>
+    <loc>https://ixiehao.github.io/ShotMap/tutorials/layout-and-export/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ixiehao.github.io/ShotMap/tutorials/layout-and-export/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://ixiehao.github.io/ShotMap/zh/tutorials/layout-and-export/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://ixiehao.github.io/ShotMap/ja/tutorials/layout-and-export/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ixiehao.github.io/ShotMap/tutorials/layout-and-export/" />
+  </url>
+  <url>
+    <loc>https://ixiehao.github.io/ShotMap/zh/tutorials/layout-and-export/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ixiehao.github.io/ShotMap/tutorials/layout-and-export/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://ixiehao.github.io/ShotMap/zh/tutorials/layout-and-export/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://ixiehao.github.io/ShotMap/ja/tutorials/layout-and-export/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ixiehao.github.io/ShotMap/tutorials/layout-and-export/" />
+  </url>
+  <url>
+    <loc>https://ixiehao.github.io/ShotMap/ja/tutorials/layout-and-export/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ixiehao.github.io/ShotMap/tutorials/layout-and-export/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://ixiehao.github.io/ShotMap/zh/tutorials/layout-and-export/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://ixiehao.github.io/ShotMap/ja/tutorials/layout-and-export/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ixiehao.github.io/ShotMap/tutorials/layout-and-export/" />
+  </url>
 </urlset>

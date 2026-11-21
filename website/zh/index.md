@@ -88,6 +88,16 @@ ShotMap 中文工作区
 
 一次加入多个视频，取到的画面逐张显示；也可在当前视频处理完后暂停。
 
+### ShotMap 图文教程
+
+从视频生成第一张分镜图，手动选帧，或调整画面比例与导出格式。
+
+- [**在 Mac 上将 MP4 生成 3 × 3 分镜图** 从一段视频自动选取九帧，拼成一张 JPG。](https://ixiehao.github.io/ShotMap/zh/tutorials/video-to-storyboard/)
+
+- [**在 ShotMap 中手动选帧并替换分镜画面** 用时间轴定位想要的瞬间，手动保留一帧，再自动补齐剩余位置。](https://ixiehao.github.io/ShotMap/zh/tutorials/choose-frames/)
+
+- [**导出带视频信息的方形 WebP 分镜图** 将分镜图设为 1:1，保留时间码并加入源视频信息。](https://ixiehao.github.io/ShotMap/zh/tutorials/layout-and-export/)
+
 视频只留在你的设备上
 
 ### 视频始终留在你的 Mac 上。

@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ShotMap の絵コンテで使うコマを手動で選ぶ · ShotMap</title>
+    <meta name="description" content="タイムラインで使いたいコマを見つけ、残りのマスを自動選択で埋めます。" />
+    <link rel="canonical" href="https://ixiehao.github.io/ShotMap/ja/tutorials/choose-frames/" />
+    <link rel="alternate" hreflang="en" href="https://ixiehao.github.io/ShotMap/tutorials/choose-frames/" />
+    <link rel="alternate" hreflang="zh-CN" href="https://ixiehao.github.io/ShotMap/zh/tutorials/choose-frames/" />
+    <link rel="alternate" hreflang="ja" href="https://ixiehao.github.io/ShotMap/ja/tutorials/choose-frames/" />
+    <link rel="alternate" hreflang="x-default" href="https://ixiehao.github.io/ShotMap/tutorials/choose-frames/" />
+    <link rel="alternate" type="text/markdown" href="https://ixiehao.github.io/ShotMap/ja/tutorials/choose-frames/index.md" />
+    <link rel="describedby" type="text/plain" href="https://ixiehao.github.io/ShotMap/llms.txt" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="ShotMap の絵コンテで使うコマを手動で選ぶ" />
+    <meta property="og:description" content="タイムラインで使いたいコマを見つけ、残りのマスを自動選択で埋めます。" />
+    <meta property="og:url" content="https://ixiehao.github.io/ShotMap/ja/tutorials/choose-frames/" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta property="og:image" content="https://ixiehao.github.io/ShotMap/assets/tutorials/frames-ja.webp" />
+    <meta property="og:image:alt" content="日本語の手動選択画面。時刻は 13.250 秒で、9 コマの選択番号がタイムラインに表示されている" />
+    <link rel="icon" href="../../../favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../../../styles.css?v=e7e784c0f3c6" />
+    <link rel="stylesheet" href="../../../tutorials.css" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"ShotMap の絵コンテで使うコマを手動で選ぶ","description":"タイムラインで使いたいコマを見つけ、残りのマスを自動選択で埋めます。","inLanguage":"ja","url":"https://ixiehao.github.io/ShotMap/ja/tutorials/choose-frames/","mainEntityOfPage":"https://ixiehao.github.io/ShotMap/ja/tutorials/choose-frames/","image":"https://ixiehao.github.io/ShotMap/assets/tutorials/frames-ja.webp","author":{"@type":"Person","name":"ixiehao"}}</script>
+  </head>
+  <body>
+    <header class="site-header tutorial-header">
+      <a class="brand" href="../../../ja/" aria-label="ShotMap ホーム">
+        <img class="brand-mark" src="../../../assets/app-icon.png" width="36" height="36" alt="" />
+        <span>ShotMap</span>
+      </a>
+      <nav aria-label="ガイドの言語">
+          <a href="../../../tutorials/choose-frames/" lang="en" hreflang="en">English</a>
+          <a href="../../../zh/tutorials/choose-frames/" lang="zh-CN" hreflang="zh-CN">简体中文</a>
+          <a href="../../../ja/tutorials/choose-frames/" lang="ja" hreflang="ja" aria-current="page">日本語</a>
+      </nav>
+    </header>
+    <main class="shell tutorial-page">
+      <article>
+        <header class="tutorial-heading">
+          <a class="tutorial-return" href="../../../ja/#tutorials">ShotMap の使い方</a>
+          <h1>ShotMap の絵コンテで使うコマを手動で選ぶ</h1>
+          <p class="tutorial-summary">タイムラインで使いたいコマを見つけ、残りのマスを自動選択で埋めます。</p>
+        </header>
+        <p>このガイドでは macOS 13 以降で ShotMap 0.2.20 と、36 秒・960 × 540 のサンプル動画 Color Trail.mp4 を使います。動画をファイルの保存が可能なフォルダに置いてください。</p>
+        <p><a href="../../../assets/tutorials/Color%20Trail.mp4" download>サンプル動画 Color Trail.mp4 をダウンロード</a></p>
+        <ol class="tutorial-steps">
+          <li>Color Trail.mp4 で 3 × 3 の JPG を作ります。プレビューを選び、右下の<strong>コマを選ぶ</strong>をクリックします。</li>
+          <li>タイムコード欄に <strong>00:00:13.250</strong> と入力して Return キーを押します。前後のコマを確認するときは −1 または +1 を使います。</li>
+          <li>タイムラインの下にある<strong>フレームを追加</strong>をクリックし、追加された候補を選びます。候補とタイムラインに番号が表示されます。</li>
+          <li><strong>自動選択</strong>をクリックすると、選んだコマを残したまま残り 8 コマが埋まります。<strong>9 / 9</strong> を確認して<strong>保存</strong>をクリックします。</li>
+        </ol>
+        <figure>
+          <a class="tutorial-figure-link" href="../../../assets/tutorials/frames-ja.webp" aria-label="原寸のスクリーンショットを表示"><img src="../../../assets/tutorials/frames-ja.webp" alt="日本語の手動選択画面。時刻は 13.250 秒で、9 コマの選択番号がタイムラインに表示されている" width="2380" height="1520" /></a>
+          <figcaption>9 コマを選択済みです。「手動」マークの付いた 5 番はタイムラインにも表示されます。 <a href="../../../assets/tutorials/frames-ja.webp">原寸のスクリーンショットを表示</a></figcaption>
+        </figure>
+        <h2>書き出した画像を確認</h2>
+        <p>プレビューで選んだ場面を確認してから、<strong>Finder に表示</strong>で新しい JPG を開きます。編集前の JPG は動画と同じフォルダに残ります。</p>
+        <p><a href="../../../assets/tutorials/manual-storyboard.jpg" download>作成例をダウンロード</a></p>
+      </article>
+      <section class="tutorial-related" aria-labelledby="related-title">
+        <h2 id="related-title">ほかのガイド</h2>
+        <ul class="tutorial-links">
+          <li><a href="../video-to-storyboard/"><strong>Mac で MP4 から 3 × 3 の絵コンテを作る</strong><span>動画から 9 コマを自動で選び、1 枚の JPG にまとめます。</span></a></li>
+          <li><a href="../layout-and-export/"><strong>動画情報付きの正方形の絵コンテを WebP で書き出す</strong><span>1:1 のレイアウトで、タイムコードと元の動画情報を表示します。</span></a></li>
+        </ul>
+      </section>
+    </main>
+  </body>
+</html>

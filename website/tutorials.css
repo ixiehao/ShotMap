@@ -1,0 +1,64 @@
+.tutorial-links {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tutorial-links a {
+  display: grid;
+  align-content: start;
+  gap: 6px;
+  height: 100%;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--surface);
+}
+
+.tutorial-links a:hover { border-color: var(--blue); }
+.tutorial-links strong { line-height: 1.4; }
+.tutorial-links span { color: var(--muted); font-size: 14px; }
+
+.tutorial-header { justify-content: space-between; flex-wrap: nowrap; }
+.tutorial-header nav {
+  display: flex;
+  justify-content: end;
+  flex-wrap: wrap;
+  width: auto;
+  gap: 6px;
+  margin: 0;
+  overflow: visible;
+}
+
+.tutorial-header nav a {
+  padding: 5px 8px;
+  border-radius: 7px;
+  white-space: nowrap;
+}
+
+.tutorial-header nav a[aria-current="page"] { background: var(--blue-soft); color: var(--blue-hover); }
+.tutorial-page { max-width: 980px; padding-block: clamp(30px, 6vw, 72px); }
+.tutorial-page article > :is(p, ol, h2), .tutorial-heading { max-width: 72ch; }
+.tutorial-heading h1 { margin: 12px 0; font-size: clamp(1.9rem, 4.5vw, 3.5rem); line-height: 1.15; overflow-wrap: anywhere; }
+.tutorial-heading .tutorial-summary { margin: 0 0 26px; color: var(--muted); font-size: clamp(1rem, 2.2vw, 1.22rem); }
+.tutorial-page :is(p, figcaption) a, .tutorial-return { color: var(--blue-hover); text-decoration: underline; text-underline-offset: 3px; }
+.tutorial-steps { padding-inline-start: 1.5em; }
+.tutorial-steps li { margin-block: .68em; padding-inline-start: .25em; }
+.tutorial-steps li::marker { color: var(--blue-hover); font-weight: 700; }
+.tutorial-page figure { margin: 26px 0; }
+.tutorial-figure-link { display: block; border: 1px solid var(--line); border-radius: 12px; }
+.tutorial-figure-link img { display: block; width: 100%; height: auto; border-radius: 11px; }
+.tutorial-page figcaption { margin-top: 8px; color: var(--muted); font-size: 14px; }
+.tutorial-related { margin-top: 34px; padding-top: 14px; border-top: 1px solid var(--line); }
+
+@media (max-width: 480px) {
+  .tutorial-header { gap: 8px; padding-inline: 12px; }
+  .tutorial-header .brand { gap: 6px; font-size: 17px; }
+  .tutorial-header .brand-mark { width: 28px; height: 28px; }
+  .tutorial-header .brand span { display: inline; }
+  .tutorial-header nav { font-size: 12px; gap: 2px; }
+  .tutorial-header nav a { padding-inline: 4px; }
+}

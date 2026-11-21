@@ -88,6 +88,16 @@ ShotMap の日本語ワークスペース
 
 複数の動画を追加し、準備できたコマから表示。処理中の動画が終わったところで一時停止もできます。
 
+### ShotMap の使い方
+
+動画から絵コンテを作り、使いたいコマの選択や書き出し設定を試せます。
+
+- [**Mac で MP4 から 3 × 3 の絵コンテを作る** 動画から 9 コマを自動で選び、1 枚の JPG にまとめます。](https://ixiehao.github.io/ShotMap/ja/tutorials/video-to-storyboard/)
+
+- [**ShotMap の絵コンテで使うコマを手動で選ぶ** タイムラインで使いたいコマを見つけ、残りのマスを自動選択で埋めます。](https://ixiehao.github.io/ShotMap/ja/tutorials/choose-frames/)
+
+- [**動画情報付きの正方形の絵コンテを WebP で書き出す** 1:1 のレイアウトで、タイムコードと元の動画情報を表示します。](https://ixiehao.github.io/ShotMap/ja/tutorials/layout-and-export/)
+
 動画は手元に
 
 ### 動画は、あなたのMacに残ります。

@@ -1,7 +1,8 @@
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { access, mkdir, readFile, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { appLanguageCodes, currentVersion, htmlLanguage, languageNames, localeURLs, localizedVisualAssets, releaseURL, siteURL, translations } from "./script.js";
+import { addTutorialLinks, tutorialPages } from "./build-tutorials.mjs";
 
 const root = resolve(fileURLToPath(new URL(".", import.meta.url)));
 const source = await readFile(resolve(root, "index.html"), "utf8");
@@ -99,7 +100,8 @@ function languagePicker(language, prefix) {
 function makeStaticPage(language) {
   const copy = { ...translations[language], ctaDownload: translations[language].ctaDownload.replace("{version}", currentVersion) };
   const prefix = language === "en" ? "" : "../";
-  let html = source.replace(/    <!-- search-discovery:start -->[\s\S]*?    <!-- search-discovery:end -->\n/g, "");
+  let html = source.replace(/    <!-- search-discovery:start -->[\s\S]*?    <!-- search-discovery:end -->\n/g, "")
+    .replace(/^    <link rel="stylesheet" href="tutorials\.css" \/>\n/m, "");
   html = replaceLocalizedContent(html, copy, "data-i18n", false);
   html = replaceLocalizedContent(html, copy, "data-i18n-html", true);
   html = replaceTagAttribute(html, "data-i18n-alt", "alt", copy);
@@ -142,7 +144,7 @@ function makeStaticPage(language) {
     <link rel="describedby" type="text/plain" href="${siteURL}llms.txt" />
     <!-- search-discovery:end -->
 `;
-  return html.replace('  </head>', discovery + '  </head>');
+  return addTutorialLinks(html.replace('  </head>', discovery + '  </head>'), language);
 }
 
 for (const language of languages) {
@@ -158,11 +160,25 @@ for (const language of languages) {
   }
 }
 
+const tutorials = tutorialPages(source.match(/href="(styles\.css[^"]*)"/)[1]);
+for (const tutorial of tutorials) {
+  for (const file of tutorial.files) await access(resolve(root, file));
+  const directory = resolve(root, tutorial.path);
+  const path = resolve(directory, "index.html");
+  if (checkOnly) {
+    if (await readFile(path, "utf8") !== tutorial.content) throw new Error("Generated tutorial is out of date: " + tutorial.path);
+  } else {
+    await mkdir(directory, { recursive: true });
+    await writeFile(path, tutorial.content);
+  }
+}
+
 const alternates = [...languages.map(key => [htmlLanguage(key), localeURLs[key]]), ["x-default", siteURL]];
-const sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n' + languages.map(language => `  <url>\n    <loc>${localeURLs[language]}</loc>\n${alternates.map(([key, url]) => `    <xhtml:link rel="alternate" hreflang="${key}" href="${url}" />`).join("\n")}\n  </url>`).join("\n") + '\n</urlset>\n';
+const sitemapPages = [...languages.map(language => ({ url: localeURLs[language], alternates })), ...tutorials];
+const sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n' + sitemapPages.map(page => `  <url>\n    <loc>${page.url}</loc>\n${page.alternates.map(([key, url]) => `    <xhtml:link rel="alternate" hreflang="${key}" href="${url}" />`).join("\n")}\n  </url>`).join("\n") + '\n</urlset>\n';
 if (checkOnly) {
   if (await readFile(resolve(root, "sitemap.xml"), "utf8") !== sitemap) throw new Error("sitemap.xml is out of date.");
 } else {
   await writeFile(resolve(root, "sitemap.xml"), sitemap);
 }
-console.log(`Verified ${languages.length} complete website translations and sitemap.`);
+console.log(`Verified ${languages.length} homepage translations, ${tutorials.length} tutorials and sitemap.`);
