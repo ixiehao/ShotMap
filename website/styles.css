@@ -145,7 +145,7 @@ h1 { max-width: 550px; margin-bottom: 23px; font-size: clamp(46px, 5vw, 64px); l
 .final-cta .eyebrow { margin-bottom: 14px; }
 .final-cta h2 { margin-bottom: 16px; font-size: clamp(38px, 4.4vw, 54px); line-height: 1.05; letter-spacing: -.055em; }
 .cta-detail { max-width: 500px; margin: 0 auto 30px; color: var(--muted); font-size: 16px; }
-.cta-actions { justify-content: center; }
+.cta-actions { flex-wrap: wrap; justify-content: center; }
 .cta-actions .button { min-width: 206px; }
 footer { display: flex; flex-wrap: wrap; align-items: center; gap: 18px; padding-block: 24px 34px; border-top: 1px solid var(--line); color: var(--faint); font-size: 12px; }
 footer span:nth-child(2) { margin-right: auto; color: var(--muted); font-weight: 640; }

@@ -73,9 +73,10 @@ Language switching uses native links in a compact, keyboard-accessible disclosur
 
 Check images, favicon, navigation, official download destinations, desktop and narrow layouts, keyboard focus, language switching, localized metadata and download/signing wording. Check canonical and share URLs, robots and sitemap where present. A path-only migration should preserve site content.
 
+The header's Download button opens `https://github.com/ixiehao/ShotMap/releases`.
 Keep macOS download links pointed at `https://github.com/ixiehao/ShotMap/releases/latest`.
 Verify the redirect and DMG assets against GitHub's latest-release response before
-publishing. The Windows preview button links to its specific GitHub prerelease,
+publishing. Both Windows preview buttons link to its specific GitHub prerelease,
 where users can find the ZIP, checksum, and setup notes. Update its tag in the
 homepage template, all README translations, and `scripts/verify_public_project.py`
 when shipping a newer preview. Keep the platform, architecture, dependencies, and
