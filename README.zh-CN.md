@@ -9,7 +9,7 @@
 
 [English](README.md) · [简体中文](README.zh-CN.md) · [Français](README.fr.md) · [Русский](README.ru.md) · [Español](README.es.md) · [日本語](README.ja.md) · [한국어](README.ko.md)
 
-**应用界面支持七种语言：**English · 简体中文 · Français · Русский · Español · 日本語 · 한국어。一个安装包，全部包含。
+**macOS 应用界面支持七种语言：**English · 简体中文 · Français · Русский · Español · 日本語 · 한국어。一个安装包，全部包含。
 
 ![ShotMap 中文工作区正在处理《Tears of Steel》并生成分镜图](website/assets/workspace-zh.webp?v=20261101-release017)
 
@@ -19,7 +19,9 @@
 
 先自动选帧，再按需手动替换、逐帧微调。一次拖入多段视频，批量导出 PNG、JPG 或 WebP，默认保存在原视频旁。视频处理都在 Mac 本机完成，无需账号，不上传视频。
 
-> **从这里开始：**[下载最新国际版](https://github.com/ixiehao/ShotMap/releases/latest) · Apple Silicon / Intel 独立安装包 · macOS 13 或更高版本 · 支持 Apple Silicon 与 Intel Mac
+> **从这里开始：**[下载 macOS 版](https://github.com/ixiehao/ShotMap/releases/latest) · Apple Silicon / Intel 独立安装包 · macOS 13 或更高版本 · 支持 Apple Silicon 与 Intel Mac
+
+> **[Windows 预览版](https://github.com/ixiehao/ShotMap/releases/tag/windows-v0.1.0-preview.1)** · 适用于 Windows 11 x64。完整解压 ZIP 后打开 `ShotMap.exe`。包内已含 .NET 10 桌面运行时，请按包内说明另行配置 x64 版 FFmpeg 和 ffprobe。导出 WebP 需要 `libwebp` 编码器。预览版未经签名。
 
 > **演示视频署名：**《Tears of Steel》（2012）© Blender Foundation / Blender Institute，采用 [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) 许可。下方的软件截图和动图均使用该视频制作。
 

@@ -10,11 +10,13 @@ Mac 视频一键拼图
 
 自动选帧，手动精调，批量生成。浏览家庭录像、旅行片段和剪辑素材，都更方便。
 
-[下载 macOS 版](https://github.com/ixiehao/ShotMap/releases/latest) [在 GitHub 查看](https://github.com/ixiehao/ShotMap)
+[下载 macOS 版](https://github.com/ixiehao/ShotMap/releases/latest) [Windows 预览版](https://github.com/ixiehao/ShotMap/releases/tag/windows-v0.1.0-preview.1)
 
 macOS 13 及以上 · Apple Silicon 与 Intel · 免费开源
 
-七种语言，内置于应用。
+Windows 11 x64 · 便携 ZIP · 内含 .NET 10 · 需另行配置 FFmpeg 和 ffprobe · 未签名
+
+macOS 版内置七种语言。
 
 - English
 
@@ -132,4 +134,4 @@ ShotMap 中文工作区
 
 [下载 v0.2.20](https://github.com/ixiehao/ShotMap/releases/latest) [在 GitHub 查看](https://github.com/ixiehao/ShotMap)
 
-© 2026 ixiehaoShotMap · MIT [GitHub](https://github.com/ixiehao/ShotMap) [版本发布](https://github.com/ixiehao/ShotMap/releases/latest) [反馈](https://github.com/ixiehao/ShotMap/issues/new/choose)
+© 2026 ixiehaoShotMap · MIT [GitHub](https://github.com/ixiehao/ShotMap) [版本发布](https://github.com/ixiehao/ShotMap/releases) [反馈](https://github.com/ixiehao/ShotMap/issues/new/choose)

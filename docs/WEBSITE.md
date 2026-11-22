@@ -73,13 +73,15 @@ Language switching uses native links in a compact, keyboard-accessible disclosur
 
 Check images, favicon, navigation, official download destinations, desktop and narrow layouts, keyboard focus, language switching, localized metadata and download/signing wording. Check canonical and share URLs, robots and sitemap where present. A path-only migration should preserve site content.
 
-Keep download links pointed at `https://github.com/ixiehao/ShotMap/releases/latest`
-so they follow the latest stable international release. Verify the actual redirect
-and DMG asset against GitHub's latest-release response before publishing; do not
-hard-code an older version into product download buttons. SoftwareApplication
-metadata lists all seven app languages, while each page retains its own HTML
-language and locale links. Bump asset query versions when adding translation keys
-or styling so a cached script cannot replace new copy with missing values.
+Keep macOS download links pointed at `https://github.com/ixiehao/ShotMap/releases/latest`.
+Verify the redirect and DMG assets against GitHub's latest-release response before
+publishing. The Windows preview button links to its specific GitHub prerelease,
+where users can find the ZIP, checksum, and setup notes. Update its tag in the
+homepage template, all README translations, and `scripts/verify_public_project.py`
+when shipping a newer preview. Keep the platform, architecture, dependencies, and
+signing status in the product copy consistent with the actual package.
+SoftwareApplication metadata describes the stable macOS app and its seven app
+languages. Each page retains its own HTML language and locale links.
 
 ## Automated responsive checks
 

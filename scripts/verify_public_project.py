@@ -21,6 +21,8 @@ from urllib.parse import unquote, urlsplit
 ROOT = Path(__file__).resolve().parent.parent
 RELEASE_VERSION = plistlib.loads((ROOT / "Packaging/Info.plist").read_bytes())["CFBundleShortVersionString"]
 REPOSITORY = "https://github.com/ixiehao/ShotMap"
+MACOS_RELEASE = REPOSITORY + "/releases/latest"
+WINDOWS_PREVIEW = REPOSITORY + "/releases/tag/windows-v0.1.0-preview.1"
 WEBSITE = "https://ixiehao.github.io/ShotMap/"
 LANGUAGES = {"en": "en", "zh": "zh-CN", "fr": "fr", "ru": "ru", "es": "es", "ja": "ja", "ko": "ko"}
 READMES = ("README.md", "README.zh-CN.md", "README.fr.md", "README.ru.md", "README.es.md", "README.ja.md", "README.ko.md")
@@ -42,6 +44,14 @@ def verify_local_target(source: Path, target: str) -> None:
     resolved = (source.parent / unquote(parsed.path)).resolve()
     if not resolved.exists():
         fail(f"{source.relative_to(ROOT)} links to missing {target}")
+
+
+def verify_release_links(source: Path, targets: list[str]) -> None:
+    expected = {MACOS_RELEASE, WINDOWS_PREVIEW}
+    actual = {target for target in targets if "/releases/" in target}
+    if actual != expected:
+        fail(f"unexpected release links in {source.relative_to(ROOT)}: "
+             f"missing={sorted(expected - actual)}, extra={sorted(actual - expected)}")
 
 
 def verify_page(path: Path, locale: str) -> None:
@@ -68,13 +78,17 @@ def verify_page(path: Path, locale: str) -> None:
         target = attrs.get("src") or attrs.get("href")
         if target:
             verify_local_target(path, target)
-        if tag == "a" and target and "/releases/" in target and target != REPOSITORY + "/releases/latest":
-            fail(f"stale download link in {path.relative_to(ROOT)}")
+    anchors = [attrs for tag, attrs in elements if tag == "a" and attrs.get("href")]
+    verify_release_links(path, [attrs["href"] for attrs in anchors])
+    if [attrs["href"] for attrs in anchors if attrs.get("data-i18n") == "windowsPreview"] != [WINDOWS_PREVIEW]:
+        fail(f"wrong Windows preview button in {path.relative_to(ROOT)}")
     for schema in re.findall(r'<script[^>]+type="application/ld\+json"[^>]*>(.*?)</script>', text, re.S):
         value = json.loads(schema)
         if value.get("@type") == "SoftwareApplication":
             if value.get("softwareVersion") != RELEASE_VERSION:
                 fail(f"stale software version in {path.relative_to(ROOT)}")
+            if value.get("downloadUrl") != MACOS_RELEASE:
+                fail(f"wrong macOS download metadata in {path.relative_to(ROOT)}")
             if value.get("url") != expected_url or value.get("inLanguage") != ["en", "zh-Hans", "fr", "ru", "es", "ja", "ko"]:
                 fail(f"incorrect software metadata in {path.relative_to(ROOT)}")
 
@@ -131,10 +145,10 @@ def main() -> None:
         for sibling in READMES:
             if f"]({sibling})" not in text:
                 fail(f"{readme} is missing a link to {sibling}")
-        for target in re.findall(r"\]\(([^\s)]+)\)", text):
+        targets = re.findall(r"\]\(([^\s)]+)\)", text)
+        for target in targets:
             verify_local_target(ROOT / readme, target)
-            if "/releases/" in target and target != REPOSITORY + "/releases/latest":
-                fail(f"stale download link in {readme}")
+        verify_release_links(ROOT / readme, targets)
 
     metadata = require_text(ROOT / "docs/GITHUB_METADATA.md", "Repository description", "ShotMap")
     description_match = re.search(r"`(ShotMap[^`]+)`", metadata)

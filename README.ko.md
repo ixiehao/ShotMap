@@ -9,7 +9,7 @@
 
 [English](README.md) · [简体中文](README.zh-CN.md) · [Français](README.fr.md) · [Русский](README.ru.md) · [Español](README.es.md) · [日本語](README.ja.md) · [한국어](README.ko.md)
 
-**앱은 7개 언어를 지원합니다:** English · 简体中文 · Français · Русский · Español · 日本語 · 한국어. 하나의 설치 파일에 모두 포함되어 있습니다.
+**macOS 앱은 7개 언어를 지원합니다:** English · 简体中文 · Français · Русский · Español · 日本語 · 한국어. 하나의 설치 파일에 모두 포함되어 있습니다.
 
 ![Tears of Steel의 장면을 스토리보드로 만드는 ShotMap 한국어 작업 화면](website/assets/workspace-ko.webp?v=20261101-release017)
 
@@ -21,7 +21,9 @@
 
 자동으로 프레임을 고른 뒤 타임라인에서 원하는 장면으로 바꾸거나 한 프레임씩 조정하세요. 여러 동영상을 한꺼번에 처리하고 원본과 같은 폴더에 PNG, JPG 또는 WebP로 저장할 수 있습니다. 모든 처리는 Mac에서 이루어지며 계정이나 동영상 업로드가 필요하지 않습니다.
 
-> **시작하기:** [최신 국제판 다운로드](https://github.com/ixiehao/ShotMap/releases/latest) · Apple Silicon / Intel용 DMG · macOS 13 이상 · Apple Silicon 및 Intel Mac
+> **시작하기:** [macOS용 다운로드](https://github.com/ixiehao/ShotMap/releases/latest) · Apple Silicon / Intel용 DMG · macOS 13 이상 · Apple Silicon 및 Intel Mac
+
+> **[Windows 프리뷰](https://github.com/ixiehao/ShotMap/releases/tag/windows-v0.1.0-preview.1)** · Windows 11 x64용입니다. ZIP 전체를 압축 해제하고 `ShotMap.exe`를 실행하세요. .NET 10 Desktop Runtime이 포함되어 있습니다. 함께 제공된 README에 따라 x64용 FFmpeg와 ffprobe를 별도로 설정하세요. WebP로 내보내려면 `libwebp` 인코더가 필요합니다. 이 프리뷰는 서명되지 않았습니다.
 
 > **데모 영상 출처:** *Tears of Steel*(2012) © Blender Foundation / Blender Institute, [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/). 이 문서의 스크린샷과 동작 예시에 사용한 영상입니다.
 

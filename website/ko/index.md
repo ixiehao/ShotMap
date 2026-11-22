@@ -10,11 +10,13 @@ MAC용 동영상 스토리보드
 
 자동으로 고르고, 한 프레임씩 조정하고, 여러 영상을 한 번에 처리하세요. 가족 영상, 여행 기록, 편집용 클립을 살펴보기 편해집니다.
 
-[macOS용 다운로드](https://github.com/ixiehao/ShotMap/releases/latest) [GitHub에서 보기](https://github.com/ixiehao/ShotMap)
+[macOS용 다운로드](https://github.com/ixiehao/ShotMap/releases/latest) [Windows 프리뷰](https://github.com/ixiehao/ShotMap/releases/tag/windows-v0.1.0-preview.1)
 
 macOS 13 이상 · Apple Silicon 및 Intel · 무료 오픈 소스
 
-7개 언어 기본 지원.
+Windows 11 x64 · 포터블 ZIP · .NET 10 포함 · FFmpeg와 ffprobe 필요 · 서명 없음
+
+macOS 앱은 7개 언어를 지원합니다.
 
 - English
 
@@ -122,4 +124,4 @@ macOS 13 이상을 지원합니다. 릴리스 페이지에서 Apple Silicon(M �
 
 [v0.2.20 다운로드](https://github.com/ixiehao/ShotMap/releases/latest) [GitHub에서 보기](https://github.com/ixiehao/ShotMap)
 
-© 2026 ixiehaoShotMap · MIT [GitHub](https://github.com/ixiehao/ShotMap) [릴리스](https://github.com/ixiehao/ShotMap/releases/latest) [의견 보내기](https://github.com/ixiehao/ShotMap/issues/new/choose)
+© 2026 ixiehaoShotMap · MIT [GitHub](https://github.com/ixiehao/ShotMap) [릴리스](https://github.com/ixiehao/ShotMap/releases) [의견 보내기](https://github.com/ixiehao/ShotMap/issues/new/choose)

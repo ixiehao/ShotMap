@@ -10,11 +10,13 @@
 
 Автовыбор кадров, точная ручная настройка и пакетная обработка. Семейные записи, видео из поездок и материалы для монтажа удобнее просматривать.
 
-[Скачать для macOS](https://github.com/ixiehao/ShotMap/releases/latest) [Открыть на GitHub](https://github.com/ixiehao/ShotMap)
+[Скачать для macOS](https://github.com/ixiehao/ShotMap/releases/latest) [Предварительная версия для Windows](https://github.com/ixiehao/ShotMap/releases/tag/windows-v0.1.0-preview.1)
 
 macOS 13+ · Apple Silicon и Intel · Бесплатно, с открытым кодом
 
-Семь встроенных языков.
+Windows 11 x64 · Портативный ZIP · .NET 10 в комплекте · Нужны FFmpeg и ffprobe · Без подписи
+
+Семь языков в приложении для macOS.
 
 - English
 
@@ -122,4 +124,4 @@ ShotMap работает на macOS 13 или новее. На странице 
 
 [Скачать v0.2.20](https://github.com/ixiehao/ShotMap/releases/latest) [Открыть на GitHub](https://github.com/ixiehao/ShotMap)
 
-© 2026 ixiehaoShotMap · MIT [GitHub](https://github.com/ixiehao/ShotMap) [Релизы](https://github.com/ixiehao/ShotMap/releases/latest) [Обратная связь](https://github.com/ixiehao/ShotMap/issues/new/choose)
+© 2026 ixiehaoShotMap · MIT [GitHub](https://github.com/ixiehao/ShotMap) [Релизы](https://github.com/ixiehao/ShotMap/releases) [Обратная связь](https://github.com/ixiehao/ShotMap/issues/new/choose)

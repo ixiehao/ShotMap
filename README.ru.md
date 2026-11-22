@@ -9,7 +9,7 @@
 
 [English](README.md) · [简体中文](README.zh-CN.md) · [Français](README.fr.md) · [Русский](README.ru.md) · [Español](README.es.md) · [日本語](README.ja.md) · [한국어](README.ko.md)
 
-**Интерфейс на семи языках:** English · 简体中文 · Français · Русский · Español · 日本語 · 한국어. Все языки включены в одно приложение.
+**Интерфейс macOS на семи языках:** English · 简体中文 · Français · Русский · Español · 日本語 · 한국어. Все языки включены в одно приложение.
 
 ![ShotMap на русском с раскадровкой фильма Tears of Steel](website/assets/workspace-ru.webp?v=20261101-release017)
 
@@ -21,7 +21,9 @@
 
 Начните с автоматического выбора, затем замените любой кадр или уточните момент на шкале времени. Добавьте несколько видео для пакетной обработки и сохраните PNG, JPG или WebP рядом с оригиналами. Всё обрабатывается на вашем Mac, без аккаунта и загрузки видео на сервер.
 
-> **Начните здесь:** [Скачать последнюю международную версию](https://github.com/ixiehao/ShotMap/releases/latest) · DMG для Apple Silicon / Intel · macOS 13 или новее · Apple Silicon и Intel
+> **Начните здесь:** [Скачать для macOS](https://github.com/ixiehao/ShotMap/releases/latest) · DMG для Apple Silicon / Intel · macOS 13 или новее · Apple Silicon и Intel
+
+> **[Предварительная версия для Windows](https://github.com/ixiehao/ShotMap/releases/tag/windows-v0.1.0-preview.1)** · Для Windows 11 x64. Распакуйте ZIP целиком и запустите `ShotMap.exe`. Среда .NET 10 Desktop входит в комплект. Установите и настройте FFmpeg и ffprobe для x64 по инструкции в прилагаемом README. Для экспорта WebP нужен кодировщик `libwebp`. Эта версия не подписана.
 
 > **Демонстрационное видео:** *Tears of Steel* (2012) © Blender Foundation / Blender Institute, лицензия [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/). Этот фильм использован в скриншотах и анимации.
 

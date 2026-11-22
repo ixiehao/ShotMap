@@ -9,7 +9,7 @@
 
 [English](README.md) · [简体中文](README.zh-CN.md) · [Français](README.fr.md) · [Русский](README.ru.md) · [Español](README.es.md) · [日本語](README.ja.md) · [한국어](README.ko.md)
 
-**La app está disponible en 7 idiomas:** English · 简体中文 · Français · Русский · Español · 日本語 · 한국어. Todos incluidos en una sola descarga.
+**La app para macOS está disponible en 7 idiomas:** English · 简体中文 · Français · Русский · Español · 日本語 · 한국어. Todos incluidos en una sola descarga.
 
 ![ShotMap en español creando un mosaico de Tears of Steel](website/assets/workspace-es.webp?v=20261101-release017)
 
@@ -21,7 +21,9 @@
 
 Empieza con la selección automática y después sustituye o ajusta cualquier fotograma en la línea de tiempo. Añade varios vídeos para procesarlos por lotes y exporta imágenes PNG, JPG o WebP junto a los originales. Todo se procesa en tu Mac, sin cuenta ni subida de vídeos.
 
-> **Empieza aquí:** [Descargar la última versión internacional](https://github.com/ixiehao/ShotMap/releases/latest) · DMG para Apple Silicon / Intel · macOS 13 o posterior · Apple Silicon e Intel
+> **Empieza aquí:** [Descargar para macOS](https://github.com/ixiehao/ShotMap/releases/latest) · DMG para Apple Silicon / Intel · macOS 13 o posterior · Apple Silicon e Intel
+
+> **[Versión preliminar para Windows](https://github.com/ixiehao/ShotMap/releases/tag/windows-v0.1.0-preview.1)** · Para Windows 11 x64. Extrae por completo el ZIP y abre `ShotMap.exe`. Incluye .NET 10 Desktop Runtime. Configura FFmpeg y ffprobe para x64 por separado siguiendo el README incluido. La exportación a WebP requiere el codificador `libwebp`. Esta versión no está firmada.
 
 > **Vídeo de demostración:** *Tears of Steel* (2012) © Blender Foundation / Blender Institute, con licencia [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/). Las capturas y la animación usan este vídeo.
 

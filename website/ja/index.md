@@ -10,11 +10,13 @@ Macで動画の場面を一覧に
 
 自動で選び、好きなコマに調整。複数動画もまとめて処理。家族の記録、旅行の動画、編集用の素材を見返しやすく。
 
-[macOS版をダウンロード](https://github.com/ixiehao/ShotMap/releases/latest) [GitHubで見る](https://github.com/ixiehao/ShotMap)
+[macOS版をダウンロード](https://github.com/ixiehao/ShotMap/releases/latest) [Windows プレビュー版](https://github.com/ixiehao/ShotMap/releases/tag/windows-v0.1.0-preview.1)
 
 macOS 13以降 · Apple Silicon / Intel対応 · 無料・オープンソース
 
-7言語を標準搭載。
+Windows 11 x64 · ポータブル ZIP · .NET 10 同梱 · FFmpeg と ffprobe が必要 · 未署名
+
+macOS 版は7言語に対応。
 
 - English
 
@@ -132,4 +134,4 @@ macOS 13以降に対応しています。リリースページで、Apple Silico
 
 [v0.2.20 をダウンロード](https://github.com/ixiehao/ShotMap/releases/latest) [GitHubで見る](https://github.com/ixiehao/ShotMap)
 
-© 2026 ixiehaoShotMap · MIT [GitHub](https://github.com/ixiehao/ShotMap) [リリース](https://github.com/ixiehao/ShotMap/releases/latest) [フィードバック](https://github.com/ixiehao/ShotMap/issues/new/choose)
+© 2026 ixiehaoShotMap · MIT [GitHub](https://github.com/ixiehao/ShotMap) [リリース](https://github.com/ixiehao/ShotMap/releases) [フィードバック](https://github.com/ixiehao/ShotMap/issues/new/choose)

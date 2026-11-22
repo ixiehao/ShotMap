@@ -9,7 +9,7 @@
 
 [English](README.md) · [简体中文](README.zh-CN.md) · [Français](README.fr.md) · [Русский](README.ru.md) · [Español](README.es.md) · [日本語](README.ja.md) · [한국어](README.ko.md)
 
-**App interface in 7 languages:** English · 简体中文 · Français · Русский · Español · 日本語 · 한국어. Included in both installers.
+**macOS app interface in 7 languages:** English · 简体中文 · Français · Русский · Español · 日本語 · 한국어. Included in both installers.
 
 ![ShotMap's real English workspace creating a storyboard from Tears of Steel](website/assets/workspace-en.webp?v=20261101-release017)
 
@@ -19,7 +19,9 @@
 
 Start with automatic frame selection, then replace or fine-tune any frame on the timeline. Add several videos to process in a batch and export PNG, JPG, or WebP images beside the originals. Processing stays on your Mac, with no account or video upload.
 
-> **Start here:** [Download the latest international edition](https://github.com/ixiehao/ShotMap/releases/latest) · Apple Silicon / Intel DMGs · macOS 13 or later · Apple Silicon and Intel
+> **Start here:** [Download for macOS](https://github.com/ixiehao/ShotMap/releases/latest) · Apple Silicon / Intel DMGs · macOS 13 or later · Apple Silicon and Intel
+
+> **[Windows preview](https://github.com/ixiehao/ShotMap/releases/tag/windows-v0.1.0-preview.1)** · Windows 11 x64. Extract the ZIP and open `ShotMap.exe`. The .NET 10 Desktop Runtime is included. Set up x64 FFmpeg and ffprobe separately as described in the included README. WebP export requires the `libwebp` encoder. The preview is unsigned.
 
 > **Demo footage:** *Tears of Steel* (2012) © Blender Foundation / Blender Institute, licensed under [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/). The screenshots and animation below use this footage.
 

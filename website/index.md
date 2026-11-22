@@ -10,11 +10,13 @@ VIDEO STORYBOARDS FOR MAC
 
 Automatic frame selection, precise manual control, and batch processing. An easier way to browse family recordings, travel clips, and editing footage.
 
-[Download for macOS](https://github.com/ixiehao/ShotMap/releases/latest) [View on GitHub](https://github.com/ixiehao/ShotMap)
+[Download for macOS](https://github.com/ixiehao/ShotMap/releases/latest) [Windows preview](https://github.com/ixiehao/ShotMap/releases/tag/windows-v0.1.0-preview.1)
 
 macOS 13+ · Apple Silicon & Intel · Free and open source
 
-Seven languages built in.
+Windows 11 x64 · Portable ZIP · Includes .NET 10 · Requires FFmpeg and ffprobe · Unsigned
+
+Seven languages in the macOS app.
 
 - English
 
@@ -132,4 +134,4 @@ Make your first storyboard on your Mac. Free, open source, and available in seve
 
 [Download v0.2.20](https://github.com/ixiehao/ShotMap/releases/latest) [View on GitHub](https://github.com/ixiehao/ShotMap)
 
-© 2026 ixiehaoShotMap · MIT [GitHub](https://github.com/ixiehao/ShotMap) [Releases](https://github.com/ixiehao/ShotMap/releases/latest) [Feedback](https://github.com/ixiehao/ShotMap/issues/new/choose)
+© 2026 ixiehaoShotMap · MIT [GitHub](https://github.com/ixiehao/ShotMap) [Releases](https://github.com/ixiehao/ShotMap/releases) [Feedback](https://github.com/ixiehao/ShotMap/issues/new/choose)

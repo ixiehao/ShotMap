@@ -10,11 +10,13 @@ MOSAICOS DE VÍDEO PARA MAC
 
 Selección automática, ajuste manual y procesamiento por lotes. Revisa con más facilidad grabaciones familiares, viajes y material de edición.
 
-[Descargar para macOS](https://github.com/ixiehao/ShotMap/releases/latest) [Ver en GitHub](https://github.com/ixiehao/ShotMap)
+[Descargar para macOS](https://github.com/ixiehao/ShotMap/releases/latest) [Versión preliminar para Windows](https://github.com/ixiehao/ShotMap/releases/tag/windows-v0.1.0-preview.1)
 
 macOS 13 o posterior · Apple Silicon e Intel · Gratis y de código abierto
 
-Siete idiomas incluidos.
+Windows 11 x64 · ZIP portátil · Incluye .NET 10 · Requiere FFmpeg y ffprobe · Sin firma
+
+Siete idiomas en la app para macOS.
 
 - English
 
@@ -122,4 +124,4 @@ Crea tu primer mosaico en Mac. Gratis, de código abierto y disponible en siete 
 
 [Descargar v0.2.20](https://github.com/ixiehao/ShotMap/releases/latest) [Ver en GitHub](https://github.com/ixiehao/ShotMap)
 
-© 2026 ixiehaoShotMap · MIT [GitHub](https://github.com/ixiehao/ShotMap) [Versiones](https://github.com/ixiehao/ShotMap/releases/latest) [Comentarios](https://github.com/ixiehao/ShotMap/issues/new/choose)
+© 2026 ixiehaoShotMap · MIT [GitHub](https://github.com/ixiehao/ShotMap) [Versiones](https://github.com/ixiehao/ShotMap/releases) [Comentarios](https://github.com/ixiehao/ShotMap/issues/new/choose)

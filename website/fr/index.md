@@ -10,11 +10,13 @@ VOS VIDÉOS EN IMAGES SUR MAC
 
 Sélection automatique, réglage image par image et traitement par lot. Parcourez plus facilement vos souvenirs de famille, vos voyages et vos rushes.
 
-[Télécharger pour macOS](https://github.com/ixiehao/ShotMap/releases/latest) [Voir sur GitHub](https://github.com/ixiehao/ShotMap)
+[Télécharger pour macOS](https://github.com/ixiehao/ShotMap/releases/latest) [Aperçu Windows](https://github.com/ixiehao/ShotMap/releases/tag/windows-v0.1.0-preview.1)
 
 macOS 13 ou ultérieur · Apple Silicon et Intel · Gratuit et open source
 
-Sept langues intégrées.
+Windows 11 x64 · ZIP portable · .NET 10 inclus · FFmpeg et ffprobe requis · Non signé
+
+Sept langues dans l’application macOS.
 
 - English
 
@@ -122,4 +124,4 @@ Créez votre première planche sur Mac. Gratuit, open source et disponible en se
 
 [Télécharger v0.2.20](https://github.com/ixiehao/ShotMap/releases/latest) [Voir sur GitHub](https://github.com/ixiehao/ShotMap)
 
-© 2026 ixiehaoShotMap · MIT [GitHub](https://github.com/ixiehao/ShotMap) [Versions](https://github.com/ixiehao/ShotMap/releases/latest) [Vos retours](https://github.com/ixiehao/ShotMap/issues/new/choose)
+© 2026 ixiehaoShotMap · MIT [GitHub](https://github.com/ixiehao/ShotMap) [Versions](https://github.com/ixiehao/ShotMap/releases) [Vos retours](https://github.com/ixiehao/ShotMap/issues/new/choose)
