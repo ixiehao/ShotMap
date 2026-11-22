@@ -1,10 +1,11 @@
 param(
     [Parameter(Mandatory = $true)] [string] $DotnetRoot,
     [Parameter(Mandatory = $true)] [string] $RuntimeVersion,
-    [string] $Output = (Join-Path $PSScriptRoot 'artifacts/releases')
+    [string] $Output
 )
 
 $ErrorActionPreference = 'Stop'
+if (-not $Output) { $Output = Join-Path $PSScriptRoot 'artifacts/releases' }
 $root = Split-Path -Parent $PSScriptRoot
 $dotnetRootPath = (Resolve-Path -LiteralPath $DotnetRoot).Path
 $dotnet = Join-Path $dotnetRootPath 'dotnet.exe'

@@ -42,7 +42,7 @@ $env:APPDATA = $env:DOTNET_CLI_HOME
 在提交 Windows 源码后，可以用同一套 x64 SDK 与 Desktop Runtime 生成发布 ZIP、版权声明、构建信息和 SHA-256 文件。产物写入 `windows/artifacts/releases/`。
 
 ```powershell
-powershell -NoProfile -File windows/Package-Preview.ps1 -DotnetRoot $env:DOTNET_ROOT_X64 -RuntimeVersion 10.0.15
+powershell -NoProfile -ExecutionPolicy RemoteSigned -File windows/Package-Preview.ps1 -DotnetRoot $env:DOTNET_ROOT_X64 -RuntimeVersion 10.0.15
 ```
 
 ## 验收入口与产物
