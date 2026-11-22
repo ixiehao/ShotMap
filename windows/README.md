@@ -10,11 +10,11 @@
 
 「智能选帧」保留已选画面并补选，「换一批」重新采样并清空当次选择。点击「保存」更新当前分镜，保留原版式，再回主窗口导出。`Ctrl+O` 添加视频，`Ctrl+S` 另存所选分镜。可在右栏或另存为窗口切换 PNG、JPG、WebP。点击「批量导出」可将已生成的分镜统一保存到一个目录，同名时自动递增序号。
 
-默认宽度为 1920 px，按显示方向保持源比例，使用象牙底色、时间码和 JPG。预览与导出共用同一张合成图。应用在本机解码、选帧和编码，无需账号或联网。Windows 版使用 WPF/WIC 渲染和编码 PNG、JPG，使用 FFmpeg 的 `libwebp` 编码无损 WebP。本地产物为依赖 .NET Desktop Runtime 的 x64 原型。
+默认宽度为 1920 px，按显示方向保持源比例，使用象牙底色、时间码和 JPG。预览与导出共用同一张合成图。应用在本机解码、选帧和编码，无需账号或联网。Windows 版使用 WPF/WIC 渲染和编码 PNG、JPG，使用 FFmpeg 的 `libwebp` 编码无损 WebP。
 
 ## 运行便携预览版
 
-从 [GitHub Releases](https://github.com/ixiehao/ShotMap/releases) 下载 Windows x64 ZIP 并完整解压。便携包内含 x64 .NET 10 Desktop Runtime。另从 [FFmpeg 的 Windows 下载页](https://ffmpeg.org/download.html#build-windows) 获取含 `ffmpeg.exe` 和 `ffprobe.exe` 的 x64 构建，启用 WebP 导出时使用带 `libwebp` 的版本。把 FFmpeg 的 `bin` 文件夹放在 ShotMap 目录下的 `ffmpeg` 文件夹里，或把 `bin` 加入 PATH，再打开 `ShotMap.exe`。预览包采用 ZIP 分发，应用未做 Authenticode 签名。
+从 Windows 预览版发布页下载 `ShotMap-0.1.0-preview.2-windows-x64.zip` 并完整解压，双击 `ShotMap.exe`。包内含 .NET 10 Desktop Runtime、FFmpeg 与 ffprobe。应用未做 Authenticode 签名。随包 FFmpeg 采用 LGPL 2.1 或更新版本，同一发布页提供对应源码和构建说明。[Windows 预览版发布页](https://github.com/ixiehao/ShotMap/releases/tag/windows-v0.1.0-preview.2) · [媒体构建说明](PORTABLE-MEDIA.md)
 
 ## 在本机构建
 
@@ -39,10 +39,12 @@ $env:DOTNET_CLI_HOME = Join-Path (Get-Location) 'windows\artifacts\sdk'
 $env:APPDATA = $env:DOTNET_CLI_HOME
 ```
 
-在提交 Windows 源码后，可以用同一套 x64 SDK 与 Desktop Runtime 生成发布 ZIP、版权声明、构建信息和 SHA-256 文件。产物写入 `windows/artifacts/releases/`。
+在提交 Windows 源码后，用 x64 SDK、Desktop Runtime 和按[媒体构建说明](PORTABLE-MEDIA.md)生成的媒体工具打包。发布 ZIP、对应源码 ZIP 和各自的 SHA-256 文件写入 `windows/artifacts/releases/`。
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy RemoteSigned -File windows/Package-Preview.ps1 -DotnetRoot $env:DOTNET_ROOT_X64 -RuntimeVersion 10.0.15
+powershell -NoProfile -ExecutionPolicy RemoteSigned -File windows/Package-Preview.ps1 `
+  -DotnetRoot $env:DOTNET_ROOT_X64 -RuntimeVersion 10.0.15 `
+  -MediaRoot 'path/to/media/work/portable' -MediaSourceDirectory 'path/to/media/source-archives'
 ```
 
 ## 验收入口与产物
