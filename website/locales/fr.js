@@ -9,7 +9,7 @@ export default {
   navWorkflow: "Utilisation", navFeatures: "Fonctions", navPrivacy: "Confidentialité", download: "Télécharger",
   heroEyebrow: "VOS VIDÉOS EN IMAGES SUR MAC", heroTitle: "Les scènes de vos vidéos,<br />réunies en une image.",
   heroSummary: "Sélection automatique, réglage image par image et traitement par lot. Parcourez plus facilement vos souvenirs de famille, vos voyages et vos rushes.",
-  heroDownload: "Télécharger pour macOS",
+  macosDownload: "Télécharger pour macOS",
   windowsPreview: "Aperçu Windows",
   windowsPreviewDetail: "Windows 11 x64 · ZIP portable · .NET 10 inclus · FFmpeg et ffprobe requis · Non signé",
   compatibility: "macOS 13 ou ultérieur · Apple Silicon et Intel · Gratuit et open source",
@@ -40,7 +40,7 @@ export default {
   faqFourQuestion: "Où les planches sont-elles enregistrées ?", faqFourAnswer: "Par défaut, dans le dossier de la vidéo d’origine. Le bouton Enregistrer permet de choisir un autre emplacement.",
   ctaEyebrow: "PRÊT À RETROUVER VOS VIDÉOS ?", ctaTitle: "Vos vidéos, plus faciles à parcourir.",
   ctaDetail: "Créez votre première planche sur Mac. Gratuit, open source et disponible en sept langues.",
-  ctaDownload: "Télécharger v{version}", ctaGithub: "Voir sur GitHub", github: "GitHub", releases: "Versions", feedback: "Vos retours",
+  ctaGithub: "Voir sur GitHub", github: "GitHub", releases: "Versions", feedback: "Vos retours",
   productAlt: "ShotMap en français : liste des vidéos, aperçu de la planche et réglages",
   manualAlt: "Choix manuel des images en français : lecteur, chronologie et galerie"
 };

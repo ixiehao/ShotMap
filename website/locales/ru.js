@@ -17,7 +17,7 @@ export default {
   heroEyebrow: "КАДРЫ ИЗ ВИДЕО НА ВАШЕМ MAC",
   heroTitle: "Кадры из видео —<br />на одном изображении.",
   heroSummary: "Автовыбор кадров, точная ручная настройка и пакетная обработка. Семейные записи, видео из поездок и материалы для монтажа удобнее просматривать.",
-  heroDownload: "Скачать для macOS",
+  macosDownload: "Скачать для macOS",
   windowsPreview: "Предварительная версия для Windows",
   windowsPreviewDetail: "Windows 11 x64 · Портативный ZIP · .NET 10 в комплекте · Нужны FFmpeg и ffprobe · Без подписи",
 
@@ -71,7 +71,6 @@ export default {
   ctaEyebrow: "ПОРА НАЙТИ ТОТ САМЫЙ РОЛИК",
   ctaTitle: "Ваши видео удобнее просматривать.",
   ctaDetail: "Создайте первую раскадровку на Mac. Бесплатно, с открытым кодом и интерфейсом на семи языках.",
-  ctaDownload: "Скачать v{version}",
   ctaGithub: "Открыть на GitHub",
   github: "GitHub",
   releases: "Релизы",

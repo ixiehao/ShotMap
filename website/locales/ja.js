@@ -9,7 +9,7 @@ export default {
   navWorkflow: "使い方", navFeatures: "機能", navPrivacy: "プライバシー", download: "ダウンロード",
   heroEyebrow: "Macで動画の場面を一覧に", heroTitle: "動画の場面を、<br />一枚にまとめる。",
   heroSummary: "自動で選び、好きなコマに調整。複数動画もまとめて処理。家族の記録、旅行の動画、編集用の素材を見返しやすく。",
-  heroDownload: "macOS版をダウンロード",
+  macosDownload: "macOS版をダウンロード",
   windowsPreview: "Windows プレビュー版",
   windowsPreviewDetail: "Windows 11 x64 · ポータブル ZIP · .NET 10 同梱 · FFmpeg と ffprobe が必要 · 未署名",
   compatibility: "macOS 13以降 · Apple Silicon / Intel対応 · 無料・オープンソース", productCaption: "ShotMap の日本語ワークスペース",
@@ -36,7 +36,7 @@ export default {
   faqThreeQuestion: "自分でコマを置き換えられますか？", faqThreeAnswer: "はい。自動選択した候補をもとに、「手動でコマを選択」で最後の調整ができます。",
   faqFourQuestion: "作成した画像はどこに保存されますか？", faqFourAnswer: "標準では元動画と同じフォルダに保存されます。「別名で保存」で別の場所も選べます。",
   ctaEyebrow: "あの動画を、もう一度", ctaTitle: "動画を、もっと見返しやすく。", ctaDetail: "まずは一本の動画から。Macで使える無料・オープンソースのアプリ。7言語に対応しています。",
-  ctaDownload: "v{version} をダウンロード", ctaGithub: "GitHubで見る", github: "GitHub", releases: "リリース", feedback: "フィードバック",
+  ctaGithub: "GitHubで見る", github: "GitHub", releases: "リリース", feedback: "フィードバック",
   productAlt: "ShotMapの日本語ワークスペース。動画一覧、絵コンテのプレビュー、設定パネルを表示",
   manualAlt: "ShotMapの日本語手動コマ選択画面。プレーヤー、タイムライン、候補コマを表示"
 };
