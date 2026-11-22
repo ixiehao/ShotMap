@@ -56,8 +56,17 @@ $signature = (Get-AuthenticodeSignature -LiteralPath $app).Status.ToString()
     bundledFfmpeg = $false
 } | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $stage 'build-info.json') -Encoding ASCII
 
-Add-Type -AssemblyName System.IO.Compression.FileSystem
-[IO.Compression.ZipFile]::CreateFromDirectory($stage, $zip, [IO.Compression.CompressionLevel]::Optimal, $true)
+Add-Type -AssemblyName System.IO.Compression, System.IO.Compression.FileSystem
+$archive = [IO.Compression.ZipFile]::Open($zip, [IO.Compression.ZipArchiveMode]::Create)
+try {
+    foreach ($file in Get-ChildItem -LiteralPath $stage -File -Recurse -Force) {
+        $entry = $file.FullName.Substring($build.Length + 1).Replace('\', '/')
+        [IO.Compression.ZipFileExtensions]::CreateEntryFromFile(
+            $archive, $file.FullName, $entry, [IO.Compression.CompressionLevel]::Optimal) | Out-Null
+    }
+} finally {
+    $archive.Dispose()
+}
 $sha = (Get-FileHash -Algorithm SHA256 -LiteralPath $zip).Hash.ToLowerInvariant()
 "$sha  $name.zip" | Set-Content -LiteralPath "$zip.sha256" -Encoding ASCII
 Get-Item -LiteralPath $zip, "$zip.sha256"
