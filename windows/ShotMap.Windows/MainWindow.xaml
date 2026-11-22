@@ -1,0 +1,355 @@
+<Window x:Class="ShotMap.Windows.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="ShotMap" Icon="Brand.png" Width="1240" Height="780" MinWidth="736" MinHeight="520"
+        WindowStartupLocation="CenterScreen" Background="{DynamicResource WindowFill}"
+        FontFamily="Segoe UI, Microsoft YaHei UI" FontSize="11" Foreground="{DynamicResource Ink}"
+        AllowDrop="True" DragOver="OnDragOver" DragLeave="OnDragLeave" Drop="OnDrop" Closing="OnClosing"
+        UseLayoutRounding="True" SnapsToDevicePixels="True" Language="zh-CN">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="WorkspaceControls.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <Style x:Key="PanelTitle" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="12" />
+                <Setter Property="FontWeight" Value="SemiBold" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+            </Style>
+            <Style x:Key="FieldLabel" TargetType="TextBlock">
+                <Setter Property="FontWeight" Value="Medium" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+            </Style>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Window.InputBindings>
+        <KeyBinding Key="O" Modifiers="Control" Command="Open" />
+        <KeyBinding Key="S" Modifiers="Control" Command="SaveAs" />
+        <KeyBinding Key="Escape" Command="Stop" />
+    </Window.InputBindings>
+    <Window.CommandBindings>
+        <CommandBinding Command="Open" CanExecute="CanOpen" Executed="OpenVideo" />
+        <CommandBinding Command="SaveAs" CanExecute="CanExport" Executed="ExportImage" />
+        <CommandBinding Command="Stop" CanExecute="CanCancel" Executed="CancelOperation" />
+    </Window.CommandBindings>
+
+    <Grid SizeChanged="SizeWorkspace">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48" />
+            <RowDefinition Height="1" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="1" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal" Margin="12,0" VerticalAlignment="Center">
+                <Image Width="22" Height="22" Source="{StaticResource ShotMapMark}" />
+                <TextBlock x:Name="BrandTitle" Text="ShotMap" FontSize="15" FontWeight="SemiBold" Margin="7,0,0,0" VerticalAlignment="Center" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,12,0" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <ToggleButton x:Name="QueueToggle" Style="{StaticResource PanelToggle}" IsChecked="True" Click="TogglePanel"
+                              ToolTip="显示或隐藏视频队列" AutomationProperties.Name="显示或隐藏视频队列" Margin="0,0,3,0">
+                    <ContentControl Style="{StaticResource Glyph}" Content="{StaticResource layout-sidebar}" />
+                </ToggleButton>
+                <ToggleButton x:Name="InspectorToggle" Style="{StaticResource PanelToggle}" IsChecked="True" Click="TogglePanel"
+                              ToolTip="显示或隐藏分镜设置" AutomationProperties.Name="显示或隐藏分镜设置" Margin="0,0,3,0">
+                    <ContentControl Style="{StaticResource Glyph}" Content="{StaticResource layout-sidebar-right}" />
+                </ToggleButton>
+                <ToggleButton x:Name="FocusToggle" Style="{StaticResource PanelToggle}" Click="ToggleFocus"
+                              ToolTip="专注预览" AutomationProperties.Name="专注预览">
+                    <ContentControl x:Name="FocusGlyph" Style="{StaticResource Glyph}" Content="{StaticResource maximize}" />
+                </ToggleButton>
+            </StackPanel>
+            <Grid x:Name="GenerateDock" Grid.Column="1" Width="217">
+                <Border x:Name="GenerateRule" Height="18" Width="1" HorizontalAlignment="Left" Background="{StaticResource Divider}" />
+                <Button x:Name="GenerateButton" Style="{StaticResource Primary}" Height="30" Margin="12,0" VerticalAlignment="Center" Click="GenerateQueue">
+                    <StackPanel Orientation="Horizontal">
+                        <ContentControl Style="{StaticResource Glyph}" Content="{StaticResource stack-2}" Width="14" Height="14" />
+                        <TextBlock x:Name="GenerateLabel" Text="生成分镜图" FontSize="12" Margin="6,0,0,0" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button>
+            </Grid>
+        </Grid>
+
+        <Border Grid.Row="1" Background="{StaticResource Divider}" />
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition x:Name="QueueColumn" Width="190" />
+                <ColumnDefinition x:Name="QueueRule" Width="1" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition x:Name="InspectorRule" Width="1" />
+                <ColumnDefinition x:Name="InspectorColumn" Width="216" />
+            </Grid.ColumnDefinitions>
+
+            <Border x:Name="QueuePanel" Background="{StaticResource PanelFill}" Padding="12,4,12,10">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="32" />
+                        <RowDefinition Height="10" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <DockPanel>
+                        <Button DockPanel.Dock="Right" Width="26" Height="26" Style="{StaticResource Action}" Command="Open"
+                                Foreground="{StaticResource Accent}" ToolTip="添加视频" AutomationProperties.Name="添加视频">
+                            <ContentControl Style="{StaticResource Glyph}" Content="{StaticResource plus}" Width="14" Height="14" />
+                        </Button>
+                        <TextBlock x:Name="QueueCount" DockPanel.Dock="Right" FontFamily="Consolas" FontWeight="Medium"
+                                   Margin="0,0,5,0" Foreground="{StaticResource Muted}" VerticalAlignment="Center" />
+                        <StackPanel Orientation="Horizontal">
+                            <ContentControl Style="{StaticResource Glyph}" Width="13" Height="13" Content="{StaticResource video-plus}"
+                                            Foreground="{StaticResource Accent}" Margin="0,0,5,0" />
+                            <TextBlock Text="视频队列" Style="{StaticResource PanelTitle}" />
+                        </StackPanel>
+                    </DockPanel>
+                    <Button x:Name="QueueDropTarget" Grid.Row="2" VerticalAlignment="Top" Command="Open" Style="{StaticResource EmptyQueue}"
+                            AutomationProperties.Name="拖入一个或多个视频">
+                        <StackPanel>
+                            <TextBlock Text="拖入一个或多个视频" FontSize="12" FontWeight="SemiBold" TextWrapping="Wrap" />
+                            <TextBlock Text="支持 MP4、MOV、MPEG 等" Foreground="{StaticResource Muted}" TextWrapping="Wrap" Margin="0,5,0,0" />
+                        </StackPanel>
+                    </Button>
+                    <ListBox x:Name="QueueList" Grid.Row="2" AutomationProperties.Name="视频队列" SelectionChanged="SelectJob"
+                             Background="Transparent" BorderThickness="0" Padding="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                             VirtualizingPanel.VirtualizationMode="Recycling" ItemContainerStyle="{StaticResource QueueRow}">
+                        <ListBox.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem x:Name="RemoveButton" Header="移出所选视频" Click="RemoveJob" />
+                            </ContextMenu>
+                        </ListBox.ContextMenu>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid ToolTip="{Binding Path}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Border MinWidth="26" Height="30" Padding="3,0" CornerRadius="6" Background="#120A66D9"
+                                            VerticalAlignment="Center" Margin="0,0,8,0">
+                                        <TextBlock Text="{Binding Ordinal}" FontFamily="Consolas" FontWeight="SemiBold" Foreground="{StaticResource Accent}"
+                                                   VerticalAlignment="Center" HorizontalAlignment="Center">
+                                            <TextBlock.Style>
+                                                <Style TargetType="TextBlock">
+                                                    <Setter Property="FontSize" Value="15" />
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding HasLongOrdinal}" Value="True"><Setter Property="FontSize" Value="12" /></DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                    </Border>
+                                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding Name}" FontWeight="SemiBold" TextWrapping="Wrap"
+                                                   TextTrimming="CharacterEllipsis" LineHeight="13" LineStackingStrategy="BlockLineHeight" MaxHeight="26" />
+                                        <TextBlock Text="{Binding Status}" Style="{StaticResource JobStatus}" Margin="0,4,0,0"
+                                                   TextTrimming="CharacterEllipsis" />
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <Button x:Name="ClearButton" Grid.Row="3" Style="{StaticResource Action}" Click="ClearQueue" HorizontalAlignment="Left"
+                            Height="26" Margin="0,10,0,0" Foreground="{StaticResource Destructive}" FontWeight="Medium"
+                            ToolTip="移除队列中的所有视频和当前预览">
+                        <StackPanel Orientation="Horizontal">
+                            <ContentControl Style="{StaticResource Glyph}" Content="{StaticResource trash}" Width="12" Height="12" />
+                            <TextBlock Text="清空队列" Margin="6,0,0,0" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
+                </Grid>
+            </Border>
+            <Border Grid.Column="1" Background="{StaticResource Divider}" />
+
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="1" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid Margin="14,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="分镜预览" Style="{StaticResource PanelTitle}" />
+                    <TextBlock x:Name="SourceName" Grid.Column="1" Foreground="{StaticResource Muted}" Margin="10,0,0,0" TextAlignment="Right"
+                               TextTrimming="CharacterEllipsis" VerticalAlignment="Center" AutomationProperties.LiveSetting="Polite" />
+                    <StackPanel Grid.Column="2" Orientation="Horizontal" Margin="10,0,0,0" VerticalAlignment="Center">
+                        <Button x:Name="SaveButton" Style="{StaticResource Action}" Command="SaveAs" Height="28" FontWeight="Medium"
+                                Foreground="{StaticResource Accent}" ToolTip="另存为 · Ctrl+S">
+                            <StackPanel Orientation="Horizontal">
+                                <ContentControl Style="{StaticResource Glyph}" Width="13" Height="13" Content="{StaticResource device-floppy}" />
+                                <TextBlock x:Name="SaveLabel" Text="另存为 JPG" Margin="6,0,0,0" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="RevealButton" Style="{StaticResource Action}" Click="RevealExport" Height="28" FontWeight="Medium"
+                                Foreground="{StaticResource Accent}" Margin="8,0,0,0" Visibility="Collapsed" ToolTip="在资源管理器中显示导出的分镜">
+                            <StackPanel Orientation="Horizontal">
+                                <ContentControl Style="{StaticResource Glyph}" Width="13" Height="13" Content="{StaticResource folder-check}" />
+                                <TextBlock Text="在资源管理器中显示" Margin="6,0,0,0" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+                <Border Grid.Row="1" Background="{StaticResource Divider}" />
+                <Grid x:Name="Stage" Grid.Row="2" Background="{StaticResource CanvasFill}" ClipToBounds="True" SizeChanged="SizeStage">
+                    <StackPanel x:Name="EmptyStage" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="24">
+                        <Image x:Name="EmptyMark" Width="44" Height="44" Source="{StaticResource ShotMapMark}" Margin="0,0,0,12" />
+                        <TextBlock x:Name="EmptyTitle" Text="把视频，编成一张分镜图" FontSize="16" FontWeight="SemiBold"
+                                   TextWrapping="Wrap" TextAlignment="Center" />
+                    </StackPanel>
+                    <StackPanel x:Name="ProcessingPanel" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed">
+                        <TextBlock x:Name="StageLabel" Foreground="{StaticResource Muted}" FontWeight="Medium"
+                                   TextAlignment="Center" Height="18" Margin="0,0,0,8" />
+                        <UniformGrid x:Name="ProcessingCells" />
+                    </StackPanel>
+                    <Image x:Name="Preview" Margin="12" Stretch="Uniform" AutomationProperties.Name="分镜预览"
+                           RenderOptions.BitmapScalingMode="HighQuality" />
+                </Grid>
+            </Grid>
+            <Border Grid.Column="3" Background="{StaticResource Divider}" />
+
+            <Border x:Name="InspectorPanel" Grid.Column="4" Background="{StaticResource PanelFill}">
+                <DockPanel>
+                    <TextBlock DockPanel.Dock="Top" Text="分镜设置" Style="{StaticResource PanelTitle}" Height="40"
+                               Margin="12,0" VerticalAlignment="Center" Padding="0,12,0,0" />
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                        <StackPanel x:Name="Inspector" Margin="12,0,12,12">
+                            <UniformGrid x:Name="GridChoices" Columns="3" Rows="2" Margin="-4,6,-4,8"
+                                         AutomationProperties.Name="分镜网格" />
+                            <Border Height="1" Background="{StaticResource SectionDivider}" />
+                            <StackPanel Margin="0,14">
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                                    <ContentControl Style="{StaticResource Glyph}" Content="{StaticResource photo}" Width="13" Height="13"
+                                                    Foreground="{StaticResource Muted}" />
+                                    <TextBlock Text="画面" Foreground="{StaticResource Muted}" FontWeight="SemiBold" Margin="6,0,0,0" />
+                                </StackPanel>
+                                <DockPanel Margin="0,0,0,8">
+                                    <ComboBox x:Name="AspectSize" DockPanel.Dock="Right" Style="{StaticResource Picker}" AutomationProperties.Name="比例" />
+                                    <TextBlock Text="比例" Style="{StaticResource FieldLabel}" />
+                                </DockPanel>
+                                <DockPanel Margin="0,0,0,8">
+                                    <ComboBox x:Name="ImageWidth" DockPanel.Dock="Right" Style="{StaticResource Picker}" AutomationProperties.Name="宽度" />
+                                    <TextBlock Text="宽度" Style="{StaticResource FieldLabel}" />
+                                </DockPanel>
+                                <DockPanel Margin="0,0,0,8">
+                                    <Border DockPanel.Dock="Right" Width="128" Height="30" BorderBrush="{StaticResource Divider}"
+                                            BorderThickness="1" CornerRadius="5" SizeChanged="ClipSwatches">
+                                        <UniformGrid x:Name="ToneChoices" Rows="1" AutomationProperties.Name="底色" />
+                                    </Border>
+                                    <TextBlock Text="底色" Style="{StaticResource FieldLabel}" />
+                                </DockPanel>
+                                <CheckBox x:Name="ShowTimestamps" Content="显示时间码" Style="{StaticResource Switch}" IsChecked="True" Margin="0,0,0,8" />
+                                <CheckBox x:Name="ShowTitle" Content="显示文件名" Style="{StaticResource Switch}" Margin="0,0,0,8" />
+                                <CheckBox x:Name="ShowVideoDetails" Content="显示视频信息" Style="{StaticResource Switch}"
+                                          ToolTip="显示时长、文件大小、分辨率、平均帧率、编码和码率" />
+                            </StackPanel>
+                            <Border Height="1" Background="{StaticResource SectionDivider}" />
+                            <StackPanel Margin="0,14,0,0">
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                                    <ContentControl Style="{StaticResource Glyph}" Content="{StaticResource download}" Width="13" Height="13"
+                                                    Foreground="{StaticResource Muted}" />
+                                    <TextBlock Text="导出" Foreground="{StaticResource Muted}" FontWeight="SemiBold" Margin="6,0,0,0" />
+                                </StackPanel>
+                                <UniformGrid x:Name="FormatChoices" Rows="1" AutomationProperties.Name="图片格式">
+                                    <RadioButton GroupName="Format" Content="PNG" Tag=".png" Style="{StaticResource FormatChoice}"
+                                                 Margin="0,0,5,0" Checked="SelectFormat" />
+                                    <RadioButton GroupName="Format" Content="JPG" Tag=".jpg" Style="{StaticResource FormatChoice}"
+                                                 Margin="2,0" IsChecked="True" Checked="SelectFormat" />
+                                    <RadioButton GroupName="Format" Content="WebP" Tag=".webp" Style="{StaticResource FormatChoice}"
+                                                 Margin="5,0,0,0" Checked="SelectFormat" />
+                                </UniformGrid>
+                                <Button x:Name="BatchExportButton" Style="{StaticResource Action}" Click="ExportBatch" HorizontalAlignment="Left"
+                                        Foreground="{StaticResource Accent}" FontWeight="Medium" Height="26" Margin="0,6,0,0">
+                                    <StackPanel Orientation="Horizontal">
+                                        <ContentControl Style="{StaticResource Glyph}" Content="{StaticResource download}" Width="12" Height="12" />
+                                        <TextBlock Text="批量导出…" Margin="6,0,0,0" VerticalAlignment="Center" />
+                                    </StackPanel>
+                                </Button>
+                            </StackPanel>
+                        </StackPanel>
+                    </ScrollViewer>
+                </DockPanel>
+            </Border>
+        </Grid>
+
+        <Border Grid.Row="3" Background="{StaticResource Divider}" />
+        <Grid Grid.Row="4">
+            <Grid x:Name="PreviewFooter" Height="48" Margin="12,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="152" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" TextElement.Foreground="{StaticResource Muted}">
+                    <ContentControl Style="{StaticResource Glyph}" Width="11" Height="11" Content="{StaticResource shield-check}" />
+                    <TextBlock Text="在本机处理视频" FontSize="10" Margin="6,0,0,0" VerticalAlignment="Center" />
+                </StackPanel>
+                <Border x:Name="Pager" Grid.Column="1" Background="White" BorderBrush="{StaticResource Divider}" BorderThickness="1"
+                        Height="36" CornerRadius="9">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Button x:Name="PreviousButton" Style="{StaticResource PagerButton}" Click="PreviousPreview"
+                                ToolTip="查看上一张分镜图" AutomationProperties.Name="查看上一张分镜图">
+                            <ContentControl Style="{StaticResource Glyph}" Content="{StaticResource chevron-left}" Width="17" Height="17" />
+                        </Button>
+                        <Viewbox MaxHeight="19" Width="60" Margin="4,0" StretchDirection="DownOnly">
+                            <TextBlock x:Name="PreviewPage" FontFamily="Consolas" FontWeight="Medium" FontSize="12" Foreground="{StaticResource Muted}">
+                                <Run x:Name="PagePosition" FontSize="15" FontWeight="Bold" Foreground="{StaticResource Accent}" />
+                                <Run x:Name="PageTotal" />
+                            </TextBlock>
+                        </Viewbox>
+                        <Button x:Name="NextButton" Style="{StaticResource PagerButton}" Click="NextPreview"
+                                ToolTip="查看下一张分镜图" AutomationProperties.Name="查看下一张分镜图">
+                            <ContentControl Style="{StaticResource Glyph}" Content="{StaticResource chevron-right}" Width="17" Height="17" />
+                        </Button>
+                    </StackPanel>
+                </Border>
+                <Button x:Name="ManualButton" Grid.Column="2" Style="{StaticResource Primary}" Height="34" Padding="14,0" FontSize="12"
+                        Click="EditFrames" HorizontalAlignment="Right" ToolTip="手动选择画面" VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal">
+                        <ContentControl Style="{StaticResource Glyph}" Width="15" Height="15" Content="{StaticResource scan}" />
+                        <TextBlock Text="手动选帧" Margin="6,0,0,0" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button>
+            </Grid>
+            <Grid x:Name="WorkFooter" Height="44" Background="{StaticResource PanelFill}" Visibility="Collapsed">
+                <DockPanel Margin="20,0">
+                    <Button x:Name="CancelButton" DockPanel.Dock="Right" Style="{StaticResource Primary}" Background="{StaticResource Destructive}"
+                            Height="28" Padding="10,0" Command="Stop" Margin="8,0,0,0">
+                        <StackPanel Orientation="Horizontal">
+                            <ContentControl Style="{StaticResource Glyph}" Width="13" Height="13" Content="{StaticResource trash}" />
+                            <TextBlock x:Name="CancelLabel" Text="停止本次生成" Margin="6,0,0,0" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="PauseButton" DockPanel.Dock="Right" Style="{StaticResource Primary}" Height="28" Padding="10,0"
+                            Click="PauseOrResume" Margin="8,0,0,0">
+                        <StackPanel Orientation="Horizontal">
+                            <ContentControl x:Name="PauseGlyph" Style="{StaticResource Glyph}" Width="13" Height="13" Content="{StaticResource player-pause}" />
+                            <TextBlock x:Name="PauseLabel" Text="当前视频完成后暂停" Margin="6,0,0,0" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
+                    <ProgressBar x:Name="ProgressBar" DockPanel.Dock="Left" Width="150" Height="5" VerticalAlignment="Center"
+                                 Foreground="{StaticResource Accent}" Background="#16000000" Maximum="1" Margin="0,0,12,0"
+                                 AutomationProperties.Name="当前进度">
+                        <ProgressBar.Template>
+                            <ControlTemplate TargetType="ProgressBar">
+                                <Grid ClipToBounds="True">
+                                    <Border x:Name="PART_Track" Background="{TemplateBinding Background}" CornerRadius="2.5" />
+                                    <Border x:Name="PART_Indicator" Background="{TemplateBinding Foreground}" HorizontalAlignment="Left" CornerRadius="2.5" />
+                                </Grid>
+                            </ControlTemplate>
+                        </ProgressBar.Template>
+                    </ProgressBar>
+                    <TextBlock x:Name="StatusText" Foreground="{StaticResource Muted}" TextTrimming="CharacterEllipsis"
+                               VerticalAlignment="Center" AutomationProperties.LiveSetting="Polite" />
+                </DockPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>
