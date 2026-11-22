@@ -21,6 +21,7 @@ from urllib.parse import unquote, urlsplit
 ROOT = Path(__file__).resolve().parent.parent
 RELEASE_VERSION = plistlib.loads((ROOT / "Packaging/Info.plist").read_bytes())["CFBundleShortVersionString"]
 REPOSITORY = "https://github.com/ixiehao/ShotMap"
+RELEASE_LIST = REPOSITORY + "/releases"
 MACOS_RELEASE = REPOSITORY + "/releases/latest"
 WINDOWS_PREVIEW = REPOSITORY + "/releases/tag/windows-v0.1.0-preview.1"
 WEBSITE = "https://ixiehao.github.io/ShotMap/"
@@ -80,8 +81,12 @@ def verify_page(path: Path, locale: str) -> None:
             verify_local_target(path, target)
     anchors = [attrs for tag, attrs in elements if tag == "a" and attrs.get("href")]
     verify_release_links(path, [attrs["href"] for attrs in anchors])
-    if [attrs["href"] for attrs in anchors if attrs.get("data-i18n") == "windowsPreview"] != [WINDOWS_PREVIEW]:
-        fail(f"wrong Windows preview button in {path.relative_to(ROOT)}")
+    if [attrs["href"] for attrs in anchors if attrs.get("data-download") == "release-list"] != [RELEASE_LIST]:
+        fail(f"wrong header download link in {path.relative_to(ROOT)}")
+    if [attrs["href"] for attrs in anchors if attrs.get("data-i18n") == "windowsPreview"] != [WINDOWS_PREVIEW] * 2:
+        fail(f"wrong Windows preview buttons in {path.relative_to(ROOT)}")
+    if [attrs["href"] for attrs in anchors if attrs.get("data-download") == "windows-preview"] != [WINDOWS_PREVIEW]:
+        fail(f"wrong bottom Windows preview link in {path.relative_to(ROOT)}")
     for schema in re.findall(r'<script[^>]+type="application/ld\+json"[^>]*>(.*?)</script>', text, re.S):
         value = json.loads(schema)
         if value.get("@type") == "SoftwareApplication":

@@ -122,6 +122,6 @@ ShotMap работает на macOS 13 или новее. На странице 
 
 Создайте первую раскадровку на Mac. Бесплатно, с открытым кодом и интерфейсом на семи языках.
 
-[Скачать v0.2.20](https://github.com/ixiehao/ShotMap/releases/latest) [Открыть на GitHub](https://github.com/ixiehao/ShotMap)
+[Скачать v0.2.20](https://github.com/ixiehao/ShotMap/releases/latest) [Предварительная версия для Windows](https://github.com/ixiehao/ShotMap/releases/tag/windows-v0.1.0-preview.1) [Открыть на GitHub](https://github.com/ixiehao/ShotMap)
 
 © 2026 ixiehaoShotMap · MIT [GitHub](https://github.com/ixiehao/ShotMap) [Релизы](https://github.com/ixiehao/ShotMap/releases) [Обратная связь](https://github.com/ixiehao/ShotMap/issues/new/choose)
