@@ -9,7 +9,7 @@ export default {
   navWorkflow: "사용 방법", navFeatures: "기능", navPrivacy: "개인정보 보호", download: "다운로드",
   heroEyebrow: "MAC용 동영상 스토리보드", heroTitle: "동영상 속 장면을<br />한 장의 이미지로.",
   heroSummary: "자동으로 고르고, 한 프레임씩 조정하고, 여러 영상을 한 번에 처리하세요. 가족 영상, 여행 기록, 편집용 클립을 살펴보기 편해집니다.",
-  heroDownload: "macOS용 다운로드",
+  macosDownload: "macOS용 다운로드",
   windowsPreview: "Windows 프리뷰",
   windowsPreviewDetail: "Windows 11 x64 · 포터블 ZIP · .NET 10 포함 · FFmpeg와 ffprobe 필요 · 서명 없음",
   compatibility: "macOS 13 이상 · Apple Silicon 및 Intel · 무료 오픈 소스", productCaption: "ShotMap 한국어 작업 화면",
@@ -36,7 +36,7 @@ export default {
   faqThreeQuestion: "프레임을 직접 바꿀 수 있나요?", faqThreeAnswer: "네. 스마트 선택으로 시작한 뒤 ‘프레임 직접 선택’에서 최종 장면을 고르면 됩니다.",
   faqFourQuestion: "스토리보드 이미지는 어디에 저장되나요?", faqFourAnswer: "기본적으로 원본 동영상과 같은 폴더에 저장됩니다. 저장 버튼으로 다른 위치를 선택할 수도 있습니다.",
   ctaEyebrow: "찾던 동영상이 있나요?", ctaTitle: "내 동영상을 더 편하게 살펴보세요.", ctaDetail: "첫 스토리보드를 Mac에서 만들어 보세요. 무료 오픈 소스 앱이며 7개 언어를 지원합니다.",
-  ctaDownload: "v{version} 다운로드", ctaGithub: "GitHub에서 보기", github: "GitHub", releases: "릴리스", feedback: "의견 보내기",
+  ctaGithub: "GitHub에서 보기", github: "GitHub", releases: "릴리스", feedback: "의견 보내기",
   productAlt: "동영상 목록, 스토리보드 미리보기, 설정 패널이 있는 ShotMap 한국어 작업 화면",
   manualAlt: "플레이어, 타임라인, 후보 프레임이 있는 ShotMap 한국어 프레임 선택 화면"
 };

@@ -132,6 +132,6 @@ macOS 13以降に対応しています。リリースページで、Apple Silico
 
 まずは一本の動画から。Macで使える無料・オープンソースのアプリ。7言語に対応しています。
 
-[v0.2.20 をダウンロード](https://github.com/ixiehao/ShotMap/releases/latest) [Windows プレビュー版](https://github.com/ixiehao/ShotMap/releases/tag/windows-v0.1.0-preview.1) [GitHubで見る](https://github.com/ixiehao/ShotMap)
+[macOS版をダウンロード](https://github.com/ixiehao/ShotMap/releases/latest) [Windows プレビュー版](https://github.com/ixiehao/ShotMap/releases/tag/windows-v0.1.0-preview.1) [GitHubで見る](https://github.com/ixiehao/ShotMap)
 
 © 2026 ixiehaoShotMap · MIT [GitHub](https://github.com/ixiehao/ShotMap) [リリース](https://github.com/ixiehao/ShotMap/releases) [フィードバック](https://github.com/ixiehao/ShotMap/issues/new/choose)

@@ -9,7 +9,7 @@ export default {
   navWorkflow: "Cómo se usa", navFeatures: "Funciones", navPrivacy: "Privacidad", download: "Descargar",
   heroEyebrow: "MOSAICOS DE VÍDEO PARA MAC", heroTitle: "Las escenas de tu vídeo,<br />en una sola imagen.",
   heroSummary: "Selección automática, ajuste manual y procesamiento por lotes. Revisa con más facilidad grabaciones familiares, viajes y material de edición.",
-  heroDownload: "Descargar para macOS",
+  macosDownload: "Descargar para macOS",
   windowsPreview: "Versión preliminar para Windows",
   windowsPreviewDetail: "Windows 11 x64 · ZIP portátil · Incluye .NET 10 · Requiere FFmpeg y ffprobe · Sin firma",
   compatibility: "macOS 13 o posterior · Apple Silicon e Intel · Gratis y de código abierto",
@@ -40,7 +40,7 @@ export default {
   faqFourQuestion: "¿Dónde se guardan los mosaicos?", faqFourAnswer: "Por defecto, en la carpeta del vídeo original. Usa Guardar como para elegir otra ubicación.",
   ctaEyebrow: "¿BUSCAMOS ESE VÍDEO?", ctaTitle: "Tus vídeos, más fáciles de revisar.",
   ctaDetail: "Crea tu primer mosaico en Mac. Gratis, de código abierto y disponible en siete idiomas.",
-  ctaDownload: "Descargar v{version}", ctaGithub: "Ver en GitHub", github: "GitHub", releases: "Versiones", feedback: "Comentarios",
+  ctaGithub: "Ver en GitHub", github: "GitHub", releases: "Versiones", feedback: "Comentarios",
   productAlt: "ShotMap en español con cola de vídeos, vista previa del mosaico y ajustes",
   manualAlt: "Selección de fotogramas en español con reproductor, línea de tiempo y galería"
 };

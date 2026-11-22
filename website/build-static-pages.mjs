@@ -98,7 +98,7 @@ function languagePicker(language, prefix) {
 }
 
 function makeStaticPage(language) {
-  const copy = { ...translations[language], ctaDownload: translations[language].ctaDownload.replace("{version}", currentVersion) };
+  const copy = translations[language];
   const prefix = language === "en" ? "" : "../";
   let html = source.replace(/    <!-- search-discovery:start -->[\s\S]*?    <!-- search-discovery:end -->\n/g, "")
     .replace(/^    <link rel="stylesheet" href="tutorials\.css" \/>\n/m, "");
