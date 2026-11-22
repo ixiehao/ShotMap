@@ -48,8 +48,7 @@ export PKG_CONFIG_PATH="$(cygpath -m "$PWD/../deps/lib/pkgconfig")"
     --enable-zlib --enable-libwebp --pkg-config-flags=--static \
     --extra-cflags="-MT -I../deps/include" --extra-ldflags="-libpath:../deps/lib" \
     --extra-libs=sharpyuv.lib
-make -j"$jobs" ffmpeg.exe ffprobe.exe
-make install
+make -j"$jobs" install
 
 mkdir -p ../portable/licenses
 cp ../ffmpeg-9.1/COPYING.LGPLv2.1 ../portable/licenses/FFmpeg-LGPL-2.1.txt
